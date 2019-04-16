@@ -54,10 +54,6 @@ public class Gun : MonoBehaviour
 
         if (IsInvoking("Shoot") == true)
         {
-            if (Input.GetAxis(input) == 0)
-            {
-                CancelInvoke("Shoot");
-            }
             if (IsInvoking("Reload") == true)
             {
                 CancelInvoke("Shoot");
@@ -67,41 +63,48 @@ public class Gun : MonoBehaviour
 
     public void Shoot()
     {
-        if (curAmmo >= gunType.bulletCount)
+        if (Input.GetAxis(input) != 0)
         {
-            // print("pew");
-            if (soundSpawner != null)
+            if (curAmmo >= gunType.bulletCount)
             {
-                soundSpawner.SpawnEffect(gunType.sound);
-            }
-            for (int i = 0; i < gunType.bulletCount; i++)
-            {
-                float accuracy = Random.Range(-gunType.accuracy / 2, gunType.accuracy / 2);
-                GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.Euler(0, transform.parent.eulerAngles.y + accuracy, 0));
-                bullet.GetComponent<BulletMove>().speed = gunType.bulletSpeed;
-                bullet.GetComponent<Hurtbox>().damage = gunType.dmg;
-                bullet.GetComponent<Hurtbox>().team = 0;
-            }
+                // print("pew");
+                if (soundSpawner != null)
+                {
+                    soundSpawner.SpawnEffect(gunType.sound);
+                }
+                for (int i = 0; i < gunType.bulletCount; i++)
+                {
+                    float accuracy = Random.Range(-gunType.accuracy / 2, gunType.accuracy / 2);
+                    GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.Euler(0, transform.parent.eulerAngles.y + accuracy, 0));
+                    bullet.GetComponent<BulletMove>().speed = gunType.bulletSpeed;
+                    bullet.GetComponent<Hurtbox>().damage = gunType.dmg;
+                    bullet.GetComponent<Hurtbox>().team = 0;
+                }
 
-            camShake.CustomShake(gunType.screenShakeTime, gunType.screenshakeStrength);
-            curAmmo -= gunType.bulletCount;
-            totalMaxAmmo -= gunType.bulletCount;
-            if (curAmmo < gunType.bulletCount)
-            {
-                GetComponent<Renderer>().material = mat[2];
+                camShake.CustomShake(gunType.screenShakeTime, gunType.screenshakeStrength);
+                curAmmo -= gunType.bulletCount;
+                totalMaxAmmo -= gunType.bulletCount;
+                if (curAmmo < gunType.bulletCount)
+                {
+                    GetComponent<Renderer>().material = mat[2];
+                }
+                //so you cant spam the bullets
+                Invoke("IgnoreInput", gunType.fireRate);
             }
-            //so you cant spam the bullets
-            Invoke("IgnoreInput", gunType.fireRate);
+            else
+            {
+                CancelInvoke("Shoot");
+                //should you reload automatically? If so, slash the if here
+                if (Input.GetButtonDown(input) == true)
+                {
+                    Invoke("Reload", gunType.reloadTime);
+                    GetComponent<Renderer>().material = mat[1];
+                }
+            }
         }
         else
         {
             CancelInvoke("Shoot");
-            //should you reload automatically? If so, slash the if here
-            if (Input.GetButtonDown(input) == true)
-            {
-                Invoke("Reload", gunType.reloadTime);
-                GetComponent<Renderer>().material = mat[1];
-            }
         }
     }
 

@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     CharacterController cc;
     [HideInInspector] public Vector3 moveV3;
     Transform cam;
+    [SerializeField] GameObject hitbox;
     [Header("Walking related")]
     [SerializeField] float walkSpeed = 1;
     float curWalkSpeed = 0;
@@ -23,6 +24,17 @@ public class PlayerController : MonoBehaviour
     [Header("Input")]
     [SerializeField] string horInput = "Horizontal";
     [SerializeField] string vertInput = "Vertical";
+    [SerializeField] string rollInput = "Fire3";
+    public enum State
+    {
+        Normal,
+        Roll
+    }
+    [Header("States")]
+    [SerializeField] State curState = State.Normal;
+    [Header("Rolling")]
+    [SerializeField] float rollSpeed = 40;
+    [SerializeField] float rollDeceleration = 100;
     void Start()
     {
         cc = GetComponent<CharacterController>();
@@ -31,21 +43,60 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        // RotateXZ();
-        //  MoveForward();
-        RotateCrosshair();
-        MoveXZ();
-        Gravity();
-        FinalMove();
-
-        if(gun != null){
-            gun.CheckInput();
+        switch (curState)
+        {
+            case State.Normal:
+                if (gun != null)
+                {
+                    RotateCrosshair();
+                    MoveXZ();
+                    gun.CheckInput();
+                }
+                else
+                {
+                    RotateXZ();
+                    MoveForward();
+                }
+                Gravity();
+                FinalMove();
+                CheckRollInput();
+                break;
+            case State.Roll:
+                RotateXZ();
+                moveV3 = Vector3.MoveTowards(moveV3,Vector3.zero,Time.deltaTime * rollDeceleration);
+                FinalMove();
+                break;
         }
+    }
+
+    void CheckRollInput()
+    {
+        if (Input.GetButtonDown(rollInput) == true)
+        {
+            StartCoroutine(RollEvent());
+        }
+    }
+
+    IEnumerator RollEvent()
+    {
+        moveV3 = Vector3.zero;
+        curState = State.Roll;
+        float oldRotSpeed = rotateSpeed;
+        rotateSpeed = rotateCrosshairSpeed * 2;
+        hitbox.SetActive(false);
+        gun.CancelInvoke("Shoot");
+        yield return new WaitForSeconds(0.1f);
+        rotateSpeed = 0;
+        moveV3 = transform.forward * -rollSpeed;
+        yield return new WaitForSeconds(0.3f);
+        rotateSpeed = oldRotSpeed;
+        curState = State.Normal;
+        hitbox.SetActive(true);
     }
 
     void RotateCrosshair()
     {
-        crosshair.position = new Vector3(crosshair.position.x,transform.position.y,crosshair.position.z);
+        crosshair.position = new Vector3(crosshair.position.x, transform.position.y, crosshair.position.z);
         rotGoal = Mathf.Atan2(crosshair.position.x - transform.position.x, crosshair.position.z - transform.position.z) * 180 / Mathf.PI + 180;
         transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, rotGoal, 0), Time.deltaTime * rotateCrosshairSpeed);
     }
@@ -55,14 +106,18 @@ public class PlayerController : MonoBehaviour
         if (Input.GetAxis(horInput) != 0)
         {
             moveV3.x = Mathf.Lerp(moveV3.x, Input.GetAxis(horInput) * walkSpeed, Time.deltaTime * accelerationSpeed);
-        } else {
+        }
+        else
+        {
             moveV3.x = Mathf.Lerp(moveV3.x, Input.GetAxis(horInput) * walkSpeed, Time.deltaTime * decelerationSpeed);
         }
-        
+
         if (Input.GetAxis(vertInput) != 0)
         {
             moveV3.z = Mathf.Lerp(moveV3.z, Input.GetAxis(vertInput) * walkSpeed, Time.deltaTime * accelerationSpeed);
-        } else {
+        }
+        else
+        {
             moveV3.z = Mathf.Lerp(moveV3.z, Input.GetAxis(vertInput) * walkSpeed, Time.deltaTime * decelerationSpeed);
         }
     }
@@ -71,7 +126,7 @@ public class PlayerController : MonoBehaviour
     {
         if (Vector2.SqrMagnitude(new Vector2(Input.GetAxis(horInput), Input.GetAxis(vertInput))) != 0)
         {
-            rotGoal = Mathf.Atan2(Input.GetAxis(vertInput), Input.GetAxis(horInput)) * Mathf.Rad2Deg + 90 + cam.eulerAngles.y;
+            rotGoal = Mathf.Atan2(Input.GetAxis(vertInput), -Input.GetAxis(horInput)) * Mathf.Rad2Deg + 90 + cam.eulerAngles.y;
         }
 
         transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, rotGoal, 0), Time.deltaTime * rotateSpeed);
