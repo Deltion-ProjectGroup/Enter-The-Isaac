@@ -82,10 +82,10 @@ public class PlayerController : MonoBehaviour
         moveV3 = Vector3.zero;
         curState = State.Roll;
         float oldRotSpeed = rotateSpeed;
-        rotateSpeed = rotateCrosshairSpeed * 2;
+        rotateSpeed = rotateCrosshairSpeed * 8f;
         hitbox.SetActive(false);
         gun.CancelInvoke("Shoot");
-        yield return new WaitForSeconds(0.1f);
+        yield return new WaitForSeconds(0.025f);
         rotateSpeed = 0;
         moveV3 = transform.forward * -rollSpeed;
         yield return new WaitForSeconds(0.3f);

@@ -87,6 +87,7 @@ public class Gun : MonoBehaviour
                 curGun = 0;
             }
             gunType = guns[curGun];
+            GetComponent<Renderer>().material = mat[0];
         }
     }
 
@@ -112,6 +113,8 @@ public class Gun : MonoBehaviour
             }
         }
         SetPresentationUI();
+        //rotating back
+        transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.Euler(0, 0, 0), Time.deltaTime * 10);
     }
 
     public void Shoot()
@@ -145,6 +148,8 @@ public class Gun : MonoBehaviour
                     Instantiate(gunType.muzzleFlash, transform.position, transform.rotation, transform);
                 }
                 transform.localPosition = startPos + (Vector3.forward * gunType.recoil);
+                transform.localEulerAngles = Vector3.zero;
+                transform.Rotate(Random.Range(-gunType.recoil, gunType.recoil) * 30, Random.Range(-gunType.recoil, gunType.recoil) * 30, 0);
                 player.moveV3 += player.transform.forward * gunType.kickBack;
                 camShake.CustomShake(gunType.screenShakeTime, gunType.screenshakeStrength);
                 curAmmo -= 1;
