@@ -11,8 +11,8 @@ public class Gun : MonoBehaviour
     Shake camShake;
     [SerializeField] int curAmmo = 0;
     int totalMaxAmmo = 0;
-    [SerializeField] GameObject bulletPrefab;
     SoundSpawn soundSpawner;
+    [SerializeField] PlayerController player;
     [Header("Delete later, for presentation")]
     [SerializeField] Material[] mat;
 
@@ -74,13 +74,25 @@ public class Gun : MonoBehaviour
                 }
                 for (int i = 0; i < gunType.bulletCount; i++)
                 {
+                    Camera.main.fieldOfView = gunType.camFov;
                     float accuracy = Random.Range(-gunType.accuracy / 2, gunType.accuracy / 2);
-                    GameObject bullet = Instantiate(bulletPrefab, transform.position, Quaternion.Euler(0, transform.parent.eulerAngles.y + accuracy, 0));
-                    bullet.GetComponent<BulletMove>().speed = gunType.bulletSpeed;
+                    GameObject bullet = Instantiate(gunType.projectileModel, transform.position, Quaternion.Euler(0, transform.parent.eulerAngles.y + accuracy, 0));
+                    bullet.transform.position -= bullet.transform.forward * gunType.forwardStart;
+                    float rngSpeed = Random.Range(gunType.bulletSpeed.x, gunType.bulletSpeed.y);
+                    bullet.GetComponent<BulletMove>().speed = rngSpeed;
+                    if (bullet.GetComponent<BulletMoveDecelerate>() != null)
+                    {
+                        bullet.GetComponent<BulletMoveDecelerate>().decelerationSpeed = gunType.bulletDecelerationSpeed;
+                    }
                     bullet.GetComponent<Hurtbox>().damage = gunType.dmg;
                     bullet.GetComponent<Hurtbox>().team = 0;
+                    Destroy(bullet, gunType.lifeTime);
                 }
-
+                if (gunType.muzzleFlash != null)
+                {
+                    Instantiate(gunType.muzzleFlash, transform.position, transform.rotation, transform);
+                }
+                player.moveV3 += player.transform.forward * gunType.kickBack;
                 camShake.CustomShake(gunType.screenShakeTime, gunType.screenshakeStrength);
                 curAmmo -= gunType.bulletCount;
                 totalMaxAmmo -= gunType.bulletCount;

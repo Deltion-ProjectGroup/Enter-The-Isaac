@@ -28,12 +28,18 @@ public class GunType : ScriptableObject
     public float reloadTime = 0;
     public int bulletCount = 0;//how many spawn at the same time
     public float accuracy = 0;
-    public float bulletSpeed = 0;
+    public float lifeTime = 5;
+    public float forwardStart = 1;
+    public Vector2 bulletSpeed = Vector2.zero;
+    public float bulletDecelerationSpeed = 10;
     public GameObject projectileModel;//incomplete
     public GameObject gunModel;//incomplete
     public float recoil = 0;//incomplete
-    public AudioClip sound;//incomplete
+    public AudioClip sound;
+    public GameObject muzzleFlash;
     public float screenShakeTime = 0;
     public float screenshakeStrength = 0;
+    public float camFov = 50;
+    public float kickBack = 0;
 
 }

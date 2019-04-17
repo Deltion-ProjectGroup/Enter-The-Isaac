@@ -63,7 +63,7 @@ public class PlayerController : MonoBehaviour
                 break;
             case State.Roll:
                 RotateXZ();
-                moveV3 = Vector3.MoveTowards(moveV3,Vector3.zero,Time.deltaTime * rollDeceleration);
+                moveV3 = Vector3.MoveTowards(moveV3, Vector3.zero, Time.deltaTime * rollDeceleration);
                 FinalMove();
                 break;
         }
