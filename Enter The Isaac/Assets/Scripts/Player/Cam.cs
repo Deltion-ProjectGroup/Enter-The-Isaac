@@ -11,6 +11,8 @@ public class Cam : MonoBehaviour
     Camera cam;
     float startFOV = 0;
     [SerializeField] float fovResetSpeed = 3;
+    [SerializeField] float followMouseAmount = 4;
+    [SerializeField] float followMouseIgnore = 1;
 
     void Start()
     {
@@ -33,6 +35,12 @@ public class Cam : MonoBehaviour
             centerPos += target[i].position;
         }
         centerPos /= target.Length;
+        Vector3 mousePos = new Vector3((Input.mousePosition.x - Screen.width) / Screen.width, 0, (Input.mousePosition.y - Screen.height) / Screen.height);
+        mousePos += new Vector3(0.5f, 0, 0.5f);
+        if (Vector3.Magnitude(mousePos) > followMouseIgnore)
+        {
+            centerPos += mousePos * followMouseAmount;
+        }
         transform.position = Vector3.Lerp(transform.position, centerPos + offset, Time.deltaTime * lerpSpeed);
     }
 }
