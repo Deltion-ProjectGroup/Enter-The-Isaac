@@ -5,7 +5,8 @@ using UnityEngine;
 public class SoundSpawn : MonoBehaviour
 {
     public void SpawnEffect(AudioClip clip){
-        GameObject g = Instantiate(new GameObject(),transform.position,transform.rotation);
+        GameObject g = new GameObject();
+        Destroy(g,clip.length);
         g.AddComponent<AudioSource>();
         AudioSource source = g.GetComponent<AudioSource>();
         source.clip = clip;

@@ -15,7 +15,7 @@ public class Crosshair : MonoBehaviour
     void Update()
     {
         PlanarHit();
-        RayHit();
+       // RayHit();
     }
 
     void RayHit()

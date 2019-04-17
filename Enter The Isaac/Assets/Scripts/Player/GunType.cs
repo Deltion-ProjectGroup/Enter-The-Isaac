@@ -34,7 +34,7 @@ public class GunType : ScriptableObject
     public float bulletDecelerationSpeed = 10;
     public GameObject projectileModel;//incomplete
     public GameObject gunModel;//incomplete
-    public float recoil = 0;//incomplete
+    public float recoil = 0;//works partially
     public AudioClip sound;
     public GameObject muzzleFlash;
     public float screenShakeTime = 0;
