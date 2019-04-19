@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-
+using UnityEngine.Events;
 public class Gun : MonoBehaviour
 {
     [SerializeField] string input = "Fire1";
     [SerializeField] string reloadInput = "Fire2";
     [SerializeField] string scrollInput = "Mouse ScrollWheel";
-    [SerializeField] GunType gunType;
+    GunType gunType;
     [SerializeField] GunType[] guns;
     List<int> ammoStore = new List<int>();
     List<int> magazineStore = new List<int>();
@@ -19,8 +19,16 @@ public class Gun : MonoBehaviour
     int totalMaxAmmo = 0;
     SoundSpawn soundSpawner;
     [SerializeField] PlayerController player;
-    [SerializeField] Vector3 startPos;
+    Vector3 startPos;
     [SerializeField] float recoilSpeed = 10;
+    //dingen om Maurits te helpen
+    [Space]
+    [Header("Event activates when you press shoot")]
+    [Header("Maurits, kijk hier!")]
+    public UnityEvent inputEvent;
+    [Header("Event activates when spawning a bullet")]
+    public UnityEvent spawnEvent;
+    public GameObject lastSpawnedBullet;
     [Header("Delete later, for presentation")]
     [SerializeField] Material[] mat;
     [SerializeField] Text[] uiElements;
@@ -129,7 +137,6 @@ public class Gun : MonoBehaviour
                 }
                 for (int i = 0; i < gunType.bulletCount; i++)
                 {
-                    Camera.main.fieldOfView = gunType.camFov;
                     float accuracy = Random.Range(-gunType.accuracy / 2, gunType.accuracy / 2);
                     GameObject bullet = Instantiate(gunType.projectileModel, transform.position, Quaternion.Euler(0, transform.parent.eulerAngles.y + accuracy, 0));
                     bullet.transform.position -= bullet.transform.forward * gunType.forwardStart;
@@ -142,11 +149,15 @@ public class Gun : MonoBehaviour
                     bullet.GetComponent<Hurtbox>().damage = gunType.dmg;
                     bullet.GetComponent<Hurtbox>().team = 0;
                     Destroy(bullet, gunType.lifeTime);
+                    lastSpawnedBullet = bullet;
+                    spawnEvent.Invoke();
+                    lastSpawnedBullet = null;
                 }
                 if (gunType.muzzleFlash != null)
                 {
                     Instantiate(gunType.muzzleFlash, transform.position, transform.rotation, transform);
                 }
+                Camera.main.fieldOfView = gunType.camFov;
                 transform.localPosition = startPos + (Vector3.forward * gunType.recoil);
                 transform.localEulerAngles = Vector3.zero;
                 transform.Rotate(Random.Range(-gunType.recoil, gunType.recoil) * 30, Random.Range(-gunType.recoil, gunType.recoil) * 30, 0);
@@ -159,6 +170,7 @@ public class Gun : MonoBehaviour
                 }
                 //so you can't spam the bullets
                 Invoke("IgnoreInput", gunType.fireRate);
+                inputEvent.Invoke();
             }
             else
             {

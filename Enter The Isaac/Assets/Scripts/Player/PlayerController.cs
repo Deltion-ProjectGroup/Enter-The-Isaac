@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     CharacterController cc;
     [HideInInspector] public Vector3 moveV3;
     Transform cam;
+    [Header("Random stuff")]
     [SerializeField] GameObject hitbox;
     [Header("Walking related")]
     [SerializeField] float walkSpeed = 1;

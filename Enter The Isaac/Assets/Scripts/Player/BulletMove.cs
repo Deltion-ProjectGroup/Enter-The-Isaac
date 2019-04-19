@@ -31,7 +31,7 @@ public class BulletMove : MonoBehaviour
         {
             transform.position = hit.point;
             if(destroyOnRayHit == true){
-                Destroy(gameObject,Time.deltaTime * 5);
+                Destroy(gameObject,Time.deltaTime * 3);
                 speed = 0;
             }
         }
