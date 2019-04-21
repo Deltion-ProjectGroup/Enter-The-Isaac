@@ -13,15 +13,16 @@ public class Cam : MonoBehaviour
     [SerializeField] float fovResetSpeed = 3;
     [SerializeField] float followMouseAmount = 4;
     [SerializeField] float followMouseIgnore = 1;
-    [SerializeField] Vector3 startRot;
+    Vector3 startRot;
     [SerializeField] float rotAmount = 30;
+    [SerializeField] Crosshair crosshair;//this is used for controller mousefollow.
 
     void Start()
     {
+        startRot = transform.eulerAngles;
         cam = GetComponent<Camera>();
         startFOV = cam.fieldOfView;
         ToCenterPos(999999);
-        startRot = transform.eulerAngles;
     }
 
     void Update()
@@ -38,15 +39,24 @@ public class Cam : MonoBehaviour
             centerPos += target[i].position;
         }
         centerPos /= target.Length;
+        if (crosshair.mouseControlled == true)
+        {
+            centerPos = MouseFollow(centerPos);
+        }
+        transform.position = Vector3.Lerp(transform.position, centerPos + offset, Time.deltaTime * lerpSpeed);
+    }
+
+    Vector3 MouseFollow(Vector3 centerPos)
+    {
         Vector3 mousePos = new Vector3((Input.mousePosition.x - Screen.width) / Screen.width, 0, (Input.mousePosition.y - Screen.height) / Screen.height);
         mousePos += new Vector3(0.5f, 0, 0.5f);
-        mousePos = new Vector3(Mathf.Max(mousePos.x,-0.5f),Mathf.Max(mousePos.y,-0.5f),Mathf.Max(mousePos.z,-0.5f));
-        mousePos = new Vector3(Mathf.Min(mousePos.x,0.5f),Mathf.Min(mousePos.y,0.5f),Mathf.Min(mousePos.z,0.5f));
-        transform.rotation = Quaternion.Lerp(transform.rotation,Quaternion.Euler(startRot + new Vector3(-mousePos.z * rotAmount,mousePos.x * rotAmount,mousePos.x * rotAmount)),Time.deltaTime * 5);
+        mousePos = new Vector3(Mathf.Max(mousePos.x, -0.5f), Mathf.Max(mousePos.y, -0.5f), Mathf.Max(mousePos.z, -0.5f));
+        mousePos = new Vector3(Mathf.Min(mousePos.x, 0.5f), Mathf.Min(mousePos.y, 0.5f), Mathf.Min(mousePos.z, 0.5f));
+        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(startRot + new Vector3(-mousePos.z * rotAmount, mousePos.x * rotAmount, mousePos.x * rotAmount)), Time.deltaTime * 5);
         if (Vector3.Magnitude(mousePos) > followMouseIgnore)
         {
             centerPos += mousePos * followMouseAmount;
         }
-        transform.position = Vector3.Lerp(transform.position, centerPos + offset, Time.deltaTime * lerpSpeed);
+        return centerPos;
     }
 }

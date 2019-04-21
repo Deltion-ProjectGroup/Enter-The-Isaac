@@ -28,7 +28,11 @@ public class Gun : MonoBehaviour
     public UnityEvent inputEvent;
     [Header("Event activates when spawning a bullet")]
     public UnityEvent spawnEvent;
+    [Header("Delegates inputDel en SpawnDel activeren ook, ze zijn public")]
     public GameObject lastSpawnedBullet;
+    public delegate void gunDelegate();
+    public gunDelegate inputDel;//<-------------- Maurits dit zijn ze
+    public gunDelegate spawnDel;//<-------------- En hier
     [Header("Delete later, for presentation")]
     [SerializeField] Material[] mat;
     [SerializeField] Text[] uiElements;
@@ -57,6 +61,7 @@ public class Gun : MonoBehaviour
 
     void SetPresentationUI()
     {
+        //hardcoded because this is used for debugging.
         uiElements[0].text = "" + curAmmo;
         uiElements[1].text = "" + gunType.magazineSize;
         uiElements[2].text = "" + gunType.maxAmmo;
@@ -131,49 +136,11 @@ public class Gun : MonoBehaviour
         {
             if (curAmmo >= 1)
             {
-                if (soundSpawner != null)
-                {
-                    soundSpawner.SpawnEffect(gunType.sound);
-                }
-                for (int i = 0; i < gunType.bulletCount; i++)
-                {
-                    float accuracy = Random.Range(-gunType.accuracy / 2, gunType.accuracy / 2);
-                    GameObject bullet = Instantiate(gunType.projectileModel, transform.position, Quaternion.Euler(0, transform.parent.eulerAngles.y + accuracy, 0));
-                    bullet.transform.position -= bullet.transform.forward * gunType.forwardStart;
-                    float rngSpeed = Random.Range(gunType.bulletSpeed.x, gunType.bulletSpeed.y);
-                    bullet.GetComponent<BulletMove>().speed = rngSpeed;
-                    if (bullet.GetComponent<BulletMoveDecelerate>() != null)
-                    {
-                        bullet.GetComponent<BulletMoveDecelerate>().decelerationSpeed = gunType.bulletDecelerationSpeed;
-                    }
-                    bullet.GetComponent<Hurtbox>().damage = gunType.dmg;
-                    bullet.GetComponent<Hurtbox>().team = 0;
-                    Destroy(bullet, gunType.lifeTime);
-                    lastSpawnedBullet = bullet;
-                    spawnEvent.Invoke();
-                    lastSpawnedBullet = null;
-                }
-                if (gunType.muzzleFlash != null)
-                {
-                    Instantiate(gunType.muzzleFlash, transform.position, transform.rotation, transform);
-                }
-                Camera.main.fieldOfView = gunType.camFov;
-                transform.localPosition = startPos + (Vector3.forward * gunType.recoil);
-                transform.localEulerAngles = Vector3.zero;
-                transform.Rotate(Random.Range(-gunType.recoil, gunType.recoil) * 30, Random.Range(-gunType.recoil, gunType.recoil) * 30, 0);
-                player.moveV3 += player.transform.forward * gunType.kickBack;
-                camShake.CustomShake(gunType.screenShakeTime, gunType.screenshakeStrength);
-                curAmmo -= 1;
-                if (curAmmo < 1)
-                {
-                    GetComponent<Renderer>().material = mat[2];
-                }
-                //so you can't spam the bullets
-                Invoke("IgnoreInput", gunType.fireRate);
-                inputEvent.Invoke();
+                ShootEvents();
             }
             else
             {
+                //stop shooting and reload
                 CancelInvoke("Shoot");
                 //should you reload automatically? If so, slash the if here
                 if (Input.GetButtonDown(input) == true)
@@ -187,6 +154,60 @@ public class Gun : MonoBehaviour
         {
             CancelInvoke("Shoot");
         }
+    }
+
+    void ShootEvents()
+    {
+
+        if (soundSpawner != null)
+        {
+            soundSpawner.SpawnEffect(gunType.sound);
+        }
+        for (int i = 0; i < gunType.bulletCount; i++)
+        {
+            float accuracy = Random.Range(-gunType.accuracy / 2, gunType.accuracy / 2);
+            GameObject bullet = Instantiate(gunType.projectileModel, transform.position, Quaternion.Euler(0, transform.parent.eulerAngles.y + accuracy, 0));
+            bullet.transform.position -= bullet.transform.forward * gunType.forwardStart;
+            float rngSpeed = Random.Range(gunType.bulletSpeed.x, gunType.bulletSpeed.y);
+            bullet.GetComponent<BulletMove>().speed = rngSpeed;
+            if (bullet.GetComponent<BulletMoveDecelerate>() != null)
+            {
+                bullet.GetComponent<BulletMoveDecelerate>().decelerationSpeed = gunType.bulletDecelerationSpeed;
+            }
+            bullet.GetComponent<Hurtbox>().damage = gunType.dmg;
+            bullet.GetComponent<Hurtbox>().team = 0;
+            Destroy(bullet, gunType.lifeTime);
+            lastSpawnedBullet = bullet;
+            spawnEvent.Invoke();
+            if (spawnDel != null)
+            {
+                spawnDel();//<--------------------------- Maurits hier activeert spawnDel, in de spawn forloop voor de bullets.
+            }
+            lastSpawnedBullet = null;
+        }
+        if (gunType.muzzleFlash != null)
+        {
+            Instantiate(gunType.muzzleFlash, transform.position, transform.rotation, transform);
+        }
+        Camera.main.fieldOfView = gunType.camFov;
+        transform.localPosition = startPos + (Vector3.forward * gunType.recoil);
+        transform.localEulerAngles = Vector3.zero;
+        transform.Rotate(Random.Range(-gunType.recoil, gunType.recoil) * 30, Random.Range(-gunType.recoil, gunType.recoil) * 30, 0);
+        player.moveV3 += player.transform.forward * gunType.kickBack;
+        camShake.CustomShake(gunType.screenShakeTime, gunType.screenshakeStrength);
+        curAmmo -= 1;
+        if (curAmmo < 1)
+        {
+            GetComponent<Renderer>().material = mat[2];
+        }
+        //so you can't spam the bullets
+        Invoke("IgnoreInput", gunType.fireRate);
+        inputEvent.Invoke();
+        if (inputDel != null)
+        {
+            inputDel();//<------------------------------ Maurtis hier activeert inputDel
+        }
+
     }
 
     public void Reload()

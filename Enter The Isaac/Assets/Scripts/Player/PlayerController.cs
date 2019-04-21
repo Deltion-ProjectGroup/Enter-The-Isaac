@@ -104,6 +104,10 @@ public class PlayerController : MonoBehaviour
 
     void MoveXZ()
     {
+        Vector2 inputs = new Vector2(Input.GetAxis(horInput),Input.GetAxis(vertInput));
+        if(Vector2.SqrMagnitude(inputs) > 1.1f){
+            inputs -= new Vector2(0.5f,0.5f);
+        }
         if (Input.GetAxis(horInput) != 0)
         {
             moveV3.x = Mathf.Lerp(moveV3.x, Input.GetAxis(horInput) * walkSpeed, Time.deltaTime * accelerationSpeed);
