@@ -27,7 +27,7 @@ public class BulletMove : MonoBehaviour
     public void RayCollide()
     {
         RaycastHit hit;
-        if (Physics.Raycast(transform.position,transform.position - lastPos, out hit, Vector3.Distance(transform.position, lastPos)))
+        if (Physics.SphereCast(transform.position,0.1f,transform.position - lastPos, out hit, Vector3.Distance(transform.position, lastPos)))
         {
             transform.position = hit.point;
             if(destroyOnRayHit == true){

@@ -57,6 +57,8 @@ public class Gun : MonoBehaviour
         totalMaxAmmo = magazineStore[curGun];
         curAmmo = ammoStore[curGun];
         soundSpawner = FindObjectOfType<SoundSpawn>();
+        Instantiate(gunType.gunModel,transform.GetChild(0).position,transform.GetChild(0).rotation,transform);
+        Destroy(transform.GetChild(0).gameObject);
     }
 
     void SetPresentationUI()
