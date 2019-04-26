@@ -15,7 +15,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float walkSpeed = 1;
     float curWalkSpeed = 0;
     [SerializeField] float rotateSpeed = 1;
-    [SerializeField] Transform crosshair;
+    public Transform crosshair;
     [SerializeField] float rotateCrosshairSpeed;
     public float rotGoal = 0;
     [SerializeField] float accelerationSpeed = 3;
@@ -80,6 +80,7 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator RollEvent()
     {
+        transform.GetChild(0).localRotation = Quaternion.Euler(0,180,0);
         moveV3 = Vector3.zero;
         curState = State.Roll;
         float oldRotSpeed = rotateSpeed;
@@ -103,7 +104,7 @@ public class PlayerController : MonoBehaviour
         float angleHelper = (Vector3.Angle(crosshair.position - transform.position,transform.right) - 90) / 270;
 
         transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, rotGoal, 0), Time.deltaTime * rotateCrosshairSpeed);
-        transform.GetChild(0).Rotate(0,0,angleHelper * -30);
+        transform.GetChild(0).localEulerAngles = new Vector3(0,180,angleHelper * -70 * Time.timeScale);
         transform.GetChild(0).localRotation = Quaternion.Lerp(transform.GetChild(0).localRotation,Quaternion.Euler(0,180,0),Time.deltaTime * rotateCrosshairSpeed);
 
 

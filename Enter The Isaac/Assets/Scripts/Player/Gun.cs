@@ -57,7 +57,7 @@ public class Gun : MonoBehaviour
         totalMaxAmmo = magazineStore[curGun];
         curAmmo = ammoStore[curGun];
         soundSpawner = FindObjectOfType<SoundSpawn>();
-        Instantiate(gunType.gunModel,transform.GetChild(0).position,transform.GetChild(0).rotation,transform);
+        Instantiate(gunType.gunModel, transform.GetChild(0).position, transform.GetChild(0).rotation, transform);
         Destroy(transform.GetChild(0).gameObject);
     }
 
@@ -168,10 +168,18 @@ public class Gun : MonoBehaviour
         for (int i = 0; i < gunType.bulletCount; i++)
         {
             float accuracy = Random.Range(-gunType.accuracy / 2, gunType.accuracy / 2);
-            GameObject bullet = Instantiate(gunType.projectileModel, transform.position, Quaternion.Euler(0, transform.parent.eulerAngles.y + accuracy + 180, 0));
+            GameObject bullet = Instantiate(gunType.projectileModel, transform.position, Quaternion.Euler(0, transform.parent.eulerAngles.y + accuracy, 0));
+            if (Vector3.Distance(transform.position, player.crosshair.position) > 1)
+            {
+                //basically this code feels more precise, exept when the crosshair is close to the player
+                bullet.transform.LookAt(player.crosshair.position);
+            }
+            bullet.transform.localEulerAngles = new Vector3(0,bullet.transform.localEulerAngles.y,bullet.transform.localEulerAngles.z);
+            bullet.transform.rotation *= Quaternion.Euler(0, accuracy + 180, 0);
             bullet.transform.position -= bullet.transform.forward * gunType.forwardStart;
             float rngSpeed = Random.Range(gunType.bulletSpeed.x, gunType.bulletSpeed.y);
             bullet.GetComponent<BulletMove>().speed = rngSpeed;
+            bullet.GetComponent<BulletMove>().ricoshet = gunType.ricochet;
             if (bullet.GetComponent<BulletMoveDecelerate>() != null)
             {
                 bullet.GetComponent<BulletMoveDecelerate>().decelerationSpeed = gunType.bulletDecelerationSpeed;
@@ -195,7 +203,7 @@ public class Gun : MonoBehaviour
         }
         Camera.main.fieldOfView = gunType.camFov;
         transform.localPosition = startPos + (Vector3.forward * gunType.recoil);
-        transform.localEulerAngles = new Vector3(0,180,0);
+        transform.localEulerAngles = new Vector3(0, 180, 0);
         transform.Rotate(Random.Range(-gunType.recoil, gunType.recoil) * 30, Random.Range(-gunType.recoil, gunType.recoil) * 30, 0);
         player.moveV3 += player.transform.forward * gunType.kickBack;
         camShake.CustomShake(gunType.screenShakeTime, gunType.screenshakeStrength);
