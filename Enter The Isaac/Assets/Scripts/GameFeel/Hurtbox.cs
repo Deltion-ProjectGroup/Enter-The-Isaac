@@ -9,7 +9,7 @@ public class Hurtbox : MonoBehaviour
 
     public float damage = 1;
     public int team = 0;
-    [SerializeField] bool destroyOnHit = true;
+    public bool destroyOnHit = true;
     [SerializeField] UnityEvent hitEvent;
 
     void OnTriggerEnter(Collider other)

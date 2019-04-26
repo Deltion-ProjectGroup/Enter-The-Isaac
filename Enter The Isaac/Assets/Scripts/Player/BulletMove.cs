@@ -6,7 +6,7 @@ public class BulletMove : MonoBehaviour
 {
     public float speed = 10;
     Vector3 lastPos;
-    [SerializeField] bool destroyOnRayHit = true;
+    public bool destroyOnRayHit = true;
 
     void Start()
     {
@@ -27,12 +27,17 @@ public class BulletMove : MonoBehaviour
     public void RayCollide()
     {
         RaycastHit hit;
-        if (Physics.SphereCast(transform.position,0.1f,transform.position - lastPos, out hit, Vector3.Distance(transform.position, lastPos)))
+        Debug.DrawRay(lastPos, lastPos - transform.position, Color.red, Time.deltaTime);
+        if (Physics.SphereCast(lastPos, 0.1f, lastPos - transform.position, out hit, Vector3.Distance(transform.position, lastPos)))
         {
-            transform.position = hit.point;
-            if(destroyOnRayHit == true){
-                Destroy(gameObject,Time.deltaTime * 3);
-                speed = 0;
+            if (hit.transform.tag != "Player")
+            {
+                if (destroyOnRayHit == true)
+                {
+                    transform.position = hit.point;
+                    Destroy(gameObject, Time.deltaTime * 3);
+                    speed = 0;
+                }
             }
         }
         lastPos = transform.position;

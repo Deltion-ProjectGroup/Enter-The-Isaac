@@ -99,14 +99,22 @@ public class PlayerController : MonoBehaviour
     {
         crosshair.position = new Vector3(crosshair.position.x, transform.position.y, crosshair.position.z);
         rotGoal = Mathf.Atan2(crosshair.position.x - transform.position.x, crosshair.position.z - transform.position.z) * 180 / Mathf.PI + 180;
+
+        float angleHelper = (Vector3.Angle(crosshair.position - transform.position,transform.right) - 90) / 270;
+
         transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, rotGoal, 0), Time.deltaTime * rotateCrosshairSpeed);
+        transform.GetChild(0).Rotate(0,0,angleHelper * -30);
+        transform.GetChild(0).localRotation = Quaternion.Lerp(transform.GetChild(0).localRotation,Quaternion.Euler(0,180,0),Time.deltaTime * rotateCrosshairSpeed);
+
+
     }
 
     void MoveXZ()
     {
-        Vector2 inputs = new Vector2(Input.GetAxis(horInput),Input.GetAxis(vertInput));
-        if(Vector2.SqrMagnitude(inputs) > 1.1f){
-            inputs -= new Vector2(0.5f,0.5f);
+        Vector2 inputs = new Vector2(Input.GetAxis(horInput), Input.GetAxis(vertInput));
+        if (Vector2.SqrMagnitude(inputs) > 1.1f)
+        {
+            inputs -= new Vector2(0.5f, 0.5f);
         }
         if (Input.GetAxis(horInput) != 0)
         {

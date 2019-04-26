@@ -30,11 +30,12 @@ public class GunType : ScriptableObject
     public float accuracy = 0;
     public float lifeTime = 5;
     public float forwardStart = 1;
+    public bool pierce = false;// incomplete
     public Vector2 bulletSpeed = Vector2.zero;
     public float bulletDecelerationSpeed = 10;
-    public GameObject projectileModel;//incomplete
-    public GameObject gunModel;//incomplete
-    public float recoil = 0;//works partially
+    public GameObject projectileModel;
+    public GameObject gunModel;
+    public float recoil = 0;//works partially, no ik yet
     public AudioClip sound;
     public GameObject muzzleFlash;
     public float screenShakeTime = 0;

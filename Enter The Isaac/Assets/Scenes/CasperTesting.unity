@@ -310,12 +310,12 @@ GameObject:
   - component: {fileID: 33009101}
   - component: {fileID: 33009105}
   m_Layer: 0
-  m_Name: LineHurtbox(work in progress)
+  m_Name: LineHurtbox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &33009101
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3028,13 +3028,13 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 602542264}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.371, y: -0.364, z: -0.117}
+  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0.0000029504295}
+  m_LocalPosition: {x: 0.3709977, y: 0.8418999, z: 0.11700277}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1741046023}
-  m_Father: {fileID: 1649669653}
-  m_RootOrder: 0
+  m_Father: {fileID: 1365744051}
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &602542266
 MeshRenderer:
@@ -4330,7 +4330,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 400206, guid: ece6b5c7bcee0524b9b4f86ffe154ecd, type: 3}
       propertyPath: m_RootOrder
-      value: 3
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 400206, guid: ece6b5c7bcee0524b9b4f86ffe154ecd, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -5945,10 +5945,9 @@ Transform:
   m_LocalPosition: {x: -31.679996, y: -2.0330594, z: -21.88708}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
-  - {fileID: 602542265}
+  - {fileID: 1365744051}
   - {fileID: 1090978804}
   - {fileID: 940390542}
-  - {fileID: 1365744051}
   m_Father: {fileID: 1151844036}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

@@ -129,7 +129,7 @@ public class Gun : MonoBehaviour
         }
         SetPresentationUI();
         //rotating back
-        transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.Euler(0, 0, 0), Time.deltaTime * 10);
+        transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.Euler(0, 180, 0), Time.deltaTime * 10);
     }
 
     public void Shoot()
@@ -168,7 +168,7 @@ public class Gun : MonoBehaviour
         for (int i = 0; i < gunType.bulletCount; i++)
         {
             float accuracy = Random.Range(-gunType.accuracy / 2, gunType.accuracy / 2);
-            GameObject bullet = Instantiate(gunType.projectileModel, transform.position, Quaternion.Euler(0, transform.parent.eulerAngles.y + accuracy, 0));
+            GameObject bullet = Instantiate(gunType.projectileModel, transform.position, Quaternion.Euler(0, transform.parent.eulerAngles.y + accuracy + 180, 0));
             bullet.transform.position -= bullet.transform.forward * gunType.forwardStart;
             float rngSpeed = Random.Range(gunType.bulletSpeed.x, gunType.bulletSpeed.y);
             bullet.GetComponent<BulletMove>().speed = rngSpeed;
@@ -178,6 +178,8 @@ public class Gun : MonoBehaviour
             }
             bullet.GetComponent<Hurtbox>().damage = gunType.dmg;
             bullet.GetComponent<Hurtbox>().team = 0;
+            bullet.GetComponent<Hurtbox>().destroyOnHit = !gunType.pierce;
+            bullet.GetComponent<BulletMove>().destroyOnRayHit = !gunType.pierce;
             Destroy(bullet, gunType.lifeTime);
             lastSpawnedBullet = bullet;
             spawnEvent.Invoke();
@@ -193,7 +195,7 @@ public class Gun : MonoBehaviour
         }
         Camera.main.fieldOfView = gunType.camFov;
         transform.localPosition = startPos + (Vector3.forward * gunType.recoil);
-        transform.localEulerAngles = Vector3.zero;
+        transform.localEulerAngles = new Vector3(0,180,0);
         transform.Rotate(Random.Range(-gunType.recoil, gunType.recoil) * 30, Random.Range(-gunType.recoil, gunType.recoil) * 30, 0);
         player.moveV3 += player.transform.forward * gunType.kickBack;
         camShake.CustomShake(gunType.screenShakeTime, gunType.screenshakeStrength);
