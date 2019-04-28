@@ -9,6 +9,7 @@ public class PlayerController : MonoBehaviour
     CharacterController cc;
     [HideInInspector] public Vector3 moveV3;
     Transform cam;
+    Animator anim;
     [Header("Random stuff")]
     [SerializeField] GameObject hitbox;
     [Header("Walking related")]
@@ -40,6 +41,14 @@ public class PlayerController : MonoBehaviour
     {
         cc = GetComponent<CharacterController>();
         cam = Camera.main.transform;
+        if (transform.GetChild(0).GetComponent<Animator>() != null)
+        {
+            anim = transform.GetChild(0).GetComponent<Animator>();
+        }
+        else
+        {
+            Debug.LogWarning("Player model is missing. The model must be child 0! -Casper");
+        }
     }
 
     void Update()
@@ -68,6 +77,12 @@ public class PlayerController : MonoBehaviour
                 FinalMove();
                 break;
         }
+        SetAnimValues();
+    }
+
+    void SetAnimValues()
+    {
+        anim.SetFloat("posChangedDistance", Vector2.SqrMagnitude(new Vector2(Input.GetAxis(horInput),Input.GetAxis(vertInput))) );
     }
 
     void CheckRollInput()
@@ -80,7 +95,7 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator RollEvent()
     {
-        transform.GetChild(0).localRotation = Quaternion.Euler(0,180,0);
+        transform.GetChild(0).localRotation = Quaternion.Euler(0, 180, 0);
         moveV3 = Vector3.zero;
         curState = State.Roll;
         float oldRotSpeed = rotateSpeed;
@@ -101,11 +116,11 @@ public class PlayerController : MonoBehaviour
         crosshair.position = new Vector3(crosshair.position.x, transform.position.y, crosshair.position.z);
         rotGoal = Mathf.Atan2(crosshair.position.x - transform.position.x, crosshair.position.z - transform.position.z) * 180 / Mathf.PI + 180;
 
-        float angleHelper = (Vector3.Angle(crosshair.position - transform.position,transform.right) - 90) / 270;
+        float angleHelper = (Vector3.Angle(crosshair.position - transform.position, transform.right) - 90) / 270;
 
         transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(0, rotGoal, 0), Time.deltaTime * rotateCrosshairSpeed);
-        transform.GetChild(0).localEulerAngles = new Vector3(0,180,angleHelper * -70 * Time.timeScale);
-        transform.GetChild(0).localRotation = Quaternion.Lerp(transform.GetChild(0).localRotation,Quaternion.Euler(0,180,0),Time.deltaTime * rotateCrosshairSpeed);
+        transform.GetChild(0).localEulerAngles = new Vector3(0, 180, angleHelper * -70 * Time.timeScale);
+        transform.GetChild(0).localRotation = Quaternion.Lerp(transform.GetChild(0).localRotation, Quaternion.Euler(0, 180, 0), Time.deltaTime * rotateCrosshairSpeed);
 
 
     }
