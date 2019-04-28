@@ -31,7 +31,8 @@ public class GunType : ScriptableObject
     public float lifeTime = 5;
     public float forwardStart = 1;
     public bool pierce = false;
-    public bool ricochet = false;//incomplete
+    public bool ricochet = false;//does not work with laser type guns
+    public bool parentToGun = false;//incomplete
     public Vector2 bulletSpeed = Vector2.zero;
     public float bulletDecelerationSpeed = 10;
     public GameObject projectileModel;
@@ -43,5 +44,7 @@ public class GunType : ScriptableObject
     public float screenshakeStrength = 0;
     public float camFov = 50;
     public float kickBack = 0;
+    public int activeFrames = 0;
+    public int damageFrames = 0;
 
 }

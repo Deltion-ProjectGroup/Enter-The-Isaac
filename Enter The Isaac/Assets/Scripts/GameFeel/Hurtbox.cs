@@ -11,6 +11,7 @@ public class Hurtbox : MonoBehaviour
     public int team = 0;
     public bool destroyOnHit = true;
     [SerializeField] UnityEvent hitEvent;
+    [SerializeField] bool enabled = true;
 
     void OnTriggerEnter(Collider other)
     {
@@ -19,11 +20,14 @@ public class Hurtbox : MonoBehaviour
         {
             if (team != hit.team)
             {
-                hit.Hit(damage);
+                if (enabled == true)
+                {
+                    hit.Hit(damage);
+                }
                 hitEvent.Invoke();
                 if (destroyOnHit == true)
                 {
-                    Destroy(transform.root.gameObject);
+                    Destroy(gameObject);
                 }
             }
         }

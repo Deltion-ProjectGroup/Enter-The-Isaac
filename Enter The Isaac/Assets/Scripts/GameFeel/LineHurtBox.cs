@@ -8,12 +8,12 @@ public class LineHurtBox : MonoBehaviour
     public float damage = 1;
     public int team = 0;
     [Header("frames are relative to 60 fps, and is not dependant on actual framerate")]
-    [SerializeField] int activeFrames = 100;
-    [SerializeField] int damageFrames = 10;
+    public int activeFrames = 100;
+    public int damageFrames = 10;
     float curFrame = 0;
-    [SerializeField] bool destroyOnHit = true;
+    public bool destroyOnHit = true;
     [SerializeField] UnityEvent hitEvent;
-    [SerializeField] bool pierce = false;
+    public bool pierce = false;
     LineRenderer line;
     List<Vector3> lastPositions = new List<Vector3>();
     bool shouldUpdate = false;
@@ -38,11 +38,12 @@ public class LineHurtBox : MonoBehaviour
             shouldUpdate = false;
         }
         CompareShape();
+        LineHurtbox(true);
     }
 
     void FrameChecker()
     {
-        LineHurtbox();
+        LineHurtbox(false);
         curFrame++;
         if (curFrame >= damageFrames)
         {
@@ -59,7 +60,7 @@ public class LineHurtBox : MonoBehaviour
         }
     }
 
-    void LineHurtbox()
+    void LineHurtbox(bool ignoreDamage)
     {
         for (int i = 1; i < line.positionCount; i++)
         {
@@ -81,11 +82,14 @@ public class LineHurtBox : MonoBehaviour
                             Hitbox hitObj = hit[r].transform.GetComponent<Hitbox>();
                             if (team != hitObj.team)
                             {
-                                hitObj.Hit(damage);
-                                hitEvent.Invoke();
-                                if (destroyOnHit == true)
+                                if (ignoreDamage == false)
                                 {
-                                    Destroy(transform.root.gameObject);
+                                    hitObj.Hit(damage);
+                                    hitEvent.Invoke();
+                                    if (destroyOnHit == true)
+                                    {
+                                        Destroy(transform.root.gameObject);
+                                    }
                                 }
                                 if (pierce == false)
                                 {

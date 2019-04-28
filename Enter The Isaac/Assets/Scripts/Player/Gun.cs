@@ -9,6 +9,8 @@ public class Gun : MonoBehaviour
     [SerializeField] string reloadInput = "Fire2";
     [SerializeField] string scrollInput = "Mouse ScrollWheel";
     GunType gunType;
+    GunType gunClone;
+
     [SerializeField] GunType[] guns;
     List<int> ammoStore = new List<int>();
     List<int> magazineStore = new List<int>();
@@ -24,15 +26,13 @@ public class Gun : MonoBehaviour
     //dingen om Maurits te helpen
     [Space]
     [Header("Event activates when you press shoot")]
-    [Header("Maurits, kijk hier!")]
     public UnityEvent inputEvent;
     [Header("Event activates when spawning a bullet")]
     public UnityEvent spawnEvent;
-    [Header("Delegates inputDel en SpawnDel activeren ook, ze zijn public")]
     public GameObject lastSpawnedBullet;
     public delegate void gunDelegate();
-    public gunDelegate inputDel;//<-------------- Maurits dit zijn ze
-    public gunDelegate spawnDel;//<-------------- En hier
+    public gunDelegate gunDel;
+    gunDelegate lastGunDel;//used to check if gunDel has to update the stats;
     [Header("Delete later, for presentation")]
     [SerializeField] Material[] mat;
     [SerializeField] Text[] uiElements;
@@ -50,24 +50,38 @@ public class Gun : MonoBehaviour
         {
             magazineStore.Add(guns[i].maxAmmo);
         }
+        gunClone = Instantiate(guns[curGun]);
     }
     void StartGun()
     {
+        //for stat changes
+        Destroy(gunClone);
+        gunClone = Instantiate(guns[curGun]);
+        if (gunDel != null)
+        {
+            gunDel();
+        }
+
+        //normal stuff
         camShake = Camera.main.GetComponent<Shake>();
         totalMaxAmmo = magazineStore[curGun];
         curAmmo = ammoStore[curGun];
         soundSpawner = FindObjectOfType<SoundSpawn>();
         Instantiate(gunType.gunModel, transform.GetChild(0).position, transform.GetChild(0).rotation, transform);
         Destroy(transform.GetChild(0).gameObject);
+
+        //update checkers
+        lastGunDel = gunDel;
+        lastGunType = gunType;
     }
 
     void SetPresentationUI()
     {
         //hardcoded because this is used for debugging.
         uiElements[0].text = "" + curAmmo;
-        uiElements[1].text = "" + gunType.magazineSize;
-        uiElements[2].text = "" + gunType.maxAmmo;
-        uiElements[3].text = gunType.name;
+        uiElements[1].text = "" + gunClone.magazineSize;
+        uiElements[2].text = "" + gunClone.maxAmmo;
+        uiElements[3].text = gunClone.name;
         uiElements[4].text = totalMaxAmmo + "/";
     }
 
@@ -75,12 +89,12 @@ public class Gun : MonoBehaviour
     {
         if (Input.GetButtonDown(input) == true && IsInvoking("Reload") == false && IsInvoking("IgnoreInput") == false)
         {
-            InvokeRepeating("Shoot", 0, gunType.fireRate);
+            InvokeRepeating("Shoot", 0, gunClone.fireRate);
         }
         if (Input.GetButtonDown(reloadInput))
         {
             CancelInvoke("Shoot");
-            Invoke("Reload", gunType.reloadTime);
+            Invoke("Reload", gunClone.reloadTime);
             GetComponent<Renderer>().material = mat[1];
         }
         transform.localPosition = Vector3.Lerp(transform.localPosition, startPos, Time.deltaTime * recoilSpeed);
@@ -117,7 +131,12 @@ public class Gun : MonoBehaviour
         if (lastGunType != gunType)
         {
             StartGun();
-            lastGunType = gunType;
+        }
+        //uodates gun when a stat has changed
+        if (gunDel != lastGunDel)
+        {
+            StartGun();
+            print("it's happening!");
         }
 
         if (IsInvoking("Shoot") == true)
@@ -147,7 +166,7 @@ public class Gun : MonoBehaviour
                 //should you reload automatically? If so, slash the if here
                 if (Input.GetButtonDown(input) == true)
                 {
-                    Invoke("Reload", gunType.reloadTime);
+                    Invoke("Reload", gunClone.reloadTime);
                     GetComponent<Renderer>().material = mat[1];
                 }
             }
@@ -158,66 +177,115 @@ public class Gun : MonoBehaviour
         }
     }
 
-    void ShootEvents()
+    void BaseShootEvents()
     {
-
         if (soundSpawner != null)
         {
-            soundSpawner.SpawnEffect(gunType.sound);
+            soundSpawner.SpawnEffect(gunClone.sound);
         }
-        for (int i = 0; i < gunType.bulletCount; i++)
+        if (gunClone.muzzleFlash != null)
         {
-            float accuracy = Random.Range(-gunType.accuracy / 2, gunType.accuracy / 2);
-            GameObject bullet = Instantiate(gunType.projectileModel, transform.position, Quaternion.Euler(0, transform.parent.eulerAngles.y + accuracy, 0));
+            Instantiate(gunClone.muzzleFlash, transform.position, transform.rotation, transform);
+        }
+        Camera.main.fieldOfView = gunClone.camFov;
+        transform.localPosition = startPos + (Vector3.forward * gunClone.recoil);
+        transform.localEulerAngles = new Vector3(0, 180, 0);
+        transform.Rotate(Random.Range(-gunClone.recoil, gunClone.recoil) * 30, Random.Range(-gunClone.recoil, gunClone.recoil) * 30, 0);
+        player.moveV3 += player.transform.forward * gunType.kickBack;
+        camShake.CustomShake(gunClone.screenShakeTime, gunClone.screenshakeStrength);
+        //this is so you can't spam the bullets
+        Invoke("IgnoreInput", gunClone.fireRate);
+        inputEvent.Invoke();
+    }
+
+    void NormalBulletEvents()
+    {
+        for (int i = 0; i < gunClone.bulletCount; i++)
+        {
+            float accuracy = Random.Range(-gunClone.accuracy / 2, gunClone.accuracy / 2);
+            GameObject bullet = Instantiate(gunClone.projectileModel, transform.position, Quaternion.Euler(0, transform.parent.eulerAngles.y + accuracy, 0));
             if (Vector3.Distance(transform.position, player.crosshair.position) > 1)
             {
                 //basically this code feels more precise, exept when the crosshair is close to the player
                 bullet.transform.LookAt(player.crosshair.position);
             }
-            bullet.transform.localEulerAngles = new Vector3(0,bullet.transform.localEulerAngles.y,bullet.transform.localEulerAngles.z);
+
             bullet.transform.rotation *= Quaternion.Euler(0, accuracy + 180, 0);
-            bullet.transform.position -= bullet.transform.forward * gunType.forwardStart;
-            float rngSpeed = Random.Range(gunType.bulletSpeed.x, gunType.bulletSpeed.y);
+            bullet.transform.Rotate(-bullet.transform.localEulerAngles.x, 0, 0);
+            bullet.transform.position -= bullet.transform.forward * gunClone.forwardStart;
+
+            float rngSpeed = Random.Range(gunClone.bulletSpeed.x, gunClone.bulletSpeed.y);
             bullet.GetComponent<BulletMove>().speed = rngSpeed;
-            bullet.GetComponent<BulletMove>().ricoshet = gunType.ricochet;
+            bullet.GetComponent<BulletMove>().ricoshet = gunClone.ricochet;
+
             if (bullet.GetComponent<BulletMoveDecelerate>() != null)
             {
-                bullet.GetComponent<BulletMoveDecelerate>().decelerationSpeed = gunType.bulletDecelerationSpeed;
+                bullet.GetComponent<BulletMoveDecelerate>().decelerationSpeed = gunClone.bulletDecelerationSpeed;
             }
-            bullet.GetComponent<Hurtbox>().damage = gunType.dmg;
+
+            bullet.GetComponent<Hurtbox>().damage = gunClone.dmg;
             bullet.GetComponent<Hurtbox>().team = 0;
-            bullet.GetComponent<Hurtbox>().destroyOnHit = !gunType.pierce;
-            bullet.GetComponent<BulletMove>().destroyOnRayHit = !gunType.pierce;
-            Destroy(bullet, gunType.lifeTime);
+            bullet.GetComponent<Hurtbox>().destroyOnHit = !gunClone.pierce;
+            bullet.GetComponent<BulletMove>().destroyOnRayHit = !gunClone.pierce;
+            Destroy(bullet, gunClone.lifeTime);
             lastSpawnedBullet = bullet;
             spawnEvent.Invoke();
-            if (spawnDel != null)
-            {
-                spawnDel();//<--------------------------- Maurits hier activeert spawnDel, in de spawn forloop voor de bullets.
-            }
             lastSpawnedBullet = null;
+            if (gunClone.parentToGun == true)
+            {
+                bullet.transform.SetParent(transform, true);
+                bullet.transform.localEulerAngles = new Vector3(0, bullet.transform.localEulerAngles.y, bullet.transform.localEulerAngles.z);
+            }
         }
-        if (gunType.muzzleFlash != null)
-        {
-            Instantiate(gunType.muzzleFlash, transform.position, transform.rotation, transform);
-        }
-        Camera.main.fieldOfView = gunType.camFov;
-        transform.localPosition = startPos + (Vector3.forward * gunType.recoil);
-        transform.localEulerAngles = new Vector3(0, 180, 0);
-        transform.Rotate(Random.Range(-gunType.recoil, gunType.recoil) * 30, Random.Range(-gunType.recoil, gunType.recoil) * 30, 0);
-        player.moveV3 += player.transform.forward * gunType.kickBack;
-        camShake.CustomShake(gunType.screenShakeTime, gunType.screenshakeStrength);
         curAmmo -= 1;
         if (curAmmo < 1)
         {
             GetComponent<Renderer>().material = mat[2];
         }
-        //so you can't spam the bullets
-        Invoke("IgnoreInput", gunType.fireRate);
-        inputEvent.Invoke();
-        if (inputDel != null)
+    }
+
+    void LaserBulletEvents()
+    {
+        StopAllCoroutines();
+        float accuracy = Random.Range(-gunClone.accuracy / 2, gunClone.accuracy / 2);
+        GameObject bullet = Instantiate(gunClone.projectileModel, transform.position, transform.rotation);
+        bullet.transform.rotation *= Quaternion.Euler(0, accuracy + 180, 0);
+        bullet.transform.Rotate(-bullet.transform.localEulerAngles.x, 0, 0);
+
+        bullet.transform.position -= bullet.transform.forward * -gunClone.forwardStart;
+        float rngSpeed = Random.Range(gunClone.bulletSpeed.x, gunClone.bulletSpeed.y);
+
+        LineHurtBox line = bullet.GetComponent<LineHurtBox>();
+        line.pierce = gunClone.pierce;
+        line.damage = gunClone.dmg;
+        line.activeFrames = gunClone.activeFrames;
+        line.damageFrames = gunClone.damageFrames;
+        line.team = 0;
+        line.destroyOnHit = false;
+        line.pierce = gunClone.pierce;
+
+        lastSpawnedBullet = bullet;
+        spawnEvent.Invoke();
+        lastSpawnedBullet = null;
+        if (gunClone.parentToGun == true)
         {
-            inputDel();//<------------------------------ Maurtis hier activeert inputDel
+            bullet.transform.SetParent(transform, true);
+            bullet.transform.localEulerAngles = new Vector3(0, bullet.transform.localEulerAngles.y, bullet.transform.localEulerAngles.z);
+            bullet.transform.rotation *= Quaternion.Euler(0, accuracy, 0);
+        }
+    }
+    void ShootEvents()
+    {
+
+        BaseShootEvents();
+
+        if (gunClone.projectileModel.GetComponent<BulletMove>() != null)
+        {
+            NormalBulletEvents();
+        }
+        else if (gunClone.projectileModel.GetComponent<LineHurtBox>() != null)
+        {
+            LaserBulletEvents();//inheretance just didn't fit, I'd have to activate other scripts, which is way too much effort, in comarison to just using functions
         }
 
     }
@@ -225,10 +293,10 @@ public class Gun : MonoBehaviour
     public void Reload()
     {
         GetComponent<Renderer>().material = mat[0];
-        if (totalMaxAmmo > gunType.magazineSize)
+        if (totalMaxAmmo > gunClone.magazineSize)
         {
-            totalMaxAmmo -= gunType.magazineSize - curAmmo;
-            curAmmo = gunType.magazineSize;
+            totalMaxAmmo -= gunClone.magazineSize - curAmmo;
+            curAmmo = gunClone.magazineSize;
         }
         else if (totalMaxAmmo != 0)
         {

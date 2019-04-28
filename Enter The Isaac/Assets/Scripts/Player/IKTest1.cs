@@ -7,15 +7,14 @@ public class IKTest1 : MonoBehaviour
 
     [SerializeField] Transform target;
     [SerializeField] Vector3 offset;
-    [SerializeField] Transform head;
+    Transform head;
     Transform lastRot;
     Animator anim;
     [SerializeField] bool withIK = true;
 
     void Start()
     {
-        head = transform;
-        //head = GetComponent<Animator>().GetBoneTransform(HumanBodyBones.Head);
+        head = GetComponent<Animator>().GetBoneTransform(HumanBodyBones.Head);
         lastRot = new GameObject().transform;
         lastRot.name = "";
 
@@ -46,10 +45,8 @@ public class IKTest1 : MonoBehaviour
     {
         if (target != null)
         {
-            Debug.DrawLine(transform.position, target.position, Color.red, Time.deltaTime);
+           // Debug.DrawLine(transform.position, target.position, Color.red, Time.deltaTime);
             anim.SetLookAtWeight(1);
-           // anim.SetBoneLocalRotation(HumanBodyBones.Head,Quaternion.Euler(0,Mathf.PingPong(Time.time, 45),0));
-           print(anim.GetBoneTransform(HumanBodyBones.Head).parent.name);
             anim.SetLookAtPosition(target.position);
         }
     }

@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: DebugGrenadeLauncher
   m_EditorClassIdentifier: 
   fireRate: 0.4
-  dmg: 0.5
+  dmg: 15
   magazineSize: 10
   maxAmmo: 100
   reloadTime: 0.4
@@ -21,6 +21,9 @@ MonoBehaviour:
   accuracy: 20
   lifeTime: 2
   forwardStart: 2
+  pierce: 0
+  ricochet: 0
+  parentToGun: 1
   bulletSpeed: {x: 20, y: 30}
   bulletDecelerationSpeed: 5
   projectileModel: {fileID: 334168290025920454, guid: b9f3e57f7f15839448cbc30f2f0d2006,
@@ -35,3 +38,5 @@ MonoBehaviour:
   screenshakeStrength: 1
   camFov: 67
   kickBack: 5
+  activeFrames: 0
+  damageFrames: 0
