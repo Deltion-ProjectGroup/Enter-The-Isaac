@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEditor;
 public class SpawnOnDestroy : MonoBehaviour
 {
     [SerializeField] GameObject[] toSpawn;
@@ -9,12 +10,17 @@ public class SpawnOnDestroy : MonoBehaviour
     {
         if (SceneManager.GetActiveScene().isLoaded == true)//prevents them from spawning while loading a scene
         {
-            for (int i = 0; i < toSpawn.Length; i++)
+            if (!EditorApplication.isPlayingOrWillChangePlaymode && EditorApplication.isPlaying) // prevents spawning when exiting playmode
             {
-                GameObject g = Instantiate(toSpawn[i], transform.position, transform.rotation);
-                if (transform.GetComponent<Hurtbox>() != null && g.GetComponent<Hurtbox>() != null)
+                //dont question it lol
+            } else {
+                for (int i = 0; i < toSpawn.Length; i++)
                 {
-                    g.GetComponent<Hurtbox>().damage = transform.GetComponent<Hurtbox>().damage;
+                    GameObject g = Instantiate(toSpawn[i], transform.position, transform.rotation);
+                    if (transform.GetComponent<Hurtbox>() != null && g.GetComponent<Hurtbox>() != null)
+                    {
+                        g.GetComponent<Hurtbox>().damage = transform.GetComponent<Hurtbox>().damage;
+                    }
                 }
             }
         }

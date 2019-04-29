@@ -14,7 +14,8 @@ public class Hitbox : MonoBehaviour
     [SerializeField] float invincibleTime = 0f;
     public UnityEvent deathEvent;
     [SerializeField] EventArray[] timedEvents;
-
+    public Vector3 impactDir = Vector3.zero; //see hurtbox for more
+    [SerializeField] float knockBack = 0;
     void Start()
     {
         StartStuff();
@@ -28,6 +29,7 @@ public class Hitbox : MonoBehaviour
     {
         if (IsInvoking("Invincible") == false)
         {
+            Invoke("Knockback",0.01f);
             curHealth -= damage;
             HealthEvent(curHealth / maxHealth * 100);
             hitEvent.Invoke(curHealth / maxHealth * 100);
@@ -47,6 +49,19 @@ public class Hitbox : MonoBehaviour
             }
         }
 
+    }
+
+    void Knockback()
+    {
+        RaycastHit _hit;
+        if (Physics.Raycast(transform.position, -impactDir.normalized, out _hit, knockBack))
+        {
+            transform.position -= impactDir.normalized * (Vector3.Distance(transform.position, _hit.point) / 2);
+        }
+        else
+        {
+            transform.position -= impactDir.normalized * knockBack;
+        }
     }
 
     public void AddHealth(int toAdd)

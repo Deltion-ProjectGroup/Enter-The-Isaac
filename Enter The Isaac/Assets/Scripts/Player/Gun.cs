@@ -20,6 +20,7 @@ public class Gun : MonoBehaviour
     int curAmmo = 0;
     int totalMaxAmmo = 0;
     SoundSpawn soundSpawner;
+    [SerializeField] Vector3 angle = new Vector3(0, 180, 0);
     [SerializeField] PlayerController player;
     Vector3 startPos;
     [SerializeField] float recoilSpeed = 10;
@@ -81,7 +82,7 @@ public class Gun : MonoBehaviour
         uiElements[0].text = "" + curAmmo;
         uiElements[1].text = "" + gunClone.magazineSize;
         uiElements[2].text = "" + gunClone.maxAmmo;
-        uiElements[3].text = gunClone.name;
+        uiElements[3].text = gunType.name;
         uiElements[4].text = totalMaxAmmo + "/";
     }
 
@@ -148,7 +149,7 @@ public class Gun : MonoBehaviour
         }
         SetPresentationUI();
         //rotating back
-        transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.Euler(0, 180, 0), Time.deltaTime * 10);
+        transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.Euler(angle), Time.deltaTime * 10);
     }
 
     public void Shoot()
@@ -189,7 +190,7 @@ public class Gun : MonoBehaviour
         }
         Camera.main.fieldOfView = gunClone.camFov;
         transform.localPosition = startPos + (Vector3.forward * gunClone.recoil);
-        transform.localEulerAngles = new Vector3(0, 180, 0);
+        transform.localEulerAngles = angle;
         transform.Rotate(Random.Range(-gunClone.recoil, gunClone.recoil) * 30, Random.Range(-gunClone.recoil, gunClone.recoil) * 30, 0);
         player.moveV3 += player.transform.forward * gunType.kickBack;
         camShake.CustomShake(gunClone.screenShakeTime, gunClone.screenshakeStrength);
@@ -249,8 +250,15 @@ public class Gun : MonoBehaviour
         StopAllCoroutines();
         float accuracy = Random.Range(-gunClone.accuracy / 2, gunClone.accuracy / 2);
         GameObject bullet = Instantiate(gunClone.projectileModel, transform.position, transform.rotation);
-        bullet.transform.rotation *= Quaternion.Euler(0, accuracy + 180, 0);
+        if (Vector3.Distance(transform.position, player.crosshair.position) > 1)
+        {
+            //basically this code feels more precise, exept when the crosshair is close to the player
+            bullet.transform.LookAt(player.crosshair.position);
+        }
+
+        bullet.transform.rotation *= Quaternion.Euler(0, accuracy, 0);
         bullet.transform.Rotate(-bullet.transform.localEulerAngles.x, 0, 0);
+        bullet.transform.position -= bullet.transform.forward * gunClone.forwardStart;
 
         bullet.transform.position -= bullet.transform.forward * -gunClone.forwardStart;
         float rngSpeed = Random.Range(gunClone.bulletSpeed.x, gunClone.bulletSpeed.y);

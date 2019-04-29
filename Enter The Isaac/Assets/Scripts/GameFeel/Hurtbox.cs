@@ -23,8 +23,10 @@ public class Hurtbox : MonoBehaviour
                 if (enabled == true)
                 {
                     hit.Hit(damage);
+                    hit.impactDir = transform.forward;
                 }
                 hitEvent.Invoke();
+
                 if (destroyOnHit == true)
                 {
                     Destroy(gameObject);

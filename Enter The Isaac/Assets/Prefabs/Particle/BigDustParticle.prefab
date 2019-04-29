@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1166407243313371269}
   - component: {fileID: 6971504361346881768}
   m_Layer: 0
-  m_Name: DustParticle
+  m_Name: BigDustParticle
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -40,7 +40,7 @@ ParticleSystem:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8158331382286321570}
   serializedVersion: 6
-  lengthInSec: 0.05
+  lengthInSec: 0.15
   simulationSpeed: 2
   stopAction: 2
   cullingMode: 0
@@ -115,7 +115,7 @@ ParticleSystem:
     startLifetime:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 0.3
+      scalar: 1
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -168,7 +168,7 @@ ParticleSystem:
     startSpeed:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 6.89
+      scalar: 15.44
       minScalar: 5
       maxCurve:
         serializedVersion: 2
@@ -284,7 +284,7 @@ ParticleSystem:
     startSize:
       serializedVersion: 2
       minMaxState: 0
-      scalar: 1.59
+      scalar: 3.81
       minScalar: 1
       maxCurve:
         serializedVersion: 2
