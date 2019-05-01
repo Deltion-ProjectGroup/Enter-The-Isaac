@@ -12,6 +12,7 @@ public class Hurtbox : MonoBehaviour
     public bool destroyOnHit = true;
     [SerializeField] UnityEvent hitEvent;
     [SerializeField] bool enabled = true;
+    [SerializeField] bool knockBackForward = true;
 
     void OnTriggerEnter(Collider other)
     {
@@ -23,7 +24,15 @@ public class Hurtbox : MonoBehaviour
                 if (enabled == true)
                 {
                     hit.Hit(damage);
-                    hit.impactDir = transform.forward;
+                    if (knockBackForward == true)
+                    {
+                        hit.impactDir = transform.forward;
+                    }
+                    else
+                    {
+                        hit.impactDir = transform.position - hit.transform.position;
+                    }
+                    hit.impactDir.y = 0;
                 }
                 hitEvent.Invoke();
 

@@ -8,7 +8,7 @@ public class Flash : MonoBehaviour
 
     [SerializeField] Color newColor = Color.white;
     Color originalColor;
-    [SerializeField] float lerpSpeed = 5;
+    float lerpSpeed = 5;
     float waitTime = 0;
 
 

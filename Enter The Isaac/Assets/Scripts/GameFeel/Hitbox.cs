@@ -14,8 +14,10 @@ public class Hitbox : MonoBehaviour
     [SerializeField] float invincibleTime = 0f;
     public UnityEvent deathEvent;
     [SerializeField] EventArray[] timedEvents;
-    public Vector3 impactDir = Vector3.zero; //see hurtbox for more
+    [HideInInspector] public Vector3 impactDir = Vector3.zero; //see hurtbox for more
     [SerializeField] float knockBack = 0;
+    [SerializeField] Transform knockBackTrans;
+    [SerializeField] float knockbackWaitTime = 0.01f;
     void Start()
     {
         StartStuff();
@@ -24,12 +26,16 @@ public class Hitbox : MonoBehaviour
     public void StartStuff()
     {
         maxHealth = curHealth;
+        if (knockBackTrans == null)
+        {
+            knockBackTrans = transform;
+        }
     }
     public virtual void Hit(float damage)
     {
         if (IsInvoking("Invincible") == false)
         {
-            Invoke("Knockback",0.01f);
+            Invoke("InvokedKnockback", knockbackWaitTime);
             curHealth -= damage;
             HealthEvent(curHealth / maxHealth * 100);
             hitEvent.Invoke(curHealth / maxHealth * 100);
@@ -51,16 +57,21 @@ public class Hitbox : MonoBehaviour
 
     }
 
-    void Knockback()
+    void InvokedKnockback()
+    {
+        Knockback(knockBack);
+    }
+
+    public void Knockback(float str)
     {
         RaycastHit _hit;
-        if (Physics.Raycast(transform.position, -impactDir.normalized, out _hit, knockBack))
+        if (Physics.Raycast(knockBackTrans.position, -impactDir.normalized, out _hit, str))
         {
-            transform.position -= impactDir.normalized * (Vector3.Distance(transform.position, _hit.point) / 2);
+            knockBackTrans.position -= impactDir.normalized * (Vector3.Distance(knockBackTrans.position, _hit.point) / 2);
         }
         else
         {
-            transform.position -= impactDir.normalized * knockBack;
+            knockBackTrans.position -= impactDir.normalized * str;
         }
     }
 

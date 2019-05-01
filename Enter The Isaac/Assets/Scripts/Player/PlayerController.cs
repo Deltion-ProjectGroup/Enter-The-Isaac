@@ -30,7 +30,8 @@ public class PlayerController : MonoBehaviour
     public enum State
     {
         Normal,
-        Roll
+        Roll,
+        GetHit
     }
     [Header("States")]
     [SerializeField] State curState = State.Normal;
@@ -194,5 +195,17 @@ public class PlayerController : MonoBehaviour
     void FinalMove()
     {
         cc.Move(moveV3 * Time.deltaTime);
+    }
+
+    public void GetHit(){
+        Invoke("StopHitControl",0.5f);
+        StopAllCoroutines();
+        moveV3 = Vector3.zero;
+        curState = State.GetHit;
+        gun.StopAllCoroutines();
+    }
+
+    void StopHitControl(){
+        curState = State.Normal;
     }
 }

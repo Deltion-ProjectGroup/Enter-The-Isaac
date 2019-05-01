@@ -17,6 +17,7 @@ public class BatBehaviour : MonoBehaviour
     [SerializeField] State curState = State.Idle;
     Transform player;
     float timer = 0;
+    Vector3 goalPos;
     [SerializeField] float noticePlayerTime = 1;
     [SerializeField] float moveToTargetSpeed = 10;
     Vector3 lastSpottedPos;
@@ -32,6 +33,8 @@ public class BatBehaviour : MonoBehaviour
             home.position = transform.position;
         }
         sine = GetComponent<Sine>();
+        InvokeRepeating("SetNewIdlePos", 2, 5);
+        goalPos = home.position;
     }
 
     void Update()
@@ -110,7 +113,17 @@ public class BatBehaviour : MonoBehaviour
 
     void IdleMove()
     {
+        transform.position = Vector3.MoveTowards(transform.position, goalPos, Time.deltaTime * moveToTargetSpeed / 3);
+    }
 
+    void SetNewIdlePos()
+    {
+        home.eulerAngles = new Vector3(0, Random.RandomRange(0, 359.9f), 0);
+        goalPos = home.position + home.forward * Random.Range(homeRadius / 10, homeRadius);
+        if (Physics.Raycast(transform.position, goalPos, Vector3.Distance(transform.position, goalPos)))
+        {
+            goalPos = home.position;
+        }
     }
 
     void MoveToTarget()
@@ -127,6 +140,7 @@ public class BatBehaviour : MonoBehaviour
             else
             {
                 exeptionBool = true;
+                sine.speed = 2;
                 timer += Time.deltaTime;
             }
         }
@@ -150,7 +164,8 @@ public class BatBehaviour : MonoBehaviour
         }
     }
 
-    public void SeePlayer(){
+    public void SeePlayer()
+    {
         //used when getting hit, so that the enemy isn't an idiot
         timer = 0;
         curState = State.FlyToTarget;
