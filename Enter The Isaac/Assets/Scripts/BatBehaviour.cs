@@ -23,6 +23,8 @@ public class BatBehaviour : MonoBehaviour
     [SerializeField] float moveToTargetSpeed = 10;
     Vector3 lastSpottedPos;
     [SerializeField] float attackDistance = 2;
+    [SerializeField] float attackChargeTime = 0.5f;
+    [SerializeField] float attackGoForwardSpeed = 30;
     [SerializeField] Sine sine;
     [SerializeField] GameObject spawnParticle;
     [SerializeField] Renderer[] spawnInvisible;
@@ -205,7 +207,7 @@ public class BatBehaviour : MonoBehaviour
     {
         //aim
         attackPhase = 0;
-        yield return new WaitForSeconds(1);
+        yield return new WaitForSeconds(attackChargeTime);
         //fire
         attackPhase = 1;
         hurtbox.SetActive(true);
@@ -236,7 +238,7 @@ public class BatBehaviour : MonoBehaviour
                 transform.Rotate(0, 180, 0);
                 break;
             case 1:
-                transform.position += -transform.forward * Time.deltaTime * 10;
+                transform.position += -transform.forward * Time.deltaTime * attackGoForwardSpeed;
                 break;
             case 2:
                 //maybe set an animation later i dunno
