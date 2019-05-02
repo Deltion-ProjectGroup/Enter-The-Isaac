@@ -6,7 +6,8 @@ using UnityEngine.UI;
 public class UIHealth : MonoBehaviour
 {
     List<Image> containers = new List<Image>();
-    [SerializeField] int curHealth;//the 2 represents hp per heart, the 3 is the amount of containers
+    [SerializeField] int curHealth;
+    [SerializeField] int parts = 2;
     int lastHP = 0;
     [SerializeField] Hitbox hpBox;
 
@@ -37,16 +38,16 @@ public class UIHealth : MonoBehaviour
 
     void SetUI()
     {
-        float fill = curHealth % 2;
-        fill /= 2;
-        int curHeart = (curHealth + 1) / 2;
+        float fill = curHealth % parts;
+        fill /= parts;
+        int curHeart = (curHealth + 1) / parts;
         for (int i = 0; i < containers.Count; i++)
         {
-            if (i == (curHealth - 1) / 2)
+            if (i == (curHealth - 1) / parts)
             {
                 if (fill > 0)
                 {
-                    containers[containers.Count - 1 - i].fillAmount = 0.5f;
+                    containers[containers.Count - 1 - i].fillAmount = fill;
                 }
                 else if (curHealth != 0)
                 {
@@ -57,11 +58,11 @@ public class UIHealth : MonoBehaviour
                     containers[containers.Count - 1 - i].fillAmount = 0;
                 }
             }
-            if (i > (curHealth - 1) / 2)
+            if (i > (curHealth - 1) / parts)
             {
                 containers[containers.Count - 1 - i].fillAmount = 0;
             }
-            if (i < (curHealth - 1) / 2)
+            if (i < (curHealth - 1) / parts)
             {
                 containers[containers.Count - 1 - i].fillAmount = 1;
             }
