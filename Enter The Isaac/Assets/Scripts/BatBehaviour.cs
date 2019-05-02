@@ -199,6 +199,7 @@ public class BatBehaviour : MonoBehaviour
         {
             timer = 0;
             curState = State.Attack;
+            StopAllCoroutines();
             StartCoroutine("AttackEvents");
         }
     }
