@@ -85,10 +85,11 @@ public class PlayerController : MonoBehaviour
     {
         anim.SetFloat("posChangedDistance", Vector2.SqrMagnitude(new Vector2(Input.GetAxis(horInput),Input.GetAxis(vertInput))) );
 
-        Vector3 inputDir = transform.TransformDirection(-Input.GetAxis(horInput),0,-Input.GetAxis(vertInput));
+        Vector3 inputDir = new Vector3(Input.GetAxis(horInput),0,Input.GetAxis(vertInput));
+        inputDir = transform.InverseTransformDirection(inputDir);
 
-        anim.SetFloat("horInput",inputDir.x);
-        anim.SetFloat("vertInput", inputDir.z);
+        anim.SetFloat("horInput",-inputDir.x);
+        anim.SetFloat("vertInput", -inputDir.z);
     }
 
     void CheckRollInput()
