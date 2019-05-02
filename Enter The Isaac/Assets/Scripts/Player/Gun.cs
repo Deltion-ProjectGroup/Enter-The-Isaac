@@ -204,7 +204,7 @@ public class Gun : MonoBehaviour
         for (int i = 0; i < gunClone.bulletCount; i++)
         {
             float accuracy = Random.Range(-gunClone.accuracy / 2, gunClone.accuracy / 2);
-            GameObject bullet = Instantiate(gunClone.projectileModel, transform.position, Quaternion.Euler(0, transform.parent.eulerAngles.y + accuracy, 0));
+            GameObject bullet = Instantiate(gunClone.projectileModel, transform.position, Quaternion.Euler(0, transform.parent.eulerAngles.y + accuracy + 180, 0));
             if (Vector3.Distance(transform.position, player.crosshair.position) > 1)
             {
                 //basically this code feels more precise, exept when the crosshair is close to the player
@@ -249,19 +249,11 @@ public class Gun : MonoBehaviour
     {
         StopAllCoroutines();
         float accuracy = Random.Range(-gunClone.accuracy / 2, gunClone.accuracy / 2);
-        GameObject bullet = Instantiate(gunClone.projectileModel, transform.position, transform.rotation);
-        if (Vector3.Distance(transform.position, player.crosshair.position) > 1)
-        {
-            //basically this code feels more precise, exept when the crosshair is close to the player
-            bullet.transform.LookAt(player.crosshair.position);
-        }
+        GameObject bullet = Instantiate(gunClone.projectileModel, transform.position, transform.rotation * Quaternion.Euler(0,180,0));
 
         bullet.transform.rotation *= Quaternion.Euler(0, accuracy, 0);
-        bullet.transform.Rotate(-bullet.transform.localEulerAngles.x, 0, 0);
-        bullet.transform.position -= bullet.transform.forward * gunClone.forwardStart;
 
         bullet.transform.position -= bullet.transform.forward * -gunClone.forwardStart;
-        float rngSpeed = Random.Range(gunClone.bulletSpeed.x, gunClone.bulletSpeed.y);
 
         LineHurtBox line = bullet.GetComponent<LineHurtBox>();
         line.pierce = gunClone.pierce;
@@ -277,10 +269,13 @@ public class Gun : MonoBehaviour
         lastSpawnedBullet = null;
         if (gunClone.parentToGun == true)
         {
+            Invoke("IgnoreRoll",(float)gunClone.activeFrames / 60);
             bullet.transform.SetParent(transform, true);
-            bullet.transform.localEulerAngles = new Vector3(0, bullet.transform.localEulerAngles.y, bullet.transform.localEulerAngles.z);
-            bullet.transform.rotation *= Quaternion.Euler(0, accuracy, 0);
         }
+    }
+
+    void IgnoreRoll(){
+        //invoke lol
     }
     void ShootEvents()
     {

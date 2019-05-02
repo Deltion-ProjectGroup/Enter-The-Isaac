@@ -84,11 +84,16 @@ public class PlayerController : MonoBehaviour
     void SetAnimValues()
     {
         anim.SetFloat("posChangedDistance", Vector2.SqrMagnitude(new Vector2(Input.GetAxis(horInput),Input.GetAxis(vertInput))) );
+
+        Vector3 inputDir = transform.TransformDirection(-Input.GetAxis(horInput),0,-Input.GetAxis(vertInput));
+
+        anim.SetFloat("horInput",inputDir.x);
+        anim.SetFloat("vertInput", inputDir.z);
     }
 
     void CheckRollInput()
     {
-        if (Input.GetButtonDown(rollInput) == true)
+        if (Input.GetButtonDown(rollInput) == true && gun.IsInvoking("IgnoreRoll") == false)
         {
             StartCoroutine(RollEvent());
         }

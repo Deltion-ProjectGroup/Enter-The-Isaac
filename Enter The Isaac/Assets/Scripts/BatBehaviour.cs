@@ -78,7 +78,7 @@ public class BatBehaviour : MonoBehaviour
 
     IEnumerator SpawnEvents()
     {
-        Destroy(Instantiate(spawnParticle, transform.position, spawnParticle.transform.rotation), 4);
+        Instantiate(spawnParticle, transform.position, spawnParticle.transform.rotation);
         for (int i = 0; i < spawnInvisible.Length; i++)
         {
             spawnInvisible[i].enabled = false;
