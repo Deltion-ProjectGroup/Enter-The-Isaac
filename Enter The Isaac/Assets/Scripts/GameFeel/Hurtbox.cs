@@ -30,7 +30,7 @@ public class Hurtbox : MonoBehaviour
                     }
                     else
                     {
-                        hit.impactDir = transform.position - hit.transform.position;
+                        hit.impactDir = transform.position - hit.lastPos;
                     }
                     hit.impactDir.y = 0;
                 }

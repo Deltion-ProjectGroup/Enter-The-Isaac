@@ -18,6 +18,7 @@ public class Hitbox : MonoBehaviour
     [SerializeField] float knockBack = 0;
     [SerializeField] Transform knockBackTrans;
     [SerializeField] float knockbackWaitTime = 0.01f;
+    [HideInInspector] public Vector3 lastPos;
     void Start()
     {
         StartStuff();
@@ -29,6 +30,14 @@ public class Hitbox : MonoBehaviour
         if (knockBackTrans == null)
         {
             knockBackTrans = transform;
+        }
+    }
+
+    void LateUpdate()
+    {
+        if (IsInvoking("InvokedKnockback") == false)
+        {
+            lastPos = transform.position;
         }
     }
     public virtual void Hit(float damage)
@@ -64,14 +73,21 @@ public class Hitbox : MonoBehaviour
 
     public void Knockback(float str)
     {
-        RaycastHit _hit;
-        if (Physics.Raycast(knockBackTrans.position, -impactDir.normalized, out _hit, str))
+        if (knockBackTrans.GetComponent<PlayerController>() == null)
         {
-            knockBackTrans.position -= impactDir.normalized * (Vector3.Distance(knockBackTrans.position, _hit.point) / 2);
+            RaycastHit _hit;
+            if (Physics.Raycast(knockBackTrans.position, -impactDir.normalized, out _hit, str))
+            {
+                knockBackTrans.position -= impactDir.normalized * (Vector3.Distance(knockBackTrans.position, _hit.point) / 2);
+            }
+            else
+            {
+                knockBackTrans.position -= impactDir.normalized * str;
+            }
         }
         else
         {
-            knockBackTrans.position -= impactDir.normalized * str;
+            knockBackTrans.GetComponent<PlayerController>().moveV3 -= impactDir.normalized * str * 5;
         }
     }
 

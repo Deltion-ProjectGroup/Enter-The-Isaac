@@ -197,8 +197,8 @@ public class PlayerController : MonoBehaviour
         cc.Move(moveV3 * Time.deltaTime);
     }
 
-    public void GetHit(){
-        Invoke("StopHitControl",0.5f);
+    public void GetHit(float timeStopTime){
+        Invoke("StopHitControl",timeStopTime);
         StopAllCoroutines();
         moveV3 = Vector3.zero;
         curState = State.GetHit;

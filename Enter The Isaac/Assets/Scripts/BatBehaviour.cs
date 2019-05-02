@@ -12,7 +12,8 @@ public class BatBehaviour : MonoBehaviour
         Idle,
         FlyToTarget,
         Attack,
-        Die
+        Die,
+        Spawn
     }
     [SerializeField] State curState = State.Idle;
     Transform player;
@@ -23,9 +24,23 @@ public class BatBehaviour : MonoBehaviour
     Vector3 lastSpottedPos;
     [SerializeField] float attackDistance = 2;
     [SerializeField] Sine sine;
+    [SerializeField] GameObject spawnParticle;
+    [SerializeField] Renderer[] spawnInvisible;
+    Collider hitbox;
+    [SerializeField] GameObject hurtbox;
+    [SerializeField] bool skipSpawnParticle = false;
+    int attackPhase = 0;
+    Vector3 startRot;
 
     void Start()
     {
+        startRot = transform.eulerAngles;
+        hitbox = GetComponent<Collider>();
+        if (skipSpawnParticle == false)
+        {
+            curState = State.Spawn;
+            StartCoroutine(SpawnEvents());
+        }
         player = FindObjectOfType<PlayerController>().transform;
         if (home == null)
         {
@@ -35,6 +50,7 @@ public class BatBehaviour : MonoBehaviour
         sine = GetComponent<Sine>();
         InvokeRepeating("SetNewIdlePos", 2, 5);
         goalPos = home.position;
+        hurtbox.SetActive(false);
     }
 
     void Update()
@@ -42,6 +58,7 @@ public class BatBehaviour : MonoBehaviour
         switch (curState)
         {
             case State.Idle:
+                transform.eulerAngles = startRot;
                 LookForTarget();
                 IdleMove();
                 sine.speed = 1f;
@@ -55,6 +72,23 @@ public class BatBehaviour : MonoBehaviour
                 Attack();
                 break;
         }
+    }
+
+    IEnumerator SpawnEvents()
+    {
+        Destroy(Instantiate(spawnParticle, transform.position, spawnParticle.transform.rotation), 4);
+        for (int i = 0; i < spawnInvisible.Length; i++)
+        {
+            spawnInvisible[i].enabled = false;
+        }
+        hitbox.enabled = false;
+        yield return new WaitForSeconds(3.2f);
+        for (int i = 0; i < spawnInvisible.Length; i++)
+        {
+            spawnInvisible[i].enabled = true;
+        }
+        hitbox.enabled = true;
+        curState = State.Idle;
     }
 
     public void Die()
@@ -134,6 +168,8 @@ public class BatBehaviour : MonoBehaviour
         {
             if (hit.transform.tag == "Player")
             {
+                transform.LookAt(player.position);
+                transform.Rotate(0, 180, 0);
                 lastSpottedPos = player.position;
                 timer = Mathf.Max(0, timer - Time.deltaTime);
             }
@@ -161,7 +197,26 @@ public class BatBehaviour : MonoBehaviour
         {
             timer = 0;
             curState = State.Attack;
+            StartCoroutine("AttackEvents");
         }
+    }
+
+    IEnumerator AttackEvents()
+    {
+        //aim
+        attackPhase = 0;
+        yield return new WaitForSeconds(1);
+        //fire
+        attackPhase = 1;
+        hurtbox.SetActive(true);
+        yield return new WaitForSeconds(0.3f);
+        //stop
+        hurtbox.SetActive(false);
+        attackPhase = 2;
+        yield return new WaitForSeconds(0.5f);
+        //idle
+        attackPhase = 0;
+        curState = State.Idle;
     }
 
     public void SeePlayer()
@@ -174,12 +229,18 @@ public class BatBehaviour : MonoBehaviour
 
     void Attack()
     {
-        timer += Time.deltaTime;
-        if (timer >= 1)
+        switch (attackPhase)
         {
-            print(transform.name + " ATTACKED! Not very effective though..");
-            timer = 0;
-            curState = State.Idle;
+            case 0:
+                transform.LookAt(player.position);
+                transform.Rotate(0, 180, 0);
+                break;
+            case 1:
+                transform.position += -transform.forward * Time.deltaTime * 10;
+                break;
+            case 2:
+                //maybe set an animation later i dunno
+                break;
         }
     }
 }
