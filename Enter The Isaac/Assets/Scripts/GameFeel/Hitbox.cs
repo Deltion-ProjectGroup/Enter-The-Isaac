@@ -7,7 +7,7 @@ using UnityEngine.Events;
 
 public class Hitbox : MonoBehaviour
 {
-    [SerializeField] float curHealth = 3;
+    public float curHealth = 3;
     public int team = 0;
     float maxHealth = 1;
     public HitEvent hitEvent;

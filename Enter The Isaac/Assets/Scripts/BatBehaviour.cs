@@ -124,7 +124,6 @@ public class BatBehaviour : MonoBehaviour
     void LookForTarget()
     {
         RaycastHit hit;
-        Debug.DrawRay(transform.position, player.position - transform.position, Color.red, Time.deltaTime);
         if (Physics.Raycast(transform.position, player.position - transform.position, out hit, Vector3.Distance(transform.position, player.position)))
         {
             if (hit.transform.tag == "Player")
