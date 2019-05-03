@@ -19,11 +19,12 @@ MonoBehaviour:
   reloadTime: 0.4
   bulletCount: 1
   accuracy: 0
-  lifeTime: 2
+  lifeTime: 0.4
   forwardStart: 1
   pierce: 0
+  destroyOnInputUp: 1
   ricochet: 0
-  parentToGun: 1
+  parentToGun: 0
   bulletSpeed: {x: 150, y: 180}
   bulletDecelerationSpeed: 0
   projectileModel: {fileID: 7235445337229934338, guid: 3f36fb9db21465645af7309d5b87ff35,
@@ -34,7 +35,7 @@ MonoBehaviour:
   sound: {fileID: 8300000, guid: bbbd6800812f75f429a0e26cc4a4d2cc, type: 3}
   muzzleFlash: {fileID: 5803644427550265676, guid: c6a185e93cfde9442aed1bdea53b5f36,
     type: 3}
-  screenShakeTime: 2
+  screenShakeTime: 0.1
   screenshakeStrength: 0.2
   camFov: 67
   kickBack: 0

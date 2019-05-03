@@ -83,19 +83,23 @@ public class PlayerController : MonoBehaviour
 
     void SetAnimValues()
     {
-        anim.SetFloat("posChangedDistance", Vector2.SqrMagnitude(new Vector2(Input.GetAxis(horInput),Input.GetAxis(vertInput))) );
+        anim.SetFloat("posChangedDistance", Vector2.SqrMagnitude(new Vector2(Input.GetAxis(horInput), Input.GetAxis(vertInput))));
 
-        Vector3 inputDir = new Vector3(Input.GetAxis(horInput),0,Input.GetAxis(vertInput));
+        Vector3 inputDir = new Vector3(Input.GetAxis(horInput), 0, Input.GetAxis(vertInput));
         inputDir = transform.InverseTransformDirection(inputDir);
 
-        anim.SetFloat("horInput",-inputDir.x);
+        anim.SetFloat("horInput", -inputDir.x);
         anim.SetFloat("vertInput", -inputDir.z);
     }
 
     void CheckRollInput()
     {
-        if (Input.GetButtonDown(rollInput) == true && gun.IsInvoking("IgnoreRoll") == false)
+        if (Input.GetButtonDown(rollInput) == true)
         {
+            if (GameObject.FindGameObjectWithTag("LaserHold") != null && Input.GetAxis(gun.input) != 0)
+            {
+                Destroy(GameObject.FindGameObjectWithTag("LaserHold"));
+            }
             StartCoroutine(RollEvent());
         }
     }
@@ -203,15 +207,17 @@ public class PlayerController : MonoBehaviour
         cc.Move(moveV3 * Time.deltaTime);
     }
 
-    public void GetHit(float timeStopTime){
-        Invoke("StopHitControl",timeStopTime);
+    public void GetHit(float timeStopTime)
+    {
+        Invoke("StopHitControl", timeStopTime);
         StopAllCoroutines();
         moveV3 = Vector3.zero;
         curState = State.GetHit;
         gun.StopAllCoroutines();
     }
 
-    void StopHitControl(){
+    void StopHitControl()
+    {
         curState = State.Normal;
     }
 }

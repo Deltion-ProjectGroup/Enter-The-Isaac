@@ -10,7 +10,6 @@ public class LineHurtBox : MonoBehaviour
     [Header("frames are relative to 60 fps, and is not dependant on actual framerate")]
     public int activeFrames = 100;
     public int damageFrames = 10;
-    float curFrame = 0;
     public bool destroyOnHit = true;
     [SerializeField] UnityEvent hitEvent;
     public bool pierce = false;
@@ -21,9 +20,13 @@ public class LineHurtBox : MonoBehaviour
     [SerializeField] int particlesToSpawn = 10;
     [SerializeField] GameObject destroyParticles;
     [SerializeField] int _particlesToSpawn = 5;
-    [SerializeField] UnityEvent destroyEvent;
 
     void Start()
+    {
+        StartStuff();
+    }
+
+    void StartStuff()
     {
         line = GetComponent<LineRenderer>();
         UpdateShape();
@@ -43,64 +46,51 @@ public class LineHurtBox : MonoBehaviour
 
     void FrameChecker()
     {
+        //also check for destroy stuff lol
+        line.SetPositions(lastPositions.ToArray());
         LineHurtbox(false);
-        curFrame++;
-        if (curFrame >= damageFrames)
-        {
-            if (destroyParticles != null)
-            {
-                SpawnParticles(particlesToSpawn, destroyParticles);
-            }
-            destroyEvent.Invoke();
-            Destroy(gameObject);
-        }
-        else if (particles != null)
-        {
-            SpawnParticles(_particlesToSpawn, particles);
-        }
+        SpawnABunchaParticles();
+    }
+
+    void SpawnABunchaParticles()
+    {// I love the name sorry for not being proffesional lol
+        SpawnParticles(_particlesToSpawn, particles);
     }
 
     void LineHurtbox(bool ignoreDamage)
     {
+        //from linePos 0---1 to 1---2 etc.
         for (int i = 1; i < line.positionCount; i++)
         {
             Ray ray = new Ray(transform.TransformPoint(line.GetPosition(i - 1)), (transform.TransformPoint(line.GetPosition(i)) - transform.TransformPoint(line.GetPosition(i - 1))));
             RaycastHit[] hit = Physics.RaycastAll(ray.origin, ray.direction, Vector3.Distance(line.GetPosition(i), line.GetPosition(i - 1)) * transform.localScale.x);
-            if (pierce == false)
-            {
-                hit = new RaycastHit[1];
-                Physics.Raycast(ray.origin, ray.direction, out hit[0], Vector3.Distance(line.GetPosition(i), line.GetPosition(i - 1)) * transform.localScale.x);
-            }
             if (hit.Length > 0)
             {
                 for (int r = 0; r < hit.Length; r++)
                 {
-                    if (hit[r].transform != null)
+                    if (hit[r].transform != null && hit[r].transform.GetComponent<Hitbox>() != null)
                     {
-                        if (hit[r].transform.GetComponent<Hitbox>() != null)
+                        Hitbox hitObj = hit[r].transform.GetComponent<Hitbox>();
+                        if (team != hitObj.team)
                         {
-                            Hitbox hitObj = hit[r].transform.GetComponent<Hitbox>();
-                            if (team != hitObj.team)
+                            if (ignoreDamage == false)
                             {
-                                if (ignoreDamage == false)
+                                hitObj.Hit(damage);
+                                hitEvent.Invoke();
+                                if (destroyOnHit == true)
                                 {
-                                    hitObj.Hit(damage);
-                                    hitEvent.Invoke();
-                                    if (destroyOnHit == true)
-                                    {
-                                        Destroy(transform.root.gameObject);
-                                    }
+                                    Destroy(transform.root.gameObject);
                                 }
-                                if (pierce == false)
+                            }
+                            if (pierce == false)
+                            {
+                                UpdateShape();
+                                line.SetPosition(i, transform.InverseTransformPoint(hit[r].point));
+                                for (int i2 = i; i2 < line.positionCount; i2++)
                                 {
-                                    UpdateShape();
-                                    line.SetPosition(i, transform.InverseTransformPoint(hit[r].point));
-                                    for (int i2 = i; i2 < line.positionCount; i2++)
-                                    {
-                                        line.SetPosition(i2, line.GetPosition(i));
-                                    }
-                                    break;
+                                    line.SetPosition(i2, line.GetPosition(i));
                                 }
+                                break;
                             }
                         }
                     }

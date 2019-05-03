@@ -31,13 +31,14 @@ public class GunType : ScriptableObject
     public float lifeTime = 5;
     public float forwardStart = 1;
     public bool pierce = false;
+    public bool destroyOnInputUp = false;//incomplete
     public bool ricochet = false;//does not work with laser type guns
-    public bool parentToGun = false;//incomplete
+    public bool parentToGun = false;
     public Vector2 bulletSpeed = Vector2.zero;
     public float bulletDecelerationSpeed = 10;
     public GameObject projectileModel;
     public GameObject gunModel;
-    public float recoil = 0;//works partially, no ik yet
+    public float recoil = 0;
     public AudioClip sound;
     public GameObject muzzleFlash;
     public float screenShakeTime = 0;

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.Events;
 public class Gun : MonoBehaviour
 {
-    [SerializeField] string input = "Fire1";
+    public string input = "Fire1";
     [SerializeField] string reloadInput = "Fire2";
     [SerializeField] string scrollInput = "Mouse ScrollWheel";
     GunType gunType;
@@ -154,7 +154,7 @@ public class Gun : MonoBehaviour
 
     public void Shoot()
     {
-        if (Input.GetAxis(input) != 0)
+        if (Input.GetAxis(input) != 0 && GameObject.FindGameObjectWithTag("LaserHold") == null)
         {
             if (curAmmo >= 1)
             {
@@ -237,6 +237,10 @@ public class Gun : MonoBehaviour
                 bullet.transform.SetParent(transform, true);
                 bullet.transform.localEulerAngles = new Vector3(0, bullet.transform.localEulerAngles.y, bullet.transform.localEulerAngles.z);
             }
+            if (gunClone.destroyOnInputUp == true)
+            {
+                bullet.AddComponent<DestroyOnButtonUp>().destroyInput = input;
+            }
         }
         curAmmo -= 1;
         if (curAmmo < 1)
@@ -249,7 +253,7 @@ public class Gun : MonoBehaviour
     {
         StopAllCoroutines();
         float accuracy = Random.Range(-gunClone.accuracy / 2, gunClone.accuracy / 2);
-        GameObject bullet = Instantiate(gunClone.projectileModel, transform.position, transform.rotation * Quaternion.Euler(0,180,0));
+        GameObject bullet = Instantiate(gunClone.projectileModel, transform.position, transform.rotation * Quaternion.Euler(0, 180, 0));
 
         bullet.transform.rotation *= Quaternion.Euler(0, accuracy, 0);
 
@@ -264,18 +268,30 @@ public class Gun : MonoBehaviour
         line.destroyOnHit = false;
         line.pierce = gunClone.pierce;
 
+        if (gunClone.destroyOnInputUp == true)
+        {
+            bullet.AddComponent<DestroyOnButtonUp>().destroyInput = input;
+            bullet.tag = "LaserHold";
+        }
+        else
+        {
+            Destroy(bullet.gameObject, gunClone.lifeTime);
+        }
         lastSpawnedBullet = bullet;
         spawnEvent.Invoke();
         lastSpawnedBullet = null;
         if (gunClone.parentToGun == true)
         {
-            Invoke("IgnoreRoll",(float)gunClone.activeFrames / 60);
             bullet.transform.SetParent(transform, true);
         }
-    }
-
-    void IgnoreRoll(){
-        //invoke lol
+        else
+        {
+            if (Vector3.Distance(transform.position, player.crosshair.position) > 1)
+            {
+                bullet.transform.LookAt(player.crosshair.position);
+            }
+            bullet.transform.Rotate(-bullet.transform.localEulerAngles.x, 0, 0);
+        }
     }
     void ShootEvents()
     {
