@@ -180,7 +180,7 @@ public class Gun : MonoBehaviour
 
     void BaseShootEvents()
     {
-        if (soundSpawner != null)
+        if (soundSpawner != null && gunClone.sound != null)
         {
             soundSpawner.SpawnEffect(gunClone.sound);
         }
@@ -272,9 +272,16 @@ public class Gun : MonoBehaviour
         {
             bullet.AddComponent<DestroyOnButtonUp>().destroyInput = input;
             bullet.tag = "LaserHold";
+            CancelInvoke("LaserHoldAmmo");
+            InvokeRepeating("LaserHoldAmmo", 0, 1f);
         }
         else
         {
+            curAmmo -= 1;
+            if (curAmmo < 1)
+            {
+                GetComponent<Renderer>().material = mat[2];
+            }
             Destroy(bullet.gameObject, gunClone.lifeTime);
         }
         lastSpawnedBullet = bullet;
@@ -291,6 +298,23 @@ public class Gun : MonoBehaviour
                 bullet.transform.LookAt(player.crosshair.position);
             }
             bullet.transform.Rotate(-bullet.transform.localEulerAngles.x, 0, 0);
+        }
+    }
+
+    void LaserHoldAmmo()
+    {
+        if (GameObject.FindGameObjectWithTag("LaserHold") == null)
+        {
+            CancelInvoke("LaserHoldAmmo");
+        }
+        else
+        {
+            curAmmo -= 1;
+            if (curAmmo <= 0)
+            {
+                Destroy(GameObject.FindGameObjectWithTag("LaserHold"));
+                CancelInvoke("LaserHoldAmmo");
+            }
         }
     }
     void ShootEvents()
