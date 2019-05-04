@@ -9,7 +9,7 @@ public class Gun : MonoBehaviour
     [SerializeField] string reloadInput = "Fire2";
     [SerializeField] string scrollInput = "Mouse ScrollWheel";
     GunType gunType;
-    GunType gunClone;
+    [HideInInspector] public GunType gunClone;
 
     [SerializeField] GunType[] guns;
     List<int> ammoStore = new List<int>();
@@ -137,7 +137,6 @@ public class Gun : MonoBehaviour
         if (gunDel != lastGunDel)
         {
             StartGun();
-            print("it's happening!");
         }
 
         if (IsInvoking("Shoot") == true)
@@ -310,8 +309,9 @@ public class Gun : MonoBehaviour
         else
         {
             curAmmo -= 1;
-            if (curAmmo <= 0)
+            if (curAmmo < 0)//best solution,in case you had 1 ammo left
             {
+                curAmmo = 0;
                 Destroy(GameObject.FindGameObjectWithTag("LaserHold"));
                 CancelInvoke("LaserHoldAmmo");
             }

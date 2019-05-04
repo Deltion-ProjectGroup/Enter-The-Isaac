@@ -9,7 +9,8 @@ public class Hitbox : MonoBehaviour
 {
     public float curHealth = 3;
     public int team = 0;
-    float maxHealth = 1;
+    [HideInInspector] public float maxHealth = 1;
+    [SerializeField] float maxHPOverride = 0;
     public HitEvent hitEvent;
     [SerializeField] float invincibleTime = 0f;
     public UnityEvent deathEvent;
@@ -26,7 +27,14 @@ public class Hitbox : MonoBehaviour
 
     public void StartStuff()
     {
-        maxHealth = curHealth;
+        if (maxHPOverride == 0)
+        {
+            maxHealth = curHealth;
+        }
+        else
+        {
+            maxHealth = maxHPOverride;
+        }
         if (knockBackTrans == null)
         {
             knockBackTrans = transform;

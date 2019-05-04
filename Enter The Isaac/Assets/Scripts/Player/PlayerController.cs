@@ -11,9 +11,9 @@ public class PlayerController : MonoBehaviour
     Transform cam;
     Animator anim;
     [Header("Random stuff")]
-    [SerializeField] GameObject hitbox;
+    public GameObject hitbox;
     [Header("Walking related")]
-    [SerializeField] float walkSpeed = 1;
+    public float walkSpeed = 1;
     float curWalkSpeed = 0;
     [SerializeField] float rotateSpeed = 1;
     public Transform crosshair;
@@ -22,7 +22,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float accelerationSpeed = 3;
     [SerializeField] float decelerationSpeed = 5;
     [Header("Gun")]
-    [SerializeField] Gun gun;
+    public Gun gun;
     [Header("Input")]
     [SerializeField] string horInput = "Horizontal";
     [SerializeField] string vertInput = "Vertical";
@@ -36,8 +36,8 @@ public class PlayerController : MonoBehaviour
     [Header("States")]
     [SerializeField] State curState = State.Normal;
     [Header("Rolling")]
-    [SerializeField] float rollSpeed = 40;
-    [SerializeField] float rollDeceleration = 100;
+    public float rollSpeed = 40;
+    public float rollDeceleration = 100;
     void Start()
     {
         cc = GetComponent<CharacterController>();
