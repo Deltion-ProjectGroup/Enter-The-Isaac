@@ -9,25 +9,33 @@ public class HATTest1 : HATBase
     [SerializeField] float divideHP = 2;
     void Start()
     {
-        print("start lagann");
-        player.gun.gunDel += DmgFRateHP;
+        if (player.gun != null)
+        {
+            player.gun.gunDel += DmgFRateHP;
+        }
         player.hitbox.GetComponent<Hitbox>().maxHealth /= divideHP;
         player.hitbox.GetComponent<Hitbox>().AddHealth(0);//apply maxhealth basically
     }
 
     void DmgFRateHP()
     {
-        player.gun.gunClone.fireRate /= multiplyFireRate;
-        player.gun.gunClone.dmg *= multiplyDmg;
+        if (player.gun != null)
+        {
+            player.gun.gunClone.fireRate /= multiplyFireRate;
+            player.gun.gunClone.dmg *= multiplyDmg;
+        }
     }
 
-    public override void StopHat(){
-        print("stop lagann");
-        player.gun.gunDel -= DmgFRateHP;
-        player.gun.gunClone.fireRate *= multiplyFireRate;
-        player.gun.gunClone.dmg /= multiplyDmg;
+    public override void StopHat()
+    {
+        if (player.gun != null)
+        {
+            player.gun.gunDel -= DmgFRateHP;
+            player.gun.gunClone.fireRate *= multiplyFireRate;
+            player.gun.gunClone.dmg /= multiplyDmg;
+        }
         player.hitbox.GetComponent<Hitbox>().maxHealth *= divideHP;
         player.hitbox.GetComponent<Hitbox>().AddHealth(0);
-        
+
     }
 }

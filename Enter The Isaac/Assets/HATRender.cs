@@ -36,7 +36,10 @@ public class HATRender : MonoBehaviour
         }
         Destroy(currentHat);
         Transform hatParent = GetComponent<Animator>().GetBoneTransform(part);
-        currentHat = Instantiate(hatRenderPrefab, hatParent.position, hatParent.rotation, hatParent);
+        if (hatRenderPrefab != null)
+        {
+            currentHat = Instantiate(hatRenderPrefab, hatParent.position, hatParent.rotation, hatParent);
+        }
         if (currentHat != null)
         {
             if (currentHat.GetComponent<HATBase>() != null)

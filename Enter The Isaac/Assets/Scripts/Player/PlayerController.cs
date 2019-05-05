@@ -27,6 +27,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] string horInput = "Horizontal";
     [SerializeField] string vertInput = "Vertical";
     [SerializeField] string rollInput = "Fire3";
+    public string shootInput = "Fire1";
+    [SerializeField] string reloadInput = "Fire2";
+    [SerializeField] string scrollInput = "Mouse ScrollWheel";
+    public delegate void playerDelegate();
+    public playerDelegate onShootDel;//maybe do something when shooting
+    public playerDelegate onNoGunShootDel;//used for when hats do stuff not related to shooting, like the constructor hat, or a melee hat
     public enum State
     {
         Normal,
@@ -61,12 +67,16 @@ public class PlayerController : MonoBehaviour
                 {
                     RotateCrosshair();
                     MoveXZ();
-                    gun.CheckInput();
+                    GunInput();
                 }
                 else
                 {
                     RotateXZ();
                     MoveForward();
+                    if (onNoGunShootDel != null)
+                    {
+                        onNoGunShootDel();
+                    }
                 }
                 Gravity();
                 FinalMove();
@@ -79,6 +89,27 @@ public class PlayerController : MonoBehaviour
                 break;
         }
         SetAnimValues();
+    }
+
+    void GunInput()
+    {
+        //shooting
+        gun.shootFirstFrame = Input.GetButtonDown(shootInput);
+        gun.shootInput = Input.GetAxis(shootInput);
+        if (Input.GetButtonDown(shootInput) == true)
+        {
+            gun.GetShootInput();
+        }
+        //reloading
+        if (Input.GetButtonDown(reloadInput))
+        {
+            gun.GetReloadInput();
+        }
+        //switch gun
+        if (Input.GetAxis(scrollInput) != 0 && GameObject.FindGameObjectWithTag("LaserHold") == null)
+        {
+            gun.GetSwitchGunInput(Input.GetAxis(scrollInput));
+        }
     }
 
     void SetAnimValues()
@@ -96,7 +127,7 @@ public class PlayerController : MonoBehaviour
     {
         if (Input.GetButtonDown(rollInput) == true)
         {
-            if (GameObject.FindGameObjectWithTag("LaserHold") != null && Input.GetAxis(gun.input) != 0)
+            if (GameObject.FindGameObjectWithTag("LaserHold") != null && Input.GetAxis(shootInput) != 0)
             {
                 Destroy(GameObject.FindGameObjectWithTag("LaserHold"));
             }
@@ -112,7 +143,10 @@ public class PlayerController : MonoBehaviour
         float oldRotSpeed = rotateSpeed;
         rotateSpeed = rotateCrosshairSpeed * 8f;
         hitbox.SetActive(false);
-        gun.CancelInvoke("Shoot");
+        if (gun != null)
+        {
+            gun.CancelInvoke("Shoot");
+        }
         yield return new WaitForSeconds(0.025f);
         rotateSpeed = 0;
         moveV3 = transform.forward * -rollSpeed;
@@ -213,7 +247,10 @@ public class PlayerController : MonoBehaviour
         StopAllCoroutines();
         moveV3 = Vector3.zero;
         curState = State.GetHit;
-        gun.StopAllCoroutines();
+        if (gun != null)
+        {
+            gun.StopAllCoroutines();
+        }
     }
 
     void StopHitControl()

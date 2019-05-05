@@ -5535,7 +5535,7 @@ GameObject:
   - component: {fileID: 59679142}
   - component: {fileID: 59679141}
   - component: {fileID: 59679140}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Bad Guy/Gal (No sexism here) (1)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -10492,9 +10492,9 @@ GameObject:
   - component: {fileID: 67589863}
   - component: {fileID: 67589862}
   - component: {fileID: 67589861}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: BigBat
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -11988,7 +11988,7 @@ GameObject:
   - component: {fileID: 235767832}
   - component: {fileID: 235767834}
   - component: {fileID: 235767833}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Bad Guy/Gal (No sexism here)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18097,7 +18097,7 @@ GameObject:
   - component: {fileID: 400961275}
   - component: {fileID: 400961274}
   - component: {fileID: 400961273}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Bad Guy/Gal (No sexism here) (7)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18447,7 +18447,7 @@ GameObject:
   - component: {fileID: 444723132}
   - component: {fileID: 444723131}
   - component: {fileID: 444723130}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Bad Guy/Gal (No sexism here) (5)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -18646,7 +18646,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 444851893}
-  m_LocalRotation: {x: -0.08386557, y: -0.1849786, z: -0.04922443, w: -0.97791946}
+  m_LocalRotation: {x: -0.081092656, y: -0.23739876, z: -0.053672154, w: -0.9665325}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.99999976, y: 0.99999976, z: 0.99999976}
   m_Children:
@@ -18658,7 +18658,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 8.981001, y: 17.066, z: 6.6530004}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 777.8648, y: 322.3799}
+  m_AnchoredPosition: {x: 777.8758, y: 322.3799}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &444851895
@@ -19004,7 +19004,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 486361902}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -1.205939, y: 1.101677, z: -1.9326094}
+  m_LocalPosition: {x: -10.73, y: 1.101677, z: -1.9326094}
   m_LocalScale: {x: 5.4479628, y: 8.225355, z: 0.37927434}
   m_Children: []
   m_Father: {fileID: 522232046}
@@ -19178,6 +19178,7 @@ Transform:
   - {fileID: 1597063852}
   - {fileID: 1058148754}
   - {fileID: 884671460}
+  - {fileID: 792420012}
   m_Father: {fileID: 0}
   m_RootOrder: 8
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -33412,9 +33413,9 @@ GameObject:
   - component: {fileID: 584674260}
   - component: {fileID: 584674259}
   - component: {fileID: 584674258}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: BatEnemy (10)
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -33952,14 +33953,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 602542264}
-  m_LocalRotation: {x: -0.00000039644328, y: 0.025290541, z: 0.00000026663557, w: 0.9996802}
-  m_LocalPosition: {x: 0.06146431, y: -0.3953588, z: -0.399}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.165, y: -0.565, z: -0.236}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1741046023}
   m_Father: {fileID: 1649669653}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 180, y: 182.898, z: 180}
+  m_RootOrder: 3
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &602542266
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -34017,16 +34018,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4f171c2fb89dc204d97b33c41eaa0f6c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  input: Fire1
-  reloadInput: Reload
-  scrollInput: Mouse ScrollWheel
   gunClone: {fileID: 0}
+  shootInput: 0
+  shootFirstFrame: 0
   guns:
   - {fileID: 11400000, guid: 64e96425528dce348a6df4aa6d9dc3dd, type: 2}
   - {fileID: 11400000, guid: e631141ea86048b43a5c41f83b3b58cc, type: 2}
   - {fileID: 11400000, guid: a0207214a85a407439564341b58d1b5b, type: 2}
   - {fileID: 11400000, guid: 88e2302c7ce07a740b29ef5e5413438f, type: 2}
   - {fileID: 11400000, guid: 11396cd665c684e4bbc5b452b97efcc2, type: 2}
+  curAmmo: 0
   angle: {x: 0, y: 0, z: 0}
   player: {fileID: 1649669650}
   recoilSpeed: 10
@@ -34041,10 +34042,6 @@ MonoBehaviour:
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   lastSpawnedBullet: {fileID: 0}
-  mat:
-  - {fileID: 10302, guid: 0000000000000000f000000000000000, type: 0}
-  - {fileID: 2100000, guid: dc751ee5065d3cd419a3a3dd1bbd9b17, type: 2}
-  - {fileID: 2100000, guid: d1e7b737ba988b348abd59fc682a197a, type: 2}
   uiElements:
   - {fileID: 186517816}
   - {fileID: 364604815}
@@ -34097,9 +34094,9 @@ GameObject:
   - component: {fileID: 618062887}
   - component: {fileID: 618062886}
   - component: {fileID: 618062885}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: BatEnemy (3)
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -35367,6 +35364,97 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 791980574}
   m_CullTransparentMesh: 0
+--- !u!1 &792420011
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 792420012}
+  - component: {fileID: 792420015}
+  - component: {fileID: 792420014}
+  - component: {fileID: 792420013}
+  m_Layer: 0
+  m_Name: Cube (6)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &792420012
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 792420011}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 11.48, y: 1.101677, z: -1.9326094}
+  m_LocalScale: {x: 5.4479628, y: 8.225355, z: 0.37927434}
+  m_Children: []
+  m_Father: {fileID: 522232046}
+  m_RootOrder: 17
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!65 &792420013
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 792420011}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1, z: 1}
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!23 &792420014
+MeshRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 792420011}
+  m_Enabled: 1
+  m_CastShadows: 1
+  m_ReceiveShadows: 1
+  m_DynamicOccludee: 1
+  m_MotionVectors: 1
+  m_LightProbeUsage: 1
+  m_ReflectionProbeUsage: 1
+  m_RenderingLayerMask: 1
+  m_RendererPriority: 0
+  m_Materials:
+  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  m_StaticBatchInfo:
+    firstSubMesh: 0
+    subMeshCount: 0
+  m_StaticBatchRoot: {fileID: 0}
+  m_ProbeAnchor: {fileID: 0}
+  m_LightProbeVolumeOverride: {fileID: 0}
+  m_ScaleInLightmap: 1
+  m_PreserveUVs: 0
+  m_IgnoreNormalsForChartDetection: 0
+  m_ImportantGI: 0
+  m_StitchLightmapSeams: 0
+  m_SelectedEditorRenderState: 3
+  m_MinimumChartSize: 4
+  m_AutoUVMaxDistance: 0.5
+  m_AutoUVMaxAngle: 89
+  m_LightmapParameters: {fileID: 0}
+  m_SortingLayerID: 0
+  m_SortingLayer: 0
+  m_SortingOrder: 0
+--- !u!33 &792420015
+MeshFilter:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 792420011}
+  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!1 &803485472
 GameObject:
   m_ObjectHideFlags: 0
@@ -35689,7 +35777,7 @@ GameObject:
   - component: {fileID: 859156564}
   - component: {fileID: 859156563}
   - component: {fileID: 859156562}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Bad Guy/Gal (No sexism here) (2)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -41118,7 +41206,7 @@ Transform:
   m_LocalScale: {x: 0.65625, y: 2.304664, z: 0.525}
   m_Children: []
   m_Father: {fileID: 1649669653}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &940390543
 BoxCollider:
@@ -42022,7 +42110,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1040454487}
-  m_LocalRotation: {x: -0.08386557, y: -0.1849786, z: -0.04922443, w: -0.97791946}
+  m_LocalRotation: {x: -0.081092656, y: -0.23739876, z: -0.053672154, w: -0.9665325}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.99999976, y: 0.99999976, z: 0.99999976}
   m_Children:
@@ -42034,7 +42122,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 8.981001, y: 17.066, z: 6.6530004}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 889.738, y: 322.3799}
+  m_AnchoredPosition: {x: 889.7581, y: 322.38358}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1040454489
@@ -42553,7 +42641,7 @@ Transform:
   m_LocalScale: {x: 0.12913, y: 0.57744, z: 27.40335}
   m_Children: []
   m_Father: {fileID: 1649669653}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!23 &1090978805
 MeshRenderer:
@@ -43487,9 +43575,9 @@ GameObject:
   - component: {fileID: 1178203904}
   - component: {fileID: 1178203903}
   - component: {fileID: 1178203902}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: BatEnemy (2)
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -43772,7 +43860,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1178505202}
-  m_LocalRotation: {x: -0.08386557, y: -0.1849786, z: -0.04922443, w: -0.97791946}
+  m_LocalRotation: {x: -0.081092656, y: -0.23739876, z: -0.053672154, w: -0.9665325}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.99999976, y: 0.99999976, z: 0.99999976}
   m_Children:
@@ -43784,7 +43872,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 8.981001, y: 17.066, z: 6.6530004}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 820.69104, y: 322.3799}
+  m_AnchoredPosition: {x: 820.73395, y: 322.38358}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1178505204
@@ -43929,7 +44017,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1188495446
 Transform:
   m_ObjectHideFlags: 0
@@ -49122,9 +49210,9 @@ GameObject:
   - component: {fileID: 1270092445}
   - component: {fileID: 1270092444}
   - component: {fileID: 1270092443}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: BatEnemy (5)
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -49524,7 +49612,7 @@ GameObject:
   - component: {fileID: 1314652544}
   - component: {fileID: 1314652543}
   - component: {fileID: 1314652542}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Bad Guy/Gal (No sexism here) (4)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -49709,9 +49797,9 @@ GameObject:
   - component: {fileID: 1323541558}
   - component: {fileID: 1323541557}
   - component: {fileID: 1323541556}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: BatEnemy (7)
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -50946,7 +51034,7 @@ GameObject:
   - component: {fileID: 1386476166}
   - component: {fileID: 1386476165}
   - component: {fileID: 1386476164}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Bad Guy/Gal (No sexism here) (3)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -51131,7 +51219,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1393809653
 Transform:
   m_ObjectHideFlags: 0
@@ -51493,9 +51581,9 @@ GameObject:
   - component: {fileID: 1441697214}
   - component: {fileID: 1441697217}
   - component: {fileID: 1441697216}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: BatEnemy
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -51843,7 +51931,7 @@ GameObject:
   - component: {fileID: 1446240116}
   - component: {fileID: 1446240115}
   - component: {fileID: 1446240114}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: Bad Guy/Gal (No sexism here) (6)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -52190,9 +52278,9 @@ GameObject:
   - component: {fileID: 1456581218}
   - component: {fileID: 1456581217}
   - component: {fileID: 1456581216}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: BatEnemy (4)
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -58210,9 +58298,9 @@ GameObject:
   - component: {fileID: 1627444433}
   - component: {fileID: 1627444432}
   - component: {fileID: 1627444431}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: BatEnemy (9)
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -63344,6 +63432,9 @@ MonoBehaviour:
   horInput: Horizontal
   vertInput: Vertical
   rollInput: Fire2
+  shootInput: Fire1
+  reloadInput: Fire2
+  scrollInput: Mouse ScrollWheel
   curState: 0
   rollSpeed: 16.666666
   rollDeceleration: 33.333332
@@ -63404,9 +63495,9 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1509296334}
-  - {fileID: 602542265}
   - {fileID: 1090978804}
   - {fileID: 940390542}
+  - {fileID: 602542265}
   m_Father: {fileID: 1151844036}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -65109,9 +65200,9 @@ GameObject:
   - component: {fileID: 1782521700}
   - component: {fileID: 1782521699}
   - component: {fileID: 1782521698}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: BatEnemy (1)
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -65565,7 +65656,7 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1814425893}
-  m_LocalRotation: {x: -0.08386557, y: -0.1849786, z: -0.04922443, w: -0.97791946}
+  m_LocalRotation: {x: -0.081092656, y: -0.23739876, z: -0.053672154, w: -0.9665325}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.99999976, y: 0.99999976, z: 0.99999976}
   m_Children:
@@ -65577,7 +65668,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 8.981001, y: 17.066, z: 6.6530004}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 856.68427, y: 322.38467}
+  m_AnchoredPosition: {x: 856.7024, y: 322.38467}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1814425895
@@ -70907,9 +70998,9 @@ GameObject:
   - component: {fileID: 1891036745}
   - component: {fileID: 1891036744}
   - component: {fileID: 1891036743}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: BatEnemy (6)
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -77440,7 +77531,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7b9e6d6ef8cac9849a76b8b9b7b7c4d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  hatRenderPrefab: {fileID: 7676436394056714604, guid: 385e76592a5592c418449754ab2e86bc,
+  hatRenderPrefab: {fileID: 4964770105971869175, guid: 4d869dd16d983614abc1d6dfaf770184,
     type: 3}
   part: 10
 --- !u!114 &2098414375
@@ -77780,9 +77871,9 @@ GameObject:
   - component: {fileID: 2113000898}
   - component: {fileID: 2113000897}
   - component: {fileID: 2113000896}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: BatEnemy (8)
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
