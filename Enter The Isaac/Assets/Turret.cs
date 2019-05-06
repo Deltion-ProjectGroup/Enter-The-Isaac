@@ -64,7 +64,7 @@ public class Turret : MonoBehaviour
             }
             else
             {
-                gun.Invoke("Reload", gun.gunClone.reloadTime);
+                Destroy(gameObject);
             }
         }
         else
