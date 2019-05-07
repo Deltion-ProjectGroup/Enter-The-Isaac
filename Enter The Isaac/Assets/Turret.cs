@@ -17,14 +17,13 @@ public class Turret : MonoBehaviour
         {
             transform.position = new Vector3(hit.point.x, hit.point.y + transform.GetComponent<Renderer>().bounds.extents.y, hit.point.z);
         }
-        Destroy(gameObject,lifeTime);
+        Destroy(gameObject, lifeTime);
     }
 
     void StartLater()
     {
         gun = transform.GetChild(0).GetComponent<Gun>();
-        //gun.gunDel = FindObjectOfType<Gun>().gunDel;
-        print("still havent done gun delegate to the player.");
+        gun.gunDel = FindObjectOfType<PlayerController>().gunDel;
         InvokeRepeating("LOS", 0, gun.gunClone.fireRate);
         gun.gunClone.screenShakeTime = 0;
         gun.gunClone.screenshakeStrength = 0;

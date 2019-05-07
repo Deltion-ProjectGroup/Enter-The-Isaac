@@ -19,12 +19,13 @@ MonoBehaviour:
   reloadTime: 0.4
   bulletCount: 5
   accuracy: 50
-  lifeTime: 2
+  lifeTime: 0.6
   forwardStart: 2
-  pierce: 0
-  ricochet: 0
+  pierce: 1
+  destroyOnInputUp: 0
+  ricochet: 1
   parentToGun: 0
-  bulletSpeed: {x: 150, y: 180}
+  bulletSpeed: {x: 60, y: 70}
   bulletDecelerationSpeed: 5
   projectileModel: {fileID: 334168290025920454, guid: 3e200a906488c3146a139ec4eb40ca54,
     type: 3}

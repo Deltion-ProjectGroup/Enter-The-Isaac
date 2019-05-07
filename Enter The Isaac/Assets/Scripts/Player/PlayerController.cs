@@ -23,6 +23,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float decelerationSpeed = 5;
     [Header("Gun")]
     public Gun gun;
+    public Gun.gunDelegate gunDel;
     [Header("Input")]
     [SerializeField] string horInput = "Horizontal";
     [SerializeField] string vertInput = "Vertical";

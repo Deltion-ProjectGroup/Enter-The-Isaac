@@ -11,7 +11,7 @@ public class HATTest1 : HATBase
     {
         if (player.gun != null)
         {
-            player.gun.gunDel += DmgFRateHP;
+            player.gunDel += DmgFRateHP;
         }
         player.hitbox.GetComponent<Hitbox>().maxHealth /= divideHP;
         player.hitbox.GetComponent<Hitbox>().AddHealth(0);//apply maxhealth basically
@@ -30,7 +30,7 @@ public class HATTest1 : HATBase
     {
         if (player.gun != null)
         {
-            player.gun.gunDel -= DmgFRateHP;
+            player.gunDel -= DmgFRateHP;
             player.gun.gunClone.fireRate *= multiplyFireRate;
             player.gun.gunClone.dmg /= multiplyDmg;
         }

@@ -15,7 +15,7 @@ public class BulletMoveDecelerate : BulletMove
 
     public override void Move()
     {
-        speed = Mathf.Lerp(speed,0,Time.deltaTime * decelerationSpeed);
-        transform.position -= transform.TransformDirection(0, 0, Time.deltaTime * speed);
+        base.Move();
+        speed = Mathf.Lerp(speed,0.01f,Time.deltaTime * decelerationSpeed);
     }
 }

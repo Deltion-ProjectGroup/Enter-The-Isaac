@@ -13,7 +13,7 @@ public class SonicHat : HATBase
     [SerializeField] AudioClip shootSound;
     void Start()
     {
-        player.gun.gunDel += AddSpeed;
+        player.gunDel += AddSpeed;
         player.walkSpeed *= multiplyWalkSpeed;
         player.rollSpeed *= mulitplyRoll;
         player.rollDeceleration *= mulitplyRoll;
@@ -35,7 +35,7 @@ public class SonicHat : HATBase
 
     public override void StopHat()
     {
-        player.gun.gunDel -= AddSpeed;
+        player.gunDel -= AddSpeed;
         player.walkSpeed /= mulitplyRoll;
         player.gun.gunClone.bulletSpeed /= multiplySpeed;
         player.gun.gunClone.bulletDecelerationSpeed /= multiplySpeed / 2;

@@ -20,7 +20,7 @@ public class Gun : MonoBehaviour
     SoundSpawn soundSpawner;
     public Vector3 angle = new Vector3(0, 0, 0);
     [SerializeField] PlayerController player;
-    Vector3 startPos;
+    [HideInInspector] public Vector3 startPos;
     [SerializeField] float recoilSpeed = 10;
     //dingen om Maurits te helpen
     [Space]
@@ -53,12 +53,28 @@ public class Gun : MonoBehaviour
     public void StartGun()
     {
         //for stat changes
+        PlayerController lastPlayer = player;
+        player = FindObjectOfType<PlayerController>();
         Destroy(gunClone);
         gunClone = Instantiate(guns[curGun]);
+        gunDelegate last = gunDel;
+        if (player.gunDel != null)
+        {
+            gunDel = player.gunDel;
+        }
+        else
+        {
+            gunDel = null;
+        }
+        Gun lastGun = player.gun;
+        player.gun = this;
         if (gunDel != null)
         {
             gunDel();
         }
+        player.gun = lastGun;
+        gunDel = last;
+        player = lastPlayer;
 
         //normal stuff
         camShake = Camera.main.GetComponent<Shake>();
@@ -88,7 +104,8 @@ public class Gun : MonoBehaviour
         if (IsInvoking("Reload") == false && IsInvoking("IgnoreInput") == false)
         {
             InvokeRepeating("Shoot", 0, gunClone.fireRate);
-            if(player != null && player.onShootDel != null){
+            if (player != null && player.onShootDel != null)
+            {
                 player.onShootDel();
             }
         }
@@ -183,7 +200,7 @@ public class Gun : MonoBehaviour
         }
         if (gunClone.muzzleFlash != null)
         {
-            Instantiate(gunClone.muzzleFlash, transform.position, transform.rotation, transform);
+            Instantiate(gunClone.muzzleFlash, transform.GetChild(0).Find("SpawnPoint").position, gunClone.muzzleFlash.transform.rotation * transform.rotation, transform);
         }
         Camera.main.fieldOfView = gunClone.camFov;
         transform.localPosition = startPos + (Vector3.forward * gunClone.recoil);
@@ -207,7 +224,7 @@ public class Gun : MonoBehaviour
         for (int i = 0; i < gunClone.bulletCount; i++)
         {
             float accuracy = Random.Range(-gunClone.accuracy / 2, gunClone.accuracy / 2);
-            GameObject bullet = Instantiate(gunClone.projectileModel, transform.position, Quaternion.Euler(0, accuracy + 180, 0));
+            GameObject bullet = Instantiate(gunClone.projectileModel, transform.GetChild(0).Find("SpawnPoint").position, Quaternion.Euler(0, accuracy + 180, 0));
             if (transform.parent != null && transform.parent.GetComponent<PlayerController>() != null)
             {
                 if (Vector3.Distance(transform.position, player.crosshair.position) > 1)
@@ -218,7 +235,8 @@ public class Gun : MonoBehaviour
             }
             else
             {
-                bullet.transform.LookAt(transform.position - transform.forward);
+                bullet.transform.rotation = transform.rotation;
+                bullet.transform.Rotate(0,180,0);
             }
 
             bullet.transform.rotation *= Quaternion.Euler(0, accuracy + 180, 0);
@@ -270,7 +288,7 @@ public class Gun : MonoBehaviour
     {
         StopAllCoroutines();
         float accuracy = Random.Range(-gunClone.accuracy / 2, gunClone.accuracy / 2);
-        GameObject bullet = Instantiate(gunClone.projectileModel, transform.position, transform.rotation * Quaternion.Euler(0, 180, 0));
+        GameObject bullet = Instantiate(gunClone.projectileModel, transform.GetChild(0).Find("SpawnPoint").position, transform.rotation * Quaternion.Euler(0, 180, 0));
 
         bullet.transform.rotation *= Quaternion.Euler(0, accuracy, 0);
 
@@ -303,7 +321,10 @@ public class Gun : MonoBehaviour
             Destroy(bullet.gameObject, gunClone.lifeTime);
         }
         lastSpawnedBullet = bullet;
-        spawnEvent.Invoke();
+        if (spawnEvent != null)
+        {
+            spawnEvent.Invoke();
+        }
         lastSpawnedBullet = null;
         if (gunClone.parentToGun == true)
         {
