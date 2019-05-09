@@ -10,6 +10,7 @@ public class UIHealth : MonoBehaviour
     [SerializeField] int parts = 2;
     int lastHP = 0;
     [SerializeField] Hitbox hpBox;
+    [SerializeField] Color fakeHeartColor;
 
 
     void Start()
@@ -29,7 +30,10 @@ public class UIHealth : MonoBehaviour
 
     void Update()
     {
-        curHealth = (int)hpBox.curHealth;
+        if (hpBox != null)
+        {
+            curHealth = (int)hpBox.curHealth + (int)hpBox.fakeHealth;
+        }
         if (curHealth != lastHP)//so it doesn't do all of setui every frame
         {
             SetUI();
@@ -65,6 +69,14 @@ public class UIHealth : MonoBehaviour
             if (i < (curHealth - 1) / parts)
             {
                 containers[containers.Count - 1 - i].fillAmount = 1;
+            }
+
+            if((int)hpBox.fakeHealth > 0){
+            if(i > (hpBox.curHealth / parts) - 1){
+                containers[containers.Count - 1 - i].color = fakeHeartColor;
+            } else {
+                containers[containers.Count - 1 - i].color = Color.white;
+            }
             }
         }
         lastHP = curHealth;

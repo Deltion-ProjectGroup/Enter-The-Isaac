@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.Events;
-using UnityEngine.Events;
 
 public class Hitbox : MonoBehaviour
 {
     public float curHealth = 3;
+    public float fakeHealth = 0;
     public int team = 0;
     [HideInInspector] public float maxHealth = 1;
     [SerializeField] float maxHPOverride = 0;
@@ -53,7 +53,15 @@ public class Hitbox : MonoBehaviour
         if (IsInvoking("Invincible") == false)
         {
             Invoke("InvokedKnockback", knockbackWaitTime);
-            curHealth -= damage;
+            if (fakeHealth < 0)
+            {
+                curHealth -= damage;
+            }
+            else
+            {
+                curHealth -= Mathf.Max(0, damage - fakeHealth);
+                fakeHealth = Mathf.Max(0, fakeHealth - damage);
+            }
             HealthEvent(curHealth / maxHealth * 100);
             hitEvent.Invoke(curHealth / maxHealth * 100);
             if (curHealth <= 0)
@@ -113,7 +121,8 @@ public class Hitbox : MonoBehaviour
 
     void Invincible()
     {
-        //invoke function
+       GetComponent<Collider>().enabled = false;
+       GetComponent<Collider>().enabled = true;
     }
 
     public void HealthEvent(float value)

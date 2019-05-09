@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 [RequireComponent(typeof(CharacterController))]
 
 public class PlayerController : MonoBehaviour
@@ -12,6 +13,8 @@ public class PlayerController : MonoBehaviour
     Animator anim;
     [Header("Random stuff")]
     public GameObject hitbox;
+    public int keys = 0;
+    public Text keyUICounter;
     [Header("Walking related")]
     public float walkSpeed = 1;
     float curWalkSpeed = 0;
@@ -23,6 +26,10 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float decelerationSpeed = 5;
     [Header("Gun")]
     public Gun gun;
+    public GunType[] guns;
+    [HideInInspector] public int curGun = 0;
+    [HideInInspector] public List<int> ammoStore = new List<int>();
+    [HideInInspector] public List<int> magazineStore = new List<int>();
     public Gun.gunDelegate gunDel;
     [Header("Input")]
     [SerializeField] string horInput = "Horizontal";
@@ -49,6 +56,18 @@ public class PlayerController : MonoBehaviour
     {
         cc = GetComponent<CharacterController>();
         cam = Camera.main.transform;
+
+
+        for (int i = 0; i < guns.Length; i++)
+        {
+            ammoStore.Add(guns[i].magazineSize);
+        }
+        for (int i = 0; i < guns.Length; i++)
+        {
+            magazineStore.Add(guns[i].maxAmmo);
+        }
+
+
         if (transform.GetChild(0).GetComponent<Animator>() != null)
         {
             anim = transform.GetChild(0).GetComponent<Animator>();
@@ -72,6 +91,7 @@ public class PlayerController : MonoBehaviour
                 }
                 else
                 {
+                    SwitchGun();
                     RotateXZ();
                     MoveForward();
                     if (onNoGunShootDel != null)
@@ -90,6 +110,17 @@ public class PlayerController : MonoBehaviour
                 break;
         }
         SetAnimValues();
+        if (keyUICounter != null)
+        {
+            if (keys >= 10)
+            {
+                keyUICounter.text = "X " + keys;
+            }
+            else
+            {
+                keyUICounter.text = "X 0" + keys;//lazyness intensfies
+            }
+        }
     }
 
     void GunInput()
@@ -107,9 +138,23 @@ public class PlayerController : MonoBehaviour
             gun.GetReloadInput();
         }
         //switch gun
+        SwitchGun();
+    }
+
+    void SwitchGun()
+    {
         if (Input.GetAxis(scrollInput) != 0 && GameObject.FindGameObjectWithTag("LaserHold") == null)
         {
-            gun.GetSwitchGunInput(Input.GetAxis(scrollInput));
+            // gun.GetSwitchGunInput(Input.GetAxis(scrollInput));
+            if (Input.GetAxis(scrollInput) > 0)
+            {
+                curGun = (int)Mathf.Repeat(curGun + 1, guns.Length);
+            }
+            else
+            {
+                curGun = (int)Mathf.Repeat(curGun - 1, guns.Length);
+            }
+            print(curGun);
         }
     }
 

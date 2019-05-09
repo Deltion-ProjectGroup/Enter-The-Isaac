@@ -10,8 +10,8 @@ public class Gun : MonoBehaviour
     [HideInInspector] public float shootInput = 0;
     [HideInInspector] public bool shootFirstFrame = false;
     public GunType[] guns;
-    List<int> ammoStore = new List<int>();
-    List<int> magazineStore = new List<int>();
+    //List<int> ammoStore = new List<int>();
+    //List<int> magazineStore = new List<int>();
     int curGun = 0;
     GunType lastGunType = null;
     Shake camShake;
@@ -39,6 +39,7 @@ public class Gun : MonoBehaviour
     {
         startPos = transform.localPosition;
         gunType = guns[curGun];
+        /*
         ammoStore.Clear();
         for (int i = 0; i < guns.Length; i++)
         {
@@ -48,15 +49,24 @@ public class Gun : MonoBehaviour
         {
             magazineStore.Add(guns[i].maxAmmo);
         }
+        */
         gunClone = Instantiate(guns[curGun]);
+        if (player != null)
+        {
+            gunType = player.guns[player.curGun];
+        }
     }
     public void StartGun()
     {
+        if (player != null)
+        {
+            gunType = player.guns[player.curGun];
+        }
         //for stat changes
         PlayerController lastPlayer = player;
         player = FindObjectOfType<PlayerController>();
         Destroy(gunClone);
-        gunClone = Instantiate(guns[curGun]);
+        gunClone = Instantiate(player.guns[player.curGun]);
         gunDelegate last = gunDel;
         if (player.gunDel != null)
         {
@@ -78,8 +88,17 @@ public class Gun : MonoBehaviour
 
         //normal stuff
         camShake = Camera.main.GetComponent<Shake>();
-        totalMaxAmmo = magazineStore[curGun];
-        curAmmo = ammoStore[curGun];
+        if (player != null)
+        {
+            totalMaxAmmo = player.magazineStore[player.curGun];
+            curAmmo = player.ammoStore[player.curGun];
+        }
+        else
+        {
+            //aka if constructorhat
+            totalMaxAmmo = 0;
+            curAmmo = gunClone.maxAmmo;
+        }
         soundSpawner = FindObjectOfType<SoundSpawn>();
         Instantiate(gunType.gunModel, transform.GetChild(0).position, transform.GetChild(0).rotation, transform);
         Destroy(transform.GetChild(0).gameObject);
@@ -89,7 +108,7 @@ public class Gun : MonoBehaviour
         lastGunType = gunType;
     }
 
-    void SetPresentationUI()
+    /*void SetPresentationUI()
     {
         //hardcoded because this is used for debugging.
         uiElements[0].text = "" + curAmmo;
@@ -97,7 +116,7 @@ public class Gun : MonoBehaviour
         uiElements[2].text = "" + gunClone.maxAmmo;
         uiElements[3].text = gunType.name;
         uiElements[4].text = totalMaxAmmo + "/";
-    }
+    } */
 
     public void GetShootInput()
     {
@@ -118,8 +137,10 @@ public class Gun : MonoBehaviour
 
     public void GetSwitchGunInput(float scrollInput)
     {
-
-        ammoStore[curGun] = curAmmo;
+        if (player != null)
+        {
+            player.ammoStore[player.curGun] = curAmmo;
+        }
         curGun += (int)(scrollInput * 10);
         if (curGun < 0)
         {
@@ -140,6 +161,10 @@ public class Gun : MonoBehaviour
 
     void Update()
     {
+        if (player != null)
+        {
+            gunType = player.guns[player.curGun];
+        }
         //updates gun, for when picking up a new one, or on start
         if (lastGunType != gunType)
         {
@@ -157,10 +182,6 @@ public class Gun : MonoBehaviour
             {
                 CancelInvoke("Shoot");
             }
-        }
-        if (uiElements != null)
-        {
-            SetPresentationUI();
         }
         //going back from recoil back
         transform.localPosition = Vector3.Lerp(transform.localPosition, startPos, Time.deltaTime * recoilSpeed);
@@ -236,7 +257,7 @@ public class Gun : MonoBehaviour
             else
             {
                 bullet.transform.rotation = transform.rotation;
-                bullet.transform.Rotate(0,180,0);
+                bullet.transform.Rotate(0, 180, 0);
             }
 
             bullet.transform.rotation *= Quaternion.Euler(0, accuracy + 180, 0);
@@ -385,6 +406,9 @@ public class Gun : MonoBehaviour
             curAmmo = totalMaxAmmo;
             totalMaxAmmo = 0;
         }
-        magazineStore[curGun] = totalMaxAmmo;
+        if (player != null)
+        {
+            player.magazineStore[player.curGun] = totalMaxAmmo;
+        }
     }
 }
