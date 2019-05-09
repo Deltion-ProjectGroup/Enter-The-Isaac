@@ -154,7 +154,6 @@ public class PlayerController : MonoBehaviour
             {
                 curGun = (int)Mathf.Repeat(curGun - 1, guns.Length);
             }
-            print(curGun);
         }
     }
 
