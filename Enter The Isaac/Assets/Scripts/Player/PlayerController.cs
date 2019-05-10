@@ -132,7 +132,6 @@ public class PlayerController : MonoBehaviour
         {
             gun.GetShootInput();
             ammoStore[curGun] = gun.curAmmo;
-            print(ammoStore[curGun]);
         }
         //reloading
         if (Input.GetButtonDown(reloadInput))

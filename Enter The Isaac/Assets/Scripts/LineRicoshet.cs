@@ -7,6 +7,8 @@ public class LineRicoshet : MonoBehaviour
     LineRenderer line;
     public List<Vector3> startShape = new List<Vector3>();
     List<Vector3> newShape = new List<Vector3>();
+
+    //online code ones
     void Start()
     {
         line = GetComponent<LineRenderer>();
@@ -15,7 +17,66 @@ public class LineRicoshet : MonoBehaviour
 
     void Update()
     {
-        Test();
+         //Test();
+        OnlineRicoshetCodeLol();
+    }
+
+    void OnlineRicoshetCodeLol()
+    {
+        /*
+        
+        //Debug.Log("Running");
+        line.enabled = true;
+        int laserReflected = 1; //How many times it got reflected
+        int vertexCounter = 1; //How many line segments are there
+        bool loopActive = true; //Is the reflecting loop active?
+       
+        Vector3 laserDirection = transform.forward; //direction of the next laser
+        Vector3 lastLaserPosition = transform.localPosition; //origin of the next laser
+   
+        line.SetVertexCount (1);
+        line.SetPosition (0, transform.position);
+        RaycastHit hit;
+
+        //neccessary values
+        float laserDistance = 0;
+        for (int i = 1; i < line.positionCount; i++)
+        {
+            laserDistance += Vector3.Distance(line.GetPosition(i), line.GetPosition(i - 1));
+        }
+        float maxBounce = 99;
+ 
+        while (loopActive) {
+ 
+            if (Physics.Raycast (lastLaserPosition, laserDirection, out hit, laserDistance) && hit.transform.gameObject.tag != "Player") {
+               
+                   // Debug.Log ("Bounce");
+                    laserReflected++;
+                    vertexCounter += 3;
+                    line.SetVertexCount (vertexCounter);
+                    line.SetPosition (vertexCounter - 3, Vector3.MoveTowards (hit.point, lastLaserPosition, 0.01f));
+                    line.SetPosition (vertexCounter - 2, hit.point);
+                    line.SetPosition (vertexCounter - 1, hit.point);
+                    line.SetWidth (.1f, .1f);
+                    lastLaserPosition = hit.point;
+                    laserDirection = Vector3.Reflect (laserDirection, hit.normal);
+                } else {
+           
+                   // Debug.Log ("No Bounce");
+                    laserReflected++;
+                    vertexCounter++;
+                    line.SetVertexCount (vertexCounter);
+                    Vector3 lastPos = lastLaserPosition + (laserDirection.normalized * laserDistance);
+                   // Debug.Log ("InitialPos " + lastLaserPosition + " Last Pos" + lastPos);
+                    line.SetPosition (vertexCounter - 1, lastLaserPosition + (laserDirection.normalized * laserDistance));
+ 
+                    loopActive = false;
+                }
+            if (laserReflected > maxBounce)
+                loopActive = false;
+        }
+        */
+    
     }
 
     void UpdateShape()
@@ -52,10 +113,12 @@ public class LineRicoshet : MonoBehaviour
             startPosWHits[i] = transform.TransformDirection(startPosWHits[i]) + transform.position;
         }
 
+
         Color drawColor = Color.green;
         for (int i = 0; i < startPosWHits.Length - 1; i++)
         {
             //this makes the postions relative to the reflected normal,exept its not here yet
+
 
             Vector3 rayDir = startPosWHits[i] - startPosWHits[i + 1];
             rayDir = -rayDir;
@@ -101,10 +164,10 @@ public class LineRicoshet : MonoBehaviour
                     hitDir = Vector3.Reflect(rayDir, closestHit.normal);
                     Debug.DrawRay(closestHit.point, hitDir.normalized, Color.magenta, Time.deltaTime);
                     currentForward = new Vector3(hitDir.z, hitDir.y, hitDir.x);
+
                 }
 
             }
-
         }
     }
 }

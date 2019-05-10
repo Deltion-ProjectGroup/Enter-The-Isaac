@@ -20,6 +20,7 @@ public class Hitbox : MonoBehaviour
     [SerializeField] Transform knockBackTrans;
     [SerializeField] float knockbackWaitTime = 0.01f;
     [HideInInspector] public Vector3 lastPos;
+    [SerializeField] bool destoy = false;
     void Start()
     {
         StartStuff();
@@ -121,8 +122,8 @@ public class Hitbox : MonoBehaviour
 
     void Invincible()
     {
-       GetComponent<Collider>().enabled = false;
-       GetComponent<Collider>().enabled = true;
+        GetComponent<Collider>().enabled = false;
+        GetComponent<Collider>().enabled = true;
     }
 
     public void HealthEvent(float value)
@@ -137,6 +138,10 @@ public class Hitbox : MonoBehaviour
     {
         //  Destroy(transform.root.gameObject);
         deathEvent.Invoke();
+        if (destoy == true)
+        {
+            Destroy(gameObject);
+        }
     }
 }
 

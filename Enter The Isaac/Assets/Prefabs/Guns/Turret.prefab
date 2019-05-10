@@ -44,6 +44,8 @@ GameObject:
   - component: {fileID: 8819762689526912357}
   - component: {fileID: 6469877880820414025}
   - component: {fileID: 6791665849085891835}
+  - component: {fileID: 3556437379440457873}
+  - component: {fileID: 2673117694379113932}
   m_Layer: 0
   m_Name: Turret
   m_TagString: Untagged
@@ -141,6 +143,53 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   toSpawn:
   - {fileID: 8158331382286321570, guid: 557ee55730e53e84a9577e984a712021, type: 3}
+--- !u!65 &3556437379440457873
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8819762689526912358}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 1, y: 1.4577179, z: 1}
+  m_Center: {x: 0, y: 0.22885895, z: 0}
+--- !u!114 &2673117694379113932
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8819762689526912358}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ca8bd342b38a3542aec7c36a87b57d4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  curHealth: 1
+  fakeHealth: 0
+  team: 0
+  maxHealth: 1
+  maxHPOverride: 1
+  hitEvent:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: HitEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
+  invincibleTime: 0
+  deathEvent:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  timedEvents: []
+  impactDir: {x: 0, y: 0, z: 0}
+  knockBack: 0
+  knockBackTrans: {fileID: 0}
+  knockbackWaitTime: 0.01
+  lastPos: {x: 0, y: 0, z: 0}
+  destoy: 1
 --- !u!1001 &3175514444749169798
 PrefabInstance:
   m_ObjectHideFlags: 0
