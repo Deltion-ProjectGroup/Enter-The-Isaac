@@ -57,17 +57,6 @@ public class DungeonCreator : MonoBehaviour
     public delegate void DelegateVoid();
     public DelegateVoid onGenerationComplete;
 
-    public void Awake()
-    {
-
-    }
-    public void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Mouse1))
-        {
-            GenerateDungeon();
-        }
-    }
     // Generates the dungeon
     public void GenerateDungeon() 
     {
