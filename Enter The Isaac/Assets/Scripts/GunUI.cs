@@ -36,7 +36,11 @@ public class GunUI : MonoBehaviour
     }
     void SetAmmoText()
     {
-        string toSet = player.ammoStore[player.curGun] + "";
+        string toSet = player.guns[player.curGun].magazineSize + "";
+        if (player.gun != null)
+        {
+            toSet = player.gun.gunClone.magazineSize + "";
+        }
         for (int i = 0; i < curGunAmmo.Length; i++)
         {
             curGunAmmo[i].text = toSet;

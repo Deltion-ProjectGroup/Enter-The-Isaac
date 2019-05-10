@@ -128,9 +128,11 @@ public class PlayerController : MonoBehaviour
         //shooting
         gun.shootFirstFrame = Input.GetButtonDown(shootInput);
         gun.shootInput = Input.GetAxis(shootInput);
-        if (Input.GetButtonDown(shootInput) == true)
+        if (Input.GetAxis(shootInput) != 0)//was originally getbuttondown
         {
             gun.GetShootInput();
+            ammoStore[curGun] = gun.curAmmo;
+            print(ammoStore[curGun]);
         }
         //reloading
         if (Input.GetButtonDown(reloadInput))

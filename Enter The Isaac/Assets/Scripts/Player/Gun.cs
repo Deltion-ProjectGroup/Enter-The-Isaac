@@ -120,7 +120,7 @@ public class Gun : MonoBehaviour
 
     public void GetShootInput()
     {
-        if (IsInvoking("Reload") == false && IsInvoking("IgnoreInput") == false)
+        if (IsInvoking("Reload") == false && IsInvoking("IgnoreInput") == false && IsInvoking("Shoot") == false)
         {
             InvokeRepeating("Shoot", 0, gunClone.fireRate);
             if (player != null && player.onShootDel != null)
