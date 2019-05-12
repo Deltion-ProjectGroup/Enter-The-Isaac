@@ -6,6 +6,7 @@ public class DungeonDoor : MonoBehaviour
 {
     public DungeonRoom ownerRoom;
     public GameObject parentDoor;
+    public Transform connectionPoint;
     public DoorDirection direction;
     public int id;
 

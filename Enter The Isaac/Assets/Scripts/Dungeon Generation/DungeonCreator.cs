@@ -89,7 +89,7 @@ public class DungeonCreator : MonoBehaviour
     }
     public Vector3 GetLocationData(Transform thisObject, Transform selectedDoor, Transform doorToSnapTo)
     {
-        return doorToSnapTo.position - (selectedDoor.position - thisObject.position);
+        return doorToSnapTo.GetComponent<DungeonDoor>().connectionPoint.position + (thisObject.position - selectedDoor.GetComponent<DungeonDoor>().connectionPoint.position);
     }
     public void SpawnRandomHallway(GameObject thisRoom, Transform doorPoint, DungeonDoor.DoorDirection requiredDirection)
     {
