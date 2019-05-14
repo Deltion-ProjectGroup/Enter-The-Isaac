@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour
 {
-
     CharacterController cc;
     [HideInInspector] public Vector3 moveV3;
     Transform cam;
@@ -52,6 +51,11 @@ public class PlayerController : MonoBehaviour
     [Header("Rolling")]
     public float rollSpeed = 40;
     public float rollDeceleration = 100;
+    [Header("INTERACTION")]
+    public string interactButton;
+    public float interactRadius;
+    public LayerMask interactablesLayer;
+    public GameObject closestInteractableObject;
     void Start()
     {
         cc = GetComponent<CharacterController>();
@@ -121,6 +125,8 @@ public class PlayerController : MonoBehaviour
                 keyUICounter.text = "X 0" + keys;//lazyness intensfies
             }
         }
+        CheckClosestInteractable();
+        Interact();
     }
 
     void GunInput()
@@ -302,5 +308,45 @@ public class PlayerController : MonoBehaviour
     void StopHitControl()
     {
         curState = State.Normal;
+    }
+    public void Interact()
+    {
+        if (closestInteractableObject)
+        {
+            if (Input.GetButtonDown(interactButton))
+            {
+                closestInteractableObject.GetComponent<Interactable>().Interact(gameObject);
+            }
+        }
+    }
+    public void CheckClosestInteractable()
+    {
+        Collider[] allInteractables = Physics.OverlapSphere(transform.position, interactRadius, interactablesLayer);
+        if (closestInteractableObject)
+        {
+            //RMOVE OUTLINE RENDERER
+            closestInteractableObject = null;
+        }
+        if (allInteractables.Length > 0)
+        {
+            if(allInteractables.Length > 1)
+            {
+                closestInteractableObject = allInteractables[0].gameObject;
+                float closestDistance = Vector3.Distance(transform.position, closestInteractableObject.transform.position);
+                foreach (Collider interactable in allInteractables)
+                {
+                    if (Vector3.Distance(interactable.transform.position, transform.position) < closestDistance)
+                    {
+                        closestDistance = Vector3.Distance(interactable.transform.position, transform.position);
+                        closestInteractableObject = interactable.gameObject;
+                    }
+                }
+            }
+            else
+            {
+                closestInteractableObject = allInteractables[0].gameObject;
+            }
+            //ADD OUTLINE RENDERER TO CLOSEST OBJECT
+        }
     }
 }
