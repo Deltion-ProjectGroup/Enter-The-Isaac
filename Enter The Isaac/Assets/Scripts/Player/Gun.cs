@@ -313,7 +313,10 @@ public class Gun : MonoBehaviour
 
         bullet.transform.rotation *= Quaternion.Euler(0, accuracy, 0);
 
-        bullet.transform.position -= bullet.transform.forward * -gunClone.forwardStart;
+        if (Physics.Raycast(bullet.transform.position - (bullet.transform.forward * -gunClone.forwardStart), -bullet.transform.forward, gunClone.forwardStart) == false)
+        {
+            bullet.transform.position -= bullet.transform.forward * -gunClone.forwardStart;
+        }
 
         LineHurtBox line = bullet.GetComponent<LineHurtBox>();
         line.pierce = gunClone.pierce;
