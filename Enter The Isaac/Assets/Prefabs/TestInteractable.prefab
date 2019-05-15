@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 2667248623591640537}
   - component: {fileID: 3195376724967871020}
   - component: {fileID: 3294401449205709378}
-  - component: {fileID: 5074527816242005307}
+  - component: {fileID: 2151517132118064582}
+  - component: {fileID: 7302016895128658779}
   m_Layer: 12
   m_Name: TestInteractable
   m_TagString: Untagged
@@ -92,7 +93,7 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5074527816242005307
+--- !u!114 &2151517132118064582
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -101,8 +102,20 @@ MonoBehaviour:
   m_GameObject: {fileID: 146287797357915031}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 50ce399df0989854fa9985b996fe4806, type: 3}
+  m_Script: {fileID: 11500000, guid: a8366aeaa24da334185f5778aa64f9f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   pickUpData: {fileID: 11400000, guid: 645e0f509cdfccb4eb4cd79b4029e8a5, type: 2}
-  fireChanceModifier: 20
+--- !u!114 &7302016895128658779
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 146287797357915031}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0dbcfc3e04d411546846b8c344e085c7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  modifyAmount: 2

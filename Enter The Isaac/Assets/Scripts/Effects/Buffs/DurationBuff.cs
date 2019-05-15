@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class DurationBuff : Buff
+public class DurationBuff : MonoBehaviour
 {
     public int duration;
     public virtual IEnumerator Duration(int duration)
@@ -18,12 +18,5 @@ public abstract class DurationBuff : Buff
     public virtual void RemoveEffect()
     {
         Destroy(this);
-    }
-    public struct Hi
-    {
-        public void No()
-        {
-
-        }
     }
 }
