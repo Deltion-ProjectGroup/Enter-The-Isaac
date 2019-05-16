@@ -6,6 +6,7 @@ public class BuffManager : MonoBehaviour
 {
     public DOTBuffSO fireBuffData;
     public int fireBuffChance;
+    public int explosionBuffChance;
     // Start is called before the first frame update
     void Start()
     {

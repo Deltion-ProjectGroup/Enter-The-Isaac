@@ -1,0 +1,482 @@
+<Project>
+  <Name>Enter The Isaac</Name>
+  <ProjectItem type="NClass.DiagramEditor.ClassDiagram.Diagram" assembly="NClass.DiagramEditor, Version=2.4.1823.0, Culture=neutral, PublicKeyToken=null">
+    <Name>Enter The Isaac</Name>
+    <Language>CSharp</Language>
+    <Entities>
+      <Entity type="Class">
+        <Name>Player</Name>
+        <Access>Public</Access>
+        <Location left="404" top="372" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Entity</Name>
+        <Access>Public</Access>
+        <Location left="518" top="103" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">int health</Member>
+        <Member type="Field">int maxHealth</Member>
+        <Member type="Field">float movementSpeed</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Interactable</Name>
+        <Access>Public</Access>
+        <Location left="577" top="1021" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">bool canInteract</Member>
+        <Member type="Method">public abstract void OnInteract()</Member>
+        <Member type="Method">public void Interact()</Member>
+        <Modifier>Abstract</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Teleporter</Name>
+        <Access>Public</Access>
+        <Location left="308" top="1490" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">string levelToLoad</Member>
+        <Member type="Method">public override void OnInteract()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>InventoryPickup</Name>
+        <Access>Public</Access>
+        <Location left="1260" top="1490" />
+        <Size width="191" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">InventoryPickupSO pickupData</Member>
+        <Member type="Method">public abstract void OnDrop()</Member>
+        <Member type="Method">public override void OnInteract()</Member>
+        <Modifier>Abstract</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>ConsumablePickup</Name>
+        <Access>Public</Access>
+        <Location left="845" top="1490" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Method">public void OnTriggerEnter()</Member>
+        <Member type="Method">public override void OnInteract()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>PassiveItemPickup</Name>
+        <Access>Public</Access>
+        <Location left="1067" top="1934" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Method">public override void OnInteract()</Member>
+        <Member type="Method">public override void OnDrop()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>WeaponItemPickup</Name>
+        <Access>Public</Access>
+        <Location left="1277" top="1934" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">WeaponSO WeaponData</Member>
+        <Member type="Method">public override void OnInteract()</Member>
+        <Member type="Method">public override void OnDrop()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>ActiveItemPickup</Name>
+        <Access>Public</Access>
+        <Location left="1472" top="1934" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Method">public override void OnInteract()</Member>
+        <Member type="Method">public override void OnDrop()</Member>
+        <Member type="Method">public void OnUse()</Member>
+        <Modifier>Abstract</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Effect</Name>
+        <Access>Public</Access>
+        <Location left="1277" top="2410" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Method">public abstract void ApplyEffect()</Member>
+        <Member type="Method">public abstract void RemoveEffect()</Member>
+        <Modifier>Abstract</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>CollisionEffect</Name>
+        <Access>Public</Access>
+        <Location left="1638" top="2410" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">LayerMask possibleTargets</Member>
+        <Member type="Method">public void OnTriggerEnter()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>ModifiyHealthEffect</Name>
+        <Access>Public</Access>
+        <Location left="1281" top="2719" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">int changeAmount</Member>
+        <Member type="Method">public override void ApplyEffect()</Member>
+        <Member type="Method">public override void RemoveEffect()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>DurationBuff</Name>
+        <Access>Public</Access>
+        <Location left="845" top="2410" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">int duration</Member>
+        <Member type="Method">public virtual void Start()</Member>
+        <Member type="Method">public virtual IEnumerator DurationTimer()</Member>
+        <Member type="Method">public virtual void RemoveEffect()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>DOTBuff</Name>
+        <Access>Public</Access>
+        <Location left="845" top="2731" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">int damagePerTick</Member>
+        <Member type="Field">int ticksPerSecond</Member>
+        <Member type="Method">public override IEnumerator DurationTimer()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>ShopItem</Name>
+        <Access>Public</Access>
+        <Location left="600" top="1490" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">int Cost</Member>
+        <Member type="Method">public override void OnInteract()</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Enemy</Name>
+        <Access>Public</Access>
+        <Location left="640" top="375" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Comment">
+        <Text>ConsumablePickup works w collision and interaction.
+
+Effects applied are controlled by all the effect components on the object.</Text>
+        <Location left="845" top="1750" />
+        <Size width="160" height="107" />
+      </Entity>
+      <Entity type="Comment">
+        <Text>Once bought it will go to the interactable class of it and use the Interact void.
+
+The items script should be disabled by the bool.</Text>
+        <Location left="600" top="1750" />
+        <Size width="160" height="98" />
+      </Entity>
+      <Entity type="Comment">
+        <Text>Needs other PickupSO for the prefab after drop.
+'
+Also has drop function now.</Text>
+        <Location left="1522" top="1564" />
+        <Size width="160" height="75" />
+      </Entity>
+      <Entity type="Comment">
+        <Text>Applies all effect components on object to target after pickup.
+Opposite if dropped.</Text>
+        <Location left="845" top="2034" />
+        <Size width="160" height="75" />
+      </Entity>
+      <Entity type="Comment">
+        <Text>Adds weaponSO to weapons, adds invenPickupSO to inventory.
+Opposite on drop.</Text>
+        <Location left="1281" top="2183" />
+        <Size width="160" height="77" />
+      </Entity>
+      <Entity type="Comment">
+        <Text>Adds activeItem to inventory.
+Drop does opposite.
+Use applies the effect components on the prefab.</Text>
+        <Location left="1697" top="2011" />
+        <Size width="175" height="75" />
+      </Entity>
+      <Entity type="Comment">
+        <Text>On Interaction teleports player to other level
+</Text>
+        <Location left="308" top="1754" />
+        <Size width="160" height="50" />
+      </Entity>
+      <Entity type="Comment">
+        <Text>Base interactable class
+Contains the check function to see if you can interact. if so, call OnInteract.</Text>
+        <Location left="577" top="903" />
+        <Size width="160" height="75" />
+      </Entity>
+      <Entity type="Comment">
+        <Text>Applies all the attached effect components to the target hit if it is in the right layer.</Text>
+        <Location left="1638" top="2663" />
+        <Size width="160" height="75" />
+      </Entity>
+      <Entity type="Comment">
+        <Text>The base effect class.
+Every possible effect will be written as classed derived from this.</Text>
+        <Location left="1067" top="2538" />
+        <Size width="160" height="75" />
+      </Entity>
+      <Entity type="Comment">
+        <Text>Base duration buff.
+Cannot do anything yet</Text>
+        <Location left="845" top="2318" />
+        <Size width="160" height="50" />
+      </Entity>
+      <Entity type="Comment">
+        <Text>Effect that applies damage over time.</Text>
+        <Location left="845" top="2991" />
+        <Size width="160" height="50" />
+      </Entity>
+      <Entity type="Comment">
+        <Text>Changes the target its health with the changeAmount.
+Remove does opposite</Text>
+        <Location left="1281" top="2991" />
+        <Size width="160" height="75" />
+      </Entity>
+    </Entities>
+    <Relationships>
+      <Relationship type="Comment" first="21" second="8">
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>1672</X>
+          <Y>2055</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>1659</X>
+          <Y>2055</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Comment" first="20" second="7">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="False">
+          <X>1362</X>
+          <Y>2175</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Comment" first="19" second="6">
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>1030</X>
+          <Y>2067</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>1042</X>
+          <Y>2067</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Comment" first="18" second="4">
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>1497</X>
+          <Y>1600</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Comment" first="16" second="5">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="False">
+          <X>928</X>
+          <Y>1731</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Comment" first="17" second="14">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="False">
+          <X>682</X>
+          <Y>1731</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Comment" first="22" second="3">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="False">
+          <X>384</X>
+          <Y>1731</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Generalization" first="4" second="2">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>1356</X>
+          <Y>1461</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>657</X>
+          <Y>1264</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Generalization" first="5" second="2">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>925</X>
+          <Y>1461</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>657</X>
+          <Y>1263</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Generalization" first="14" second="2">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="False">
+          <X>657</X>
+          <Y>1262</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Generalization" first="3" second="2">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>387</X>
+          <Y>1460</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>657</X>
+          <Y>1265</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Comment" first="23" second="2">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="False">
+          <X>658</X>
+          <Y>996</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Generalization" first="15" second="1">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+      </Relationship>
+      <Relationship type="Generalization" first="0" second="1">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>484</X>
+          <Y>347</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>599</X>
+          <Y>347</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Generalization" first="11" second="9">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+      </Relationship>
+      <Relationship type="Dependency" first="6" second="9">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>1153</X>
+          <Y>2315</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Dependency" first="8" second="9">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>1547</X>
+          <Y>2316</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>1359</X>
+          <Y>2385</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Dependency" first="10" second="9">
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+      </Relationship>
+      <Relationship type="Generalization" first="6" second="4">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="False">
+          <X>1356</X>
+          <Y>1731</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Generalization" first="7" second="4">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="False">
+          <X>1356</X>
+          <Y>1735</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Generalization" first="8" second="4">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="False">
+          <X>1356</X>
+          <Y>1731</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Association" first="12" second="9">
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Association</AssociationType>
+      </Relationship>
+      <Relationship type="Comment" first="24" second="10">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="False">
+          <X>1720</X>
+          <Y>2651</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Comment" first="25" second="9">
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+      </Relationship>
+      <Relationship type="Comment" first="26" second="12">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="False">
+          <X>922</X>
+          <Y>2385</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Comment" first="27" second="13">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="False">
+          <X>929</X>
+          <Y>2972</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Generalization" first="13" second="12">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+      </Relationship>
+      <Relationship type="Comment" first="28" second="11">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+      </Relationship>
+    </Relationships>
+  </ProjectItem>
+</Project>

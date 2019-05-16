@@ -6,10 +6,6 @@ public class DOTBuff : DurationBuff
 {
     public int ticksPerSecond;
     public float tickDamage;
-    public override void ApplyEffect()
-    {
-        StartCoroutine(Duration(duration));
-    }
     public override IEnumerator Duration(int duration)
     {
         for(int i = 0; i < duration * ticksPerSecond; i++)
