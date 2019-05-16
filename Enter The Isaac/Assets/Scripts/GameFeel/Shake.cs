@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
 
 public class Shake : MonoBehaviour
 {
@@ -10,6 +11,7 @@ public class Shake : MonoBehaviour
     [SerializeField] float shakeScale = 1;
     Vector3 rngRemover;
     [SerializeField] ParticleSystem speedLines;
+    [SerializeField] PostProcessVolume ppVolume;
 
 
     void LateUpdate()
@@ -30,6 +32,16 @@ public class Shake : MonoBehaviour
                 speedLines.Stop();
             }
         }
+
+        if (ppVolume != null)
+        {
+            ChromaticAberration crom;
+            ppVolume.profile.TryGetSettings(out crom);
+            if (crom != null)
+            {
+                crom.intensity.value = Mathf.MoveTowards(crom.intensity.value, 0, Time.unscaledDeltaTime * 3);
+            }
+        }
     }
 
     void StartShake(float time, float strength)
@@ -40,6 +52,16 @@ public class Shake : MonoBehaviour
         Invoke("StopShake", time);
         transform.eulerAngles -= rngRemover;
         rngRemover = Vector3.zero;
+
+        if (ppVolume != null)
+        {
+            ChromaticAberration crom;
+            ppVolume.profile.TryGetSettings(out crom);
+            if (crom != null)
+            {
+                crom.intensity.value = 0.2f;
+            }
+        }
     }
 
     public void SmallShake()

@@ -123,6 +123,7 @@ public class Gun : MonoBehaviour
     {
         CancelInvoke("Shoot");
         Invoke("Reload", gunClone.reloadTime);
+        transform.Rotate(0,0,90);
     }
 
     public void GetSwitchGunInput(float scrollInput)
@@ -194,6 +195,7 @@ public class Gun : MonoBehaviour
                 if (shootFirstFrame == true)
                 {
                     Invoke("Reload", gunClone.reloadTime);
+                    transform.Rotate(0,0,90);
                 }
             }
         }
