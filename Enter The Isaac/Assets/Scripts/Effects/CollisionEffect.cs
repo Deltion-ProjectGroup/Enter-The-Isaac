@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class CollisionEffect : MonoBehaviour
+public class CollisionEffect : MonoBehaviour
 {
     public LayerMask possibleTargets;
     public void OnTriggerEnter(Collider other)
