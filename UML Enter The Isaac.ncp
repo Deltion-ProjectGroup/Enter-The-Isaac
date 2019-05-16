@@ -407,7 +407,7 @@
       <Entity type="Class">
         <Name>Player</Name>
         <Access>Public</Access>
-        <Location left="404" top="459" />
+        <Location left="404" top="372" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
         <Modifier>None</Modifier>
@@ -455,7 +455,7 @@
       <Entity type="Class">
         <Name>ConsumablePickup</Name>
         <Access>Public</Access>
-        <Location left="501" top="1491" />
+        <Location left="577" top="1480" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
         <Modifier>None</Modifier>
@@ -532,6 +532,14 @@
         <Collapsed>False</Collapsed>
         <Modifier>None</Modifier>
       </Entity>
+      <Entity type="Class">
+        <Name>ShopItem</Name>
+        <Access>Public</Access>
+        <Location left="332" top="1486" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Modifier>None</Modifier>
+      </Entity>
     </Entities>
     <Relationships>
       <Relationship type="Dependency" first="0" second="1">
@@ -564,8 +572,8 @@
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
         <BendPoint relativeToStartShape="True">
-          <X>582</X>
-          <Y>1458</Y>
+          <X>658</X>
+          <Y>1447</Y>
         </BendPoint>
         <BendPoint relativeToStartShape="False">
           <X>757</X>
@@ -607,6 +615,16 @@
         </Label>
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
+      </Relationship>
+      <Relationship type="Dependency" first="16" second="4">
+        <Label>
+        </Label>
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>410</X>
+          <Y>1446</Y>
+        </BendPoint>
       </Relationship>
     </Relationships>
   </ProjectItem>
