@@ -5,406 +5,6 @@
     <Language>CSharp</Language>
     <Entities>
       <Entity type="Class">
-        <Name>GameLobby</Name>
-        <Access>Public</Access>
-        <Location left="670" top="915" />
-        <Size width="162" height="604" />
-        <Collapsed>False</Collapsed>
-        <Member type="Field">GameObject localPlayer</Member>
-        <Member type="Field">List&lt;GameObject&gt; allPlayer</Member>
-        <Member type="Field">Transform[] playerPlatformPositions</Member>
-        <Member type="Field">Color readyColor</Member>
-        <Member type="Field">Color neutralColor</Member>
-        <Member type="Field">string readyText</Member>
-        <Member type="Field">string neutralText</Member>
-        <Member type="Field">string waitForPlayerText</Member>
-        <Member type="Field">string readyUpText</Member>
-        <Member type="Field">int waitTime</Member>
-        <Member type="Field">int remainingTime</Member>
-        <Member type="Field">int minPlrRequired</Member>
-        <Member type="Field">Text timerText</Member>
-        <Member type="Field">bool inIntermission</Member>
-        <Member type="Method">public void StartGame()</Member>
-        <Member type="Method">public void Leave()</Member>
-        <Member type="Method">public void OnJoinedRoom()</Member>
-        <Member type="Method">public IEnemerator RPCAddPlayer()</Member>
-        <Member type="Method">public IEnemerator RPCRemovePlayer()</Member>
-        <Member type="Method">public void GetPlayers()</Member>
-        <Member type="Method">public void ReSort()</Member>
-        <Member type="Method">public IEnemerator RPCCheckReadyPlayers()</Member>
-        <Member type="Method">public bool AllReady()</Member>
-        <Member type="Method">public IEnemerator Intermission()</Member>
-        <Member type="Method">public void ToggleReady()</Member>
-        <Member type="Method">public void OnMasterClientSwitched()</Member>
-        <Member type="Method">public void OnPhotonSerializeView()</Member>
-        <Member type="Method">public void KickPlayer()</Member>
-        <Member type="Method">public void OnLeftRoom()</Member>
-        <Member type="Method">public void ToggleVisible()</Member>
-        <Member type="Method">public void ToggleLock()</Member>
-        <Modifier>None</Modifier>
-      </Entity>
-      <Entity type="Class">
-        <Name>NetworkLobby</Name>
-        <Access>Public</Access>
-        <Location left="435" top="915" />
-        <Size width="162" height="264" />
-        <Collapsed>False</Collapsed>
-        <Member type="Field">Transform roomHolder</Member>
-        <Member type="Field">InputField roomInput</Member>
-        <Member type="Field">InputField nameInput</Member>
-        <Member type="Field">Slider playerSlider</Member>
-        <Member type="Field">string version</Member>
-        <Member type="Field">string preGameScene</Member>
-        <Member type="Method">public void OnReceiveRoomListUpdate()</Member>
-        <Member type="Method">public void CreateRoom()</Member>
-        <Member type="Method">public void JoinCertainRoom(string roomName)</Member>
-        <Modifier>None</Modifier>
-      </Entity>
-      <Entity type="Class">
-        <Name>UIManager</Name>
-        <Access>Public</Access>
-        <Location left="815" top="119" />
-        <Size width="162" height="216" />
-        <Collapsed>False</Collapsed>
-        <Member type="Field">Text TimerText</Member>
-        <Modifier>None</Modifier>
-      </Entity>
-      <Entity type="Class">
-        <Name>GameManager</Name>
-        <Access>Public</Access>
-        <Location left="443" top="120" />
-        <Size width="162" height="230" />
-        <Collapsed>False</Collapsed>
-        <Member type="Field">GameObject aliveElves</Member>
-        <Member type="Field">GameObject santa</Member>
-        <Member type="Field">const int startTime = 5000</Member>
-        <Member type="Field">int remainingTIme</Member>
-        <Member type="Method">public static void FindElves()</Member>
-        <Member type="Method">public static void FindSanta()</Member>
-        <Member type="Method">public IEnumerator Timer()</Member>
-        <Member type="Method">public void CheckGameStatus()</Member>
-        <Modifier>None</Modifier>
-      </Entity>
-      <Entity type="Class">
-        <Name>Player</Name>
-        <Access>Public</Access>
-        <Location left="1665" top="60" />
-        <Size width="162" height="383" />
-        <Collapsed>False</Collapsed>
-        <Member type="Field">float speed</Member>
-        <Member type="Field">const float baseSpeed = 10</Member>
-        <Member type="Field">float jumpPower</Member>
-        <Member type="Field">const float baseJumpPower = 10</Member>
-        <Member type="Field">int health</Member>
-        <Member type="Field">float baseHealth</Member>
-        <Member type="Field">float interactionRange</Member>
-        <Member type="Field">bool carrying</Member>
-        <Member type="Field">Transform cam</Member>
-        <Member type="Field">float rotateMultiplier</Member>
-        <Member type="Method">private void Jump()</Member>
-        <Member type="Method">private void Walk()</Member>
-        <Member type="Method">public void Interact()</Member>
-        <Member type="Method">public void CheckInteract()</Member>
-        <Member type="Method">public virtual void Death()</Member>
-        <Member type="Method">public virtual void CheckHealth()</Member>
-        <Member type="Method">public void ReceiveDamage(int damageAmount)</Member>
-        <Member type="Method">private void CamRotate()</Member>
-        <Modifier>None</Modifier>
-      </Entity>
-      <Entity type="Class">
-        <Name>Santa</Name>
-        <Access>Public</Access>
-        <Location left="1562" top="466" />
-        <Size width="162" height="370" />
-        <Collapsed>False</Collapsed>
-        <Member type="Field">int attackDamage</Member>
-        <Member type="Field">const int baseAttackDamage = 1</Member>
-        <Member type="Field">float attackCooldown</Member>
-        <Member type="Field">private bool canAttack</Member>
-        <Member type="Method">public IEnumerator Attack()</Member>
-        <Modifier>None</Modifier>
-      </Entity>
-      <Entity type="Class">
-        <Name>Elves</Name>
-        <Access>Public</Access>
-        <Location left="1768" top="481" />
-        <Size width="162" height="961" />
-        <Collapsed>False</Collapsed>
-        <Member type="Field">public StruggleState currentState</Member>
-        <Member type="Field">public string struggleInput</Member>
-        <Member type="Field">public float struggleMoveSpeed</Member>
-        <Member type="Field">public int struggleTime</Member>
-        <Member type="Field">public float pullBackSpeed</Member>
-        <Member type="Field">int struggling</Member>
-        <Member type="Field">public float itemDetectRange</Member>
-        <Member type="Field">public LayerMask craftingItemsMask</Member>
-        <Member type="Field">bool canCrraft</Member>
-        <Member type="Field">public int minimumItemAmount</Member>
-        <Member type="Field">public string craftingInput</Member>
-        <Member type="Field">public int craftingTime</Member>
-        <Member type="Field">IEnumerator currentCrafting</Member>
-        <Member type="Field">public float cambackwardsDistance</Member>
-        <Member type="Field">public string gun</Member>
-        <Member type="Field">public Transform InventoryLocation</Member>
-        <Member type="Field">public bool hasItem</Member>
-        <Member type="Field">GameObject currentItem</Member>
-        <Member type="Field">public string itemName</Member>
-        <Member type="Field">public string dropInput</Member>
-        <Member type="Field">public Rigidbody[] bones</Member>
-        <Member type="Field">public bool isKnockedOut = true</Member>
-        <Member type="Field">public float knockedOutTime</Member>
-        <Member type="Field">public float jumpForce</Member>
-        <Member type="Field">public bool addForce</Member>
-        <Member type="Field">public float groundDetectionRange</Member>
-        <Member type="Field">public LayerMask groundMask</Member>
-        <Member type="Field">public bool canJump</Member>
-        <Member type="Field">public Rigidbody rig</Member>
-        <Member type="Field">public bool downwardsVelocityEnabled</Member>
-        <Member type="Field">public float addDownwardsVelocity</Member>
-        <Member type="Field">public IEnumerator currentKnockeddOutNumerator</Member>
-        <Member type="Method">public void Start()</Member>
-        <Member type="Method">public void Update()</Member>
-        <Member type="Method">public void AddItem()</Member>
-        <Member type="Method">public void DropItem()</Member>
-        <Member type="Method">public void ExtraDownwardsVelocity()</Member>
-        <Member type="Method">public void Jump()</Member>
-        <Member type="Method">public void CheckGround()</Member>
-        <Member type="Method">public void CheckState()</Member>
-        <Member type="Method">public void Weapon()</Member>
-        <Member type="Method">public void Normal()</Member>
-        <Member type="Method">public void CheckForItems()</Member>
-        <Member type="Method">public void Struggling()</Member>
-        <Member type="Method">public void KnockedOut()</Member>
-        <Member type="Method">public void KnockedOutTimer()</Member>
-        <Member type="Method">public void ToggleRagdoll()</Member>
-        <Member type="Method">public void Crafting()</Member>
-        <Member type="Method">public void StartCrafting()</Member>
-        <Member type="Method">public void Crafted()</Member>
-        <Member type="Method">public void OnDrawGizmosSelected()</Member>
-        <Member type="Method">public override void Death()</Member>
-        <Modifier>None</Modifier>
-      </Entity>
-      <Entity type="Class">
-        <Name>InteractableObject</Name>
-        <Access>Public</Access>
-        <Location left="2639" top="185" />
-        <Size width="162" height="216" />
-        <Collapsed>False</Collapsed>
-        <Member type="Method">public void Interact()</Member>
-        <Modifier>None</Modifier>
-      </Entity>
-      <Entity type="Class">
-        <Name>ElveKiller</Name>
-        <Access>Public</Access>
-        <Location left="3013" top="294" />
-        <Size width="162" height="216" />
-        <Collapsed>False</Collapsed>
-        <Member type="Field">bool isActive</Member>
-        <Member type="Field">int currentElve</Member>
-        <Member type="Method">public void Kill()</Member>
-        <Member type="Method">public void PlaceElve()</Member>
-        <Member type="Method">public void FreeElve()</Member>
-        <Modifier>None</Modifier>
-      </Entity>
-      <Entity type="Class">
-        <Name>Spectator</Name>
-        <Access>Public</Access>
-        <Location left="2028" top="466" />
-        <Size width="162" height="216" />
-        <Collapsed>False</Collapsed>
-        <Member type="Field">int currentSpectate</Member>
-        <Member type="Method">public void SwitchTarget(int switchVal)</Member>
-        <Modifier>None</Modifier>
-      </Entity>
-      <Entity type="Class">
-        <Name>Train</Name>
-        <Access>Public</Access>
-        <Location left="3013" top="751" />
-        <Size width="162" height="216" />
-        <Collapsed>False</Collapsed>
-        <Modifier>None</Modifier>
-      </Entity>
-      <Entity type="Class">
-        <Name>Options</Name>
-        <Access>Public</Access>
-        <Location left="815" top="493" />
-        <Size width="162" height="216" />
-        <Collapsed>False</Collapsed>
-        <Modifier>None</Modifier>
-      </Entity>
-      <Entity type="Class">
-        <Name>KnockedOutElve</Name>
-        <Access>Public</Access>
-        <Location left="3013" top="526" />
-        <Size width="162" height="216" />
-        <Collapsed>False</Collapsed>
-        <Modifier>None</Modifier>
-      </Entity>
-      <Entity type="Class">
-        <Name>Room</Name>
-        <Access>Public</Access>
-        <Location left="169" top="915" />
-        <Size width="162" height="216" />
-        <Collapsed>False</Collapsed>
-        <Member type="Method">public void Join()</Member>
-        <Member type="Method">public void SetInfo(RoomInfo aInfo, NetworkLobby aLobbyManager)</Member>
-        <Modifier>None</Modifier>
-      </Entity>
-      <Entity type="Class">
-        <Name>LobbyPlayer</Name>
-        <Access>Public</Access>
-        <Location left="1382" top="102" />
-        <Size width="162" height="216" />
-        <Collapsed>False</Collapsed>
-        <Member type="Field">Text userName</Member>
-        <Member type="Field">Text readyText</Member>
-        <Member type="Field">bool isReady</Member>
-        <Member type="Method">public void OnPhotonSerializeView()</Member>
-        <Modifier>None</Modifier>
-      </Entity>
-      <Entity type="Class">
-        <Name>WeaponPart</Name>
-        <Access>Public</Access>
-        <Location left="2639" top="526" />
-        <Size width="162" height="247" />
-        <Collapsed>False</Collapsed>
-        <Member type="Field">public Vector3 position</Member>
-        <Member type="Field">public Quanternion rotation</Member>
-        <Member type="Field">public float smoothing</Member>
-        <Member type="Field">public bool pickedUp</Member>
-        <Member type="Field">public bool hasCollider = true</Member>
-        <Member type="Method">public void Awake()</Member>
-        <Member type="Method">public override void Interact()</Member>
-        <Member type="Method">public void DestroyThis()</Member>
-        <Member type="Method">public IEnumerator UpdateData()</Member>
-        <Member type="Method">public void OnPhotonSerializeView()</Member>
-        <Modifier>None</Modifier>
-      </Entity>
-      <Entity type="Class">
-        <Name>BaseGun</Name>
-        <Access>Public</Access>
-        <Location left="2255" top="756" />
-        <Size width="162" height="216" />
-        <Collapsed>False</Collapsed>
-        <Member type="Field">public ElfController controller</Member>
-        <Member type="Field">public string projectile</Member>
-        <Member type="Field">public Transform firePosition</Member>
-        <Member type="Method">public void Fire()</Member>
-        <Modifier>None</Modifier>
-      </Entity>
-    </Entities>
-    <Relationships>
-      <Relationship type="Association" first="0" second="1">
-        <StartOrientation>Horizontal</StartOrientation>
-        <EndOrientation>Horizontal</EndOrientation>
-        <Direction>Unidirectional</Direction>
-        <AssociationType>Association</AssociationType>
-      </Relationship>
-      <Relationship type="Generalization" first="6" second="4">
-        <StartOrientation>Horizontal</StartOrientation>
-        <EndOrientation>Vertical</EndOrientation>
-        <BendPoint relativeToStartShape="True">
-          <X>1746</X>
-          <Y>828</Y>
-        </BendPoint>
-        <BendPoint relativeToStartShape="False">
-          <X>1746</X>
-          <Y>468</Y>
-        </BendPoint>
-      </Relationship>
-      <Relationship type="Generalization" first="5" second="4">
-        <StartOrientation>Vertical</StartOrientation>
-        <EndOrientation>Vertical</EndOrientation>
-      </Relationship>
-      <Relationship type="Generalization" first="8" second="7">
-        <StartOrientation>Horizontal</StartOrientation>
-        <EndOrientation>Horizontal</EndOrientation>
-        <BendPoint relativeToStartShape="False">
-          <X>2833</X>
-          <Y>311</Y>
-        </BendPoint>
-      </Relationship>
-      <Relationship type="Association" first="9" second="6">
-        <StartOrientation>Horizontal</StartOrientation>
-        <EndOrientation>Horizontal</EndOrientation>
-        <Direction>Unidirectional</Direction>
-        <AssociationType>Association</AssociationType>
-      </Relationship>
-      <Relationship type="Generalization" first="10" second="7">
-        <StartOrientation>Horizontal</StartOrientation>
-        <EndOrientation>Horizontal</EndOrientation>
-        <BendPoint relativeToStartShape="True">
-          <X>2988</X>
-          <Y>860</Y>
-        </BendPoint>
-        <BendPoint relativeToStartShape="False">
-          <X>2826</X>
-          <Y>311</Y>
-        </BendPoint>
-      </Relationship>
-      <Relationship type="Association" first="11" second="2">
-        <StartOrientation>Vertical</StartOrientation>
-        <EndOrientation>Vertical</EndOrientation>
-        <Direction>Unidirectional</Direction>
-        <AssociationType>Association</AssociationType>
-      </Relationship>
-      <Relationship type="Association" first="7" second="4">
-        <StartOrientation>Horizontal</StartOrientation>
-        <EndOrientation>Horizontal</EndOrientation>
-        <Direction>Unidirectional</Direction>
-        <AssociationType>Association</AssociationType>
-      </Relationship>
-      <Relationship type="Generalization" first="12" second="7">
-        <StartOrientation>Horizontal</StartOrientation>
-        <EndOrientation>Horizontal</EndOrientation>
-        <BendPoint relativeToStartShape="True">
-          <X>2988</X>
-          <Y>580</Y>
-        </BendPoint>
-        <BendPoint relativeToStartShape="False">
-          <X>2826</X>
-          <Y>311</Y>
-        </BendPoint>
-      </Relationship>
-      <Relationship type="Association" first="13" second="1">
-        <StartOrientation>Horizontal</StartOrientation>
-        <EndOrientation>Horizontal</EndOrientation>
-        <Direction>Unidirectional</Direction>
-        <AssociationType>Association</AssociationType>
-      </Relationship>
-      <Relationship type="Association" first="4" second="14">
-        <Label>
-        </Label>
-        <StartOrientation>Horizontal</StartOrientation>
-        <EndOrientation>Horizontal</EndOrientation>
-        <Direction>Unidirectional</Direction>
-        <AssociationType>Association</AssociationType>
-      </Relationship>
-      <Relationship type="Generalization" first="15" second="7">
-        <StartOrientation>Horizontal</StartOrientation>
-        <EndOrientation>Horizontal</EndOrientation>
-        <BendPoint relativeToStartShape="True">
-          <X>2851</X>
-          <Y>580</Y>
-        </BendPoint>
-        <BendPoint relativeToStartShape="False">
-          <X>2907</X>
-          <Y>311</Y>
-        </BendPoint>
-      </Relationship>
-      <Relationship type="Association" first="16" second="6">
-        <StartOrientation>Horizontal</StartOrientation>
-        <EndOrientation>Horizontal</EndOrientation>
-        <Direction>Unidirectional</Direction>
-        <AssociationType>Association</AssociationType>
-      </Relationship>
-    </Relationships>
-  </ProjectItem>
-  <ProjectItem type="NClass.DiagramEditor.ClassDiagram.Diagram" assembly="NClass.DiagramEditor, Version=2.4.1823.0, Culture=neutral, PublicKeyToken=null">
-    <Name>Untitled</Name>
-    <Language>CSharp</Language>
-    <Entities>
-      <Entity type="Class">
         <Name>Player</Name>
         <Access>Public</Access>
         <Location left="404" top="372" />
@@ -423,121 +23,139 @@
       <Entity type="Class">
         <Name>Interactable</Name>
         <Access>Public</Access>
-        <Location left="872" top="835" />
+        <Location left="577" top="1021" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
-        <Modifier>None</Modifier>
+        <Member type="Field">bool canInteract</Member>
+        <Member type="Method">public abstract void OnInteract()</Member>
+        <Member type="Method">public void Interact()</Member>
+        <Modifier>Abstract</Modifier>
       </Entity>
       <Entity type="Class">
         <Name>Teleporter</Name>
         <Access>Public</Access>
-        <Location left="1099" top="1118" />
+        <Location left="308" top="1490" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
-        <Modifier>None</Modifier>
-      </Entity>
-      <Entity type="Class">
-        <Name>Pickup</Name>
-        <Access>Public</Access>
-        <Location left="677" top="1118" />
-        <Size width="162" height="216" />
-        <Collapsed>False</Collapsed>
+        <Member type="Field">string levelToLoad</Member>
+        <Member type="Method">public override void OnInteract()</Member>
         <Modifier>None</Modifier>
       </Entity>
       <Entity type="Class">
         <Name>InventoryPickup</Name>
         <Access>Public</Access>
-        <Location left="797" top="1480" />
-        <Size width="162" height="216" />
+        <Location left="1261" top="1490" />
+        <Size width="191" height="216" />
         <Collapsed>False</Collapsed>
-        <Modifier>None</Modifier>
+        <Member type="Field">InventoryPickupSO pickupData</Member>
+        <Member type="Method">public abstract void OnDrop()</Member>
+        <Member type="Method">public override void OnInteract()</Member>
+        <Modifier>Abstract</Modifier>
       </Entity>
       <Entity type="Class">
         <Name>ConsumablePickup</Name>
         <Access>Public</Access>
-        <Location left="577" top="1480" />
+        <Location left="845" top="1490" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
+        <Member type="Method">public void OnTriggerEnter()</Member>
+        <Member type="Method">public override void OnInteract()</Member>
         <Modifier>None</Modifier>
       </Entity>
       <Entity type="Class">
         <Name>PassiveItemPickup</Name>
         <Access>Public</Access>
-        <Location left="797" top="1779" />
+        <Location left="1067" top="1934" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
+        <Member type="Method">public override void OnInteract()</Member>
+        <Member type="Method">public override void OnDrop()</Member>
         <Modifier>None</Modifier>
       </Entity>
       <Entity type="Class">
         <Name>WeaponItemPickup</Name>
         <Access>Public</Access>
-        <Location left="1007" top="1779" />
+        <Location left="1277" top="1934" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
+        <Member type="Field">WeaponSO WeaponData</Member>
+        <Member type="Method">public override void OnInteract()</Member>
+        <Member type="Method">public override void OnDrop()</Member>
         <Modifier>None</Modifier>
       </Entity>
       <Entity type="Class">
         <Name>ActiveItemPickup</Name>
         <Access>Public</Access>
-        <Location left="1202" top="1779" />
+        <Location left="1472" top="1934" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
-        <Modifier>None</Modifier>
+        <Member type="Method">public override void OnInteract()</Member>
+        <Member type="Method">public override void OnDrop()</Member>
+        <Member type="Method">public void OnUse()</Member>
+        <Modifier>Abstract</Modifier>
       </Entity>
       <Entity type="Class">
         <Name>Effect</Name>
         <Access>Public</Access>
-        <Location left="1808" top="1261" />
+        <Location left="1277" top="2410" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
-        <Modifier>None</Modifier>
+        <Member type="Method">public abstract void ApplyEffect()</Member>
+        <Member type="Method">public abstract void RemoveEffect()</Member>
+        <Modifier>Abstract</Modifier>
       </Entity>
       <Entity type="Class">
         <Name>CollisionEffect</Name>
         <Access>Public</Access>
-        <Location left="1808" top="877" />
+        <Location left="1638" top="2410" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
+        <Member type="Field">LayerMask possibleTargets</Member>
+        <Member type="Method">public void OnTriggerEnter()</Member>
         <Modifier>None</Modifier>
       </Entity>
       <Entity type="Class">
-        <Name>MofiyHealthEffect</Name>
+        <Name>ModifiyHealthEffect</Name>
         <Access>Public</Access>
-        <Location left="1812" top="1570" />
+        <Location left="1281" top="2719" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
-        <Modifier>None</Modifier>
-      </Entity>
-      <Entity type="Class">
-        <Name>Buff</Name>
-        <Access>Public</Access>
-        <Location left="2256" top="877" />
-        <Size width="162" height="216" />
-        <Collapsed>False</Collapsed>
+        <Member type="Field">int changeAmount</Member>
+        <Member type="Method">public override void ApplyEffect()</Member>
+        <Member type="Method">public override void RemoveEffect()</Member>
         <Modifier>None</Modifier>
       </Entity>
       <Entity type="Class">
         <Name>DurationBuff</Name>
         <Access>Public</Access>
-        <Location left="2261" top="1181" />
+        <Location left="659" top="2398" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
+        <Member type="Field">int duration</Member>
+        <Member type="Method">public virtual void Start()</Member>
+        <Member type="Method">public virtual IEnumerator DurationTimer()</Member>
+        <Member type="Method">public virtual void RemoveEffect()</Member>
         <Modifier>None</Modifier>
       </Entity>
       <Entity type="Class">
         <Name>DOTBuff</Name>
         <Access>Public</Access>
-        <Location left="2265" top="1556" />
+        <Location left="659" top="2719" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
+        <Member type="Field">int damagePerTick</Member>
+        <Member type="Field">int ticksPerSecond</Member>
+        <Member type="Method">public override IEnumerator DurationTimer()</Member>
         <Modifier>None</Modifier>
       </Entity>
       <Entity type="Class">
         <Name>ShopItem</Name>
         <Access>Public</Access>
-        <Location left="332" top="1486" />
+        <Location left="600" top="1490" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
+        <Member type="Field">int Cost</Member>
+        <Member type="Method">public override void OnInteract()</Member>
         <Modifier>None</Modifier>
       </Entity>
       <Entity type="Class">
@@ -556,99 +174,311 @@
         <Collapsed>False</Collapsed>
         <Modifier>None</Modifier>
       </Entity>
+      <Entity type="Comment">
+        <Text>ConsumablePickup works w collision and interaction.
+
+Effects applied are controlled by all the effect components on the object.</Text>
+        <Location left="845" top="1750" />
+        <Size width="160" height="107" />
+      </Entity>
+      <Entity type="Comment">
+        <Text>Once bought it will go to the interactable class of it and use the Interact void.
+
+The items script should be disabled by the bool.</Text>
+        <Location left="600" top="1750" />
+        <Size width="160" height="98" />
+      </Entity>
+      <Entity type="Comment">
+        <Text>Needs other PickupSO for the prefab after drop.
+'
+Also has drop function now.</Text>
+        <Location left="1522" top="1564" />
+        <Size width="160" height="75" />
+      </Entity>
+      <Entity type="Comment">
+        <Text>Applies all effect components on object to target after pickup.
+Opposite if dropped.</Text>
+        <Location left="845" top="2034" />
+        <Size width="160" height="75" />
+      </Entity>
+      <Entity type="Comment">
+        <Text>Adds weaponSO to weapons, adds invenPickupSO to inventory.
+Opposite on drop.</Text>
+        <Location left="1281" top="2183" />
+        <Size width="160" height="77" />
+      </Entity>
+      <Entity type="Comment">
+        <Text>Adds activeItem to inventory.
+Drop does opposite.
+Use applies the effect components on the prefab.</Text>
+        <Location left="1697" top="2011" />
+        <Size width="175" height="75" />
+      </Entity>
+      <Entity type="Comment">
+        <Text>On Interaction teleports player to other level
+</Text>
+        <Location left="308" top="1754" />
+        <Size width="160" height="50" />
+      </Entity>
+      <Entity type="Comment">
+        <Text>Base interactable class
+Contains the check function to see if you can interact. if so, call OnInteract.</Text>
+        <Location left="577" top="903" />
+        <Size width="160" height="75" />
+      </Entity>
+      <Entity type="Comment">
+        <Text>Applies all the attached effect components to the target hit if it is in the right layer.</Text>
+        <Location left="1638" top="2663" />
+        <Size width="160" height="75" />
+      </Entity>
+      <Entity type="Comment">
+        <Text>The base effect class.
+Every possible effect will be written as classed derived from this.</Text>
+        <Location left="1067" top="2538" />
+        <Size width="160" height="75" />
+      </Entity>
+      <Entity type="Comment">
+        <Text>Base duration buff.
+Cannot do anything yet</Text>
+        <Location left="659" top="2306" />
+        <Size width="160" height="50" />
+      </Entity>
+      <Entity type="Comment">
+        <Text>Effect that applies damage over time.</Text>
+        <Location left="659" top="2979" />
+        <Size width="160" height="50" />
+      </Entity>
+      <Entity type="Comment">
+        <Text>Changes the target its health with the changeAmount.
+Remove does opposite</Text>
+        <Location left="1281" top="2991" />
+        <Size width="160" height="75" />
+      </Entity>
     </Entities>
     <Relationships>
-      <Relationship type="Dependency" first="0" second="1">
-        <Label>
-        </Label>
-        <StartOrientation>Vertical</StartOrientation>
-        <EndOrientation>Vertical</EndOrientation>
-      </Relationship>
-      <Relationship type="Dependency" first="3" second="2">
-        <Label>
-        </Label>
-        <StartOrientation>Vertical</StartOrientation>
-        <EndOrientation>Vertical</EndOrientation>
-      </Relationship>
-      <Relationship type="Dependency" first="4" second="2">
-        <Label>
-        </Label>
-        <StartOrientation>Vertical</StartOrientation>
-        <EndOrientation>Vertical</EndOrientation>
-      </Relationship>
-      <Relationship type="Dependency" first="5" second="4">
-        <Label>
-        </Label>
-        <StartOrientation>Vertical</StartOrientation>
-        <EndOrientation>Vertical</EndOrientation>
-      </Relationship>
-      <Relationship type="Dependency" first="6" second="4">
-        <Label>
-        </Label>
-        <StartOrientation>Vertical</StartOrientation>
-        <EndOrientation>Vertical</EndOrientation>
+      <Relationship type="Comment" first="22" second="8">
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
         <BendPoint relativeToStartShape="True">
-          <X>658</X>
-          <Y>1447</Y>
+          <X>1672</X>
+          <Y>2055</Y>
         </BendPoint>
         <BendPoint relativeToStartShape="False">
-          <X>757</X>
-          <Y>1359</Y>
+          <X>1659</X>
+          <Y>2055</Y>
         </BendPoint>
       </Relationship>
-      <Relationship type="Dependency" first="7" second="5">
-        <Label>
-        </Label>
+      <Relationship type="Comment" first="21" second="7">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="False">
+          <X>1362</X>
+          <Y>2175</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Comment" first="20" second="6">
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>1030</X>
+          <Y>2067</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>1042</X>
+          <Y>2067</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Comment" first="19" second="4">
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>1497</X>
+          <Y>1600</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Comment" first="17" second="5">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="False">
+          <X>928</X>
+          <Y>1731</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Comment" first="18" second="14">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="False">
+          <X>682</X>
+          <Y>1731</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Comment" first="23" second="3">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="False">
+          <X>384</X>
+          <Y>1731</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Generalization" first="4" second="2">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>1357</X>
+          <Y>1461</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>658</X>
+          <Y>1266</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Generalization" first="5" second="2">
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
       </Relationship>
-      <Relationship type="Dependency" first="8" second="5">
-        <Label>
-        </Label>
+      <Relationship type="Generalization" first="14" second="2">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="False">
+          <X>658</X>
+          <Y>1262</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Generalization" first="3" second="2">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>388</X>
+          <Y>1465</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>657</X>
+          <Y>1266</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Comment" first="24" second="2">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="False">
+          <X>658</X>
+          <Y>996</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Generalization" first="15" second="1">
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
       </Relationship>
-      <Relationship type="Dependency" first="9" second="5">
-        <Label>
-        </Label>
+      <Relationship type="Generalization" first="0" second="1">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>484</X>
+          <Y>347</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>599</X>
+          <Y>347</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Generalization" first="11" second="9">
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
       </Relationship>
-      <Relationship type="Dependency" first="12" second="10">
-        <Label>
-        </Label>
-        <StartOrientation>Vertical</StartOrientation>
-        <EndOrientation>Vertical</EndOrientation>
-      </Relationship>
-      <Relationship type="Dependency" first="15" second="14">
-        <Label>
-        </Label>
-        <StartOrientation>Vertical</StartOrientation>
-        <EndOrientation>Vertical</EndOrientation>
-      </Relationship>
-      <Relationship type="Dependency" first="14" second="13">
-        <Label>
-        </Label>
-        <StartOrientation>Vertical</StartOrientation>
-        <EndOrientation>Vertical</EndOrientation>
-      </Relationship>
-      <Relationship type="Dependency" first="16" second="4">
+      <Relationship type="Dependency" first="6" second="9">
         <Label>
         </Label>
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
         <BendPoint relativeToStartShape="True">
-          <X>410</X>
-          <Y>1446</Y>
+          <X>1153</X>
+          <Y>2315</Y>
         </BendPoint>
       </Relationship>
-      <Relationship type="Generalization" first="11" second="10">
+      <Relationship type="Dependency" first="8" second="9">
+        <Label>
+        </Label>
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>1547</X>
+          <Y>2316</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>1359</X>
+          <Y>2385</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Dependency" first="10" second="9">
+        <Label>
+        </Label>
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+      </Relationship>
+      <Relationship type="Generalization" first="6" second="4">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="False">
+          <X>1357</X>
+          <Y>1731</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Generalization" first="7" second="4">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="False">
+          <X>1357</X>
+          <Y>1735</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Generalization" first="8" second="4">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="False">
+          <X>1357</X>
+          <Y>1731</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Association" first="12" second="9">
+        <Label>
+        </Label>
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+        <Direction>Unidirectional</Direction>
+        <AssociationType>Association</AssociationType>
+      </Relationship>
+      <Relationship type="Comment" first="25" second="10">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="False">
+          <X>1720</X>
+          <Y>2651</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Comment" first="26" second="9">
+        <StartOrientation>Horizontal</StartOrientation>
+        <EndOrientation>Horizontal</EndOrientation>
+      </Relationship>
+      <Relationship type="Comment" first="27" second="12">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="False">
+          <X>736</X>
+          <Y>2373</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Comment" first="28" second="13">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="False">
+          <X>743</X>
+          <Y>2960</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Generalization" first="13" second="12">
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
       </Relationship>
-      <Relationship type="Dependency" first="17" second="1">
-        <Label>
-        </Label>
+      <Relationship type="Comment" first="29" second="11">
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
       </Relationship>
