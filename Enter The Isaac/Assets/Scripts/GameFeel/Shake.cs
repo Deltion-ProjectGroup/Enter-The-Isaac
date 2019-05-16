@@ -9,6 +9,7 @@ public class Shake : MonoBehaviour
     float shakestr = 0.5f;
     [SerializeField] float shakeScale = 1;
     Vector3 rngRemover;
+    [SerializeField] ParticleSystem speedLines;
 
 
     void LateUpdate()
@@ -17,6 +18,17 @@ public class Shake : MonoBehaviour
         {
             transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, transform.localEulerAngles.y, 0);
             Shaking(shakestr);
+            if (speedLines != null)
+            {
+                speedLines.Play();
+            }
+        }
+        else
+        {
+            if (speedLines != null)
+            {
+                speedLines.Stop();
+            }
         }
     }
 
@@ -45,8 +57,9 @@ public class Shake : MonoBehaviour
         StartShake(0.3f, 1f);
     }
 
-    public void CustomShake(float time, float strength){
-        StartShake(time,strength);
+    public void CustomShake(float time, float strength)
+    {
+        StartShake(time, strength);
     }
 
     void StopShake()
@@ -60,7 +73,7 @@ public class Shake : MonoBehaviour
     {
         transform.eulerAngles -= rngRemover;
         str *= shakeScale;
-        rngRemover = new Vector3(Random.Range(-str, str),Random.Range(-str, str),Random.Range(-str, str));
+        rngRemover = new Vector3(Random.Range(-str, str), Random.Range(-str, str), Random.Range(-str, str));
         transform.localEulerAngles = new Vector3(transform.eulerAngles.x + rngRemover.x, transform.eulerAngles.y + rngRemover.y, rngRemover.z);
     }
 }

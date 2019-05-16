@@ -75,18 +75,29 @@ public class BaseEnemy : MonoBehaviour
 
     public void DieEvent()
     {
+        if (IsInvoking("DieEvent") == false)
+        {
+            Invoke("DieEvent", Time.deltaTime);
+        }
         if (GetComponent<Hitbox>().impactDir != Vector3.zero)
         {
             transform.LookAt(transform.position + GetComponent<Hitbox>().impactDir);
         }
-        hitbox.enabled = false;
-        timer += Time.deltaTime;
-        if (timer > 0.1f)
+        if (hitbox.enabled == true)
         {
-            transform.position -= transform.forward * 30 * Time.deltaTime;
+            Camera.main.GetComponent<Shake>().SmallShake();
+            hitbox.enabled = false;
+            transform.GetComponentInChildren<TrailRenderer>().enabled = true;
+        }
+        timer += Time.deltaTime;
+        if (timer < 0.05f)
+        {
+            transform.position -= transform.forward * 100 * Time.deltaTime;
         }
         if (timer > 0.25f)
         {
+            Camera.main.GetComponent<Shake>().SmallShake();
+            Camera.main.fieldOfView = 60;
             Destroy(gameObject);
         }
     }

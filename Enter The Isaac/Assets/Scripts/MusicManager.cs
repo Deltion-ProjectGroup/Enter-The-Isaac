@@ -82,7 +82,7 @@ public class MusicManager : MonoBehaviour
     IEnumerator MusicFadeEvent(int newSong)
     {
         FadeMusic();
-        yield return new WaitForSecondsRealtime(0.5f);
+        yield return new WaitUntil(() => fadeState != 0);
         UpdateMusic(newSong);
     }
 

@@ -150,9 +150,10 @@ public class PlayerController : MonoBehaviour
 
     void SwitchGun()
     {
-        if (Input.GetAxis(scrollInput) != 0 && GameObject.FindGameObjectWithTag("LaserHold") == null)
+        if (Input.GetAxis(scrollInput) != 0 && GameObject.FindGameObjectWithTag("LaserHold") == null && IsInvoking("NoSwitchGun") == false)
         {
-            // gun.GetSwitchGunInput(Input.GetAxis(scrollInput));
+            Invoke("NoSwitchGun",0.2f);
+            gun.transform.Rotate(-90,0,0);
             if (Input.GetAxis(scrollInput) > 0)
             {
                 curGun = (int)Mathf.Repeat(curGun + 1, guns.Length);
@@ -162,6 +163,10 @@ public class PlayerController : MonoBehaviour
                 curGun = (int)Mathf.Repeat(curGun - 1, guns.Length);
             }
         }
+    }
+
+    void NoSwitchGun(){
+        //invoke function lol
     }
 
     void SetAnimValues()

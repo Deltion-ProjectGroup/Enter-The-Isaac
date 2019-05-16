@@ -39,17 +39,7 @@ public class Gun : MonoBehaviour
     {
         startPos = transform.localPosition;
         gunType = guns[curGun];
-        /*
-        ammoStore.Clear();
-        for (int i = 0; i < guns.Length; i++)
-        {
-            ammoStore.Add(guns[i].magazineSize);
-        }
-        for (int i = 0; i < guns.Length; i++)
-        {
-            magazineStore.Add(guns[i].maxAmmo);
-        }
-        */
+
         gunClone = Instantiate(guns[curGun]);
         if (player != null)
         {
@@ -185,7 +175,7 @@ public class Gun : MonoBehaviour
         }
         //going back from recoil back
         transform.localPosition = Vector3.Lerp(transform.localPosition, startPos, Time.deltaTime * recoilSpeed);
-        transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.Euler(angle), Time.deltaTime * 10);
+        transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.Euler(angle), Time.deltaTime * 20);
     }
 
     public void Shoot()
@@ -262,7 +252,11 @@ public class Gun : MonoBehaviour
 
             bullet.transform.rotation *= Quaternion.Euler(0, accuracy + 180, 0);
             bullet.transform.Rotate(-bullet.transform.localEulerAngles.x, 0, 0);
-            bullet.transform.position -= bullet.transform.forward * gunClone.forwardStart;
+
+            if (Physics.Raycast(bullet.transform.position - (bullet.transform.forward * -gunClone.forwardStart), -bullet.transform.forward, gunClone.forwardStart) == false)
+            {
+                //bullet.transform.position -= bullet.transform.forward * gunClone.forwardStart;
+            }
 
             float rngSpeed = Random.Range(gunClone.bulletSpeed.x, gunClone.bulletSpeed.y);
             bullet.GetComponent<BulletMove>().speed = rngSpeed;
@@ -313,10 +307,7 @@ public class Gun : MonoBehaviour
 
         bullet.transform.rotation *= Quaternion.Euler(0, accuracy, 0);
 
-        if (Physics.Raycast(bullet.transform.position - (bullet.transform.forward * -gunClone.forwardStart), -bullet.transform.forward, gunClone.forwardStart) == false)
-        {
-            bullet.transform.position -= bullet.transform.forward * -gunClone.forwardStart;
-        }
+        bullet.transform.position -= bullet.transform.forward * -gunClone.forwardStart;
 
         LineHurtBox line = bullet.GetComponent<LineHurtBox>();
         line.pierce = gunClone.pierce;
