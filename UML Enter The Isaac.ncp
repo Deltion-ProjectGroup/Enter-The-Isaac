@@ -415,7 +415,7 @@
       <Entity type="Class">
         <Name>Entity</Name>
         <Access>Public</Access>
-        <Location left="404" top="100" />
+        <Location left="518" top="103" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
         <Modifier>None</Modifier>
@@ -487,7 +487,7 @@
       <Entity type="Class">
         <Name>Effect</Name>
         <Access>Public</Access>
-        <Location left="1592" top="877" />
+        <Location left="1808" top="1261" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
         <Modifier>None</Modifier>
@@ -503,7 +503,7 @@
       <Entity type="Class">
         <Name>MofiyHealthEffect</Name>
         <Access>Public</Access>
-        <Location left="1596" top="1186" />
+        <Location left="1812" top="1570" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
         <Modifier>None</Modifier>
@@ -536,6 +536,22 @@
         <Name>ShopItem</Name>
         <Access>Public</Access>
         <Location left="332" top="1486" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>Enemy</Name>
+        <Access>Public</Access>
+        <Location left="640" top="375" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>DestructableObject</Name>
+        <Access>Public</Access>
+        <Location left="1044" top="108" />
         <Size width="162" height="216" />
         <Collapsed>False</Collapsed>
         <Modifier>None</Modifier>
@@ -625,6 +641,16 @@
           <X>410</X>
           <Y>1446</Y>
         </BendPoint>
+      </Relationship>
+      <Relationship type="Generalization" first="11" second="10">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+      </Relationship>
+      <Relationship type="Dependency" first="17" second="1">
+        <Label>
+        </Label>
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
       </Relationship>
     </Relationships>
   </ProjectItem>
