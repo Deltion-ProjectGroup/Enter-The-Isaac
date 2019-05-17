@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class PassiveItemPickup : InventoryItemPickup
 {
-    public override void Interact(GameObject player)
+    public override void OnInteract(GameObject player)
     {
         Effect[] effects = GetComponents<Effect>();
         foreach(Effect effect in effects)
@@ -12,7 +12,7 @@ public class PassiveItemPickup : InventoryItemPickup
             effect.ApplyEffect(player);
         }
         player.GetComponent<Inventory>().passiveItems.Add(pickUpData);
-        base.Interact(player);
+        base.OnInteract(player);
     }
     public override void OnDropItem(GameObject player)
     {

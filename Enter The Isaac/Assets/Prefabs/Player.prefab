@@ -867,6 +867,7 @@ GameObject:
   - component: {fileID: 65470452505166384}
   - component: {fileID: 65470452505166389}
   - component: {fileID: 65470452505166385}
+  - component: {fileID: 8032494892689465576}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -970,6 +971,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   moveV3: {x: 0, y: 0, z: 0}
   hitbox: {fileID: 65470453204126894}
+  money: 0
   keys: 0
   keyUICounter: {fileID: 8678377968133611466}
   walkSpeed: 6
@@ -982,10 +984,6 @@ MonoBehaviour:
   gun: {fileID: 65470453587846303}
   guns:
   - {fileID: 11400000, guid: 64e96425528dce348a6df4aa6d9dc3dd, type: 2}
-  - {fileID: 11400000, guid: e631141ea86048b43a5c41f83b3b58cc, type: 2}
-  - {fileID: 11400000, guid: 88e2302c7ce07a740b29ef5e5413438f, type: 2}
-  - {fileID: 11400000, guid: a0207214a85a407439564341b58d1b5b, type: 2}
-  - {fileID: 11400000, guid: 11396cd665c684e4bbc5b452b97efcc2, type: 2}
   curGun: 0
   ammoStore: 
   magazineStore: 
@@ -1000,12 +998,26 @@ MonoBehaviour:
   rollDeceleration: 60
   rollParticle: {fileID: 8158331382286321570, guid: 557ee55730e53e84a9577e984a712021,
     type: 3}
-  interactButton: 
-  interactRadius: 0
+  interactButton: Interact
+  interactRadius: 30
   interactablesLayer:
     serializedVersion: 2
-    m_Bits: 0
+    m_Bits: 4096
   closestInteractableObject: {fileID: 0}
+--- !u!114 &8032494892689465576
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 65470452505166386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fd09bf3b9c2bfa428410bc96d91fcac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  passiveItems: []
+  weaponItems: []
 --- !u!1 &65470452675986998
 GameObject:
   m_ObjectHideFlags: 0
@@ -17214,14 +17226,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 65470452505166390}
     m_Modifications:
-    - target: {fileID: 100206, guid: ece6b5c7bcee0524b9b4f86ffe154ecd, type: 3}
-      propertyPath: m_Name
-      value: KnightA
-      objectReference: {fileID: 0}
-    - target: {fileID: 100546, guid: ece6b5c7bcee0524b9b4f86ffe154ecd, type: 3}
-      propertyPath: m_Layer
-      value: 9
-      objectReference: {fileID: 0}
     - target: {fileID: 400206, guid: ece6b5c7bcee0524b9b4f86ffe154ecd, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -17265,6 +17269,14 @@ PrefabInstance:
     - target: {fileID: 400206, guid: ece6b5c7bcee0524b9b4f86ffe154ecd, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 100546, guid: ece6b5c7bcee0524b9b4f86ffe154ecd, type: 3}
+      propertyPath: m_Layer
+      value: 9
+      objectReference: {fileID: 0}
+    - target: {fileID: 100206, guid: ece6b5c7bcee0524b9b4f86ffe154ecd, type: 3}
+      propertyPath: m_Name
+      value: KnightA
       objectReference: {fileID: 0}
     - target: {fileID: 13700000, guid: ece6b5c7bcee0524b9b4f86ffe154ecd, type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -17349,11 +17361,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 65470453587846298}
     m_Modifications:
-    - target: {fileID: 5340255346962640094, guid: ba49d5577f13db84ca513ef469922b83,
-        type: 3}
-      propertyPath: m_Name
-      value: HandGunPrefab
-      objectReference: {fileID: 0}
     - target: {fileID: 5340255346962640095, guid: ba49d5577f13db84ca513ef469922b83,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -17408,6 +17415,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5340255346962640094, guid: ba49d5577f13db84ca513ef469922b83,
+        type: 3}
+      propertyPath: m_Name
+      value: HandGunPrefab
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ba49d5577f13db84ca513ef469922b83, type: 3}
