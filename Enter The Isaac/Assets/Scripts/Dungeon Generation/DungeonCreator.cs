@@ -4,10 +4,8 @@ using UnityEngine;
 
 public class DungeonCreator : MonoBehaviour
 {
-    public DistanceStack distanceRoomStack;
     public GameObject startRoom;
 
-    public int dungeons;
     [Header("Generation Data")]
     public int minRoomCount;
     public int maxRoomCount;
@@ -20,7 +18,6 @@ public class DungeonCreator : MonoBehaviour
 
 
     public GameObject[] walls;
-    public GameObject[] doors;
     [Header("Room Data")]
     public List<GameObject> startRooms;
     public List<GameObject> rooms;
@@ -60,8 +57,6 @@ public class DungeonCreator : MonoBehaviour
     // Generates the dungeon
     public void GenerateDungeon() 
     {
-        dungeons++;
-        print(dungeons);
         if (removePreviousDungeon)
         {
             ClearDungeon();
