@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.PostProcessing;
 
 public class Shake : MonoBehaviour
 {
@@ -9,6 +10,8 @@ public class Shake : MonoBehaviour
     float shakestr = 0.5f;
     [SerializeField] float shakeScale = 1;
     Vector3 rngRemover;
+    [SerializeField] ParticleSystem speedLines;
+    [SerializeField] PostProcessVolume ppVolume;
 
 
     void LateUpdate()
@@ -17,6 +20,27 @@ public class Shake : MonoBehaviour
         {
             transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, transform.localEulerAngles.y, 0);
             Shaking(shakestr);
+            if (speedLines != null)
+            {
+                speedLines.Play();
+            }
+        }
+        else
+        {
+            if (speedLines != null)
+            {
+                speedLines.Stop();
+            }
+        }
+
+        if (ppVolume != null)
+        {
+            ChromaticAberration crom;
+            ppVolume.profile.TryGetSettings(out crom);
+            if (crom != null)
+            {
+                crom.intensity.value = Mathf.MoveTowards(crom.intensity.value, 0, Time.unscaledDeltaTime * 3);
+            }
         }
     }
 
@@ -28,6 +52,16 @@ public class Shake : MonoBehaviour
         Invoke("StopShake", time);
         transform.eulerAngles -= rngRemover;
         rngRemover = Vector3.zero;
+
+        if (ppVolume != null)
+        {
+            ChromaticAberration crom;
+            ppVolume.profile.TryGetSettings(out crom);
+            if (crom != null)
+            {
+                crom.intensity.value = 0.2f;
+            }
+        }
     }
 
     public void SmallShake()
@@ -45,8 +79,9 @@ public class Shake : MonoBehaviour
         StartShake(0.3f, 1f);
     }
 
-    public void CustomShake(float time, float strength){
-        StartShake(time,strength);
+    public void CustomShake(float time, float strength)
+    {
+        StartShake(time, strength);
     }
 
     void StopShake()
@@ -60,7 +95,7 @@ public class Shake : MonoBehaviour
     {
         transform.eulerAngles -= rngRemover;
         str *= shakeScale;
-        rngRemover = new Vector3(Random.Range(-str, str),Random.Range(-str, str),Random.Range(-str, str));
+        rngRemover = new Vector3(Random.Range(-str, str), Random.Range(-str, str), Random.Range(-str, str));
         transform.localEulerAngles = new Vector3(transform.eulerAngles.x + rngRemover.x, transform.eulerAngles.y + rngRemover.y, rngRemover.z);
     }
 }

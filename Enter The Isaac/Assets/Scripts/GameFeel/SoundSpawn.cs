@@ -1,9 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 
 public class SoundSpawn : MonoBehaviour
 {
+
+    [SerializeField] AudioMixerGroup mixerGroup;
     public void SpawnEffect(AudioClip clip)
     {
         if (clip != null)
@@ -14,6 +17,7 @@ public class SoundSpawn : MonoBehaviour
             AudioSource source = g.GetComponent<AudioSource>();
             source.clip = clip;
             source.Play();
+            source.outputAudioMixerGroup = mixerGroup;
             if (GetComponent<AudioSource>() != null)
             {
                 AudioSource mySource = GetComponent<AudioSource>();

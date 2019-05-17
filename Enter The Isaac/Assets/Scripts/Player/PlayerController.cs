@@ -51,6 +51,7 @@ public class PlayerController : MonoBehaviour
     [Header("Rolling")]
     public float rollSpeed = 40;
     public float rollDeceleration = 100;
+    [SerializeField] GameObject rollParticle;
     [Header("INTERACTION")]
     public string interactButton;
     public float interactRadius;
@@ -150,9 +151,10 @@ public class PlayerController : MonoBehaviour
 
     void SwitchGun()
     {
-        if (Input.GetAxis(scrollInput) != 0 && GameObject.FindGameObjectWithTag("LaserHold") == null)
+        if (Input.GetAxis(scrollInput) != 0 && GameObject.FindGameObjectWithTag("LaserHold") == null && IsInvoking("NoSwitchGun") == false)
         {
-            // gun.GetSwitchGunInput(Input.GetAxis(scrollInput));
+            Invoke("NoSwitchGun", 0.2f);
+            gun.transform.Rotate(-90, 0, 0);
             if (Input.GetAxis(scrollInput) > 0)
             {
                 curGun = (int)Mathf.Repeat(curGun + 1, guns.Length);
@@ -162,6 +164,11 @@ public class PlayerController : MonoBehaviour
                 curGun = (int)Mathf.Repeat(curGun - 1, guns.Length);
             }
         }
+    }
+
+    void NoSwitchGun()
+    {
+        //invoke function lol
     }
 
     void SetAnimValues()
@@ -202,10 +209,17 @@ public class PlayerController : MonoBehaviour
         yield return new WaitForSeconds(0.025f);
         rotateSpeed = 0;
         moveV3 = transform.forward * -rollSpeed;
+        if (rollParticle != null)
+        {
+            Instantiate(rollParticle, transform.position, rollParticle.transform.rotation * transform.rotation * Quaternion.Euler(0, 180, 0));
+        }
+        transform.Find("Line").gameObject.SetActive(true);
+        cam.GetComponent<Shake>().SmallShake();
         yield return new WaitForSeconds(0.3f);
         rotateSpeed = oldRotSpeed;
         curState = State.Normal;
         hitbox.SetActive(true);
+        transform.Find("Line").gameObject.SetActive(false);
     }
 
     void RotateCrosshair()
@@ -329,7 +343,7 @@ public class PlayerController : MonoBehaviour
         }
         if (allInteractables.Length > 0)
         {
-            if(allInteractables.Length > 1)
+            if (allInteractables.Length > 1)
             {
                 closestInteractableObject = allInteractables[0].gameObject;
                 float closestDistance = Vector3.Distance(transform.position, closestInteractableObject.transform.position);
