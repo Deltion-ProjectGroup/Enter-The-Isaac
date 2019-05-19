@@ -38,9 +38,10 @@ public class PlayerController : MonoBehaviour
     public string shootInput = "Fire1";
     [SerializeField] string reloadInput = "Fire2";
     [SerializeField] string scrollInput = "Mouse ScrollWheel";
-    public delegate void playerDelegate();
+    public delegate void playerDelegate(PlayerController thisController);
     public playerDelegate onShootDel;//maybe do something when shooting
     public playerDelegate onNoGunShootDel;//used for when hats do stuff not related to shooting, like the constructor hat, or a melee hat
+    public playerDelegate onSwapGun;
     public enum State
     {
         Normal,
@@ -102,7 +103,7 @@ public class PlayerController : MonoBehaviour
                     MoveForward();
                     if (onNoGunShootDel != null)
                     {
-                        onNoGunShootDel();
+                        onNoGunShootDel(this);
                     }
                 }
                 Gravity();
