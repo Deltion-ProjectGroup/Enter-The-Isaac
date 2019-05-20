@@ -14,8 +14,8 @@ public class BuffManager : MonoBehaviour
         int randomChance = Random.Range(1, 101);
         if(randomChance <= fireBuffChance)
         {
-            DOTBuff burnEffect = target.AddComponent<DOTBuff>();
-            burnEffect.dotData = fireBuffData;
+            BurnEffect burnEffect = target.AddComponent<BurnEffect>();
+            burnEffect.burnData = fireBuffData;
         }
         randomChance = Random.Range(1, 101);
         if (randomChance <= explosionBuffChance)

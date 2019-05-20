@@ -30,6 +30,8 @@ public class BaseEnemy : MonoBehaviour
     [Header("PathFinding")]
     [SerializeField] float distanceFromPlayer = 10;
     public PathMethod myPathMethod = PathMethod.GoToPlayer;
+    public delegate void VoidDelegate();
+    public VoidDelegate onDeath;
     NavMeshAgent agent;
     Transform player;
     //animation
