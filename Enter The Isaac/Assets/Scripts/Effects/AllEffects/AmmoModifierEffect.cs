@@ -8,13 +8,15 @@ public class AmmoModifierEffect : Effect
     public override void ApplyEffect(GameObject target)
     {
         target.GetComponent<PlayerController>().gun.gunClone.maxAmmo += modifyAmount;
+        target.GetComponent<PlayerController>().gun.onSwapGun += OnSwapGun;
     }
     public override void RemoveEffect(GameObject target)
     {
         target.GetComponent<PlayerController>().gun.gunClone.maxAmmo -= modifyAmount;
+        target.GetComponent<PlayerController>().gun.onSwapGun -= OnSwapGun;
     }
-    public void OnSwapGun(PlayerController thisPlayer)
+    public void OnSwapGun(Gun gunSwappedTo)
     {
-        thisPlayer.gun.gunClone.maxAmmo += modifyAmount;
+        gunSwappedTo.gunClone.maxAmmo += modifyAmount;
     }
 }

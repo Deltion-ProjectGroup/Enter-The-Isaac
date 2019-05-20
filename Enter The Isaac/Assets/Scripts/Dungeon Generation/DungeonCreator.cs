@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class DungeonCreator : MonoBehaviour
 {
+
     public GameObject startRoom;
 
     [Header("Generation Data")]
@@ -194,21 +195,28 @@ public class DungeonCreator : MonoBehaviour
             }
             if (bossCount < minBossRoomCount || shopCount < minShopRoomCount || treasureCount < minTreasureRoomCount)
             {
-                StartCoroutine(Test());
+                GenerateDungeon();
             }
             else
             {
-                if(onGenerationComplete != null)
-                {
-                    onGenerationComplete();
-                }
+                StartCoroutine(Finalize());
             }
         }
     }
-    public IEnumerator Test()
+    public IEnumerator Finalize()
     {
-        yield return null;
-        GenerateDungeon();
+        foreach(GameObject dungeonPart in entireDungeon)
+        {
+            if(dungeonPart.GetComponent<BaseRoom>().type != BaseRoom.RoomTypes.Spawn)
+            {
+                dungeonPart.transform.SetParent(dungeonPart.GetComponent<BaseRoom>().entranceDoor.GetComponent<DungeonDoor>().parentDoor.transform);
+            }
+            yield return null;
+        }
+        if (onGenerationComplete != null)
+        {
+            onGenerationComplete();
+        }
     }
     public void ProceedGeneration()
     {

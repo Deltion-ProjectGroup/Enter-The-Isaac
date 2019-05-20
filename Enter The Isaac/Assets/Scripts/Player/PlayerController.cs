@@ -30,7 +30,7 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public int curGun = 0;
     [HideInInspector] public List<int> ammoStore = new List<int>();
     [HideInInspector] public List<int> magazineStore = new List<int>();
-    public Gun.gunDelegate gunDel;
+    public Gun.voidDelegate gunDel;
     [Header("Input")]
     [SerializeField] string horInput = "Horizontal";
     [SerializeField] string vertInput = "Vertical";
@@ -38,7 +38,7 @@ public class PlayerController : MonoBehaviour
     public string shootInput = "Fire1";
     [SerializeField] string reloadInput = "Fire2";
     [SerializeField] string scrollInput = "Mouse ScrollWheel";
-    public delegate void playerDelegate(PlayerController thisController);
+    public delegate void playerDelegate();
     public playerDelegate onShootDel;//maybe do something when shooting
     public playerDelegate onNoGunShootDel;//used for when hats do stuff not related to shooting, like the constructor hat, or a melee hat
     public playerDelegate onSwapGun;
@@ -103,7 +103,7 @@ public class PlayerController : MonoBehaviour
                     MoveForward();
                     if (onNoGunShootDel != null)
                     {
-                        onNoGunShootDel(this);
+                        onNoGunShootDel();
                     }
                 }
                 Gravity();
@@ -331,7 +331,10 @@ public class PlayerController : MonoBehaviour
         {
             if (Input.GetButtonDown(interactButton))
             {
-                closestInteractableObject.GetComponent<Interactable>().Interact(gameObject);
+                foreach(Interactable interactableComponent in closestInteractableObject.GetComponents<Interactable>())
+                {
+                    interactableComponent.Interact(gameObject);
+                }
             }
         }
     }

@@ -13,9 +13,9 @@ GameObject:
   - component: {fileID: 3195376724967871020}
   - component: {fileID: 3294401449205709378}
   - component: {fileID: 2151517132118064582}
-  - component: {fileID: 7302016895128658779}
+  - component: {fileID: 4889784328462591349}
   m_Layer: 12
-  m_Name: TestInteractable
+  m_Name: AmmoModifyInteractable
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -105,8 +105,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a8366aeaa24da334185f5778aa64f9f3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  canInteract: 1
   pickUpData: {fileID: 11400000, guid: 645e0f509cdfccb4eb4cd79b4029e8a5, type: 2}
---- !u!114 &7302016895128658779
+--- !u!114 &4889784328462591349
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -115,7 +116,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 146287797357915031}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0dbcfc3e04d411546846b8c344e085c7, type: 3}
+  m_Script: {fileID: 11500000, guid: 478231f7330eb064fb332b25e541a958, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  modifyAmount: 2
+  modifyAmount: 200
