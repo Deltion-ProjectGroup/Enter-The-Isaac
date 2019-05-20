@@ -191,6 +191,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1848568832}
   - component: {fileID: 1848568831}
+  - component: {fileID: 1848568833}
   m_Layer: 0
   m_Name: InGameManager
   m_TagString: Manager
@@ -210,6 +211,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d538c4431678aa4a8c51caa4144d5a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemPool:
+  - chance: 10
+    percentageBorders: {x: 0, y: 0}
+    items:
+    - {fileID: 146287797357915031, guid: db34f6a2f74710246858d67398947672, type: 3}
+  - chance: 1
+    percentageBorders: {x: 0, y: 0}
+    items:
+    - {fileID: 146287797357915031, guid: 11056447b8b75ab47b331df5b2c27874, type: 3}
+  maxPercentage: 0
   localPlayer: {fileID: 0}
   dungeonCreator: {fileID: 1995347974}
   playerPrefab: {fileID: 65470453131414240, guid: 8d7fad365328ae84f91c121c1068e847,
@@ -229,6 +240,22 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1848568833
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1848568830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d6872a1b71da9e844b28fdbe840f1426, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  fireBuffData: {fileID: 11400000, guid: b2a3bc53b66664143bd85a5826772a17, type: 2}
+  fireBuffChance: 100
+  explosionBuffChance: 0
+  explosion: {fileID: 65690012234462425, guid: 9c1f320743bbd6d48a7f6efa326ded4a, type: 3}
 --- !u!1 &1995347973
 GameObject:
   m_ObjectHideFlags: 0

@@ -12,6 +12,17 @@ public class DungeonRoom : BaseRoom
     public delegate void VoidDelegate();
     public VoidDelegate onClearRoom;
     public List<GameObject> aliveEnemies;
+
+
+    public void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            currentWave = 0;
+            aliveEnemies = new List<GameObject>();
+            OnEnteredRoom();
+        }
+    }
     public override void Initialize(DungeonCreator owner, GameObject parentRoom_ = null, GameObject entrance = null)
     {
         base.Initialize(owner, parentRoom_, entrance);
@@ -41,6 +52,14 @@ public class DungeonRoom : BaseRoom
     }
     public void CheckEnemies()
     {
+        print("CHECKED");
+        for(int i= aliveEnemies.Count - 1; i >= 0; i--)
+        {
+            if (!aliveEnemies[i])
+            {
+                aliveEnemies.RemoveAt(i);
+            }
+        }
         if(aliveEnemies.Count <= 0)
         {
             onClearRoom();
@@ -50,16 +69,24 @@ public class DungeonRoom : BaseRoom
     {
         if(currentWave >= waveSpawnPossibilities[selectedPossibility].waves.Length) //If done spawning waves
         {
+            onClearRoom -= SpawnWave;
             print("COMPLETED ROOM");
         }
         else
         {
             foreach (SpawnData spawnable in waveSpawnPossibilities[selectedPossibility].waves[currentWave].spawnData)
             {
-                spawnable.spawner.SpawnObject(spawnable.enemy).GetComponent<BaseEnemy>().onDeath += CheckEnemies;
+                GameObject enemy = spawnable.spawner.SpawnObject(spawnable.enemy);
+                enemy.GetComponent<Hitbox>().onDeath += RemoveEnemy;
+                aliveEnemies.Add(enemy);
             }
             currentWave++;
         }
+    }
+    public void RemoveEnemy(GameObject enemy)
+    {
+        aliveEnemies.Remove(enemy);
+        CheckEnemies();
     }
     [System.Serializable]
     public struct SpawnData

@@ -24,7 +24,8 @@ public class Hitbox : MonoBehaviour
     [SerializeField] bool destoy = false;
 
     public delegate void VoidDelegate();
-    public VoidDelegate onDeath;
+    public delegate void GameObjectDelegate(GameObject thisObject);
+    public GameObjectDelegate onDeath;
 
     void Start()
     {
@@ -146,7 +147,7 @@ public class Hitbox : MonoBehaviour
         deathEvent.Invoke();
         if (destoy == true)
         {
-            onDeath();
+            onDeath(gameObject);
             Destroy(gameObject);
         }
     }
