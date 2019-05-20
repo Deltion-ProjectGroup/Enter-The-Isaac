@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     Animator anim;
     [Header("Random stuff")]
     public GameObject hitbox;
+    public int money = 0;
     public int keys = 0;
     public Text keyUICounter;
     [SerializeField] GameObject reloadIcon;
@@ -26,7 +27,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float decelerationSpeed = 5;
     [Header("Gun")]
     public Gun gun;
-    public GunType[] guns;
+    public List<GunType> guns;
     [HideInInspector] public int curGun = 0;
     [HideInInspector] public List<int> ammoStore = new List<int>();
     [HideInInspector] public List<int> magazineStore = new List<int>();
@@ -38,9 +39,10 @@ public class PlayerController : MonoBehaviour
     public string shootInput = "Fire1";
     [SerializeField] string reloadInput = "Fire2";
     [SerializeField] string scrollInput = "Mouse ScrollWheel";
-    public delegate void playerDelegate();
+    public delegate void playerDelegate(PlayerController thisController);
     public playerDelegate onShootDel;//maybe do something when shooting
     public playerDelegate onNoGunShootDel;//used for when hats do stuff not related to shooting, like the constructor hat, or a melee hat
+    public playerDelegate onSwapGun;
     public enum State
     {
         Normal,
@@ -64,11 +66,11 @@ public class PlayerController : MonoBehaviour
         cam = Camera.main.transform;
 
 
-        for (int i = 0; i < guns.Length; i++)
+        for (int i = 0; i < guns.Count; i++)
         {
             ammoStore.Add(guns[i].magazineSize);
         }
-        for (int i = 0; i < guns.Length; i++)
+        for (int i = 0; i < guns.Count; i++)
         {
             magazineStore.Add(guns[i].maxAmmo);
         }
@@ -102,7 +104,7 @@ public class PlayerController : MonoBehaviour
                     MoveForward();
                     if (onNoGunShootDel != null)
                     {
-                        onNoGunShootDel();
+                        onNoGunShootDel(this);
                     }
                 }
                 Gravity();
@@ -163,11 +165,11 @@ public class PlayerController : MonoBehaviour
             gun.transform.Rotate(-90, 0, 0);
             if (Input.GetAxis(scrollInput) > 0)
             {
-                curGun = (int)Mathf.Repeat(curGun + 1, guns.Length);
+                curGun = (int)Mathf.Repeat(curGun + 1, guns.Count);
             }
             else
             {
-                curGun = (int)Mathf.Repeat(curGun - 1, guns.Length);
+                curGun = (int)Mathf.Repeat(curGun - 1, guns.Count);
             }
         }
     }

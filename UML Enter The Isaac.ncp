@@ -249,6 +249,106 @@ Remove does opposite</Text>
         <Location left="1281" top="2991" />
         <Size width="160" height="75" />
       </Entity>
+      <Entity type="Class">
+        <Name>DungeonCreator</Name>
+        <Access>Public</Access>
+        <Location left="2909" top="1423" />
+        <Size width="162" height="689" />
+        <Collapsed>False</Collapsed>
+        <Member type="Field">GameObject startRoom</Member>
+        <Member type="Field">int minRoomCount</Member>
+        <Member type="Field">int maxRoomCount</Member>
+        <Member type="Field">int minShopRoomCount</Member>
+        <Member type="Field">int minTreasureRoomCount</Member>
+        <Member type="Field">int minBossRoomCount</Member>
+        <Member type="Field">int minBossRoomDistance</Member>
+        <Member type="Field">int maxEventRoomCount</Member>
+        <Member type="Field">int maxEventRoomPerFloor</Member>
+        <Member type="Field">bool removePreviousDungeon</Member>
+        <Member type="Field">List&lt;GameObject&gt; walls</Member>
+        <Member type="Field">List&lt;GameObject&gt; startRooms</Member>
+        <Member type="Field">List&lt;GameObject&gt; rooms</Member>
+        <Member type="Field">List&lt;GameObject&gt; hallways</Member>
+        <Member type="Field">List&lt;GameObject&gt; bossRooms</Member>
+        <Member type="Field">List&lt;GameObject&gt; shopRooms</Member>
+        <Member type="Field">List&lt;GameObject&gt; treasureRooms</Member>
+        <Member type="Field">List&lt;GameObject&gt; eventRooms</Member>
+        <Member type="Field">LayerMask roomLayer</Member>
+        <Member type="Field">int openProcesses</Member>
+        <Member type="Field">int roomCount</Member>
+        <Member type="Field">int shopCount</Member>
+        <Member type="Field">int bossCount</Member>
+        <Member type="Field">int treasureCount</Member>
+        <Member type="Field">static int eventRoomCount</Member>
+        <Member type="Field">int eventRoomsThisFloor</Member>
+        <Member type="Field">int shopChance</Member>
+        <Member type="Field">int eventRoomChance</Member>
+        <Member type="Field">int bossRoomChance</Member>
+        <Member type="Field">int treasureRoomCount</Member>
+        <Member type="Field">List&lt;GameObject&gt; endRooms</Member>
+        <Member type="Field">List&lt;GameObject&gt; entireDungeon</Member>
+        <Member type="Field">DelVoid onGenerationComplete</Member>
+        <Member type="Method">public void GenerateDungeon()</Member>
+        <Member type="Method">public void ClearDungeon()</Member>
+        <Member type="Method">public void GetLocationData(Transform thisObject, Transform selectedDoor, Transform doorToSnapTo)</Member>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>BaseRoom</Name>
+        <Access>Public</Access>
+        <Location left="2708" top="1762" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>DungeonDoor</Name>
+        <Access>Public</Access>
+        <Location left="3496" top="1758" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>DungeonRoom</Name>
+        <Access>Public</Access>
+        <Location left="2336" top="2089" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>BossRoom</Name>
+        <Access>Public</Access>
+        <Location left="2530" top="2089" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>EventRoom</Name>
+        <Access>Public</Access>
+        <Location left="2710" top="2089" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>ShopRoom</Name>
+        <Access>Public</Access>
+        <Location left="2893" top="2087" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Modifier>None</Modifier>
+      </Entity>
+      <Entity type="Class">
+        <Name>TreasureRoom</Name>
+        <Access>Public</Access>
+        <Location left="3087" top="2087" />
+        <Size width="162" height="216" />
+        <Collapsed>False</Collapsed>
+        <Modifier>None</Modifier>
+      </Entity>
     </Entities>
     <Relationships>
       <Relationship type="Comment" first="21" second="8">
@@ -388,6 +488,8 @@ Remove does opposite</Text>
         <EndOrientation>Vertical</EndOrientation>
       </Relationship>
       <Relationship type="Dependency" first="6" second="9">
+        <Label>
+        </Label>
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
         <BendPoint relativeToStartShape="True">
@@ -396,6 +498,8 @@ Remove does opposite</Text>
         </BendPoint>
       </Relationship>
       <Relationship type="Dependency" first="8" second="9">
+        <Label>
+        </Label>
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
         <BendPoint relativeToStartShape="True">
@@ -408,6 +512,8 @@ Remove does opposite</Text>
         </BendPoint>
       </Relationship>
       <Relationship type="Dependency" first="10" second="9">
+        <Label>
+        </Label>
         <StartOrientation>Horizontal</StartOrientation>
         <EndOrientation>Horizontal</EndOrientation>
       </Relationship>
@@ -436,6 +542,8 @@ Remove does opposite</Text>
         </BendPoint>
       </Relationship>
       <Relationship type="Association" first="12" second="9">
+        <Label>
+        </Label>
         <StartOrientation>Horizontal</StartOrientation>
         <EndOrientation>Horizontal</EndOrientation>
         <Direction>Unidirectional</Direction>
@@ -476,6 +584,42 @@ Remove does opposite</Text>
       <Relationship type="Comment" first="28" second="11">
         <StartOrientation>Vertical</StartOrientation>
         <EndOrientation>Vertical</EndOrientation>
+      </Relationship>
+      <Relationship type="Generalization" first="32" second="30">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+      </Relationship>
+      <Relationship type="Generalization" first="33" second="30">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+      </Relationship>
+      <Relationship type="Generalization" first="34" second="30">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="False">
+          <X>2789</X>
+          <Y>2003</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Generalization" first="35" second="30">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="True">
+          <X>2974</X>
+          <Y>2062</Y>
+        </BendPoint>
+        <BendPoint relativeToStartShape="False">
+          <X>2789</X>
+          <Y>2005</Y>
+        </BendPoint>
+      </Relationship>
+      <Relationship type="Generalization" first="36" second="30">
+        <StartOrientation>Vertical</StartOrientation>
+        <EndOrientation>Vertical</EndOrientation>
+        <BendPoint relativeToStartShape="False">
+          <X>2789</X>
+          <Y>2006</Y>
+        </BendPoint>
       </Relationship>
     </Relationships>
   </ProjectItem>

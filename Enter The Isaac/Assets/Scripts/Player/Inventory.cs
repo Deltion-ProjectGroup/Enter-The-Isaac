@@ -5,6 +5,7 @@ using UnityEngine;
 public class Inventory : MonoBehaviour
 {
     public List<PickupSO> passiveItems;
+    public List<PickupSO> weaponItems;
     // Start is called before the first frame update
     void Start()
     {
