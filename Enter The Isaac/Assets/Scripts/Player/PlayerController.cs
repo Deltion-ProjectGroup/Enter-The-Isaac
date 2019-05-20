@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     public GameObject hitbox;
     public int keys = 0;
     public Text keyUICounter;
+    [SerializeField] GameObject reloadIcon;
     [Header("Walking related")]
     public float walkSpeed = 1;
     float curWalkSpeed = 0;
@@ -47,7 +48,7 @@ public class PlayerController : MonoBehaviour
         GetHit
     }
     [Header("States")]
-    [SerializeField] State curState = State.Normal;
+    public State curState = State.Normal;
     [Header("Rolling")]
     public float rollSpeed = 40;
     public float rollDeceleration = 100;
@@ -145,13 +146,18 @@ public class PlayerController : MonoBehaviour
         {
             gun.GetReloadInput();
         }
+        if (reloadIcon.activeSelf != (gun.curAmmo <= 0))
+        {
+            reloadIcon.transform.localScale = new Vector3(0, 2, 0);
+            reloadIcon.SetActive(gun.curAmmo <= 0);
+        }
         //switch gun
         SwitchGun();
     }
 
     void SwitchGun()
     {
-        if (Input.GetAxis(scrollInput) != 0 && GameObject.FindGameObjectWithTag("LaserHold") == null && IsInvoking("NoSwitchGun") == false)
+        if (Input.GetAxis(scrollInput) != 0 && GameObject.FindGameObjectWithTag("LaserHold") == null && IsInvoking("NoSwitchGun") == false && gun.IsInvoking("Reload") == false)
         {
             Invoke("NoSwitchGun", 0.2f);
             gun.transform.Rotate(-90, 0, 0);

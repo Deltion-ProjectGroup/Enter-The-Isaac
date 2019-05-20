@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.AI;
 
 public class BaseEnemy : MonoBehaviour
 {
@@ -20,8 +21,27 @@ public class BaseEnemy : MonoBehaviour
     [SerializeField] Renderer[] spawnInvisible;
     [SerializeField] GameObject spawnParticle;
     [SerializeField] bool skipParticle = false;
+    public enum PathMethod
+    {
+        GoToPlayer,
+        KeepDistanceFromPlayer,
+        DontMove
+    }
+    [Header("PathFinding")]
+    [SerializeField] float distanceFromPlayer = 10;
+    public PathMethod myPathMethod = PathMethod.GoToPlayer;
+    NavMeshAgent agent;
+    Transform player;
+    //animation
+    Animator anim;
+    Vector3 lastPos;
+    float walkWaitTime = 1;
+
     void Start()
     {
+        agent = GetComponent<NavMeshAgent>();
+        player = FindObjectOfType<PlayerController>().transform;
+        anim = GetComponent<Animator>();
         if (skipParticle == false)
         {
             Spawn();
@@ -56,6 +76,7 @@ public class BaseEnemy : MonoBehaviour
         {
             case State.Move:
                 Move();
+                SetWalkAnim();
                 break;
             case State.Attack:
                 Attack();
@@ -63,18 +84,83 @@ public class BaseEnemy : MonoBehaviour
         }
     }
 
+    void SetWalkAnim()
+    {
+        if (agent.velocity.magnitude > 0)
+        {
+            anim.SetBool("walking", true);
+        }
+        else
+        {
+            anim.SetBool("walking", false);
+            lastPos = transform.position;
+        }
+    }
+
     public virtual void Move()
     {
-        curState = State.Attack;
+        switch (myPathMethod)
+        {
+            case PathMethod.GoToPlayer:
+                GoToPlayer();
+                agent.isStopped = (Vector3.Distance(player.position, transform.position) < distanceFromPlayer);
+                break;
+
+            case PathMethod.KeepDistanceFromPlayer:
+                KeepDistanceFromPlayer();
+                break;
+
+            case PathMethod.DontMove:
+                //yeah well, dont move
+                break;
+        }
+    }
+
+    void KeepDistanceFromPlayer()
+    {
+
+        float distance = Vector3.Distance(transform.position, player.position);
+        if (distance > distanceFromPlayer - (distanceFromPlayer / 10) && distance < distanceFromPlayer + (distanceFromPlayer / 10))//if i'm close    if(5 units away from player > 10 / 10 = 1)
+        {
+            //dont move
+            walkWaitTime = 0.2f;
+            agent.isStopped = true;
+        }
+        else if (walkWaitTime <= 0)
+        {
+            agent.isStopped = false;
+            GoAwayFromPlayer();
+        }
+        walkWaitTime = Mathf.Max(-0.001f, walkWaitTime - Time.deltaTime);
+
+    }
+
+    void GoToPlayer()
+    {
+        agent.SetDestination(player.position);
+        if (agent.isStopped == false)
+        {
+            transform.LookAt(new Vector3(player.position.x, transform.position.y, player.position.z));
+        }
+    }
+
+    void GoAwayFromPlayer()
+    {
+        Vector3 awayFromPlayerDir = (transform.position - player.position).normalized;
+        awayFromPlayerDir.y = 0;
+        agent.SetDestination(player.position + (awayFromPlayerDir * distanceFromPlayer));
+        transform.LookAt(new Vector3(player.position.x, transform.position.y, player.position.z));
     }
 
     public virtual void Attack()
     {
-
+        // agent.path.corners.
     }
 
     public void DieEvent()
     {
+        curState = State.Die;
+        agent.enabled = false;
         if (IsInvoking("DieEvent") == false)
         {
             Invoke("DieEvent", Time.deltaTime);
@@ -87,7 +173,6 @@ public class BaseEnemy : MonoBehaviour
         {
             Camera.main.GetComponent<Shake>().SmallShake();
             hitbox.enabled = false;
-            transform.GetComponentInChildren<TrailRenderer>().enabled = true;
         }
         timer += Time.deltaTime;
         if (timer < 0.05f)

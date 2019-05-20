@@ -74,6 +74,8 @@ public class BatBehaviour : MonoBehaviour
                 Attack();
                 break;
         }
+
+        transform.Rotate(-transform.localEulerAngles.x,0,0);
     }
 
     IEnumerator SpawnEvents()
@@ -211,10 +213,12 @@ public class BatBehaviour : MonoBehaviour
         //fire
         attackPhase = 1;
         hurtbox.SetActive(true);
+        transform.Find("Line").gameObject.SetActive(true);
         yield return new WaitForSeconds(0.3f);
         //stop
         hurtbox.SetActive(false);
         attackPhase = 2;
+        transform.Find("Line").gameObject.SetActive(false);
         yield return new WaitForSeconds(0.5f);
         //idle
         attackPhase = 0;
