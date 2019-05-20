@@ -17,6 +17,7 @@ GameObject:
   - component: {fileID: 4695708890612705018}
   - component: {fileID: 4395145269313031296}
   - component: {fileID: 1971995093565730999}
+  - component: {fileID: 3795080908979913247}
   m_Layer: 2
   m_Name: Bullet
   m_TagString: Untagged
@@ -178,6 +179,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   trail: {fileID: 5658390629023539589}
+--- !u!114 &3795080908979913247
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 334168290025920454}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 946cd30cb48ad8b418d2635bc4aad3aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  possibleTargets:
+    serializedVersion: 2
+    m_Bits: 4294967295
 --- !u!114 &8625839732049308942
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -324,11 +340,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 334168290025920312}
     m_Modifications:
-    - target: {fileID: 2466674889741236324, guid: cee98e1bc60baa44588075ea81b3482e,
-        type: 3}
-      propertyPath: m_Name
-      value: 9mm
-      objectReference: {fileID: 0}
     - target: {fileID: 2466674889740870724, guid: cee98e1bc60baa44588075ea81b3482e,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -383,6 +394,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2466674889741236324, guid: cee98e1bc60baa44588075ea81b3482e,
+        type: 3}
+      propertyPath: m_Name
+      value: 9mm
       objectReference: {fileID: 0}
     - target: {fileID: 4613792585601262085, guid: cee98e1bc60baa44588075ea81b3482e,
         type: 3}
