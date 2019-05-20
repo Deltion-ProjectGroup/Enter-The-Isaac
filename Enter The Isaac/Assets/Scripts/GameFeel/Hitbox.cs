@@ -17,6 +17,7 @@ public class Hitbox : MonoBehaviour
     [SerializeField] EventArray[] timedEvents;
     [HideInInspector] public Vector3 impactDir = Vector3.zero; //see hurtbox for more
     [SerializeField] float knockBack = 0;
+    [HideInInspector] public float hurtboxKnockBackMultiplier = 1;
     [SerializeField] Transform knockBackTrans;
     [SerializeField] float knockbackWaitTime = 0.01f;
     [HideInInspector] public Vector3 lastPos;
@@ -85,7 +86,7 @@ public class Hitbox : MonoBehaviour
 
     void InvokedKnockback()
     {
-        Knockback(knockBack);
+        Knockback(knockBack * hurtboxKnockBackMultiplier);
     }
 
     public void Knockback(float str)
@@ -106,6 +107,7 @@ public class Hitbox : MonoBehaviour
         {
             knockBackTrans.GetComponent<PlayerController>().moveV3 -= impactDir.normalized * str * 5;
         }
+        hurtboxKnockBackMultiplier = 1;
     }
 
     public void AddHealth(int toAdd)

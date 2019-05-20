@@ -10,7 +10,6 @@ public class BaseEnemy : MonoBehaviour
     {
         Spawn,
         Die,
-        Attack,
         Move,
         Idle
     }
@@ -36,6 +35,19 @@ public class BaseEnemy : MonoBehaviour
     Animator anim;
     Vector3 lastPos;
     float walkWaitTime = 1;
+    [Header("Attacking")]
+    [SerializeField] bool canAttackWhileWalking = true;
+    public enum AttackType
+    {
+        Repeat,
+        RepeatOnSight,
+        Close,
+        ResponseFire,
+        OnDeath,
+        Overridable
+    }
+    [SerializeField] AttackType[] attackType;
+    [SerializeField] float repeatRate = 1;
 
     void Start()
     {
@@ -78,10 +90,8 @@ public class BaseEnemy : MonoBehaviour
                 Move();
                 SetWalkAnim();
                 break;
-            case State.Attack:
-                Attack();
-                break;
         }
+        CheckAttack();
     }
 
     void SetWalkAnim()
@@ -152,11 +162,6 @@ public class BaseEnemy : MonoBehaviour
         transform.LookAt(new Vector3(player.position.x, transform.position.y, player.position.z));
     }
 
-    public virtual void Attack()
-    {
-        // agent.path.corners.
-    }
-
     public void DieEvent()
     {
         curState = State.Die;
@@ -185,5 +190,136 @@ public class BaseEnemy : MonoBehaviour
             Camera.main.fieldOfView = 60;
             Destroy(gameObject);
         }
+    }
+
+    //ATACKING RELATED
+    public virtual void Attack()
+    {
+        print("attack b!tch");
+    }
+
+    void CheckAttack()
+    {
+        bool helper = false;
+        if (canAttackWhileWalking == false && anim.GetBool("walking") == true)
+        {
+            helper = true;
+        }
+        if (helper == false)
+        {
+            for (int i = 0; i < attackType.Length; i++)
+            {
+                switch (attackType[i])
+                {
+                    case AttackType.Repeat:
+                        AttackRepeat();
+                        break;
+                    case AttackType.RepeatOnSight:
+                        AttackRepeatOnSight();
+                        break;
+                    case AttackType.ResponseFire:
+                        AttackResponseFire();
+                        break;
+                    case AttackType.Close:
+                        AttackClose();
+                        break;
+                    case AttackType.OnDeath:
+                        AttackOnDeath();
+                        break;
+                    case AttackType.Overridable:
+                        AttackOverridable();
+                        break;
+                }
+            }
+        }
+    }
+
+    void AttackRepeat()
+    {
+        if (IsInvoking("AttackRepeatFunction") == false)
+        {
+            InvokeRepeating("AttackRepeatFunction", repeatRate, repeatRate);
+        }
+    }
+
+    void AttackRepeatOnSight()
+    {
+        RaycastHit hit;
+        if (Physics.Raycast(transform.position + new Vector3(0,0.15f,0), player.position - transform.position, out hit, Vector3.Distance(transform.position, player.position)))
+        {
+            if (hit.transform == player || hit.transform.parent == player)
+            {
+                if (IsInvoking("AttackRepeatFunction") == false)
+                {
+                    InvokeRepeating("AttackRepeatFunction", repeatRate, repeatRate);
+                }
+            }
+            else
+            {
+                CancelInvoke("AttackRepeatFunction");
+            }
+        }
+        else
+        {
+            CancelInvoke("AttackRepeatFunction");
+        }
+    }
+    void AttackRepeatFunction()
+    {
+        //basically this is the actual called function
+        Attack();
+    }
+
+    void AttackResponseFire()
+    {
+        if (player != null)
+        {
+            PlayerController playCon = player.GetComponent<PlayerController>();
+            if (playCon.gun != null && playCon.gun.IsInvoking("Shoot") == true)
+            {
+                if (IsInvoking("AttackRepeatFunction") == false)
+                {
+                    InvokeRepeating("AttackRepeatFunction", repeatRate, repeatRate);
+                }
+            }
+            else
+            {
+                CancelInvoke("AttackRepeatFunction");
+            }
+        }
+        else
+        {
+            CancelInvoke("AttackRepeatFunction");
+        }
+    }
+
+    void AttackClose()
+    {
+        if (Vector3.Distance(transform.position, player.position) < distanceFromPlayer)
+        {
+            if (IsInvoking("AttackRepeatFunction") == false)
+            {
+                InvokeRepeating("AttackRepeatFunction", repeatRate, repeatRate);
+            }
+        }
+        else
+        {
+            CancelInvoke("AttackRepeatFunction");
+        }
+    }
+    void AttackOnDeath()
+    {
+        if (curState == State.Die)
+        {
+            if (IsInvoking("AttackRepeatFunction") == false)
+            {
+                InvokeRepeating("AttackRepeatFunction", 0, repeatRate);
+            }
+        }
+    }
+
+    public virtual void AttackOverridable()
+    {
+        //for inheritance
     }
 }
