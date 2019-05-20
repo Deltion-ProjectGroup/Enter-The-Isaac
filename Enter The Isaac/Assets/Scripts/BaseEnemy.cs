@@ -42,8 +42,6 @@ public class BaseEnemy : MonoBehaviour
     }
     [SerializeField] AttackType[] attackType;
     [SerializeField] float repeatRate = 1;
-    public delegate void VoidDelegate();
-    public VoidDelegate onDeath;
     NavMeshAgent agent;
     Transform player;
     //animation

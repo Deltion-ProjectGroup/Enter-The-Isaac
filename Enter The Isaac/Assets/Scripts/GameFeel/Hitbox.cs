@@ -22,6 +22,10 @@ public class Hitbox : MonoBehaviour
     [SerializeField] float knockbackWaitTime = 0.01f;
     [HideInInspector] public Vector3 lastPos;
     [SerializeField] bool destoy = false;
+
+    public delegate void VoidDelegate();
+    public VoidDelegate onDeath;
+
     void Start()
     {
         StartStuff();
@@ -142,6 +146,7 @@ public class Hitbox : MonoBehaviour
         deathEvent.Invoke();
         if (destoy == true)
         {
+            onDeath();
             Destroy(gameObject);
         }
     }

@@ -56,7 +56,7 @@ public class DungeonRoom : BaseRoom
         {
             foreach (SpawnData spawnable in waveSpawnPossibilities[selectedPossibility].waves[currentWave].spawnData)
             {
-                spawnable.spawner.SpawnObject(spawnable.enemy);
+                spawnable.spawner.SpawnObject(spawnable.enemy).GetComponent<BaseEnemy>().onDeath += CheckEnemies;
             }
             currentWave++;
         }
