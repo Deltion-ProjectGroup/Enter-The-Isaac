@@ -13,6 +13,7 @@ public class Hurtbox : MonoBehaviour
     [SerializeField] UnityEvent hitEvent;
     [SerializeField] new bool enabled = true; // enabled is used for the grenade launchers normal bullets. The explosion inherits the damage.
     [SerializeField] bool knockBackForward = true;
+    [SerializeField] float knockBackMultiply = 1;
 
     void OnTriggerEnter(Collider other)
     {
@@ -23,6 +24,7 @@ public class Hurtbox : MonoBehaviour
             {
                 if (enabled == true)
                 {
+                    hit.hurtboxKnockBackMultiplier = knockBackMultiply;
                     hit.Hit(damage);
                     if (knockBackForward == true)
                     {

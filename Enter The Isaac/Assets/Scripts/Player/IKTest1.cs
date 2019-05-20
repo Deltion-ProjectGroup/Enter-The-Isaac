@@ -11,9 +11,14 @@ public class IKTest1 : MonoBehaviour
     Transform lastRot;
     Animator anim;
     [SerializeField] bool withIK = true;
+    [SerializeField] bool lookAtPlayer = false;
 
     void Start()
     {
+        if (lookAtPlayer == true && FindObjectOfType<PlayerController>() != null)
+        {
+            target = FindObjectOfType<PlayerController>().transform;
+        }
         head = GetComponent<Animator>().GetBoneTransform(HumanBodyBones.Head);
         lastRot = new GameObject().transform;
         lastRot.name = "";
@@ -45,7 +50,7 @@ public class IKTest1 : MonoBehaviour
     {
         if (target != null)
         {
-           // Debug.DrawLine(transform.position, target.position, Color.red, Time.deltaTime);
+            // Debug.DrawLine(transform.position, target.position, Color.red, Time.deltaTime);
             anim.SetLookAtWeight(1);
             anim.SetLookAtPosition(target.position);
         }
