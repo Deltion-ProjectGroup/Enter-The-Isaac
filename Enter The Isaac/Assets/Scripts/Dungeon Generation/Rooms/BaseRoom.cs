@@ -117,5 +117,5 @@ public abstract class BaseRoom : MonoBehaviour
         }
         return false;
     }
-    public enum RoomTypes { Normal, End, Hallway, Shop, Event, Boss, Treasure }
+    public enum RoomTypes { Normal, End, Hallway, Shop, Event, Boss, Treasure, Spawn }
 }

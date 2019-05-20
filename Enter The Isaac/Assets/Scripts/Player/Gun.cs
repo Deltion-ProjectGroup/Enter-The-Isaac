@@ -29,9 +29,11 @@ public class Gun : MonoBehaviour
     [Header("Event activates when spawning a bullet")]
     public UnityEvent spawnEvent;
     public GameObject lastSpawnedBullet;
-    public delegate void gunDelegate();
-    public gunDelegate gunDel;
-    gunDelegate lastGunDel;//used to check if gunDel has to update the stats;
+    public delegate void voidDelegate();
+    public voidDelegate gunDel;
+    public delegate void gunDelegate(Gun thisGun);
+    public gunDelegate onSwapGun;
+    voidDelegate lastGunDel;//used to check if gunDel has to update the stats;
     [Header("Delete later, for presentation")]
     [SerializeField] Text[] uiElements;
 
@@ -57,7 +59,7 @@ public class Gun : MonoBehaviour
         player = FindObjectOfType<PlayerController>();
         Destroy(gunClone);
         gunClone = Instantiate(player.guns[player.curGun]);
-        gunDelegate last = gunDel;
+        voidDelegate last = gunDel;
         if (player.gunDel != null)
         {
             gunDel = player.gunDel;
@@ -75,6 +77,11 @@ public class Gun : MonoBehaviour
         player.gun = lastGun;
         gunDel = last;
         player = lastPlayer;
+
+        if (onSwapGun != null)
+        {
+            onSwapGun(this);
+        }
 
         //normal stuff
         camShake = Camera.main.GetComponent<Shake>();

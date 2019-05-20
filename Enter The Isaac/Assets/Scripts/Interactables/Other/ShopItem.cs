@@ -19,8 +19,10 @@ public class ShopItem : Interactable
     }
     public override void Interact(GameObject player_)
     {
+        print("INTERACTOOD");
         if (canInteract && player_.GetComponent<PlayerController>().money >= cost)
         {
+            print("ENUF MUNZ");
             OnInteract(player_);
         }
     }

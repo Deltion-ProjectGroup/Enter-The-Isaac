@@ -68,7 +68,7 @@ public class GunUI : MonoBehaviour
     }
     void SetMagazineLeftText()
     {
-        string toSet = player.guns[player.curGun].maxAmmo + "";
+        string toSet = player.gun.gunClone.maxAmmo.ToString();
         for (int i = 0; i < curGunMagazineLeft.Length; i++)
         {
             curGunMagazineLeft[i].text = toSet;

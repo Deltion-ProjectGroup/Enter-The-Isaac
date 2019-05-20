@@ -4,17 +4,19 @@ using UnityEngine;
 
 public class FireRateModfierEffect : GunEffect
 {
-    public int modifyValue;
+    public float modifyPercentage;
     public override void ApplyEffect(GameObject target)
     {
-        target.GetComponent<PlayerController>().gun.gunClone.fireRate += modifyValue;
+        target.GetComponent<PlayerController>().gun.gunClone.fireRate += modifyPercentage;
+        target.GetComponent<PlayerController>().gun.onSwapGun += OnSwapGun;
     }
     public override void RemoveEffect(GameObject target)
     {
-        throw new System.NotImplementedException();
+        target.GetComponent<PlayerController>().gun.gunClone.fireRate -= modifyPercentage;
+        target.GetComponent<PlayerController>().gun.onSwapGun -= OnSwapGun;
     }
-    public void OnSwapGun(PlayerController thisPlayer)
+    public void OnSwapGun(Gun gunSwappedTo)
     {
-        thisPlayer.gun.gunClone.fireRate += modifyValue;
+        gunSwappedTo.gunClone.fireRate += modifyPercentage;
     }
 }
