@@ -13,19 +13,6 @@ public class BaseEnemy : MonoBehaviour
         Move,
         Idle
     }
-    [Header("Attacking")]
-    [SerializeField] bool canAttackWhileWalking = true;
-    public enum AttackType
-    {
-        Repeat,
-        RepeatOnSight,
-        Close,
-        ResponseFire,
-        OnDeath,
-        Overridable
-    }
-    [SerializeField] AttackType[] attackType;
-    [SerializeField] float repeatRate = 1;
     public State curState;
     [SerializeField] Hitbox hitbox;
     float timer = 0;
@@ -42,6 +29,19 @@ public class BaseEnemy : MonoBehaviour
     [Header("PathFinding")]
     [SerializeField] float distanceFromPlayer = 10;
     public PathMethod myPathMethod = PathMethod.GoToPlayer;
+    [Header("Attacking")]
+    [SerializeField] bool canAttackWhileWalking = true;
+    public enum AttackType
+    {
+        Repeat,
+        RepeatOnSight,
+        Close,
+        ResponseFire,
+        OnDeath,
+        Overridable
+    }
+    [SerializeField] AttackType[] attackType;
+    [SerializeField] float repeatRate = 1;
     public delegate void VoidDelegate();
     public VoidDelegate onDeath;
     NavMeshAgent agent;
