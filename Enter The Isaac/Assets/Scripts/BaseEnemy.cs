@@ -13,6 +13,19 @@ public class BaseEnemy : MonoBehaviour
         Move,
         Idle
     }
+    [Header("Attacking")]
+    [SerializeField] bool canAttackWhileWalking = true;
+    public enum AttackType
+    {
+        Repeat,
+        RepeatOnSight,
+        Close,
+        ResponseFire,
+        OnDeath,
+        Overridable
+    }
+    [SerializeField] AttackType[] attackType;
+    [SerializeField] float repeatRate = 1;
     public State curState;
     [SerializeField] Hitbox hitbox;
     float timer = 0;
@@ -37,19 +50,6 @@ public class BaseEnemy : MonoBehaviour
     Animator anim;
     Vector3 lastPos;
     float walkWaitTime = 1;
-    [Header("Attacking")]
-    [SerializeField] bool canAttackWhileWalking = true;
-    public enum AttackType
-    {
-        Repeat,
-        RepeatOnSight,
-        Close,
-        ResponseFire,
-        OnDeath,
-        Overridable
-    }
-    [SerializeField] AttackType[] attackType;
-    [SerializeField] float repeatRate = 1;
 
     void Start()
     {
@@ -164,6 +164,7 @@ public class BaseEnemy : MonoBehaviour
         transform.LookAt(new Vector3(player.position.x, transform.position.y, player.position.z));
     }
 
+
     public void DieEvent()
     {
         curState = State.Die;
@@ -194,7 +195,6 @@ public class BaseEnemy : MonoBehaviour
         }
     }
 
-    //ATACKING RELATED
     public virtual void Attack()
     {
         print("attack b!tch");
@@ -247,7 +247,7 @@ public class BaseEnemy : MonoBehaviour
     void AttackRepeatOnSight()
     {
         RaycastHit hit;
-        if (Physics.Raycast(transform.position + new Vector3(0,0.15f,0), player.position - transform.position, out hit, Vector3.Distance(transform.position, player.position)))
+        if (Physics.Raycast(transform.position + new Vector3(0, 0.15f, 0), player.position - transform.position, out hit, Vector3.Distance(transform.position, player.position)))
         {
             if (hit.transform == player || hit.transform.parent == player)
             {
