@@ -99,12 +99,12 @@ public abstract class BaseRoom : MonoBehaviour
         colliderHalfExtends.y *= transform.lossyScale.y;
         colliderHalfExtends.z *= transform.lossyScale.z;
         colliderHalfExtends /= 2;
-        bool returnValue = Physics.CheckBox(transform.position, colliderHalfExtends, transform.rotation, creator.roomLayer);
+        bool returnValue = Physics.CheckBox(transform.position + GetComponent<BoxCollider>().center, colliderHalfExtends, transform.rotation, creator.roomLayer);
         if (returnValue)
         {
             if (notIncludeThis)
             {
-                Collider[] hits = Physics.OverlapBox(transform.position, colliderHalfExtends, transform.rotation, creator.roomLayer);
+                Collider[] hits = Physics.OverlapBox(transform.position + GetComponent<BoxCollider>().center, colliderHalfExtends, transform.rotation, creator.roomLayer);
                 if (hits.Length >= 2)
                 {
                     return true;

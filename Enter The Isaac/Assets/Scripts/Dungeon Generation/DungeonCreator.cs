@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class DungeonCreator : MonoBehaviour
 {
+    public int iterations;
 
     public GameObject startRoom;
 
@@ -58,6 +59,7 @@ public class DungeonCreator : MonoBehaviour
     // Generates the dungeon
     public void GenerateDungeon() 
     {
+        iterations++;
         if (removePreviousDungeon)
         {
             ClearDungeon();
@@ -213,10 +215,7 @@ public class DungeonCreator : MonoBehaviour
             }
             yield return null;
         }
-        if (onGenerationComplete != null)
-        {
-            onGenerationComplete();
-        }
+        GenerateDungeon();
     }
     public void ProceedGeneration()
     {
@@ -226,8 +225,6 @@ public class DungeonCreator : MonoBehaviour
             Transform backupTransform = roomToReplace.GetComponent<BaseRoom>().entranceDoor.GetComponent<DungeonDoor>().parentDoor.transform;
             GameObject backupParent = roomToReplace.GetComponent<BaseRoom>().parentRoom;
             DungeonDoor.DoorDirection backupDirection = roomToReplace.GetComponent<BaseRoom>().entranceDoor.GetComponent<DungeonDoor>().direction;;
-            print("DESTROYED " + roomToReplace);
-            print("PROCEEDGEN - REPLACING " + roomToReplace);
             roomToReplace.GetComponent<BaseRoom>().OnDestroyed();
             DestroyImmediate(roomToReplace);
             SpawnRandomRoom(backupParent, backupTransform, backupDirection);
@@ -237,6 +234,7 @@ public class DungeonCreator : MonoBehaviour
     {
         if (doorToRemove.transform.parent.GetComponent<BaseRoom>().type == BaseRoom.RoomTypes.Hallway)
         {
+            print("REMOVING DOOR");
             GameObject hallway = doorToRemove.transform.parent.gameObject;
             doorToRemove = hallway.GetComponent<BaseRoom>().entranceDoor.GetComponent<DungeonDoor>().parentDoor;
             hallway.GetComponent<BaseRoom>().OnDestroyed();
@@ -335,7 +333,6 @@ public class DungeonCreator : MonoBehaviour
         }
         if (finalRoom != null)
         {
-            print("FOUND NEW ROOM");
             finalRoom.GetComponent<BaseRoom>().replaced = true;
             StartCoroutine(finalRoom.GetComponent<BaseRoom>().SpawnNextRoom());
         }
@@ -358,7 +355,6 @@ public class DungeonCreator : MonoBehaviour
             {
                 if (roomToReplace.GetComponent<BaseRoom>().roomDistanceFromStart >= minDistanceFromStart)
                 {
-                    print("HIIII");
                     roomToReplace.SetActive(false);
                     DungeonDoor.DoorDirection entranceDirection = roomToReplace.GetComponent<BaseRoom>().entranceDoor.GetComponent<DungeonDoor>().direction;
 
@@ -395,7 +391,6 @@ public class DungeonCreator : MonoBehaviour
                     GameObject finalRoom = null;
                     GameObject selectedDoor = null;
                     int selectedDoorId = 0;
-                    print(availableOptions.Count);
                     foreach (GameObject option in availableOptions)
                     {
                         List<GameObject> availableDoors = new List<GameObject>();
@@ -441,7 +436,6 @@ public class DungeonCreator : MonoBehaviour
                     }
                     if (finalRoom != null)
                     {
-                        print("FOUND NEW ROOM");
                         finalRoom.GetComponent<BaseRoom>().replaced = true;
                         //StartCoroutine(finalRoom.GetComponent<BaseRoom>().SpawnNextRoom());
                         replaced = true;

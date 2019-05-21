@@ -12,6 +12,7 @@ public class DungeonRoom : BaseRoom
     public delegate void VoidDelegate();
     public VoidDelegate onClearRoom;
     public List<GameObject> aliveEnemies;
+    public int openSpawnProcesses;
 
 
     public void Update()
@@ -76,23 +77,42 @@ public class DungeonRoom : BaseRoom
         {
             foreach (SpawnData spawnable in waveSpawnPossibilities[selectedPossibility].waves[currentWave].spawnData)
             {
-                GameObject enemy = spawnable.spawner.SpawnObject(spawnable.enemy);
-                enemy.GetComponent<Hitbox>().onDeath += RemoveEnemy;
-                aliveEnemies.Add(enemy);
+                StartCoroutine(SpawnQeue(spawnable));
             }
             currentWave++;
         }
     }
+    public IEnumerator SpawnQeue(SpawnData spawnData)
+    {
+        openSpawnProcesses++;
+        foreach(EnemySpawnData enemieSpawn in spawnData.enemySpawnData)
+        {
+            yield return new WaitForSeconds(enemieSpawn.delayBeforeSpawn);
+            GameObject enemy = spawnData.spawner.SpawnObject(enemieSpawn.enemy);
+            enemy.GetComponent<Hitbox>().onDeath += RemoveEnemy;
+            aliveEnemies.Add(enemy);
+        }
+        openSpawnProcesses--;
+    }
     public void RemoveEnemy(GameObject enemy)
     {
         aliveEnemies.Remove(enemy);
-        CheckEnemies();
+        if(openSpawnProcesses == 0)
+        {
+            CheckEnemies();
+        }
+    }
+    [System.Serializable]
+    public struct EnemySpawnData
+    {
+        public GameObject enemy;
+        public float delayBeforeSpawn;
     }
     [System.Serializable]
     public struct SpawnData
     {
         public Spawner spawner;
-        public GameObject enemy;
+        public EnemySpawnData[] enemySpawnData;
     }
     [System.Serializable]
     public struct WaveData

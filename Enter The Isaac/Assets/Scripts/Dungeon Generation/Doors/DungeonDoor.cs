@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DungeonDoor : MonoBehaviour
 {
-    public DungeonRoom ownerRoom;
+    public BaseRoom ownerRoom;
     public GameObject parentDoor;
     public Transform connectionPoint;
     public DoorDirection direction;

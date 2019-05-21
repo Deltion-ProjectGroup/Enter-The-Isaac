@@ -15,7 +15,6 @@ public class TreasurePedestal : Spawner
         int randomNum = Random.Range(1, inGameManager.maxPercentage + 1);
         foreach(InGameManager.ItemPoolData data in inGameManager.itemPool)
         {
-            print("YES");
             if (randomNum >= data.percentageBorders.x && randomNum <= data.percentageBorders.y)
             {
                 if(data.items.Length > 0)
