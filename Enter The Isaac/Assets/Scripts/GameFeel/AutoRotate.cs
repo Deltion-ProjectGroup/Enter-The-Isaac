@@ -26,7 +26,7 @@ public class AutoRotate : MonoBehaviour
         }
         if (ignore == false)
         {
-            transform.position += tranformV3 * speed * Time.deltaTime;
+            transform.position += transform.TransformDirection(tranformV3 * speed * Time.deltaTime);
             transform.Rotate(eulerV3 * speed * Time.deltaTime);
             transform.localScale = Vector3.Lerp(transform.localScale, scaleV3, speed * Time.deltaTime);
         }

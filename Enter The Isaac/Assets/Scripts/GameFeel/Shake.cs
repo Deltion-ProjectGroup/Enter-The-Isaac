@@ -16,30 +16,33 @@ public class Shake : MonoBehaviour
 
     void LateUpdate()
     {
-        if (isShaking == true)
+        if (shakeScale > 0)
         {
-            transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, transform.localEulerAngles.y, 0);
-            Shaking(shakestr);
-            if (speedLines != null)
+            if (isShaking == true)
             {
-                speedLines.Play();
+                transform.localEulerAngles = new Vector3(transform.localEulerAngles.x, transform.localEulerAngles.y, 0);
+                Shaking(shakestr);
+                if (speedLines != null)
+                {
+                    speedLines.Play();
+                }
             }
-        }
-        else
-        {
-            if (speedLines != null)
+            else
             {
-                speedLines.Stop();
+                if (speedLines != null)
+                {
+                    speedLines.Stop();
+                }
             }
-        }
 
-        if (ppVolume != null)
-        {
-            ChromaticAberration crom;
-            ppVolume.profile.TryGetSettings(out crom);
-            if (crom != null)
+            if (ppVolume != null)
             {
-                crom.intensity.value = Mathf.MoveTowards(crom.intensity.value, 0, Time.unscaledDeltaTime * 3);
+                ChromaticAberration crom;
+                ppVolume.profile.TryGetSettings(out crom);
+                if (crom != null)
+                {
+                    crom.intensity.value = Mathf.MoveTowards(crom.intensity.value, 0, Time.unscaledDeltaTime * 3);
+                }
             }
         }
     }
@@ -53,7 +56,7 @@ public class Shake : MonoBehaviour
         transform.eulerAngles -= rngRemover;
         rngRemover = Vector3.zero;
 
-        if (ppVolume != null)
+        if (ppVolume != null && shakeScale > 0)
         {
             ChromaticAberration crom;
             ppVolume.profile.TryGetSettings(out crom);

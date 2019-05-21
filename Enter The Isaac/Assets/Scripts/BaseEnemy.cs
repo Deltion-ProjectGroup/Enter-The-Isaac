@@ -16,6 +16,8 @@ public class BaseEnemy : MonoBehaviour
     public State curState;
     [SerializeField] Hitbox hitbox;
     float timer = 0;
+    ShakeCam shakeCam;
+    [SerializeField] Vector2 randomSpeedMultiplier = new Vector2(0.9f, 1.5f);
     [Header("Spawning")]
     [SerializeField] Renderer[] spawnInvisible;
     [SerializeField] GameObject spawnParticle;
@@ -29,6 +31,8 @@ public class BaseEnemy : MonoBehaviour
     [Header("PathFinding")]
     [SerializeField] float distanceFromPlayer = 10;
     public PathMethod myPathMethod = PathMethod.GoToPlayer;
+    [SerializeField] float ignorePlayerDistance = 30;
+    [SerializeField] bool alwaysLookAtPlayer = false;
     [Header("Attacking")]
     [SerializeField] bool canAttackWhileWalking = true;
     public enum AttackType
@@ -48,10 +52,17 @@ public class BaseEnemy : MonoBehaviour
     Animator anim;
     Vector3 lastPos;
     float walkWaitTime = 1;
+    [Header("Shooting")]
+    [SerializeField] GameObject toShoot;
+    [SerializeField] Transform shootPivot;
+    [SerializeField] int amountOfBullets = 1;
+    [SerializeField] [Range(0, 360)] float angleRadius = 30;
 
     void Start()
     {
+        shakeCam = GetComponent<ShakeCam>();
         agent = GetComponent<NavMeshAgent>();
+        agent.speed *= Random.Range(randomSpeedMultiplier.x, randomSpeedMultiplier.y);
         player = FindObjectOfType<PlayerController>().transform;
         anim = GetComponent<Animator>();
         if (skipParticle == false)
@@ -92,6 +103,10 @@ public class BaseEnemy : MonoBehaviour
                 break;
         }
         CheckAttack();
+        if (alwaysLookAtPlayer == true && curState != State.Die)
+        {
+            transform.LookAt(new Vector3(player.position.x, transform.position.y, player.position.z));
+        }
     }
 
     void SetWalkAnim()
@@ -109,20 +124,27 @@ public class BaseEnemy : MonoBehaviour
 
     public virtual void Move()
     {
-        switch (myPathMethod)
+        if (Vector3.Distance(transform.position, player.position) <= ignorePlayerDistance)
         {
-            case PathMethod.GoToPlayer:
-                GoToPlayer();
-                agent.isStopped = (Vector3.Distance(player.position, transform.position) < distanceFromPlayer);
-                break;
+            switch (myPathMethod)
+            {
+                case PathMethod.GoToPlayer:
+                    GoToPlayer();
+                    agent.isStopped = (Vector3.Distance(player.position, transform.position) < distanceFromPlayer);
+                    break;
 
-            case PathMethod.KeepDistanceFromPlayer:
-                KeepDistanceFromPlayer();
-                break;
+                case PathMethod.KeepDistanceFromPlayer:
+                    KeepDistanceFromPlayer();
+                    break;
 
-            case PathMethod.DontMove:
-                //yeah well, dont move
-                break;
+                case PathMethod.DontMove:
+                    //yeah well, dont move
+                    break;
+            }
+        }
+        else
+        {
+            agent.isStopped = true;
         }
     }
 
@@ -177,7 +199,7 @@ public class BaseEnemy : MonoBehaviour
         }
         if (hitbox.enabled == true)
         {
-            Camera.main.GetComponent<Shake>().SmallShake();
+            shakeCam.SmallShake();
             hitbox.enabled = false;
         }
         timer += Time.deltaTime;
@@ -187,7 +209,7 @@ public class BaseEnemy : MonoBehaviour
         }
         if (timer > 0.25f)
         {
-            Camera.main.GetComponent<Shake>().SmallShake();
+            shakeCam.SmallShake();
             Camera.main.fieldOfView = 60;
             Destroy(gameObject);
         }
@@ -195,13 +217,23 @@ public class BaseEnemy : MonoBehaviour
 
     public virtual void Attack()
     {
-        print("attack b!tch");
+        shakeCam.SmallShake();
+        float curAngle = -angleRadius / 2;
+        for (int i = 0; i < amountOfBullets; i++)
+        {
+            Instantiate(toShoot, shootPivot.position, transform.rotation * toShoot.transform.rotation * Quaternion.Euler(0, curAngle, 0));
+            curAngle += angleRadius / amountOfBullets;
+        }
     }
 
     void CheckAttack()
     {
         bool helper = false;
         if (canAttackWhileWalking == false && anim.GetBool("walking") == true)
+        {
+            helper = true;
+        }
+        if (Vector3.Distance(transform.position, player.position) > ignorePlayerDistance)
         {
             helper = true;
         }
@@ -231,6 +263,10 @@ public class BaseEnemy : MonoBehaviour
                         break;
                 }
             }
+        }
+        else if (IsInvoking("AttackRepeatFunction") == true)
+        {
+            CancelInvoke("AttackRepeatFunction");
         }
     }
 
@@ -279,7 +315,7 @@ public class BaseEnemy : MonoBehaviour
             {
                 if (IsInvoking("AttackRepeatFunction") == false)
                 {
-                    InvokeRepeating("AttackRepeatFunction", repeatRate, repeatRate);
+                    InvokeRepeating("AttackRepeatFunction", 0, repeatRate);
                 }
             }
             else

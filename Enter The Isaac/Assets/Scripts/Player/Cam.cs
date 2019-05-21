@@ -17,6 +17,7 @@ public class Cam : MonoBehaviour
     [SerializeField] float rotAmount = 30;
     [SerializeField] Crosshair crosshair;//this is used for controller mousefollow.
     PlayerController player;
+    [SerializeField] bool ignoreFOVChange = false;
 
 
     void Start()
@@ -30,12 +31,29 @@ public class Cam : MonoBehaviour
 
     void Update()
     {
-        cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, startFOV, Time.deltaTime * fovResetSpeed);
+        if (ignoreFOVChange == false)
+        {
+            cam.fieldOfView = Mathf.Lerp(cam.fieldOfView, startFOV, Time.deltaTime * fovResetSpeed);
+        }
+        else
+        {
+            cam.fieldOfView = startFOV;
+        }
         if (player.curState != PlayerController.State.Roll && player.curState != PlayerController.State.GetHit)
         {
             ToCenterPos(speed);
-        } else {
-           ToCenterPos(speed / 2); 
+        }
+        else
+        {
+            ToCenterPos(speed / 2);
+        }
+    }
+
+    void LateUpdate()
+    {
+        if (ignoreFOVChange == true)
+        {
+            cam.fieldOfView = startFOV;
         }
     }
 
