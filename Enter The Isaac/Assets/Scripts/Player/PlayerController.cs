@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour
     public int keys = 0;
     public Text keyUICounter;
     [SerializeField] GameObject reloadIcon;
+    public GameObject reloadBar;
     [Header("Walking related")]
     public float walkSpeed = 1;
     float curWalkSpeed = 0;
@@ -152,6 +153,10 @@ public class PlayerController : MonoBehaviour
         {
             reloadIcon.transform.localScale = new Vector3(0, 2, 0);
             reloadIcon.SetActive(gun.curAmmo <= 0);
+        }
+        else
+        {
+            reloadIcon.SetActive(!gun.IsInvoking("Reload"));
         }
         //switch gun
         SwitchGun();
@@ -337,7 +342,7 @@ public class PlayerController : MonoBehaviour
         {
             if (Input.GetButtonDown(interactButton))
             {
-                foreach(Interactable interactableComponent in closestInteractableObject.GetComponents<Interactable>())
+                foreach (Interactable interactableComponent in closestInteractableObject.GetComponents<Interactable>())
                 {
                     interactableComponent.Interact(gameObject);
                 }

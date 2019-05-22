@@ -84,6 +84,8 @@ public class BatBehaviour : MonoBehaviour
             timer = 0;
             StopAllCoroutines();
             curState = State.Idle;
+            hurtbox.SetActive(false);
+            attackPhase = 0;
         }
     }
 

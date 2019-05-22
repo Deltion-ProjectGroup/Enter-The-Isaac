@@ -130,7 +130,12 @@ public class Gun : MonoBehaviour
     {
         CancelInvoke("Shoot");
         Invoke("Reload", gunClone.reloadTime);
-        transform.Rotate(0,0,90);
+        if (player != null)
+        {
+            player.reloadBar.GetComponent<AutoRotate>().speed = 1 / gunClone.reloadTime;
+            player.reloadBar.transform.localScale = new Vector3(1, player.reloadBar.transform.localScale.y, player.reloadBar.transform.localScale.z);
+        }
+        transform.Rotate(0, 0, 90);
     }
 
     public void GetSwitchGunInput(float scrollInput)
@@ -201,8 +206,8 @@ public class Gun : MonoBehaviour
                 //should you reload automatically? If so, slash the if here
                 if (shootFirstFrame == true)
                 {
-                    Invoke("Reload", gunClone.reloadTime);
-                    transform.Rotate(0,0,90);
+                    GetReloadInput();
+                    transform.Rotate(0, 0, 90);
                 }
             }
         }

@@ -10,7 +10,9 @@ public class AutoRotate : MonoBehaviour
     public Vector3 eulerV3 = Vector3.zero;
     public Vector3 scaleV3 = Vector3.zero;
     public float speed = 1;
-    [SerializeField] bool moveInEditMode = true;
+    [SerializeField] bool moveInEditMode = false;
+    [SerializeField] bool scaleLerp = true;
+    [SerializeField] bool ignoreScale = true;
 
     void Start()
     {
@@ -28,7 +30,17 @@ public class AutoRotate : MonoBehaviour
         {
             transform.position += transform.TransformDirection(tranformV3 * speed * Time.deltaTime);
             transform.Rotate(eulerV3 * speed * Time.deltaTime);
-            transform.localScale = Vector3.Lerp(transform.localScale, scaleV3, speed * Time.deltaTime);
+            if (ignoreScale == false)
+            {
+                if (scaleLerp == true)
+                {
+                    transform.localScale = Vector3.Lerp(transform.localScale, scaleV3, speed * Time.deltaTime);
+                }
+                else
+                {
+                    transform.localScale = Vector3.MoveTowards(transform.localScale, scaleV3, speed * Time.deltaTime);
+                }
+            }
         }
     }
 }
