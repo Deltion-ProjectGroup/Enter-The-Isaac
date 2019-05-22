@@ -133,7 +133,7 @@ public class Gun : MonoBehaviour
         if (player != null)
         {
             player.reloadBar.GetComponent<AutoRotate>().speed = 1 / gunClone.reloadTime;
-            player.reloadBar.transform.localScale = new Vector3(1, player.reloadBar.transform.localScale.y, player.reloadBar.transform.localScale.z);
+            player.reloadBar.transform.localScale = new Vector3(1, player.reloadBar.transform.localScale.y, 0);
         }
         transform.Rotate(0, 0, 90);
     }
