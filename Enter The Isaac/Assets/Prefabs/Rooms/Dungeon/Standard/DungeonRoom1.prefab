@@ -152,11 +152,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6780ef114d5f1442a9f24badc9624e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ownerRoom: {fileID: 0}
+  ownerRoom: {fileID: 1936038409343245234}
   parentDoor: {fileID: 0}
   connectionPoint: {fileID: 106541293}
-  direction: 1
-  id: 0
+  direction: 3
+  id: 2
 --- !u!1 &168496283
 GameObject:
   m_ObjectHideFlags: 0
@@ -651,11 +651,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6780ef114d5f1442a9f24badc9624e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ownerRoom: {fileID: 0}
+  ownerRoom: {fileID: 1936038409343245234}
   parentDoor: {fileID: 0}
   connectionPoint: {fileID: 363579392}
-  direction: 1
-  id: 0
+  direction: 0
+  id: 1
 --- !u!1 &1143276651
 GameObject:
   m_ObjectHideFlags: 0
@@ -759,15 +759,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1195029933}
-  m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 13.592999, y: 0, z: -1.5}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 13.5, y: 0, z: 1.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 934380018}
   - {fileID: 46760983}
   m_Father: {fileID: 495231528492005292}
   m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!33 &1195029937
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -825,11 +825,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6780ef114d5f1442a9f24badc9624e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ownerRoom: {fileID: 0}
+  ownerRoom: {fileID: 1936038409343245234}
   parentDoor: {fileID: 0}
   connectionPoint: {fileID: 46760983}
-  direction: 1
-  id: 0
+  direction: 2
+  id: 3
 --- !u!1 &1203780661
 GameObject:
   m_ObjectHideFlags: 0
@@ -963,15 +963,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1293328748}
-  m_LocalRotation: {x: -0, y: 1, z: -0, w: 0}
-  m_LocalPosition: {x: -1.5, y: 0, z: -13.593}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.5, y: 0, z: -13.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 911879475}
   - {fileID: 1203780662}
   m_Father: {fileID: 495231528492005292}
   m_RootOrder: 2
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &1293328752
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1029,7 +1029,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6780ef114d5f1442a9f24badc9624e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ownerRoom: {fileID: 0}
+  ownerRoom: {fileID: 1936038409343245234}
   parentDoor: {fileID: 0}
   connectionPoint: {fileID: 1203780662}
   direction: 1
@@ -1646,7 +1646,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 495231528492005292}
-  m_Layer: 0
+  - component: {fileID: 1936038409343245234}
+  - component: {fileID: 1103100223767887967}
+  m_Layer: 4
   m_Name: DungeonRoom1
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1678,6 +1680,47 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1936038409343245234
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 495231528492005293}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6844f2bd25e2d1f448ea4b9821b44e87, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  roomDistanceFromStart: 0
+  parentRoom: {fileID: 0}
+  replacedTimes: 0
+  creator: {fileID: 0}
+  availableDoors:
+  - {fileID: 1293328748}
+  - {fileID: 1108871035}
+  - {fileID: 115595492}
+  - {fileID: 1195029933}
+  entranceDoor: {fileID: 0}
+  type: 0
+  selectedPossibility: 0
+  currentWave: 0
+  waveSpawnPossibilities: []
+  aliveEnemies: []
+  openSpawnProcesses: 0
+--- !u!65 &1103100223767887967
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 495231528492005293}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 27.07391, y: 3.9449768, z: 26.84822}
+  m_Center: {x: 0.03494072, y: 1.4724884, z: 0.02735138}
 --- !u!1 &495231529952667450
 GameObject:
   m_ObjectHideFlags: 0

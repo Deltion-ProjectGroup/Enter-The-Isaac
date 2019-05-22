@@ -201,11 +201,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6780ef114d5f1442a9f24badc9624e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ownerRoom: {fileID: 0}
+  ownerRoom: {fileID: 440909162268694758}
   parentDoor: {fileID: 0}
   connectionPoint: {fileID: 1709009947}
-  direction: 1
-  id: 0
+  direction: 3
+  id: 2
 --- !u!1 &369323329
 GameObject:
   m_ObjectHideFlags: 0
@@ -617,15 +617,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 842322737}
-  m_LocalRotation: {x: 0, y: 1, z: 0, w: 0}
-  m_LocalPosition: {x: -1.5, y: 0, z: -7.5929}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 1.5, y: 0, z: -7.5001}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1321632726}
   - {fileID: 1591320817}
   m_Father: {fileID: 7862944203223238109}
   m_RootOrder: 5
-  m_LocalEulerAnglesHint: {x: 0, y: 180, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!33 &842322741
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -683,11 +683,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6780ef114d5f1442a9f24badc9624e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ownerRoom: {fileID: 0}
+  ownerRoom: {fileID: 440909162268694758}
   parentDoor: {fileID: 0}
   connectionPoint: {fileID: 1591320817}
   direction: 1
-  id: 0
+  id: 3
 --- !u!1 &854983499
 GameObject:
   m_ObjectHideFlags: 0
@@ -1107,10 +1107,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6780ef114d5f1442a9f24badc9624e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ownerRoom: {fileID: 0}
+  ownerRoom: {fileID: 440909162268694758}
   parentDoor: {fileID: 0}
   connectionPoint: {fileID: 1458114248}
-  direction: 1
+  direction: 0
   id: 0
 --- !u!1 &1458114247
 GameObject:
@@ -1459,15 +1459,15 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1911780006}
-  m_LocalRotation: {x: -0, y: 0.7071068, z: -0, w: 0.7071068}
-  m_LocalPosition: {x: 7.5929, y: 0, z: -1.5}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
+  m_LocalPosition: {x: 7.5001, y: 0, z: 1.5}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 1248976887}
   - {fileID: 1966005063}
   m_Father: {fileID: 7862944203223238109}
   m_RootOrder: 3
-  m_LocalEulerAnglesHint: {x: 0, y: 90, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!33 &1911780010
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -1525,11 +1525,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6780ef114d5f1442a9f24badc9624e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ownerRoom: {fileID: 0}
+  ownerRoom: {fileID: 440909162268694758}
   parentDoor: {fileID: 0}
   connectionPoint: {fileID: 1966005063}
-  direction: 1
-  id: 0
+  direction: 2
+  id: 1
 --- !u!1 &1966005062
 GameObject:
   m_ObjectHideFlags: 0
@@ -1692,7 +1692,9 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7862944203223238109}
-  m_Layer: 0
+  - component: {fileID: 440909162268694758}
+  - component: {fileID: 3267246232773465967}
+  m_Layer: 4
   m_Name: DungeonRoom4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -1724,6 +1726,47 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &440909162268694758
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7862944203223238114}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6844f2bd25e2d1f448ea4b9821b44e87, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  roomDistanceFromStart: 0
+  parentRoom: {fileID: 0}
+  replacedTimes: 0
+  creator: {fileID: 0}
+  availableDoors:
+  - {fileID: 1414944487}
+  - {fileID: 1911780006}
+  - {fileID: 360636914}
+  - {fileID: 842322737}
+  entranceDoor: {fileID: 0}
+  type: 0
+  selectedPossibility: 0
+  currentWave: 0
+  waveSpawnPossibilities: []
+  aliveEnemies: []
+  openSpawnProcesses: 0
+--- !u!65 &3267246232773465967
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7862944203223238114}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 14.976101, y: 4.1401367, z: 14.954834}
+  m_Center: {x: 0.0028820038, y: 1.5700684, z: 0.0010375977}
 --- !u!1 &7862944203271353571
 GameObject:
   m_ObjectHideFlags: 0
