@@ -279,7 +279,7 @@ public class Gun : MonoBehaviour
             bullet.GetComponent<Hurtbox>().damage = gunClone.dmg;
             bullet.GetComponent<Hurtbox>().team = 0;
             bullet.GetComponent<Hurtbox>().destroyOnHit = !gunClone.pierce;
-            bullet.GetComponent<BulletMove>().destroyOnRayHit = !gunClone.pierce;
+            bullet.GetComponent<BulletMove>().destroyOnRayHit = !gunClone.ghostBullet;
             Destroy(bullet, gunClone.lifeTime);
             lastSpawnedBullet = bullet;
             if (spawnEvent != null)

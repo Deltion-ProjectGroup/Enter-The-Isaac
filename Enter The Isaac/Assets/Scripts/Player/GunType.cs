@@ -31,6 +31,7 @@ public class GunType : ScriptableObject
     public float lifeTime = 5;
     public float forwardStart = 1;
     public bool pierce = false;
+    public bool ghostBullet = false;
     public bool destroyOnInputUp = false;//incomplete
     public bool ricochet = false;//does not work with laser type guns
     public bool parentToGun = false;

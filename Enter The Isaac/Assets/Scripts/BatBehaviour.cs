@@ -17,6 +17,7 @@ public class BatBehaviour : MonoBehaviour
     }
     [SerializeField] State curState = State.Idle;
     Transform player;
+    Animator anim;
     float timer = 0;
     Vector3 goalPos;
     [SerializeField] float noticePlayerTime = 1;
@@ -36,6 +37,8 @@ public class BatBehaviour : MonoBehaviour
 
     void Start()
     {
+        transform.position += transform.up;
+        anim = transform.GetComponentInChildren<Animator>();
         startRot = transform.eulerAngles;
         hitbox = GetComponent<Collider>();
         if (skipSpawnParticle == false)
@@ -75,7 +78,13 @@ public class BatBehaviour : MonoBehaviour
                 break;
         }
 
-        transform.Rotate(-transform.localEulerAngles.x,0,0);
+        transform.Rotate(-transform.localEulerAngles.x, 0, 0);
+        if (anim.GetCurrentAnimatorStateInfo(0).IsTag("GetHit") == true && curState == State.Attack)
+        {
+            timer = 0;
+            StopAllCoroutines();
+            curState = State.Idle;
+        }
     }
 
     IEnumerator SpawnEvents()
@@ -126,7 +135,7 @@ public class BatBehaviour : MonoBehaviour
     void LookForTarget()
     {
         RaycastHit hit;
-        if (Physics.Raycast(transform.position, player.position - transform.position, out hit, Vector3.Distance(transform.position, player.position)))
+        if (Physics.Raycast(transform.position + new Vector3(0, 0.2f, 0), player.position - transform.position, out hit, Vector3.Distance(transform.position, player.position), ~LayerMask.GetMask("Ignore Raycast", "Enemy")))
         {
             if (hit.transform.tag == "Player")
             {
@@ -209,6 +218,7 @@ public class BatBehaviour : MonoBehaviour
     {
         //aim
         attackPhase = 0;
+        anim.Play("metarig|Attack(Charge)", 0);
         yield return new WaitForSeconds(attackChargeTime);
         //fire
         attackPhase = 1;
@@ -216,6 +226,7 @@ public class BatBehaviour : MonoBehaviour
         transform.Find("Line").gameObject.SetActive(true);
         yield return new WaitForSeconds(0.3f);
         //stop
+        anim.Play("metarig|Attack(Attack)", 0);
         hurtbox.SetActive(false);
         attackPhase = 2;
         transform.Find("Line").gameObject.SetActive(false);
@@ -238,13 +249,17 @@ public class BatBehaviour : MonoBehaviour
         switch (attackPhase)
         {
             case 0:
-                transform.LookAt(player.position);
-                transform.Rotate(0, 180, 0);
+                if (anim.GetCurrentAnimatorStateInfo(0).IsTag("Charge") == false)
+                {
+                    transform.LookAt(player.position);
+                    transform.Rotate(0, 180, 0);
+                }
                 break;
             case 1:
                 transform.position += -transform.forward * Time.deltaTime * attackGoForwardSpeed;
                 break;
             case 2:
+                anim.Play("metarig|Flying", 0);
                 //maybe set an animation later i dunno
                 break;
         }

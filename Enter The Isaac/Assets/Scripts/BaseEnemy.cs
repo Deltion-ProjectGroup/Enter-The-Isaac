@@ -57,6 +57,11 @@ public class BaseEnemy : MonoBehaviour
     [SerializeField] Transform shootPivot;
     [SerializeField] int amountOfBullets = 1;
     [SerializeField] [Range(0, 360)] float angleRadius = 30;
+    [SerializeField] float speedMuliplier = 1;
+    [SerializeField] int damage = 1;
+    [SerializeField] float rotateY = 0;
+    [SerializeField] float lifeTime = 1;
+    [SerializeField] bool parentToMe = false;
 
     void Start()
     {
@@ -102,10 +107,13 @@ public class BaseEnemy : MonoBehaviour
                 SetWalkAnim();
                 break;
         }
-        CheckAttack();
-        if (alwaysLookAtPlayer == true && curState != State.Die)
+        if (curState != State.Spawn)
         {
-            transform.LookAt(new Vector3(player.position.x, transform.position.y, player.position.z));
+            CheckAttack();
+            if (alwaysLookAtPlayer == true && curState != State.Die)
+            {
+                transform.LookAt(new Vector3(player.position.x, transform.position.y, player.position.z));
+            }
         }
     }
 
@@ -221,7 +229,15 @@ public class BaseEnemy : MonoBehaviour
         float curAngle = -angleRadius / 2;
         for (int i = 0; i < amountOfBullets; i++)
         {
-            Instantiate(toShoot, shootPivot.position, transform.rotation * toShoot.transform.rotation * Quaternion.Euler(0, curAngle, 0));
+            GameObject g = Instantiate(toShoot, shootPivot.position, transform.rotation * toShoot.transform.rotation * Quaternion.Euler(0, curAngle, 0));
+            g.GetComponent<AutoRotate>().speed = speedMuliplier;
+            g.GetComponent<AutoRotate>().eulerV3.y = rotateY / speedMuliplier;
+            g.GetComponent<DestroyAfterSeconds>().time = lifeTime;
+            if (parentToMe == true)
+            {
+                g.transform.SetParent(transform);
+            }
+            g.GetComponent<Hurtbox>().damage = damage;
             curAngle += angleRadius / amountOfBullets;
         }
     }
