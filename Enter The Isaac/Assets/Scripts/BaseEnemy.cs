@@ -65,6 +65,11 @@ public class BaseEnemy : MonoBehaviour
 
     void Start()
     {
+        StartBase();
+    }
+
+    public void StartBase()
+    {
         shakeCam = GetComponent<ShakeCam>();
         agent = GetComponent<NavMeshAgent>();
         agent.speed *= Random.Range(randomSpeedMultiplier.x, randomSpeedMultiplier.y);
@@ -99,6 +104,11 @@ public class BaseEnemy : MonoBehaviour
     }
 
     void Update()
+    {
+        UpdateBase();
+    }
+
+    public void UpdateBase()
     {
         switch (curState)
         {
