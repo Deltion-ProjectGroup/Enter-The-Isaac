@@ -130,6 +130,13 @@ public class PlayerController : MonoBehaviour
                 keyUICounter.text = "X 0" + keys;//lazyness intensfies
             }
         }
+        //setting the reload icon
+        if (reloadIcon.activeSelf != (gun.curAmmo <= 0))
+        {
+            reloadIcon.transform.localScale = new Vector3(0, 2, 0);
+            reloadIcon.SetActive(gun.curAmmo <= 0);
+        }
+        reloadIcon.SetActive(!gun.IsInvoking("Reload"));
         CheckClosestInteractable();
         Interact();
     }
@@ -148,15 +155,6 @@ public class PlayerController : MonoBehaviour
         if (Input.GetButtonDown(reloadInput))
         {
             gun.GetReloadInput();
-        }
-        if (reloadIcon.activeSelf != (gun.curAmmo <= 0))
-        {
-            reloadIcon.transform.localScale = new Vector3(0, 2, 0);
-            reloadIcon.SetActive(gun.curAmmo <= 0);
-        }
-        else
-        {
-            reloadIcon.SetActive(!gun.IsInvoking("Reload"));
         }
         //switch gun
         SwitchGun();
