@@ -6,8 +6,7 @@ public abstract class BaseRoom : MonoBehaviour
 {
     public int roomDistanceFromStart;
     public GameObject parentRoom;
-    public bool replaced;
-    public bool previousReplaced;
+    public int replacedTimes;
 
 
     public DungeonCreator creator;
@@ -90,6 +89,10 @@ public abstract class BaseRoom : MonoBehaviour
     public virtual void OnDestroyed()
     {
         creator.entireDungeon.Remove(gameObject);
+        if (creator.endRooms.Contains(gameObject))
+        {
+            creator.endRooms.Remove(gameObject);
+        }
     }
     public abstract void SpawnRoom(DungeonDoor.DoorDirection wantedDir, Transform doorPoint);
     public bool HasCollision(bool notIncludeThis = false)

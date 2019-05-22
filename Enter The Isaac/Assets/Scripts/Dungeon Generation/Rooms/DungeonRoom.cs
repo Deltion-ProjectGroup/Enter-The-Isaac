@@ -37,10 +37,6 @@ public class DungeonRoom : BaseRoom
     {
         base.OnDestroyed();
         creator.roomCount--;
-        if (creator.endRooms.Contains(gameObject))
-        {
-            creator.endRooms.Remove(gameObject);
-        }
     }
     public void OnEnteredRoom()
     {

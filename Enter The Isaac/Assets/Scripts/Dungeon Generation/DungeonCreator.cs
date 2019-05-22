@@ -5,7 +5,7 @@ using UnityEngine;
 public class DungeonCreator : MonoBehaviour
 {
     public int iterations;
-
+    public int maxReplacementTimes;
     public GameObject startRoom;
 
     [Header("Generation Data")]
@@ -77,7 +77,6 @@ public class DungeonCreator : MonoBehaviour
         shopCount = 0;
         bossCount = 0;
         treasureCount = 0;
-        print(entireDungeon.Count);
         foreach (GameObject dungeonPart in entireDungeon) /// Destroys the current dungeon if removePreviousDungeon is true;
         {
             DestroyImmediate(dungeonPart);
@@ -165,12 +164,10 @@ public class DungeonCreator : MonoBehaviour
     {
         if (roomToCheck.GetComponent<BaseRoom>().HasCollision(true))
         {
-            print("HAD COLL");
             ReplaceRoom(roomToCheck, entranceDirection);
         }
         else
         {
-            print("DID NOT COLL");
             StartCoroutine(roomToCheck.GetComponent<BaseRoom>().SpawnNextRoom());
         }
     }
@@ -182,7 +179,6 @@ public class DungeonCreator : MonoBehaviour
         }
         else
         {
-            print("MKAYYYY");
             if(bossCount < minBossRoomCount)
             {
                 ForcedReplaceRoom(endRooms, minBossRoomCount - bossCount, bossRooms, minBossRoomDistance);
@@ -224,17 +220,19 @@ public class DungeonCreator : MonoBehaviour
             GameObject roomToReplace = endRooms[Random.Range(0, endRooms.Count)];
             Transform backupTransform = roomToReplace.GetComponent<BaseRoom>().entranceDoor.GetComponent<DungeonDoor>().parentDoor.transform;
             GameObject backupParent = roomToReplace.GetComponent<BaseRoom>().parentRoom;
-            DungeonDoor.DoorDirection backupDirection = roomToReplace.GetComponent<BaseRoom>().entranceDoor.GetComponent<DungeonDoor>().direction;;
-            roomToReplace.GetComponent<BaseRoom>().OnDestroyed();
-            DestroyImmediate(roomToReplace);
-            SpawnRandomRoom(backupParent, backupTransform, backupDirection);
+            DungeonDoor.DoorDirection backupDirection = roomToReplace.GetComponent<BaseRoom>().entranceDoor.GetComponent<DungeonDoor>().direction;
+            ReplaceRoom(roomToReplace, backupDirection);
+        }
+        else
+        {
+            print("NOT ENOUGH ENDROOMS");
+            GenerateDungeon();
         }
     }
     public void RemoveDoor(GameObject doorToRemove)
     {
         if (doorToRemove.transform.parent.GetComponent<BaseRoom>().type == BaseRoom.RoomTypes.Hallway)
         {
-            print("REMOVING DOOR");
             GameObject hallway = doorToRemove.transform.parent.gameObject;
             doorToRemove = hallway.GetComponent<BaseRoom>().entranceDoor.GetComponent<DungeonDoor>().parentDoor;
             hallway.GetComponent<BaseRoom>().OnDestroyed();
@@ -242,7 +240,7 @@ public class DungeonCreator : MonoBehaviour
         }
         GameObject newWall = Instantiate(walls[Random.Range(0, walls.Length)], doorToRemove.transform.position, doorToRemove.transform.rotation, doorToRemove.transform.parent);
         doorToRemove.GetComponent<DungeonDoor>().ownerRoom.availableDoors.Remove(doorToRemove);
-        if(doorToRemove.GetComponent<DungeonDoor>().ownerRoom.availableDoors.Count <= 0)
+        if(doorToRemove.GetComponent<DungeonDoor>().ownerRoom.availableDoors.Count <= 0 && doorToRemove.GetComponent<DungeonDoor>().ownerRoom.replacedTimes <= maxReplacementTimes)
         {
             doorToRemove.GetComponent<DungeonDoor>().ownerRoom.type = BaseRoom.RoomTypes.End;
             endRooms.Add(doorToRemove.GetComponent<DungeonDoor>().ownerRoom.gameObject);
@@ -251,10 +249,10 @@ public class DungeonCreator : MonoBehaviour
     }
     public void ReplaceRoom(GameObject roomToReplace, DungeonDoor.DoorDirection entranceDirection, List<GameObject> staticOptions = null)
     {
+        int backupReplacedAmount = roomToReplace.GetComponent<BaseRoom>().replacedTimes;
         BaseRoom.RoomTypes backupType = roomToReplace.GetComponent<BaseRoom>().type;
         GameObject backupParentDoor = roomToReplace.GetComponent<BaseRoom>().entranceDoor.GetComponent<DungeonDoor>().parentDoor;
         GameObject backupParent = roomToReplace.GetComponent<BaseRoom>().parentRoom;
-        print("DESTROYED " + roomToReplace);
         roomToReplace.GetComponent<BaseRoom>().OnDestroyed();
         DestroyImmediate(roomToReplace);
 
@@ -291,8 +289,10 @@ public class DungeonCreator : MonoBehaviour
         GameObject finalRoom = null;
         GameObject selectedDoor = null;
         int selectedDoorId = 0;
-        foreach(GameObject option in availableOptions)
+        while(availableOptions.Count > 0)
         {
+            GameObject option = availableOptions[Random.Range(0, availableOptions.Count)];
+            availableOptions.Remove(option);
             List<GameObject> availableDoors = new List<GameObject>();
             foreach (GameObject door in option.GetComponent<BaseRoom>().availableDoors)
             {
@@ -306,10 +306,10 @@ public class DungeonCreator : MonoBehaviour
 
             finalRoom = Instantiate(option, GetLocationData(option.transform, selectedDoor.transform, backupParentDoor.transform), Quaternion.identity);
 
-            for(int i = 0; i < finalRoom.GetComponent<BaseRoom>().availableDoors.Count; i++)
+            for (int i = 0; i < finalRoom.GetComponent<BaseRoom>().availableDoors.Count; i++)
             {
                 GameObject thisDoor = finalRoom.GetComponent<BaseRoom>().availableDoors[i];
-                if(thisDoor.GetComponent<DungeonDoor>().id == selectedDoorId)
+                if (thisDoor.GetComponent<DungeonDoor>().id == selectedDoorId)
                 {
                     selectedDoor = thisDoor;
                     break;
@@ -318,6 +318,7 @@ public class DungeonCreator : MonoBehaviour
 
             finalRoom.GetComponent<BaseRoom>().Initialize(this, backupParent, selectedDoor);
             finalRoom.GetComponent<BaseRoom>().entranceDoor.GetComponent<DungeonDoor>().parentDoor = backupParentDoor;
+            finalRoom.GetComponent<BaseRoom>().replacedTimes = backupReplacedAmount;
             if (finalRoom.GetComponent<BaseRoom>().HasCollision(true))
             {
                 finalRoom.GetComponent<BaseRoom>().OnDestroyed();
@@ -333,7 +334,8 @@ public class DungeonCreator : MonoBehaviour
         }
         if (finalRoom != null)
         {
-            finalRoom.GetComponent<BaseRoom>().replaced = true;
+            finalRoom.GetComponent<BaseRoom>().replacedTimes++;
+
             StartCoroutine(finalRoom.GetComponent<BaseRoom>().SpawnNextRoom());
         }
         else
@@ -436,7 +438,7 @@ public class DungeonCreator : MonoBehaviour
                     }
                     if (finalRoom != null)
                     {
-                        finalRoom.GetComponent<BaseRoom>().replaced = true;
+                        finalRoom.GetComponent<BaseRoom>().replacedTimes++;
                         //StartCoroutine(finalRoom.GetComponent<BaseRoom>().SpawnNextRoom());
                         replaced = true;
                         break;
@@ -477,69 +479,5 @@ public class DungeonCreator : MonoBehaviour
             return eventRooms;
         }
         return null;
-    }
-    [System.Serializable]
-    public struct DistanceStack
-    {
-        public DistanceObject[] stack;
-        public void AddRoom(GameObject objectToCheck, float distanceFromStart)
-        {
-            DistanceObject thisDistanceObject = new DistanceObject(objectToCheck, distanceFromStart);
-            for(int i = stack.Length - 1; i >= 0; i--)
-            {
-                if(stack[i].thisObject == null)
-                {
-                    stack[i] = thisDistanceObject;
-                    return;
-                }
-                else
-                {
-                    if(thisDistanceObject.distanceFromReferencePoint > stack[i].distanceFromReferencePoint)
-                    {
-                        stack[0] = thisDistanceObject;
-                        Sort();
-                    }
-                }
-            }
-        }
-        public void Sort()
-        {
-            bool swapped = false;
-            int currentToCheck = 0;
-            while(currentToCheck < stack.Length - 1)
-            {
-                if(stack[currentToCheck].distanceFromReferencePoint > stack[currentToCheck + 1].distanceFromReferencePoint || stack[currentToCheck + 1].thisObject == null)
-                {
-                    DistanceObject backupStackObject = stack[currentToCheck + 1];
-                    stack[currentToCheck + 1] = stack[currentToCheck];
-                    stack[currentToCheck] = backupStackObject;
-                    swapped = true;
-                }
-                currentToCheck++;
-            }
-            if (swapped)
-            {
-                Sort();
-            }
-        }
-        public GameObject PopFarthestObjectFromStack()
-        {
-            DistanceObject backupStackObject = stack[stack.Length - 1];
-            stack[stack.Length - 1] = null;
-            Sort();
-            return (backupStackObject.thisObject);
-        }
-    }
-    [System.Serializable]
-    public class DistanceObject
-    {
-        public GameObject thisObject;
-        public float distanceFromReferencePoint;
-
-        public DistanceObject(GameObject thisObject_, float distance)
-        {
-            thisObject = thisObject_;
-            distanceFromReferencePoint = distance;
-        }
     }
 }
