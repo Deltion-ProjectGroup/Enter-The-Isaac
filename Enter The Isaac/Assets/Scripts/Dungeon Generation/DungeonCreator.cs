@@ -341,7 +341,7 @@ public class DungeonCreator : MonoBehaviour
         else
         {
             RemoveDoor(backupParentDoor);
-            if (openProcesses <= 0)
+            if (openProcesses == 0)
             {
                 CheckRoomCount();
             }
