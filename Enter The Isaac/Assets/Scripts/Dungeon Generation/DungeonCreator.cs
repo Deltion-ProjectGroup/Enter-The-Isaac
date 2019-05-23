@@ -211,7 +211,7 @@ public class DungeonCreator : MonoBehaviour
             }
             yield return null;
         }
-        GenerateDungeon();
+        onGenerationComplete();
     }
     public void ProceedGeneration()
     {
@@ -240,7 +240,8 @@ public class DungeonCreator : MonoBehaviour
         }
         GameObject newWall = Instantiate(walls[Random.Range(0, walls.Length)], doorToRemove.transform.position, doorToRemove.transform.rotation, doorToRemove.transform.parent);
         doorToRemove.GetComponent<DungeonDoor>().ownerRoom.availableDoors.Remove(doorToRemove);
-        if(doorToRemove.GetComponent<DungeonDoor>().ownerRoom.availableDoors.Count <= 0 && doorToRemove.GetComponent<DungeonDoor>().ownerRoom.replacedTimes <= maxReplacementTimes)
+        doorToRemove.GetComponent<DungeonDoor>().ownerRoom.allDoors.Remove(doorToRemove.GetComponent<DungeonDoor>());
+        if (doorToRemove.GetComponent<DungeonDoor>().ownerRoom.availableDoors.Count <= 0 && doorToRemove.GetComponent<DungeonDoor>().ownerRoom.replacedTimes <= maxReplacementTimes)
         {
             doorToRemove.GetComponent<DungeonDoor>().ownerRoom.type = BaseRoom.RoomTypes.End;
             endRooms.Add(doorToRemove.GetComponent<DungeonDoor>().ownerRoom.gameObject);
