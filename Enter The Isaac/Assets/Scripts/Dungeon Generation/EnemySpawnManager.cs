@@ -4,13 +4,13 @@ using UnityEngine;
 
 public class EnemySpawnManager : MonoBehaviour
 {
-    [SerializeField] int selectedPossibility;
-    [SerializeField] int currentWave;
+    int selectedPossibility;
+    int currentWave;
     public PossibleWave[] waveSpawnPossibilities;
     public delegate void VoidDelegate();
     public VoidDelegate onClearRoom;
-    public List<GameObject> aliveEnemies;
-    public int openSpawnProcesses;
+    List<GameObject> aliveEnemies;
+    int openSpawnProcesses;
     // Start is called before the first frame update
     void Start()
     {
