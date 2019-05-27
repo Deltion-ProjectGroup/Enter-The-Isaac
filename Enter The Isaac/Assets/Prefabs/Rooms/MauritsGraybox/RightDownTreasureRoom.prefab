@@ -128,13 +128,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roomDistanceFromStart: 0
   parentRoom: {fileID: 0}
-  replaced: 0
-  previousReplaced: 0
+  replacedTimes: 0
   creator: {fileID: 0}
-  availableDoors:
-  - {fileID: 4951985062779096296}
-  - {fileID: 2439671255372340796}
-  entranceDoor: {fileID: 0}
+  availableConnectionPoints:
+  - {fileID: 8365399523090047099}
+  - {fileID: 1650770886206758801}
+  allDoors: []
+  entrancePoint: {fileID: 0}
   type: 6
 --- !u!1 &2222918957918430935
 GameObject:
@@ -228,8 +228,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ownerRoom: {fileID: 3746228521799701166, guid: 552d9cefdaa8d1e48a0b58d53873cd4d,
     type: 3}
-  parentDoor: {fileID: 0}
-  connectionPoint: {fileID: 0}
+  pointConnectedTo: {fileID: 0}
+  objectToReplace: {fileID: 0}
   direction: 3
   id: 2
 --- !u!1 &2439671255372340796
@@ -324,8 +324,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ownerRoom: {fileID: 3746228521799701166, guid: 552d9cefdaa8d1e48a0b58d53873cd4d,
     type: 3}
-  parentDoor: {fileID: 0}
-  connectionPoint: {fileID: 6087775038261485988}
+  pointConnectedTo: {fileID: 0}
+  objectToReplace: {fileID: 2439671255372340796}
   direction: 2
   id: 1
 --- !u!1 &3885244631707899199
@@ -420,8 +420,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ownerRoom: {fileID: 3746228521799701166, guid: 552d9cefdaa8d1e48a0b58d53873cd4d,
     type: 3}
-  parentDoor: {fileID: 0}
-  connectionPoint: {fileID: 0}
+  pointConnectedTo: {fileID: 0}
+  objectToReplace: {fileID: 0}
   direction: 0
   id: 3
 --- !u!1 &4951985062779096296
@@ -516,8 +516,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ownerRoom: {fileID: 3746228521799701166, guid: 552d9cefdaa8d1e48a0b58d53873cd4d,
     type: 3}
-  parentDoor: {fileID: 0}
-  connectionPoint: {fileID: 5918697763369219659}
+  pointConnectedTo: {fileID: 0}
+  objectToReplace: {fileID: 4951985062779096296}
   direction: 1
   id: 0
 --- !u!1001 &4546751236792475521

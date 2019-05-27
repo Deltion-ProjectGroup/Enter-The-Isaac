@@ -4,11 +4,11 @@ using UnityEngine;
 
 public class BossRoom : BaseRoom
 {
-    public override void SpawnRoom(DungeonDoor.DoorDirection wantedDir, Transform doorPoint)
+    public override void SpawnRoom(DungeonConnectionPoint.ConnectionDirection wantedDir, Transform doorPoint)
     {
         throw new System.NotImplementedException();
     }
-    public override void Initialize(DungeonCreator owner, GameObject parentRoom_ = null, GameObject entrance = null)
+    public override void Initialize(DungeonCreator owner, GameObject parentRoom_ = null, DungeonConnectionPoint entrance = null)
     {
         base.Initialize(owner, parentRoom_, entrance);
         creator.bossCount++;

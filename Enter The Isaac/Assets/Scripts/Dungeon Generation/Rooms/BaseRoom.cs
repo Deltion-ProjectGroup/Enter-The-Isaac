@@ -10,11 +10,12 @@ public abstract class BaseRoom : MonoBehaviour
 
 
     public DungeonCreator creator;
-    public List<GameObject> availableDoors;
-    public GameObject entranceDoor;
+    public List<DungeonConnectionPoint> availableConnectionPoints;
+    public List<GameObject> allDoors;
+    public DungeonConnectionPoint entrancePoint;
     public RoomTypes type;
 
-    public virtual void Initialize(DungeonCreator owner, GameObject parentRoom_ = null, GameObject entrance = null)
+    public virtual void Initialize(DungeonCreator owner, GameObject parentRoom_ = null, DungeonConnectionPoint entrance = null)
     {
         creator = owner;
         if (parentRoom_ != null)
@@ -28,8 +29,8 @@ public abstract class BaseRoom : MonoBehaviour
         }
         if (entrance)
         {
-            entranceDoor = entrance;
-            availableDoors.Remove(entrance);
+            entrancePoint = entrance;
+            availableConnectionPoints.Remove(entrance);
         }
         if (type == RoomTypes.End)
         {
@@ -40,41 +41,41 @@ public abstract class BaseRoom : MonoBehaviour
 
     public virtual IEnumerator SpawnNextRoom()
     {
-        if (availableDoors.Count > 0)
+        if (availableConnectionPoints.Count > 0)
         {
-            creator.openProcesses += availableDoors.Count;
+            creator.openProcesses += availableConnectionPoints.Count;
         }
         else
         {
             creator.openProcesses++;
         }
         yield return null;
-        int backupCount = availableDoors.Count;
-        if (availableDoors.Count > 0)
+        int backupCount = availableConnectionPoints.Count;
+        if (availableConnectionPoints.Count > 0)
         {
             for (int i = backupCount - 1; i >= 0; i--)
             {
                 creator.openProcesses--;
-                DungeonDoor.DoorDirection wantedDoorDirection = DungeonDoor.DoorDirection.Left;
-                switch (availableDoors[i].GetComponent<DungeonDoor>().direction)
+                DungeonConnectionPoint.ConnectionDirection wantedDoorDirection = DungeonConnectionPoint.ConnectionDirection.Left;
+                switch (availableConnectionPoints[i].direction)
                 {
-                    case DungeonDoor.DoorDirection.Up:
-                        wantedDoorDirection = DungeonDoor.DoorDirection.Down;
+                    case DungeonConnectionPoint.ConnectionDirection.Up:
+                        wantedDoorDirection = DungeonConnectionPoint.ConnectionDirection.Down;
                         break;
 
-                    case DungeonDoor.DoorDirection.Down:
-                        wantedDoorDirection = DungeonDoor.DoorDirection.Up;
+                    case DungeonConnectionPoint.ConnectionDirection.Down:
+                        wantedDoorDirection = DungeonConnectionPoint.ConnectionDirection.Up;
                         break;
 
-                    case DungeonDoor.DoorDirection.Left:
-                        wantedDoorDirection = DungeonDoor.DoorDirection.Right;
+                    case DungeonConnectionPoint.ConnectionDirection.Left:
+                        wantedDoorDirection = DungeonConnectionPoint.ConnectionDirection.Right;
                         break;
 
-                    case DungeonDoor.DoorDirection.Right:
-                        wantedDoorDirection = DungeonDoor.DoorDirection.Left;
+                    case DungeonConnectionPoint.ConnectionDirection.Right:
+                        wantedDoorDirection = DungeonConnectionPoint.ConnectionDirection.Left;
                         break;
                 }
-                SpawnRoom(wantedDoorDirection, availableDoors[i].transform);
+                SpawnRoom(wantedDoorDirection, availableConnectionPoints[i].transform);
             }
         }
         else
@@ -94,7 +95,7 @@ public abstract class BaseRoom : MonoBehaviour
             creator.endRooms.Remove(gameObject);
         }
     }
-    public abstract void SpawnRoom(DungeonDoor.DoorDirection wantedDir, Transform doorPoint);
+    public abstract void SpawnRoom(DungeonConnectionPoint.ConnectionDirection wantedDir, Transform doorPoint);
     public bool HasCollision(bool notIncludeThis = false)
     {
         Vector3 colliderHalfExtends = transform.GetComponent<BoxCollider>().size;

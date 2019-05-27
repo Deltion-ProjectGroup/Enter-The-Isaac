@@ -4,17 +4,15 @@ using UnityEngine;
 
 public class DungeonDoor : MonoBehaviour
 {
-    public BaseRoom ownerRoom;
-    public GameObject parentDoor;
-    public Transform connectionPoint;
-    public DoorDirection direction;
-    public int id;
-
-
-    public enum DoorDirection {Left, Down, Right, Up }
-
-    public DungeonDoor(GameObject parentedDoor)
+    // Start is called before the first frame update
+    void Start()
     {
-        parentDoor = parentedDoor;
+        
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        
     }
 }

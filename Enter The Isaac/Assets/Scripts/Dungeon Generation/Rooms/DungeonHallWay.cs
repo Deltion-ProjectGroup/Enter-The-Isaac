@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class DungeonHallWay : BaseRoom
 {
-    public override void SpawnRoom(DungeonDoor.DoorDirection wantedDir, Transform doorPoint)
+    public override void SpawnRoom(DungeonConnectionPoint.ConnectionDirection wantedDir, Transform doorPoint)
     {
         creator.SpawnDungeonPartAlt(creator.rooms, wantedDir, gameObject, doorPoint, RoomTypes.Normal);
     }

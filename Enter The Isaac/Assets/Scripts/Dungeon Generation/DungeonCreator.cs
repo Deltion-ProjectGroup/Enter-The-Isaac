@@ -84,19 +84,19 @@ public class DungeonCreator : MonoBehaviour
         entireDungeon = new List<GameObject>();
         endRooms = new List<GameObject>();
     }
-    public Vector3 GetLocationData(Transform thisObject, Transform selectedDoor, Transform doorToSnapTo)
+    public Vector3 GetLocationData(Transform thisObject, Transform selectedConnectionPoint, Transform connectionPointToSnapTo)
     {
-        return doorToSnapTo.GetComponent<DungeonDoor>().connectionPoint.position + (thisObject.position - selectedDoor.GetComponent<DungeonDoor>().connectionPoint.position);
+        return connectionPointToSnapTo.position + (thisObject.position - selectedConnectionPoint.position);
     }
-    public void SpawnRandomHallway(GameObject thisRoom, Transform doorPoint, DungeonDoor.DoorDirection requiredDirection)
+    public void SpawnRandomHallway(GameObject thisRoom, Transform doorPoint, DungeonConnectionPoint.ConnectionDirection requiredDirection)
     {
         SpawnDungeonPartAlt(hallways, requiredDirection, thisRoom, doorPoint, BaseRoom.RoomTypes.Hallway);
     }
-    public void SpawnRandomRoom(GameObject thisRoom, Transform doorPoint, DungeonDoor.DoorDirection requiredDirection)
+    public void SpawnRandomRoom(GameObject thisRoom, Transform doorPoint, DungeonConnectionPoint.ConnectionDirection requiredDirection)
     {
         SpawnDungeonPartAlt(rooms, requiredDirection, thisRoom, doorPoint, BaseRoom.RoomTypes.Normal);
     }
-    public void SpawnDungeonPartAlt(List<GameObject> allRooms, DungeonDoor.DoorDirection requiredDirection, GameObject parentRoom, Transform doorPoint, BaseRoom.RoomTypes roomType)
+    public void SpawnDungeonPartAlt(List<GameObject> allRooms, DungeonConnectionPoint.ConnectionDirection requiredDirection, GameObject parentRoom, Transform pointToConnectTo, BaseRoom.RoomTypes roomType)
     {
         if(roomCount < maxRoomCount)
         {
@@ -114,9 +114,9 @@ public class DungeonCreator : MonoBehaviour
 
             foreach (GameObject room in allRooms)
             {
-                foreach (GameObject door in room.GetComponent<BaseRoom>().availableDoors)
+                foreach (DungeonConnectionPoint connectionPoint in room.GetComponent<BaseRoom>().availableConnectionPoints)
                 {
-                    if (door.GetComponent<DungeonDoor>().direction == requiredDirection)
+                    if (connectionPoint.direction == requiredDirection)
                     {
                         possibleRooms.Add(room);
                         break;
@@ -125,42 +125,42 @@ public class DungeonCreator : MonoBehaviour
             }
 
             GameObject roomToSpawn = possibleRooms[Random.Range(0, possibleRooms.Count)];
-            List<Transform> availableDoors = new List<Transform>();
-            for (int i = 0; i < roomToSpawn.GetComponent<BaseRoom>().availableDoors.Count; i++)
+            List<DungeonConnectionPoint> availableConnectionPoints = new List<DungeonConnectionPoint>();
+            for (int i = 0; i < roomToSpawn.GetComponent<BaseRoom>().availableConnectionPoints.Count; i++)
             {
-                GameObject thisDoor = roomToSpawn.GetComponent<BaseRoom>().availableDoors[i];
-                if (thisDoor.GetComponent<DungeonDoor>().direction == requiredDirection)
+                DungeonConnectionPoint thisConnectionPoint = roomToSpawn.GetComponent<BaseRoom>().availableConnectionPoints[i];
+                if (thisConnectionPoint.direction == requiredDirection)
                 {
-                    availableDoors.Add(thisDoor.transform);
+                    availableConnectionPoints.Add(thisConnectionPoint);
                 }
             }
-            Transform selectedDoor = availableDoors[Random.Range(0, availableDoors.Count)];
-            int selectedDoorId = selectedDoor.GetComponent<DungeonDoor>().id;
-            GameObject spawnedRoom = Instantiate(roomToSpawn, GetLocationData(roomToSpawn.transform, selectedDoor, doorPoint), Quaternion.identity);
-            for (int i = 0; i < spawnedRoom.GetComponent<BaseRoom>().availableDoors.Count; i++)
+            DungeonConnectionPoint selectedConnectionPoint = availableConnectionPoints[Random.Range(0, availableConnectionPoints.Count)];
+            int selectedDoorId = selectedConnectionPoint.id;
+            GameObject spawnedRoom = Instantiate(roomToSpawn, GetLocationData(roomToSpawn.transform, selectedConnectionPoint.transform, pointToConnectTo), Quaternion.identity);
+            for (int i = 0; i < spawnedRoom.GetComponent<BaseRoom>().availableConnectionPoints.Count; i++)
             {
-                Transform thisDoor = spawnedRoom.GetComponent<BaseRoom>().availableDoors[i].transform;
-                if (thisDoor.GetComponent<DungeonDoor>().id == selectedDoorId)
+                DungeonConnectionPoint thisConnectionPoint = spawnedRoom.GetComponent<BaseRoom>().availableConnectionPoints[i];
+                if (thisConnectionPoint.id == selectedDoorId)
                 {
-                    selectedDoor = thisDoor;
+                    selectedConnectionPoint = thisConnectionPoint;
                     break;
                 }
             }
 
-            spawnedRoom.GetComponent<BaseRoom>().Initialize(this, parentRoom, selectedDoor.gameObject);
-            spawnedRoom.GetComponent<BaseRoom>().entranceDoor.GetComponent<DungeonDoor>().parentDoor = doorPoint.gameObject;
-            CheckPartCollision(spawnedRoom, selectedDoor.GetComponent<DungeonDoor>().direction);
+            spawnedRoom.GetComponent<BaseRoom>().Initialize(this, parentRoom, selectedConnectionPoint);
+            spawnedRoom.GetComponent<BaseRoom>().entrancePoint.pointConnectedTo = pointToConnectTo.gameObject;
+            CheckPartCollision(spawnedRoom, selectedConnectionPoint.direction);
         }
         else
         {
-            RemoveDoor(doorPoint.gameObject);
+            RemoveConnectionPoint(pointToConnectTo.GetComponent<DungeonConnectionPoint>());
             if(openProcesses == 0)
             {
                 CheckRoomCount();
             }
         }
     }
-    public void CheckPartCollision(GameObject roomToCheck, DungeonDoor.DoorDirection entranceDirection)
+    public void CheckPartCollision(GameObject roomToCheck, DungeonConnectionPoint.ConnectionDirection entranceDirection)
     {
         if (roomToCheck.GetComponent<BaseRoom>().HasCollision(true))
         {
@@ -207,7 +207,7 @@ public class DungeonCreator : MonoBehaviour
         {
             if(dungeonPart.GetComponent<BaseRoom>().type != BaseRoom.RoomTypes.Spawn)
             {
-                dungeonPart.transform.SetParent(dungeonPart.GetComponent<BaseRoom>().entranceDoor.GetComponent<DungeonDoor>().parentDoor.transform);
+                dungeonPart.transform.SetParent(dungeonPart.GetComponent<BaseRoom>().entrancePoint.pointConnectedTo.transform);
             }
             yield return null;
         }
@@ -218,9 +218,9 @@ public class DungeonCreator : MonoBehaviour
         if(endRooms.Count > 0)
         {
             GameObject roomToReplace = endRooms[Random.Range(0, endRooms.Count)];
-            Transform backupTransform = roomToReplace.GetComponent<BaseRoom>().entranceDoor.GetComponent<DungeonDoor>().parentDoor.transform;
+            Transform backupTransform = roomToReplace.GetComponent<BaseRoom>().entrancePoint.pointConnectedTo.transform;
             GameObject backupParent = roomToReplace.GetComponent<BaseRoom>().parentRoom;
-            DungeonDoor.DoorDirection backupDirection = roomToReplace.GetComponent<BaseRoom>().entranceDoor.GetComponent<DungeonDoor>().direction;
+            DungeonConnectionPoint.ConnectionDirection backupDirection = roomToReplace.GetComponent<BaseRoom>().entrancePoint.direction;
             ReplaceRoom(roomToReplace, backupDirection);
         }
         else
@@ -229,30 +229,29 @@ public class DungeonCreator : MonoBehaviour
             GenerateDungeon();
         }
     }
-    public void RemoveDoor(GameObject doorToRemove)
+    public void RemoveConnectionPoint(DungeonConnectionPoint connectionPointToRemove)
     {
-        if (doorToRemove.transform.parent.GetComponent<BaseRoom>().type == BaseRoom.RoomTypes.Hallway)
+        if (connectionPointToRemove.objectToReplace.transform.parent.GetComponent<BaseRoom>().type == BaseRoom.RoomTypes.Hallway)
         {
-            GameObject hallway = doorToRemove.transform.parent.gameObject;
-            doorToRemove = hallway.GetComponent<BaseRoom>().entranceDoor.GetComponent<DungeonDoor>().parentDoor;
+            GameObject hallway = connectionPointToRemove.objectToReplace.transform.parent.gameObject;
+            connectionPointToRemove = hallway.GetComponent<BaseRoom>().entrancePoint.pointConnectedTo.GetComponent<DungeonConnectionPoint>();
             hallway.GetComponent<BaseRoom>().OnDestroyed();
             DestroyImmediate(hallway);
         }
-        GameObject newWall = Instantiate(walls[Random.Range(0, walls.Length)], doorToRemove.transform.position, doorToRemove.transform.rotation, doorToRemove.transform.parent);
-        doorToRemove.GetComponent<DungeonDoor>().ownerRoom.availableDoors.Remove(doorToRemove);
-        //doorToRemove.GetComponent<DungeonDoor>().ownerRoom.allDoors.Remove(doorToRemove.GetComponent<DungeonDoor>());
-        if (doorToRemove.GetComponent<DungeonDoor>().ownerRoom.availableDoors.Count <= 0 && doorToRemove.GetComponent<DungeonDoor>().ownerRoom.replacedTimes <= maxReplacementTimes)
+        GameObject newWall = Instantiate(walls[Random.Range(0, walls.Length)], connectionPointToRemove.objectToReplace.transform.position, connectionPointToRemove.objectToReplace.transform.rotation, connectionPointToRemove.objectToReplace.transform.parent);
+        connectionPointToRemove.ownerRoom.availableConnectionPoints.Remove(connectionPointToRemove);
+        if (connectionPointToRemove.ownerRoom.availableConnectionPoints.Count <= 0 && connectionPointToRemove.ownerRoom.replacedTimes <= maxReplacementTimes)
         {
-            doorToRemove.GetComponent<DungeonDoor>().ownerRoom.type = BaseRoom.RoomTypes.End;
-            endRooms.Add(doorToRemove.GetComponent<DungeonDoor>().ownerRoom.gameObject);
+            connectionPointToRemove.ownerRoom.type = BaseRoom.RoomTypes.End;
+            endRooms.Add(connectionPointToRemove.ownerRoom.gameObject);
         }
-        DestroyImmediate(doorToRemove);
+        DestroyImmediate(connectionPointToRemove);
     }
-    public void ReplaceRoom(GameObject roomToReplace, DungeonDoor.DoorDirection entranceDirection, List<GameObject> staticOptions = null)
+    public void ReplaceRoom(GameObject roomToReplace, DungeonConnectionPoint.ConnectionDirection entranceDirection, List<GameObject> staticOptions = null)
     {
         int backupReplacedAmount = roomToReplace.GetComponent<BaseRoom>().replacedTimes;
         BaseRoom.RoomTypes backupType = roomToReplace.GetComponent<BaseRoom>().type;
-        GameObject backupParentDoor = roomToReplace.GetComponent<BaseRoom>().entranceDoor.GetComponent<DungeonDoor>().parentDoor;
+        GameObject backupParentConnectionPoint = roomToReplace.GetComponent<BaseRoom>().entrancePoint.pointConnectedTo;
         GameObject backupParent = roomToReplace.GetComponent<BaseRoom>().parentRoom;
         roomToReplace.GetComponent<BaseRoom>().OnDestroyed();
         DestroyImmediate(roomToReplace);
@@ -277,9 +276,9 @@ public class DungeonCreator : MonoBehaviour
         List<GameObject> availableOptions = new List<GameObject>();
         foreach(GameObject option in possibleAvailableOptions)
         {
-            foreach(GameObject door in option.GetComponent<BaseRoom>().availableDoors)
+            foreach(DungeonConnectionPoint connectionPoint in option.GetComponent<BaseRoom>().availableConnectionPoints)
             {
-                if(door.GetComponent<DungeonDoor>().direction == entranceDirection)
+                if(connectionPoint.direction == entranceDirection)
                 {
                     availableOptions.Add(option);
                     break;
@@ -288,37 +287,37 @@ public class DungeonCreator : MonoBehaviour
         }
 
         GameObject finalRoom = null;
-        GameObject selectedDoor = null;
+        DungeonConnectionPoint selectedConnectionPoint = null;
         int selectedDoorId = 0;
         while(availableOptions.Count > 0)
         {
             GameObject option = availableOptions[Random.Range(0, availableOptions.Count)];
             availableOptions.Remove(option);
-            List<GameObject> availableDoors = new List<GameObject>();
-            foreach (GameObject door in option.GetComponent<BaseRoom>().availableDoors)
+            List<DungeonConnectionPoint> availableConnectionPoints = new List<DungeonConnectionPoint>();
+            foreach (DungeonConnectionPoint connectionPoint in option.GetComponent<BaseRoom>().availableConnectionPoints)
             {
-                if (door.GetComponent<DungeonDoor>().direction == entranceDirection)
+                if (connectionPoint.direction == entranceDirection)
                 {
-                    availableDoors.Add(door);
+                    availableConnectionPoints.Add(connectionPoint);
                 }
             }
-            selectedDoor = availableDoors[Random.Range(0, availableDoors.Count)];
-            selectedDoorId = selectedDoor.GetComponent<DungeonDoor>().id;
+            selectedConnectionPoint = availableConnectionPoints[Random.Range(0, availableConnectionPoints.Count)];
+            selectedDoorId = selectedConnectionPoint.id;
 
-            finalRoom = Instantiate(option, GetLocationData(option.transform, selectedDoor.transform, backupParentDoor.transform), Quaternion.identity);
+            finalRoom = Instantiate(option, GetLocationData(option.transform, selectedConnectionPoint.transform, backupParentConnectionPoint.transform), Quaternion.identity);
 
-            for (int i = 0; i < finalRoom.GetComponent<BaseRoom>().availableDoors.Count; i++)
+            for (int i = 0; i < finalRoom.GetComponent<BaseRoom>().availableConnectionPoints.Count; i++)
             {
-                GameObject thisDoor = finalRoom.GetComponent<BaseRoom>().availableDoors[i];
-                if (thisDoor.GetComponent<DungeonDoor>().id == selectedDoorId)
+                DungeonConnectionPoint thisConnectionPoint = finalRoom.GetComponent<BaseRoom>().availableConnectionPoints[i];
+                if (thisConnectionPoint.id == selectedDoorId)
                 {
-                    selectedDoor = thisDoor;
+                    selectedConnectionPoint = thisConnectionPoint;
                     break;
                 }
             }
 
-            finalRoom.GetComponent<BaseRoom>().Initialize(this, backupParent, selectedDoor);
-            finalRoom.GetComponent<BaseRoom>().entranceDoor.GetComponent<DungeonDoor>().parentDoor = backupParentDoor;
+            finalRoom.GetComponent<BaseRoom>().Initialize(this, backupParent, selectedConnectionPoint);
+            finalRoom.GetComponent<BaseRoom>().entrancePoint.pointConnectedTo = backupParentConnectionPoint;
             finalRoom.GetComponent<BaseRoom>().replacedTimes = backupReplacedAmount;
             if (finalRoom.GetComponent<BaseRoom>().HasCollision(true))
             {
@@ -341,7 +340,7 @@ public class DungeonCreator : MonoBehaviour
         }
         else
         {
-            RemoveDoor(backupParentDoor);
+            RemoveConnectionPoint(backupParentConnectionPoint.GetComponent<DungeonConnectionPoint>());
             if (openProcesses == 0)
             {
                 CheckRoomCount();
@@ -359,7 +358,7 @@ public class DungeonCreator : MonoBehaviour
                 if (roomToReplace.GetComponent<BaseRoom>().roomDistanceFromStart >= minDistanceFromStart)
                 {
                     roomToReplace.SetActive(false);
-                    DungeonDoor.DoorDirection entranceDirection = roomToReplace.GetComponent<BaseRoom>().entranceDoor.GetComponent<DungeonDoor>().direction;
+                    DungeonConnectionPoint.ConnectionDirection entranceDirection = roomToReplace.GetComponent<BaseRoom>().entrancePoint.direction;
 
                     List<GameObject> possibleAvailableOptions = new List<GameObject>();
                     if (staticOptions != null)
@@ -381,9 +380,9 @@ public class DungeonCreator : MonoBehaviour
                     List<GameObject> availableOptions = new List<GameObject>();
                     foreach (GameObject option in possibleAvailableOptions)
                     {
-                        foreach (GameObject door in option.GetComponent<BaseRoom>().availableDoors)
+                        foreach (DungeonConnectionPoint connectionPoint in option.GetComponent<BaseRoom>().availableConnectionPoints)
                         {
-                            if (door.GetComponent<DungeonDoor>().direction == entranceDirection)
+                            if (connectionPoint.direction == entranceDirection)
                             {
                                 availableOptions.Add(option);
                                 break;
@@ -392,35 +391,35 @@ public class DungeonCreator : MonoBehaviour
                     }
 
                     GameObject finalRoom = null;
-                    GameObject selectedDoor = null;
+                    DungeonConnectionPoint selectedConnectionPoint = null;
                     int selectedDoorId = 0;
                     foreach (GameObject option in availableOptions)
                     {
-                        List<GameObject> availableDoors = new List<GameObject>();
-                        foreach (GameObject door in option.GetComponent<BaseRoom>().availableDoors)
+                        List<DungeonConnectionPoint> availableConnectionPoints = new List<DungeonConnectionPoint>();
+                        foreach (DungeonConnectionPoint connectionPoint in option.GetComponent<BaseRoom>().availableConnectionPoints)
                         {
-                            if (door.GetComponent<DungeonDoor>().direction == entranceDirection)
+                            if (connectionPoint.direction == entranceDirection)
                             {
-                                availableDoors.Add(door);
+                                availableConnectionPoints.Add(connectionPoint);
                             }
                         }
-                        selectedDoor = availableDoors[Random.Range(0, availableDoors.Count)];
-                        selectedDoorId = selectedDoor.GetComponent<DungeonDoor>().id;
+                        selectedConnectionPoint = availableConnectionPoints[Random.Range(0, availableConnectionPoints.Count)];
+                        selectedDoorId = selectedConnectionPoint.id;
 
-                        finalRoom = Instantiate(option, GetLocationData(option.transform, selectedDoor.transform, roomToReplace.GetComponent<BaseRoom>().entranceDoor.GetComponent<DungeonDoor>().parentDoor.transform), Quaternion.identity);
+                        finalRoom = Instantiate(option, GetLocationData(option.transform, selectedConnectionPoint.transform, roomToReplace.GetComponent<BaseRoom>().entrancePoint.pointConnectedTo.transform), Quaternion.identity);
 
-                        for (int i = 0; i < finalRoom.GetComponent<BaseRoom>().availableDoors.Count; i++)
+                        for (int i = 0; i < finalRoom.GetComponent<BaseRoom>().availableConnectionPoints.Count; i++)
                         {
-                            GameObject thisDoor = finalRoom.GetComponent<BaseRoom>().availableDoors[i];
-                            if (thisDoor.GetComponent<DungeonDoor>().id == selectedDoorId)
+                            DungeonConnectionPoint thisConnectionPoint = finalRoom.GetComponent<BaseRoom>().availableConnectionPoints[i];
+                            if (thisConnectionPoint.id == selectedDoorId)
                             {
-                                selectedDoor = thisDoor;
+                                selectedConnectionPoint = thisConnectionPoint;
                                 break;
                             }
                         }
 
-                        finalRoom.GetComponent<BaseRoom>().Initialize(this, roomToReplace.GetComponent<BaseRoom>().parentRoom, selectedDoor);
-                        finalRoom.GetComponent<BaseRoom>().entranceDoor.GetComponent<DungeonDoor>().parentDoor = roomToReplace.GetComponent<BaseRoom>().entranceDoor.GetComponent<DungeonDoor>().parentDoor;
+                        finalRoom.GetComponent<BaseRoom>().Initialize(this, roomToReplace.GetComponent<BaseRoom>().parentRoom, selectedConnectionPoint);
+                        finalRoom.GetComponent<BaseRoom>().entrancePoint.pointConnectedTo = roomToReplace.GetComponent<BaseRoom>().entrancePoint.pointConnectedTo;
                         if (finalRoom.GetComponent<BaseRoom>().HasCollision(true))
                         {
                             finalRoom.GetComponent<BaseRoom>().OnDestroyed();
