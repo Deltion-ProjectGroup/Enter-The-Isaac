@@ -62,7 +62,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5147418959096718469}
   m_LocalRotation: {x: -0, y: -1, z: -0, w: 0.0000026226041}
-  m_LocalPosition: {x: 2.2409027, y: -0.003999793, z: -1.7218103}
+  m_LocalPosition: {x: 4.92, y: -0.003999793, z: -22.39}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 5147418959096954427}
@@ -184,20 +184,20 @@ MonoBehaviour:
     type: 3}
   skipParticle: 0
   distanceFromPlayer: 5
-  myPathMethod: 0
+  myPathMethod: 1
   ignorePlayerDistance: 20
   alwaysLookAtPlayer: 1
   canAttackWhileWalking: 1
-  attackType: 03000000
+  attackType: 01000000
   repeatRate: 2
   toShoot: {fileID: 5489075468618320679, guid: 340c32dd2b0d26c438cb4d1db8f85d6c, type: 3}
   shootPivot: {fileID: 8387137215665473055}
-  amountOfBullets: 30
-  angleRadius: 360
+  amountOfBullets: 5
+  angleRadius: 31
   speedMuliplier: 1
   damage: 1
   rotateY: 0
-  lifeTime: 1
+  lifeTime: 2
   parentToMe: 0
 --- !u!114 &5147418958244692109
 MonoBehaviour:

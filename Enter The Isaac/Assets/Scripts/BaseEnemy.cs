@@ -48,6 +48,7 @@ public class BaseEnemy : MonoBehaviour
     [SerializeField] float repeatRate = 1;
     NavMeshAgent agent;
     Transform player;
+    PlayerController playerCon;
     //animation
     Animator anim;
     Vector3 lastPos;
@@ -74,6 +75,7 @@ public class BaseEnemy : MonoBehaviour
         agent = GetComponent<NavMeshAgent>();
         agent.speed *= Random.Range(randomSpeedMultiplier.x, randomSpeedMultiplier.y);
         player = FindObjectOfType<PlayerController>().transform;
+        playerCon = player.GetComponent<PlayerController>();
         anim = GetComponent<Animator>();
         if (skipParticle == false)
         {
@@ -306,24 +308,27 @@ public class BaseEnemy : MonoBehaviour
 
     void AttackRepeatOnSight()
     {
-        RaycastHit hit;
-        if (Physics.Raycast(transform.position + new Vector3(0, 0.15f, 0), player.position - transform.position, out hit, Vector3.Distance(transform.position, player.position)))
+        if (player.GetComponent<PlayerController>().curState != PlayerController.State.Roll)//fix this line
         {
-            if (hit.transform == player || hit.transform.parent == player)
+            RaycastHit hit;
+            if (Physics.Raycast(transform.position + new Vector3(0, 0.15f, 0), player.position - transform.position, out hit, Vector3.Distance(transform.position, player.position)))
             {
-                if (IsInvoking("AttackRepeatFunction") == false)
+                if (hit.transform.tag == player.tag)
                 {
-                    InvokeRepeating("AttackRepeatFunction", repeatRate, repeatRate);
+                    if (IsInvoking("AttackRepeatFunction") == false)
+                    {
+                        InvokeRepeating("AttackRepeatFunction", repeatRate, repeatRate);
+                    }
+                }
+                else
+                {
+                    CancelInvoke("AttackRepeatFunction");
                 }
             }
             else
             {
                 CancelInvoke("AttackRepeatFunction");
             }
-        }
-        else
-        {
-            CancelInvoke("AttackRepeatFunction");
         }
     }
     void AttackRepeatFunction()
@@ -336,8 +341,7 @@ public class BaseEnemy : MonoBehaviour
     {
         if (player != null)
         {
-            PlayerController playCon = player.GetComponent<PlayerController>();
-            if (playCon.gun != null && playCon.gun.IsInvoking("Shoot") == true)
+            if (playerCon.gun != null && playerCon.gun.IsInvoking("Shoot") == true)
             {
                 if (IsInvoking("AttackRepeatFunction") == false)
                 {

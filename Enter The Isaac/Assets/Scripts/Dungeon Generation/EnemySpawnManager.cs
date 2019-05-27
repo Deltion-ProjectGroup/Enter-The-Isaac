@@ -9,18 +9,19 @@ public class EnemySpawnManager : MonoBehaviour
     public PossibleWave[] waveSpawnPossibilities;
     public delegate void VoidDelegate();
     public VoidDelegate onClearRoom;
-    List<GameObject> aliveEnemies;
+    List<GameObject> aliveEnemies = new List<GameObject>();
     int openSpawnProcesses;
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField] bool checkEnemiesInUpdate = false;
 
-    // Update is called once per frame
-    void Update()
+    void Start(){
+        InvokeRepeating("UpdateEveryHalfASecond",0,0.5f);
+    }
+    void UpdateEveryHalfASecond()
     {
-        
+        if (checkEnemiesInUpdate == true && IsInvoking("IgnoreSpawn") == false)
+        {
+            CheckEnemies();
+        }
     }
     public void ActivateSpawners()
     {
@@ -30,9 +31,13 @@ public class EnemySpawnManager : MonoBehaviour
             SpawnWave();
         }
     }
+
+    void IgnoreSpawn(){
+        //A Casper function, I check if this is invoking. If not, you can spawn.
+    }
     public void CheckEnemies()
     {
-        print("CHECKED");
+        //print("CHECKED");
         for (int i = aliveEnemies.Count - 1; i >= 0; i--)
         {
             if (!aliveEnemies[i])
@@ -53,7 +58,7 @@ public class EnemySpawnManager : MonoBehaviour
             {
                 onClearRoom();
             }
-            print("COMPLETED ROOM");
+            //print("COMPLETED ROOM");
         }
         else
         {
@@ -69,6 +74,7 @@ public class EnemySpawnManager : MonoBehaviour
         openSpawnProcesses++;
         foreach (EnemySpawnData enemieSpawn in spawnData.enemySpawnData)
         {
+            Invoke("IgnoreSpawn",enemieSpawn.delayBeforeSpawn);
             yield return new WaitForSeconds(enemieSpawn.delayBeforeSpawn);
             GameObject enemy = spawnData.spawner.SpawnObject(enemieSpawn.enemy);
             enemy.GetComponent<Hitbox>().onDeath += RemoveEnemy;

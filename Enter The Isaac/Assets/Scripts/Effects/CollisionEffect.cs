@@ -7,10 +7,10 @@ public class CollisionEffect : MonoBehaviour
     public LayerMask possibleTargets;
     public void OnTriggerEnter(Collider other)
     {
-        print("I HIT SUMTHING");
+        //print("I HIT SUMTHING");
         if(other.gameObject.GetComponent<Hitbox>())
         {
-            print("I HIT RITE LAYER");
+            //print("I HIT RITE LAYER");
             Effect[] effectsToApply = GetComponents<Effect>();
             foreach(Effect effect in effectsToApply)
             {

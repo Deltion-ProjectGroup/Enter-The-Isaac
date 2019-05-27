@@ -11,7 +11,7 @@ public class CollisionEvent : MonoBehaviour
 
     void OnTriggerEnter(Collider other)
     {
-        if (other.GetComponent(requiredComponent) != null)
+        if (other.GetComponent(requiredComponent) != null && other.name != transform.name)
         {
             float totalTime = 0;
             for (int i = 0; i < timedEvents.Length; i++)

@@ -7,6 +7,10 @@ public class DestroyAfterSeconds : MonoBehaviour
     public float time = 1;
     void Start()
     {
-        Destroy(gameObject, time);
+        Invoke("DestroyMe",time);
+    }
+
+    public void DestroyMe(){
+        Destroy(gameObject);
     }
 }

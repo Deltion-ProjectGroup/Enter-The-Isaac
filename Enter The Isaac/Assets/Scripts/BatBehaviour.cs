@@ -13,7 +13,8 @@ public class BatBehaviour : MonoBehaviour
         FlyToTarget,
         Attack,
         Die,
-        Spawn
+        Spawn,
+        Bonk
     }
     [SerializeField] State curState = State.Idle;
     Transform player;
@@ -258,12 +259,30 @@ public class BatBehaviour : MonoBehaviour
                 }
                 break;
             case 1:
+                Vector3 lastPos = transform.position + new Vector3(0, 0.2f, 0);
                 transform.position += -transform.forward * Time.deltaTime * attackGoForwardSpeed;
+                //dont forget  + new Vector3(0, 0.2f, 0)
+                if (Physics.Raycast(lastPos, (transform.position + new Vector3(0, 0.2f, 0)) - lastPos, Vector3.Distance((transform.position + new Vector3(0, 0.2f, 0)), lastPos), ~LayerMask.GetMask("Ignore Raycast", "Enemy", "SpecialRender", "Player")))
+                {
+                    curState = State.Bonk;
+                    attackPhase = 0;
+                    timer = 0;
+                    anim.Play("metarig|Flinch", 0);
+                    StopCoroutine("AttackEvents");
+                    transform.Find("Line").gameObject.SetActive(false);
+                    transform.position = lastPos;
+                    Invoke("StopBonk", 0.4f);
+                }
                 break;
             case 2:
                 anim.Play("metarig|Flying", 0);
-                //maybe set an animation later i dunno
                 break;
         }
+    }
+
+    void StopBonk()
+    {
+        curState = State.Idle;
+        anim.Play("metarig|Flying", 0);
     }
 }
