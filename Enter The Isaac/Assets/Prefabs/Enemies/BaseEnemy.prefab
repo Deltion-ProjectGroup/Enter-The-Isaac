@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 5147418958244692109}
   - component: {fileID: 5147418958244692108}
   - component: {fileID: 8387137215913692676}
+  - component: {fileID: 1923806104296783579}
   m_Layer: 0
   m_Name: BaseEnemy
   m_TagString: Untagged
@@ -81,6 +82,17 @@ MonoBehaviour:
           m_IntArgument: 2
           m_FloatArgument: 0.1
           m_StringArgument: Flinch
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 1923806104296783579}
+        m_MethodName: MediumShake
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
     m_TypeName: HitEvent, Assembly-CSharp, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null
@@ -201,6 +213,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 830025cffca44eb4ea041cbdbdaad150, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1923806104296783579
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5147418959096718469}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c1629e4c5c7f23741bf513d5224b083d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shakeScale: 5
+  speedLines: {fileID: 0}
+  ppVolume: {fileID: 0}
 --- !u!114 &1877649992
 MonoBehaviour:
   m_ObjectHideFlags: 0

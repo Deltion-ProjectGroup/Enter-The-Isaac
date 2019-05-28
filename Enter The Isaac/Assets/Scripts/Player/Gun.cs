@@ -224,11 +224,11 @@ public class Gun : MonoBehaviour
         {
             soundSpawner.SpawnEffect(gunClone.sound);
         }
-        if (gunClone.muzzleFlash != null)
+        if (gunClone.muzzleFlash.Length > 0)
         {
             for (int i = 0; i < gunClone.muzzleFlash.Length; i++)
             {
-            Instantiate(gunClone.muzzleFlash[i], transform.GetChild(0).Find("SpawnPoint").position, gunClone.muzzleFlash[i].transform.rotation * transform.rotation, transform);
+                Instantiate(gunClone.muzzleFlash[i], transform.GetChild(0).Find("SpawnPoint").position, gunClone.muzzleFlash[i].transform.rotation * transform.rotation, transform);
             }
         }
         Camera.main.fieldOfView = gunClone.camFov;
@@ -260,9 +260,11 @@ public class Gun : MonoBehaviour
                 {
                     //basically this code feels more precise, exept when the crosshair is close to the player
                     bullet.transform.LookAt(player.crosshair.position);
-                } else {
+                }
+                else
+                {
                     bullet.transform.rotation = transform.rotation;
-                    bullet.transform.Rotate(0,180,0);
+                    bullet.transform.Rotate(0, 180, 0);
                 }
             }
             else

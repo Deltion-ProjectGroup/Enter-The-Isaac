@@ -35,9 +35,16 @@ public class BatBehaviour : MonoBehaviour
     [SerializeField] bool skipSpawnParticle = false;
     int attackPhase = 0;
     Vector3 startRot;
+    SoundSpawn soundSpawner;
+    [SerializeField] AudioClip chargeSound;
+    [SerializeField] AudioClip deathSound;
+    [SerializeField] AudioClip getHitSound;
+    [SerializeField] AudioClip idleSound;
+    [SerializeField] float flapRepeatSpeed = 0.4f;
 
     void Start()
     {
+        soundSpawner = FindObjectOfType<SoundSpawn>();
         transform.position += transform.up;
         anim = transform.GetComponentInChildren<Animator>();
         startRot = transform.eulerAngles;
@@ -68,10 +75,12 @@ public class BatBehaviour : MonoBehaviour
                 LookForTarget();
                 IdleMove();
                 sine.speed = 1f;
+                PlayFlapSound();
                 break;
             case State.FlyToTarget:
                 sine.speed = 5f;
                 MoveToTarget();
+                PlayFlapSound();
                 break;
             case State.Attack:
                 sine.speed = 0;
@@ -88,6 +97,16 @@ public class BatBehaviour : MonoBehaviour
             hurtbox.SetActive(false);
             attackPhase = 0;
         }
+    }
+
+    void PlayFlapSound(){
+        if(IsInvoking("ActualFlapSound") == false){
+            Invoke("ActualFlapSound",flapRepeatSpeed);
+        }
+    }
+
+    void ActualFlapSound(){
+        soundSpawner.SpawnEffect(idleSound,1,1,1);
     }
 
     IEnumerator SpawnEvents()
@@ -111,6 +130,7 @@ public class BatBehaviour : MonoBehaviour
     {
         curState = State.Die;
         timer = 0;
+        soundSpawner.SpawnEffect(deathSound);
         if (GetComponent<Hitbox>().impactDir != Vector3.zero)
         {
             transform.LookAt(transform.position + GetComponent<Hitbox>().impactDir);
@@ -158,6 +178,10 @@ public class BatBehaviour : MonoBehaviour
         {
             timer = Mathf.Max(0, timer - Time.deltaTime);
         }
+    }
+
+    public void GetHit(){
+        soundSpawner.SpawnEffect(getHitSound);
     }
 
     void IdleMove()
@@ -227,6 +251,7 @@ public class BatBehaviour : MonoBehaviour
         attackPhase = 1;
         hurtbox.SetActive(true);
         transform.Find("Line").gameObject.SetActive(true);
+        soundSpawner.SpawnEffect(chargeSound,1,1,1);
         yield return new WaitForSeconds(0.3f);
         //stop
         anim.Play("metarig|Attack(Attack)", 0);
@@ -272,6 +297,7 @@ public class BatBehaviour : MonoBehaviour
                     transform.Find("Line").gameObject.SetActive(false);
                     transform.position = lastPos;
                     Invoke("StopBonk", 0.4f);
+                    soundSpawner.SpawnEffect(getHitSound,1,1,1);
                 }
                 break;
             case 2:

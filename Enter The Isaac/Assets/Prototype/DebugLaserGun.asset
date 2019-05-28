@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23cfbedfe35a87248982214a440ad0a3, type: 3}
   m_Name: DebugLaserGun
   m_EditorClassIdentifier: 
+  activeFrames: 30
+  damageFrames: 3
+  bulletDecelerationSpeed: 0
   fireRate: 0.6
   dmg: 3
   magazineSize: 10
@@ -27,18 +30,15 @@ MonoBehaviour:
   ricochet: 1
   parentToGun: 0
   bulletSpeed: {x: 150, y: 180}
-  bulletDecelerationSpeed: 0
   projectileModel: {fileID: 7235445337229934338, guid: 3f36fb9db21465645af7309d5b87ff35,
     type: 3}
   gunModel: {fileID: 3734062980094691057, guid: 354502ce1314a734aaf41b9e9888ffa8,
     type: 3}
   recoil: 0.1
-  sound: {fileID: 8300000, guid: 4598889c47368394ca452c9bb0a3c5ec, type: 3}
-  muzzleFlash: {fileID: 2908625459948094507, guid: 41f6a535f03be484ca2af855a1d6f32a,
-    type: 3}
+  sound: {fileID: 8300000, guid: dec7b94510490a0439b807b36d9e498a, type: 3}
+  muzzleFlash:
+  - {fileID: 196731903992000112, guid: 1ff5a52b392197b4fb900b8cd7875260, type: 3}
   screenShakeTime: 0.1
   screenshakeStrength: 0.2
   camFov: 67
   kickBack: 0
-  activeFrames: 30
-  damageFrames: 3

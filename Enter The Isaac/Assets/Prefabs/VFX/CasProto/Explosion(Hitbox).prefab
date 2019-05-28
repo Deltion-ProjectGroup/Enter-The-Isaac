@@ -140,6 +140,7 @@ MonoBehaviour:
       Culture=neutral, PublicKeyToken=null
   enabled: 1
   knockBackForward: 0
+  knockBackMultiply: 1
 --- !u!114 &4626582288453044632
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -170,6 +171,8 @@ MonoBehaviour:
   scaleV3: {x: 5, y: 5, z: 5}
   speed: 5
   moveInEditMode: 0
+  scaleLerp: 1
+  ignoreScale: 1
 --- !u!114 &3111268907228783164
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -243,7 +246,7 @@ MonoBehaviour:
         m_MethodName: SpawnEffect
         m_Mode: 2
         m_Arguments:
-          m_ObjectArgument: {fileID: 8300000, guid: 51583f0587e3b094a8b1daec032c653a,
+          m_ObjectArgument: {fileID: 8300000, guid: 8d311f5a0a8992e4eb3929ff5f32a859,
             type: 3}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.AudioClip, UnityEngine
           m_IntArgument: 0
@@ -387,7 +390,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6318238185303367229}
-  m_LocalRotation: {x: -0.5076297, y: 0.4922521, z: -0.4922521, w: -0.5076297}
+  m_LocalRotation: {x: -0.25847435, y: 0.6581725, z: -0.6581725, w: -0.25847435}
   m_LocalPosition: {x: 0, y: 0.19, z: 0}
   m_LocalScale: {x: 1.0000005, y: 1.0000005, z: 1.0000005}
   m_Children: []
@@ -459,3 +462,5 @@ MonoBehaviour:
   scaleV3: {x: 1, y: 1, z: 1}
   speed: 1
   moveInEditMode: 1
+  scaleLerp: 1
+  ignoreScale: 1

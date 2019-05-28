@@ -12,6 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 23cfbedfe35a87248982214a440ad0a3, type: 3}
   m_Name: DebugShotgun
   m_EditorClassIdentifier: 
+  activeFrames: 0
+  damageFrames: 0
+  bulletDecelerationSpeed: 5
   fireRate: 0.4
   dmg: 4
   magazineSize: 10
@@ -27,18 +30,15 @@ MonoBehaviour:
   ricochet: 1
   parentToGun: 0
   bulletSpeed: {x: 60, y: 70}
-  bulletDecelerationSpeed: 5
   projectileModel: {fileID: 334168290025920454, guid: 3e200a906488c3146a139ec4eb40ca54,
     type: 3}
   gunModel: {fileID: 2979394607292614494, guid: ca2a020c38666db42a4cfd9f4f71d0c9,
     type: 3}
   recoil: 0.5
-  sound: {fileID: 8300000, guid: bbbd6800812f75f429a0e26cc4a4d2cc, type: 3}
-  muzzleFlash: {fileID: 5803644427550265676, guid: c6a185e93cfde9442aed1bdea53b5f36,
-    type: 3}
+  sound: {fileID: 8300000, guid: 0581bb85f7052fc4cb3e1b5e2eb07a18, type: 3}
+  muzzleFlash:
+  - {fileID: 196731903992000112, guid: 1ff5a52b392197b4fb900b8cd7875260, type: 3}
   screenShakeTime: 0.1
   screenshakeStrength: 1
   camFov: 67
   kickBack: 5
-  activeFrames: 0
-  damageFrames: 0

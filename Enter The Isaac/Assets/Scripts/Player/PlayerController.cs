@@ -206,7 +206,6 @@ public class PlayerController : MonoBehaviour
     }
 
    void PlayFootStepSound(){
-       print("ur mom g");
        soundSpawn.SpawnEffect(footStepSound,0.4f,0.8f,1);
     }
 
