@@ -30,13 +30,14 @@ public class SoundSpawn : MonoBehaviour
         }
     }
 
-    public void SpawnEffect(AudioClip clip, float volume, float pitch, float blend)
+    public void SpawnEffect(AudioClip clip, float volume, float pitch, float blend,Transform origin)
     {
         if (clip != null)
         {
             GameObject g = new GameObject();
             Destroy(g, clip.length / pitch);
             g.AddComponent<AudioSource>();
+            g.transform.position = origin.position;
             AudioSource source = g.GetComponent<AudioSource>();
             source.clip = clip;
             source.Play();

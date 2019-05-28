@@ -206,7 +206,7 @@ public class PlayerController : MonoBehaviour
     }
 
    void PlayFootStepSound(){
-       soundSpawn.SpawnEffect(footStepSound,0.4f,0.8f,1);
+       soundSpawn.SpawnEffect(footStepSound,0.4f,0.8f,1,transform);
     }
 
     void CheckRollInput()

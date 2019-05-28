@@ -222,7 +222,7 @@ public class Gun : MonoBehaviour
     {
         if (soundSpawner != null && gunClone.sound != null)
         {
-            soundSpawner.SpawnEffect(gunClone.sound);
+            soundSpawner.SpawnEffect(gunClone.sound,0.5f,1,0,transform);
         }
         if (gunClone.muzzleFlash.Length > 0)
         {

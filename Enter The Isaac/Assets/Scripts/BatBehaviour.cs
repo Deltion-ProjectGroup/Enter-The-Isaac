@@ -106,7 +106,7 @@ public class BatBehaviour : MonoBehaviour
     }
 
     void ActualFlapSound(){
-        soundSpawner.SpawnEffect(idleSound,1,1,1);
+        soundSpawner.SpawnEffect(idleSound,1,1,1,transform);
     }
 
     IEnumerator SpawnEvents()
@@ -251,7 +251,7 @@ public class BatBehaviour : MonoBehaviour
         attackPhase = 1;
         hurtbox.SetActive(true);
         transform.Find("Line").gameObject.SetActive(true);
-        soundSpawner.SpawnEffect(chargeSound,1,1,1);
+        soundSpawner.SpawnEffect(chargeSound,1,1,1,transform);
         yield return new WaitForSeconds(0.3f);
         //stop
         anim.Play("metarig|Attack(Attack)", 0);
@@ -297,7 +297,7 @@ public class BatBehaviour : MonoBehaviour
                     transform.Find("Line").gameObject.SetActive(false);
                     transform.position = lastPos;
                     Invoke("StopBonk", 0.4f);
-                    soundSpawner.SpawnEffect(getHitSound,1,1,1);
+                    soundSpawner.SpawnEffect(getHitSound,1,1,1,transform);
                 }
                 break;
             case 2:
