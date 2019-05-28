@@ -207,6 +207,14 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator RollEvent()
     {
+        anim.Play("Dash",0);
+        anim.SetLayerWeight(1,0);
+        GetComponentInChildren<IKHoldGun>().enabled = false;
+        Vector3 lastGunScale = Vector3.zero;
+        if(gun != null){
+            lastGunScale = gun.transform.localScale;
+            gun.transform.localScale = Vector3.zero;
+        }
         transform.GetChild(0).localRotation = Quaternion.Euler(0, 180, 0);
         moveV3 = Vector3.zero;
         curState = State.Roll;
@@ -227,6 +235,11 @@ public class PlayerController : MonoBehaviour
         transform.Find("Line").gameObject.SetActive(true);
         cam.GetComponent<Shake>().SmallShake();
         yield return new WaitForSeconds(0.3f);
+        if(gun != null){
+            gun.transform.localScale = lastGunScale;
+        }
+        anim.SetLayerWeight(1,1);
+        GetComponentInChildren<IKHoldGun>().enabled = true;
         rotateSpeed = oldRotSpeed;
         curState = State.Normal;
         hitbox.SetActive(true);
@@ -319,6 +332,7 @@ public class PlayerController : MonoBehaviour
         cc.Move(moveV3 * Time.deltaTime);
     }
 
+    Vector3 lastGunScale = Vector3.zero;
     public void GetHit(float timeStopTime)
     {
         Invoke("StopHitControl", timeStopTime);
@@ -329,11 +343,23 @@ public class PlayerController : MonoBehaviour
         {
             gun.StopAllCoroutines();
         }
+        anim.Play("Flinch",0);
+        anim.SetLayerWeight(1,0);
+        anim.GetComponent<IKHoldGun>().enabled = false;
+        if(gun != null){
+            lastGunScale = gun.transform.localScale;
+            gun.transform.localScale = Vector3.zero;
+        }
     }
 
     void StopHitControl()
     {
         curState = State.Normal;
+        anim.SetLayerWeight(1,1);
+        anim.GetComponent<IKHoldGun>().enabled = true;
+        if(gun != null){
+            gun.transform.localScale = lastGunScale;
+        }
     }
     public void Interact()
     {

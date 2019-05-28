@@ -54,6 +54,10 @@ public class BaseEnemy : MonoBehaviour
     Vector3 lastPos;
     float walkWaitTime = 1;
     [Header("Shooting")]
+    [SerializeField] Transform gun;
+    Vector3 gunStartPos = Vector3.zero;
+    [SerializeField] float recoil = 1;
+    [SerializeField] float recoilBackSpeed = 1;
     [SerializeField] GameObject toShoot;
     [SerializeField] Transform shootPivot;
     [SerializeField] int amountOfBullets = 1;
@@ -76,11 +80,12 @@ public class BaseEnemy : MonoBehaviour
         agent.speed *= Random.Range(randomSpeedMultiplier.x, randomSpeedMultiplier.y);
         player = FindObjectOfType<PlayerController>().transform;
         playerCon = player.GetComponent<PlayerController>();
-        anim = GetComponent<Animator>();
+        anim = transform.GetChild(0).GetComponent<Animator>();
         if (skipParticle == false)
         {
             Spawn();
         }
+        gunStartPos = gun.localPosition;
     }
 
     void Spawn()
@@ -127,6 +132,7 @@ public class BaseEnemy : MonoBehaviour
                 transform.LookAt(new Vector3(player.position.x, transform.position.y, player.position.z));
             }
         }
+        gun.localPosition = Vector3.MoveTowards(gun.localPosition, gunStartPos, Time.deltaTime * recoilBackSpeed);
     }
 
     void SetWalkAnim()
@@ -238,6 +244,7 @@ public class BaseEnemy : MonoBehaviour
     public virtual void Attack()
     {
         shakeCam.SmallShake();
+        gun.position -= gun.right * recoil;
         float curAngle = -angleRadius / 2;
         for (int i = 0; i < amountOfBullets; i++)
         {
@@ -252,6 +259,25 @@ public class BaseEnemy : MonoBehaviour
             g.GetComponent<Hurtbox>().damage = damage;
             curAngle += angleRadius / amountOfBullets;
         }
+    }
+
+    Vector3 lastGunScale = Vector3.zero;
+    public void GetHit()
+    {
+        anim.Play("Flinch", 0);
+        anim.GetComponent<IKHoldGun>().enabled = false;
+        if (lastGunScale == Vector3.zero)
+        {
+            lastGunScale = gun.localScale;
+        }
+        gun.localScale = Vector3.zero;
+        Invoke("StopGetHit", 0.2f);
+    }
+
+    void StopGetHit()
+    {
+        anim.GetComponent<IKHoldGun>().enabled = true;
+        gun.localScale = lastGunScale;
     }
 
     void CheckAttack()

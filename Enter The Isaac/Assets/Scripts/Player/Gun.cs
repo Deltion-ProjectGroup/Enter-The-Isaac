@@ -256,6 +256,9 @@ public class Gun : MonoBehaviour
                 {
                     //basically this code feels more precise, exept when the crosshair is close to the player
                     bullet.transform.LookAt(player.crosshair.position);
+                } else {
+                    bullet.transform.rotation = transform.rotation;
+                    bullet.transform.Rotate(0,180,0);
                 }
             }
             else

@@ -6,18 +6,22 @@ public class IKHoldGun : MonoBehaviour
 {
 
     Animator anim;
-    Transform leftHandPos;
-    Transform rightHandPos;
+    [SerializeField] Transform leftHandPos;
+    [SerializeField] Transform rightHandPos;
     [SerializeField] string leftHandName = "LeftHandIK";
     [SerializeField] string rightHandName = "RightHandIK";
     [SerializeField] string bellyName = "RotateBelly";
     [SerializeField] float rotateBelly;
+    [SerializeField] bool findHandsByName = true;
 
 
     void Start()
     {
         anim = GetComponent<Animator>();
-        InvokeRepeating("FindHands", 0, 0.01f);
+        if (findHandsByName == true)
+        {
+            InvokeRepeating("FindHands", 0, 0.01f);
+        }
     }
     void FindHands()
     {
@@ -32,10 +36,12 @@ public class IKHoldGun : MonoBehaviour
             rightHandPos = GameObject.Find(rightHandName).transform;
         }
         //also find belly thing
-         if (GameObject.Find(bellyName))
+        if (GameObject.Find(bellyName))
         {
             rotateBelly = GameObject.Find(bellyName).transform.localEulerAngles.y;
-        } else {
+        }
+        else
+        {
             rotateBelly = 0;
         }
     }
