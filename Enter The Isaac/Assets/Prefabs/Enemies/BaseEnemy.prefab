@@ -124,6 +124,9 @@ MonoBehaviour:
   curState: 2
   hitbox: {fileID: 5147418958244692102}
   randomSpeedMultiplier: {x: 0.9, y: 1.5}
+  getHitSound: {fileID: 8300000, guid: 254274e694506e04ebb545065b69d615, type: 3}
+  dieSound: {fileID: 8300000, guid: f66954e10e841fb418bd3efa4e87c585, type: 3}
+  shootSound: {fileID: 8300000, guid: b0e82b74a8aa6104983044253e8d32c6, type: 3}
   spawnInvisible:
   - {fileID: 5991812272737329494}
   - {fileID: 5340255348197930595}
@@ -425,6 +428,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 13700000, guid: b9ccaa691a3ca5e429aca09bb2fae66f, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 7fbef612076295d4ea33258f84f7ac36, type: 2}
     - target: {fileID: 9500000, guid: b9ccaa691a3ca5e429aca09bb2fae66f, type: 3}
       propertyPath: m_Controller
       value: 
@@ -433,10 +440,6 @@ PrefabInstance:
       propertyPath: m_ApplyRootMotion
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 13700000, guid: b9ccaa691a3ca5e429aca09bb2fae66f, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 7fbef612076295d4ea33258f84f7ac36, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: b9ccaa691a3ca5e429aca09bb2fae66f, type: 3}
 --- !u!1 &5991812272740445270 stripped

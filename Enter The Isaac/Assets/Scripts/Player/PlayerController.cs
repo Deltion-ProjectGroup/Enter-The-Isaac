@@ -17,6 +17,7 @@ public class PlayerController : MonoBehaviour
     public Text keyUICounter;
     [SerializeField] GameObject reloadIcon;
     public GameObject reloadBar;
+    SoundSpawn soundSpawn;
     [Header("Walking related")]
     public float walkSpeed = 1;
     float curWalkSpeed = 0;
@@ -26,6 +27,8 @@ public class PlayerController : MonoBehaviour
     public float rotGoal = 0;
     [SerializeField] float accelerationSpeed = 3;
     [SerializeField] float decelerationSpeed = 5;
+    [SerializeField] AudioClip footStepSound;
+    [SerializeField] float footStepSpeed = 0.2f;
     [Header("Gun")]
     public Gun gun;
     public List<GunType> guns;
@@ -33,6 +36,8 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public List<int> ammoStore = new List<int>();
     [HideInInspector] public List<int> magazineStore = new List<int>();
     public Gun.voidDelegate gunDel;
+    [SerializeField] AudioClip reloadSound;
+    public AudioClip realReloadSound;
     [Header("Input")]
     [SerializeField] string horInput = "Horizontal";
     [SerializeField] string vertInput = "Vertical";
@@ -55,6 +60,7 @@ public class PlayerController : MonoBehaviour
     [Header("Rolling")]
     public float rollSpeed = 40;
     public float rollDeceleration = 100;
+    [SerializeField] AudioClip rollSound;
     [SerializeField] GameObject rollParticle;
     [Header("INTERACTION")]
     public string interactButton;
@@ -65,6 +71,7 @@ public class PlayerController : MonoBehaviour
     {
         cc = GetComponent<CharacterController>();
         cam = Camera.main.transform;
+        soundSpawn = FindObjectOfType<SoundSpawn>();
 
 
         for (int i = 0; i < guns.Count; i++)
@@ -166,6 +173,7 @@ public class PlayerController : MonoBehaviour
         {
             Invoke("NoSwitchGun", 0.2f);
             gun.transform.Rotate(-90, 0, 0);
+            soundSpawn.SpawnEffect(reloadSound);
             if (Input.GetAxis(scrollInput) > 0)
             {
                 curGun = (int)Mathf.Repeat(curGun + 1, guns.Count);
@@ -191,6 +199,15 @@ public class PlayerController : MonoBehaviour
 
         anim.SetFloat("horInput", -inputDir.x);
         anim.SetFloat("vertInput", -inputDir.z);
+
+        if(anim.GetCurrentAnimatorStateInfo(1).IsTag("Walk") == true && IsInvoking("PlayFootStepSound") == false && curState == State.Normal){
+            Invoke("PlayFootStepSound",footStepSpeed);
+        }
+    }
+
+   void PlayFootStepSound(){
+       print("ur mom g");
+       soundSpawn.SpawnEffect(footStepSound,0.4f,0.8f,1);
     }
 
     void CheckRollInput()
@@ -207,11 +224,13 @@ public class PlayerController : MonoBehaviour
 
     IEnumerator RollEvent()
     {
-        anim.Play("Dash",0);
-        anim.SetLayerWeight(1,0);
+        soundSpawn.SpawnEffect(rollSound);
+        anim.Play("Dash", 0);
+        anim.SetLayerWeight(1, 0);
         GetComponentInChildren<IKHoldGun>().enabled = false;
         Vector3 lastGunScale = Vector3.zero;
-        if(gun != null){
+        if (gun != null)
+        {
             lastGunScale = gun.transform.localScale;
             gun.transform.localScale = Vector3.zero;
         }
@@ -235,15 +254,20 @@ public class PlayerController : MonoBehaviour
         transform.Find("Line").gameObject.SetActive(true);
         cam.GetComponent<Shake>().SmallShake();
         yield return new WaitForSeconds(0.3f);
-        if(gun != null){
+        if (gun != null)
+        {
             gun.transform.localScale = lastGunScale;
         }
-        anim.SetLayerWeight(1,1);
+        anim.SetLayerWeight(1, 1);
         GetComponentInChildren<IKHoldGun>().enabled = true;
         rotateSpeed = oldRotSpeed;
         curState = State.Normal;
         hitbox.SetActive(true);
         transform.Find("Line").gameObject.SetActive(false);
+        if (new Vector2(Input.GetAxis(horInput), Input.GetAxis(vertInput)).sqrMagnitude == 0)
+        {
+            anim.Play("Run", 1);
+        }
     }
 
     void RotateCrosshair()
@@ -343,10 +367,11 @@ public class PlayerController : MonoBehaviour
         {
             gun.StopAllCoroutines();
         }
-        anim.Play("Flinch",0);
-        anim.SetLayerWeight(1,0);
+        anim.Play("Flinch", 0);
+        anim.SetLayerWeight(1, 0);
         anim.GetComponent<IKHoldGun>().enabled = false;
-        if(gun != null){
+        if (gun != null)
+        {
             lastGunScale = gun.transform.localScale;
             gun.transform.localScale = Vector3.zero;
         }
@@ -355,9 +380,10 @@ public class PlayerController : MonoBehaviour
     void StopHitControl()
     {
         curState = State.Normal;
-        anim.SetLayerWeight(1,1);
+        anim.SetLayerWeight(1, 1);
         anim.GetComponent<IKHoldGun>().enabled = true;
-        if(gun != null){
+        if (gun != null)
+        {
             gun.transform.localScale = lastGunScale;
         }
     }

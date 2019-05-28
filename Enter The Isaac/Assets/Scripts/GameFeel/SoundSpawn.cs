@@ -29,4 +29,25 @@ public class SoundSpawn : MonoBehaviour
             }
         }
     }
+
+    public void SpawnEffect(AudioClip clip, float volume, float pitch, float blend)
+    {
+        if (clip != null)
+        {
+            GameObject g = new GameObject();
+            Destroy(g, clip.length / pitch);
+            g.AddComponent<AudioSource>();
+            AudioSource source = g.GetComponent<AudioSource>();
+            source.clip = clip;
+            source.Play();
+            source.outputAudioMixerGroup = mixerGroup;
+
+            AudioSource mySource = GetComponent<AudioSource>();
+            source.volume = volume;
+            source.pitch = pitch;
+            source.spatialBlend = blend;
+        }
+    }
+
+
 }

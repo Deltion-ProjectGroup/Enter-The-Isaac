@@ -18,6 +18,10 @@ public class BaseEnemy : MonoBehaviour
     float timer = 0;
     ShakeCam shakeCam;
     [SerializeField] Vector2 randomSpeedMultiplier = new Vector2(0.9f, 1.5f);
+    SoundSpawn soundSpawner;
+    [SerializeField] AudioClip getHitSound;
+    [SerializeField] AudioClip dieSound;
+    [SerializeField] AudioClip shootSound;
     [Header("Spawning")]
     [SerializeField] Renderer[] spawnInvisible;
     [SerializeField] GameObject spawnParticle;
@@ -75,6 +79,7 @@ public class BaseEnemy : MonoBehaviour
 
     public void StartBase()
     {
+        soundSpawner = FindObjectOfType<SoundSpawn>();
         shakeCam = GetComponent<ShakeCam>();
         agent = GetComponent<NavMeshAgent>();
         agent.speed *= Random.Range(randomSpeedMultiplier.x, randomSpeedMultiplier.y);
@@ -225,6 +230,7 @@ public class BaseEnemy : MonoBehaviour
         }
         if (hitbox.enabled == true)
         {
+            soundSpawner.SpawnEffect(dieSound);
             shakeCam.SmallShake();
             hitbox.enabled = false;
         }
@@ -243,6 +249,7 @@ public class BaseEnemy : MonoBehaviour
 
     public virtual void Attack()
     {
+        soundSpawner.SpawnEffect(shootSound);
         shakeCam.SmallShake();
         gun.position -= gun.right * recoil;
         float curAngle = -angleRadius / 2;
@@ -265,6 +272,7 @@ public class BaseEnemy : MonoBehaviour
     public void GetHit()
     {
         anim.Play("Flinch", 0);
+        soundSpawner.SpawnEffect(getHitSound);
         anim.GetComponent<IKHoldGun>().enabled = false;
         if (lastGunScale == Vector3.zero)
         {

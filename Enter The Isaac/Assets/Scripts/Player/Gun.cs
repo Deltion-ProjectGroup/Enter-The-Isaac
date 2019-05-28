@@ -134,6 +134,7 @@ public class Gun : MonoBehaviour
         {
             player.reloadBar.GetComponent<AutoRotate>().speed = 1 / gunClone.reloadTime;
             player.reloadBar.transform.localScale = new Vector3(1, player.reloadBar.transform.localScale.y, 0);
+            soundSpawner.SpawnEffect(player.realReloadSound);
         }
         transform.Rotate(0, 0, 90);
     }
@@ -225,7 +226,10 @@ public class Gun : MonoBehaviour
         }
         if (gunClone.muzzleFlash != null)
         {
-            Instantiate(gunClone.muzzleFlash, transform.GetChild(0).Find("SpawnPoint").position, gunClone.muzzleFlash.transform.rotation * transform.rotation, transform);
+            for (int i = 0; i < gunClone.muzzleFlash.Length; i++)
+            {
+            Instantiate(gunClone.muzzleFlash[i], transform.GetChild(0).Find("SpawnPoint").position, gunClone.muzzleFlash[i].transform.rotation * transform.rotation, transform);
+            }
         }
         Camera.main.fieldOfView = gunClone.camFov;
         transform.localPosition = startPos + (Vector3.forward * gunClone.recoil);

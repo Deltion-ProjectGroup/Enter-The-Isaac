@@ -31,7 +31,7 @@ public class GunType : ScriptableObject
     [Header("Game Feel")]
     public float recoil = 0;
     public AudioClip sound;
-    public GameObject muzzleFlash;
+    public GameObject[] muzzleFlash;
     public float screenShakeTime = 0;
     public float screenshakeStrength = 0;
     public float camFov = 50;
