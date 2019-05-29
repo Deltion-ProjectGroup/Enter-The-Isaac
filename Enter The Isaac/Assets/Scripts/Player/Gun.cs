@@ -222,7 +222,8 @@ public class Gun : MonoBehaviour
     {
         if (soundSpawner != null && gunClone.sound != null)
         {
-            soundSpawner.SpawnEffect(gunClone.sound,0.5f,1,0,transform);
+            float randomPitch = Random.Range(0.8f,1.2f);
+            soundSpawner.SpawnEffect(gunClone.sound,0.5f,randomPitch,0,transform);
         }
         if (gunClone.muzzleFlash.Length > 0)
         {
