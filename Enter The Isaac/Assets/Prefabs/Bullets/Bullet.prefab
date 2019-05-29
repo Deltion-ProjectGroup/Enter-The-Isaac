@@ -250,7 +250,7 @@ TrailRenderer:
   m_Time: 0.1
   m_Parameters:
     serializedVersion: 3
-    widthMultiplier: 0.2
+    widthMultiplier: 0.1
     widthCurve:
       serializedVersion: 2
       m_Curve:
@@ -295,8 +295,8 @@ TrailRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 0.7254902}
-      key1: {r: 1, g: 1, b: 1, a: 0}
+      key0: {r: 1, g: 1, b: 0.2509804, a: 0.8862745}
+      key1: {r: 1, g: 1, b: 0.63529414, a: 0}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
@@ -497,79 +497,29 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2466674889740870724, guid: cee98e1bc60baa44588075ea81b3482e,
+        type: 3}
+      propertyPath: m_LocalScale.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2466674889740870724, guid: cee98e1bc60baa44588075ea81b3482e,
+        type: 3}
+      propertyPath: m_LocalScale.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2466674889740870724, guid: cee98e1bc60baa44588075ea81b3482e,
+        type: 3}
+      propertyPath: m_LocalScale.z
+      value: 0.5
+      objectReference: {fileID: 0}
     - target: {fileID: 3082117327796372651, guid: cee98e1bc60baa44588075ea81b3482e,
         type: 3}
       propertyPath: m_LocalPosition.z
       value: -0.033
       objectReference: {fileID: 0}
-    - target: {fileID: 1160076083445811209, guid: cee98e1bc60baa44588075ea81b3482e,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 3707522050724203509, guid: cee98e1bc60baa44588075ea81b3482e,
         type: 3}
       propertyPath: m_IsActive
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2230699531425331608, guid: cee98e1bc60baa44588075ea81b3482e,
-        type: 3}
-      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[0].value
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2230699531425331608, guid: cee98e1bc60baa44588075ea81b3482e,
-        type: 3}
-      propertyPath: VelocityModule.enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2230699531425331608, guid: cee98e1bc60baa44588075ea81b3482e,
-        type: 3}
-      propertyPath: ShapeModule.arc.mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2230699531425331608, guid: cee98e1bc60baa44588075ea81b3482e,
-        type: 3}
-      propertyPath: InitialModule.startSpeed.scalar
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2230699531425331608, guid: cee98e1bc60baa44588075ea81b3482e,
-        type: 3}
-      propertyPath: simulationSpeed
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2230699531425331608, guid: cee98e1bc60baa44588075ea81b3482e,
-        type: 3}
-      propertyPath: InitialModule.startLifetime.scalar
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2230699531425331608, guid: cee98e1bc60baa44588075ea81b3482e,
-        type: 3}
-      propertyPath: TrailModule.enabled
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2230699531425331608, guid: cee98e1bc60baa44588075ea81b3482e,
-        type: 3}
-      propertyPath: moveWithTransform
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2230699531425331608, guid: cee98e1bc60baa44588075ea81b3482e,
-        type: 3}
-      propertyPath: ShapeModule.type
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 2230699531425331608, guid: cee98e1bc60baa44588075ea81b3482e,
-        type: 3}
-      propertyPath: ShapeModule.radius.value
-      value: 0.0001
-      objectReference: {fileID: 0}
-    - target: {fileID: 2230699531425331608, guid: cee98e1bc60baa44588075ea81b3482e,
-        type: 3}
-      propertyPath: VelocityModule.radial.scalar
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 2230699531425331608, guid: cee98e1bc60baa44588075ea81b3482e,
-        type: 3}
-      propertyPath: ShapeModule.radiusThickness
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4719437420404946565, guid: cee98e1bc60baa44588075ea81b3482e,
@@ -692,10 +642,25 @@ PrefabInstance:
       propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[3].value
       value: 0.1798561
       objectReference: {fileID: 0}
-    - target: {fileID: 5209762454716435654, guid: cee98e1bc60baa44588075ea81b3482e,
+    - target: {fileID: 2230699531425331608, guid: cee98e1bc60baa44588075ea81b3482e,
         type: 3}
-      propertyPath: m_IsActive
-      value: 0
+      propertyPath: simulationSpeed
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2230699531425331608, guid: cee98e1bc60baa44588075ea81b3482e,
+        type: 3}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2230699531425331608, guid: cee98e1bc60baa44588075ea81b3482e,
+        type: 3}
+      propertyPath: ShapeModule.radius.value
+      value: 0.0001
+      objectReference: {fileID: 0}
+    - target: {fileID: 2230699531425331608, guid: cee98e1bc60baa44588075ea81b3482e,
+        type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[0].value
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cee98e1bc60baa44588075ea81b3482e, type: 3}
