@@ -103,6 +103,11 @@ public class BatBehaviour : MonoBehaviour
         if(IsInvoking("ActualFlapSound") == false){
             Invoke("ActualFlapSound",flapRepeatSpeed);
         }
+
+        //also a rotation bug fix
+        if(anim.GetCurrentAnimatorStateInfo(0).IsTag("Attack")){
+            anim.Play("metarig|Flying", 0);
+        }
     }
 
     void ActualFlapSound(){
