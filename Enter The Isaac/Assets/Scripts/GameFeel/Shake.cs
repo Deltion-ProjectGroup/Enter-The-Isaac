@@ -49,20 +49,27 @@ public class Shake : MonoBehaviour
 
     void StartShake(float time, float strength)
     {
-        CancelInvoke("StopShake");
-        isShaking = true;
-        shakestr = strength;
-        Invoke("StopShake", time);
-        transform.eulerAngles -= rngRemover;
-        rngRemover = Vector3.zero;
-
-        if (ppVolume != null && shakeScale > 0)
+        if (transform.tag == "MainCamera" && PlayerPrefs.GetInt("screenshake") == 0)
         {
-            ChromaticAberration crom;
-            ppVolume.profile.TryGetSettings(out crom);
-            if (crom != null)
+            //no screenshake
+        }
+        else
+        {
+            CancelInvoke("StopShake");
+            isShaking = true;
+            shakestr = strength;
+            Invoke("StopShake", time);
+            transform.eulerAngles -= rngRemover;
+            rngRemover = Vector3.zero;
+
+            if (ppVolume != null && shakeScale > 0)
             {
-                crom.intensity.value = 0.2f;
+                ChromaticAberration crom;
+                ppVolume.profile.TryGetSettings(out crom);
+                if (crom != null)
+                {
+                    crom.intensity.value = 0.2f;
+                }
             }
         }
     }

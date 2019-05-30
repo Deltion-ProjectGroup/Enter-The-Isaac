@@ -51,6 +51,7 @@ public class Cam : MonoBehaviour
 
     void LateUpdate()
     {
+        ignoreFOVChange = (PlayerPrefs.GetInt("screenshake") == 0);
         if (ignoreFOVChange == true)
         {
             cam.fieldOfView = startFOV;
