@@ -79,11 +79,11 @@ public class Cam : MonoBehaviour
         mousePos += new Vector3(0.5f, 0, 0.5f);
         mousePos = new Vector3(Mathf.Max(mousePos.x, -0.5f), Mathf.Max(mousePos.y, -0.5f), Mathf.Max(mousePos.z, -0.5f));
         mousePos = new Vector3(Mathf.Min(mousePos.x, 0.5f), Mathf.Min(mousePos.y, 0.5f), Mathf.Min(mousePos.z, 0.5f));
-        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(startRot + new Vector3(-mousePos.z * rotAmount, mousePos.x * rotAmount, mousePos.x * rotAmount)), Time.deltaTime * 5);
+        transform.rotation = Quaternion.Lerp(transform.rotation, Quaternion.Euler(startRot + (new Vector3(-mousePos.z * rotAmount, mousePos.x * rotAmount, mousePos.x * rotAmount) * PlayerPrefs.GetFloat("mouseFollowAmount"))), Time.deltaTime * 5);
         mousePos.z *= 1.5f;
         if (Vector3.Magnitude(mousePos) > followMouseIgnore)
         {
-            centerPos += mousePos * followMouseAmount;
+            centerPos += mousePos * followMouseAmount * PlayerPrefs.GetFloat("mouseFollowAmount");
         }
         return centerPos;
     }

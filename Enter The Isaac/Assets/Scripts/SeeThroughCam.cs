@@ -15,7 +15,7 @@ public class SeeThroughCam : MonoBehaviour
         mainCam = Camera.main;
     }
 
-    void Update()
+    void FixedUpdate()
     {
         cam.enabled = false;
         cam.fieldOfView = mainCam.fieldOfView;

@@ -11,6 +11,7 @@ public class PlayerController : MonoBehaviour
     Transform cam;
     Animator anim;
     [Header("Random stuff")]
+    Pause pauseSettings;
     public GameObject hitbox;
     public int money = 0;
     public int keys = 0;
@@ -69,6 +70,7 @@ public class PlayerController : MonoBehaviour
     public GameObject closestInteractableObject;
     void Start()
     {
+        pauseSettings = FindObjectOfType<Pause>();
         cc = GetComponent<CharacterController>();
         cam = Camera.main.transform;
         soundSpawn = FindObjectOfType<SoundSpawn>();
@@ -96,56 +98,61 @@ public class PlayerController : MonoBehaviour
 
     void Update()
     {
-        switch (curState)
+        anim.enabled = !pauseSettings.isPaused;
+        reloadIcon.SetActive(!pauseSettings.isPaused);
+        if (pauseSettings.isPaused == false)
         {
-            case State.Normal:
-                if (gun != null)
+            switch (curState)
+            {
+                case State.Normal:
+                    if (gun != null)
+                    {
+                        RotateCrosshair();
+                        MoveXZ();
+                        GunInput();
+                    }
+                    else
+                    {
+                        SwitchGun();
+                        RotateXZ();
+                        MoveForward();
+                        if (onNoGunShootDel != null)
+                        {
+                            onNoGunShootDel();
+                        }
+                    }
+                    Gravity();
+                    FinalMove();
+                    CheckRollInput();
+                    break;
+                case State.Roll:
+                    RotateXZ();
+                    moveV3 = Vector3.MoveTowards(moveV3, Vector3.zero, Time.deltaTime * rollDeceleration);
+                    FinalMove();
+                    break;
+            }
+            SetAnimValues();
+            if (keyUICounter != null)
+            {
+                if (keys >= 10)
                 {
-                    RotateCrosshair();
-                    MoveXZ();
-                    GunInput();
+                    keyUICounter.text = "X " + keys;
                 }
                 else
                 {
-                    SwitchGun();
-                    RotateXZ();
-                    MoveForward();
-                    if (onNoGunShootDel != null)
-                    {
-                        onNoGunShootDel();
-                    }
+                    keyUICounter.text = "X 0" + keys;//lazyness intensfies
                 }
-                Gravity();
-                FinalMove();
-                CheckRollInput();
-                break;
-            case State.Roll:
-                RotateXZ();
-                moveV3 = Vector3.MoveTowards(moveV3, Vector3.zero, Time.deltaTime * rollDeceleration);
-                FinalMove();
-                break;
-        }
-        SetAnimValues();
-        if (keyUICounter != null)
-        {
-            if (keys >= 10)
-            {
-                keyUICounter.text = "X " + keys;
             }
-            else
+            //setting the reload icon
+            if (reloadIcon.activeSelf != (gun.curAmmo <= 0))
             {
-                keyUICounter.text = "X 0" + keys;//lazyness intensfies
+                reloadIcon.transform.localScale = new Vector3(0, 2, 0);
+                reloadIcon.SetActive(gun.curAmmo <= 0);
             }
+            reloadIcon.SetActive(!gun.IsInvoking("Reload"));
+            CheckClosestInteractable();
+            Interact();
         }
-        //setting the reload icon
-        if (reloadIcon.activeSelf != (gun.curAmmo <= 0))
-        {
-            reloadIcon.transform.localScale = new Vector3(0, 2, 0);
-            reloadIcon.SetActive(gun.curAmmo <= 0);
-        }
-        reloadIcon.SetActive(!gun.IsInvoking("Reload"));
-        CheckClosestInteractable();
-        Interact();
     }
 
     void GunInput()
@@ -200,13 +207,15 @@ public class PlayerController : MonoBehaviour
         anim.SetFloat("horInput", -inputDir.x);
         anim.SetFloat("vertInput", -inputDir.z);
 
-        if(anim.GetCurrentAnimatorStateInfo(1).IsTag("Walk") == true && IsInvoking("PlayFootStepSound") == false && curState == State.Normal){
-            Invoke("PlayFootStepSound",footStepSpeed);
+        if (anim.GetCurrentAnimatorStateInfo(1).IsTag("Walk") == true && IsInvoking("PlayFootStepSound") == false && curState == State.Normal)
+        {
+            Invoke("PlayFootStepSound", footStepSpeed);
         }
     }
 
-   void PlayFootStepSound(){
-       soundSpawn.SpawnEffect(footStepSound,0.4f,0.8f,1,transform);
+    void PlayFootStepSound()
+    {
+        soundSpawn.SpawnEffect(footStepSound, 0.4f, 0.8f, 1, transform);
     }
 
     void CheckRollInput()

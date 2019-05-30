@@ -14,7 +14,7 @@ public class Shake : MonoBehaviour
     [SerializeField] PostProcessVolume ppVolume;
 
 
-    void LateUpdate()
+    void FixedUpdate()
     {
         if (shakeScale > 0)
         {
