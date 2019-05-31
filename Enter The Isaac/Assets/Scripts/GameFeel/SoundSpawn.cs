@@ -30,7 +30,7 @@ public class SoundSpawn : MonoBehaviour
         }
     }
 
-    public void SpawnEffect(AudioClip clip, float volume, float pitch, float blend,Transform origin)
+    public void SpawnEffect(AudioClip clip, float volume, float pitch, float blend, Transform origin)
     {
         if (clip != null)
         {

@@ -786,7 +786,7 @@ MonoBehaviour:
   rotateCrosshairSpeed: 18
   rotGoal: 0
   accelerationSpeed: 15
-  decelerationSpeed: 5
+  decelerationSpeed: 10
   footStepSound: {fileID: 8300000, guid: 90ac57664ec549a4a833376a46f99788, type: 3}
   footStepSpeed: 0.2
   gun: {fileID: 65470453587846303}
@@ -3111,7 +3111,6 @@ GameObject:
   - component: {fileID: 65470453204126892}
   - component: {fileID: 65470453204126899}
   - component: {fileID: 65470453204126898}
-  - component: {fileID: 65470453204126897}
   m_Layer: 0
   m_Name: Hitbox
   m_TagString: Player
@@ -3210,7 +3209,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: 65470453204126897}
+      - m_Target: {fileID: 0}
         m_MethodName: SpawnEffect
         m_Mode: 2
         m_Arguments:
@@ -3260,19 +3259,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 830025cffca44eb4ea041cbdbdaad150, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &65470453204126897
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 65470453204126894}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7d7a5bbfd90b3ac499d40afe1edc5c7d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  mixerGroup: {fileID: 0}
 --- !u!1 &65470453238278004
 GameObject:
   m_ObjectHideFlags: 0
@@ -13002,6 +12988,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 1
         m_CallState: 2
+      - m_Target: {fileID: 65470452881420563}
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   unPauseEvent:
@@ -13040,6 +13037,17 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 65470452881420563}
+        m_MethodName: set_enabled
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
         m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
@@ -27937,11 +27945,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: PPDungeon
-      objectReference: {fileID: 0}
-    - target: {fileID: 354003489755812157, guid: 8f4b92c86216dfc4f9b5566f4aef7787,
-        type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 354003489755812159, guid: 8f4b92c86216dfc4f9b5566f4aef7787,
         type: 3}
