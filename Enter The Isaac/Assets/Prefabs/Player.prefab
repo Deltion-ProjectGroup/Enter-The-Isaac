@@ -1123,7 +1123,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6af36a0d938ac804ea4d899b2b67f5bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 0.06
+  radius: 0.12
 --- !u!1 &65470452683682870
 GameObject:
   m_ObjectHideFlags: 0
@@ -1168,7 +1168,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6af36a0d938ac804ea4d899b2b67f5bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 0.06
+  radius: 0.12
 --- !u!1 &65470452683682872
 GameObject:
   m_ObjectHideFlags: 0
@@ -1339,7 +1339,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6af36a0d938ac804ea4d899b2b67f5bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 0.08
+  radius: 0.14
 --- !u!1 &65470452683682928
 GameObject:
   m_ObjectHideFlags: 0
@@ -1384,7 +1384,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6af36a0d938ac804ea4d899b2b67f5bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 0.08
+  radius: 0.14
 --- !u!1 &65470452683682934
 GameObject:
   m_ObjectHideFlags: 0
@@ -1516,7 +1516,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 65470452683317452}
-  - component: {fileID: 3737376245068067312}
   m_Layer: 0
   m_Name: metarig
   m_TagString: Untagged
@@ -1539,75 +1538,6 @@ Transform:
   m_Father: {fileID: 6825431267036448768}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3737376245068067312
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 65470452683682988}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4fd7862bbaff34341befc6bc41f9ac3f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  dynamicRatio: 1
-  stiffnessForce: 0.01
-  stiffnessCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  dragForce: 0.4
-  dragCurve:
-    serializedVersion: 2
-    m_Curve:
-    - serializedVersion: 3
-      time: 0
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    - serializedVersion: 3
-      time: 1
-      value: 1
-      inSlope: 0
-      outSlope: 0
-      tangentMode: 34
-      weightedMode: 0
-      inWeight: 0
-      outWeight: 0
-    m_PreInfinity: 2
-    m_PostInfinity: 2
-    m_RotationOrder: 4
-  springBones:
-  - {fileID: 3737376245068066880}
-  - {fileID: 7894114637136236848}
-  - {fileID: 7894114637136236844}
-  - {fileID: 7894114637136236842}
-  - {fileID: 7894114637136236838}
 --- !u!1 &65470452683683100
 GameObject:
   m_ObjectHideFlags: 0
@@ -1653,19 +1583,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   child: {fileID: 6825431267036448840}
-  boneAxis: {x: -1, y: 0, z: 0}
-  radius: 0.14
+  boneAxis: {x: 0, y: 1, z: 0}
+  radius: 0.05
   isUseEachBoneForceSettings: 1
-  stiffnessForce: 0.01
+  stiffnessForce: 0.2
   dragForce: 0.4
-  springForce: {x: 0, y: -0.0001, z: 0}
+  springForce: {x: 0, y: 0, z: 0}
   colliders:
-  - {fileID: 3737376245068067176}
-  - {fileID: 3737376245068067090}
-  - {fileID: 3737376245068070560}
   - {fileID: 3737376245068067178}
   - {fileID: 3737376245068067116}
   - {fileID: 3737376245068070562}
+  - {fileID: 3737376245068067176}
+  - {fileID: 3737376245068067090}
+  - {fileID: 3737376245068070560}
   debug: 1
   threshold: 0.01
 --- !u!1 &65470452683683274
@@ -2203,7 +2133,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6af36a0d938ac804ea4d899b2b67f5bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 0.09
+  radius: 0.16
 --- !u!1 &65470452683684862
 GameObject:
   m_ObjectHideFlags: 0
@@ -2249,7 +2179,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6af36a0d938ac804ea4d899b2b67f5bc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  radius: 0.09
+  radius: 0.16
 --- !u!1 &65470452730780936
 GameObject:
   m_ObjectHideFlags: 0
@@ -14008,6 +13938,7 @@ GameObject:
   - component: {fileID: 6825431267036288037}
   - component: {fileID: 6825431267036288035}
   - component: {fileID: 6825431267036288033}
+  - component: {fileID: 730896530}
   m_Layer: 0
   m_Name: Player CharacterLP
   m_TagString: Untagged
@@ -14099,6 +14030,75 @@ MonoBehaviour:
   offset: {x: 0, y: 0, z: 0}
   withIK: 1
   lookAtPlayer: 0
+--- !u!114 &730896530
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6825431267036288032}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fd7862bbaff34341befc6bc41f9ac3f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dynamicRatio: 1
+  stiffnessForce: 0.01
+  stiffnessCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  dragForce: 0.4
+  dragCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 34
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  springBones:
+  - {fileID: 3737376245068066880}
+  - {fileID: 7894114637136236848}
+  - {fileID: 7894114637136236844}
+  - {fileID: 7894114637136236842}
+  - {fileID: 7894114637136236838}
 --- !u!1 &6825431267036288034
 GameObject:
   m_ObjectHideFlags: 0
@@ -14486,19 +14486,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   child: {fileID: 6825431267036448846}
-  boneAxis: {x: -1, y: 0, z: 0}
-  radius: 0.14
+  boneAxis: {x: 0, y: 1, z: 0}
+  radius: 0.05
   isUseEachBoneForceSettings: 1
-  stiffnessForce: 0.01
+  stiffnessForce: 0.2
   dragForce: 0.4
-  springForce: {x: 0, y: -0.0001, z: 0}
+  springForce: {x: 0, y: 0, z: 0}
   colliders:
-  - {fileID: 3737376245068067176}
-  - {fileID: 3737376245068067090}
-  - {fileID: 3737376245068070560}
   - {fileID: 3737376245068067178}
   - {fileID: 3737376245068067116}
   - {fileID: 3737376245068070562}
+  - {fileID: 3737376245068067176}
+  - {fileID: 3737376245068067090}
+  - {fileID: 3737376245068070560}
   debug: 1
   threshold: 0.01
 --- !u!1 &6825431267036288110
@@ -14576,19 +14576,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   child: {fileID: 6825431267036448850}
-  boneAxis: {x: -1, y: 0, z: 0}
-  radius: 0.14
+  boneAxis: {x: 0, y: 1, z: 0}
+  radius: 0.05
   isUseEachBoneForceSettings: 1
-  stiffnessForce: 0.01
+  stiffnessForce: 0.2
   dragForce: 0.4
-  springForce: {x: 0, y: -0.0001, z: 0}
+  springForce: {x: 0, y: 0, z: 0}
   colliders:
-  - {fileID: 3737376245068067176}
-  - {fileID: 3737376245068067090}
-  - {fileID: 3737376245068070560}
   - {fileID: 3737376245068067178}
   - {fileID: 3737376245068067116}
   - {fileID: 3737376245068070562}
+  - {fileID: 3737376245068067176}
+  - {fileID: 3737376245068067090}
+  - {fileID: 3737376245068070560}
   debug: 1
   threshold: 0.01
 --- !u!1 &6825431267036288114
@@ -14666,19 +14666,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   child: {fileID: 6825431267036448856}
-  boneAxis: {x: -1, y: 0, z: 0}
-  radius: 0.14
+  boneAxis: {x: 0, y: 1, z: 0}
+  radius: 0.05
   isUseEachBoneForceSettings: 1
-  stiffnessForce: 0.01
+  stiffnessForce: 0.2
   dragForce: 0.4
-  springForce: {x: 0, y: -0.0001, z: 0}
+  springForce: {x: 0, y: 0, z: 0}
   colliders:
-  - {fileID: 3737376245068067176}
-  - {fileID: 3737376245068067090}
-  - {fileID: 3737376245068070560}
   - {fileID: 3737376245068067178}
   - {fileID: 3737376245068067116}
   - {fileID: 3737376245068070562}
+  - {fileID: 3737376245068067176}
+  - {fileID: 3737376245068067090}
+  - {fileID: 3737376245068070560}
   debug: 1
   threshold: 0.01
 --- !u!1 &6825431267036288120
@@ -14756,19 +14756,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   child: {fileID: 6825431267036448860}
-  boneAxis: {x: -1, y: 0, z: 0}
-  radius: 0.14
+  boneAxis: {x: 0, y: 1, z: 0}
+  radius: 0.05
   isUseEachBoneForceSettings: 1
-  stiffnessForce: 0.01
+  stiffnessForce: 0.2
   dragForce: 0.4
-  springForce: {x: 0, y: -0.0001, z: 0}
+  springForce: {x: 0, y: 0, z: 0}
   colliders:
-  - {fileID: 3737376245068067176}
-  - {fileID: 3737376245068067090}
-  - {fileID: 3737376245068070560}
   - {fileID: 3737376245068067178}
   - {fileID: 3737376245068067116}
   - {fileID: 3737376245068070562}
+  - {fileID: 3737376245068067176}
+  - {fileID: 3737376245068067090}
+  - {fileID: 3737376245068070560}
   debug: 1
   threshold: 0.01
 --- !u!1 &6825431267036288124
