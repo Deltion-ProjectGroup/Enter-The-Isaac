@@ -41,7 +41,10 @@ public class SniperEnemy : BaseEnemy
     IEnumerator AttackCoroutine()
     {
         StopCoroutine("AttackCoroutine");
-        agent.isStopped = true;
+        if (agent.isActiveAndEnabled == true)
+        {
+            agent.isStopped = true;
+        }
         isAttacking = true;
         attackState = 1;
         hurtbox.enabled = false;
