@@ -185,7 +185,7 @@ public class PlayerController : MonoBehaviour
 
     void SwitchGun()
     {
-        if (Input.GetAxis(scrollInput) != 0 && GameObject.FindGameObjectWithTag("LaserHold") == null && IsInvoking("NoSwitchGun") == false && gun.IsInvoking("Reload") == false)
+        if (Input.GetAxis(scrollInput) != 0 && Input.GetAxis(shootInput) == 0 && GameObject.FindGameObjectWithTag("LaserHold") == null && IsInvoking("NoSwitchGun") == false && gun.IsInvoking("Reload") == false)
         {
             Invoke("NoSwitchGun", 0.2f);
             gun.transform.Rotate(-90, 0, 0);

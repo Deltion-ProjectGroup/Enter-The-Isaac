@@ -52,8 +52,9 @@ public class Crosshair : MonoBehaviour
         }
         else
         {
-            transform.position = player.position + -player.forward;
+            transform.position = player.position + (-player.forward * 10);
         }
+        transform.position = new Vector3(transform.position.x, player.position.y, transform.position.z);
     }
 
     void RayHit()
