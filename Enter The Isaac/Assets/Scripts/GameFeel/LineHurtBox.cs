@@ -20,17 +20,32 @@ public class LineHurtBox : MonoBehaviour
     [SerializeField] int particlesToSpawn = 10;
     [SerializeField] GameObject destroyParticles;
     [SerializeField] int _particlesToSpawn = 5;
+    bool alreadyStated = false;
+    [HideInInspector] public bool ghostBullet = false;
+    float width = 0;
 
     void Start()
     {
         StartStuff();
     }
 
-    void StartStuff()
+    public void StartStuff()
     {
-        line = GetComponent<LineRenderer>();
-        UpdateShape();
-        InvokeRepeating("FrameChecker", ((float)activeFrames / (float)damageFrames) / 60, ((float)activeFrames / (float)damageFrames) / 60);
+        if (alreadyStated == false)
+        {
+            alreadyStated = true;
+            line = GetComponent<LineRenderer>();
+            width = line.startWidth;
+            line.startWidth = 0;
+            line.endWidth = 0;
+            Invoke("LateStart",0.01f);
+            UpdateShape();
+            InvokeRepeating("FrameChecker", ((float)activeFrames / (float)damageFrames) / 60, ((float)activeFrames / (float)damageFrames) / 60);
+        }
+    }
+    void LateStart(){
+        line.startWidth = width;
+        line.endWidth = width;
     }
 
     void Update()
@@ -48,11 +63,15 @@ public class LineHurtBox : MonoBehaviour
     {
         //also check for destroy stuff lol
         line.SetPositions(lastPositions.ToArray());
-        LineHurtbox(false);
-        SpawnABunchaParticles();
+        LineHurtbox(true);
+        if (enabled == true)
+        {
+            LineHurtbox(false);
+            SpawnABunchaParticles();
+        }
     }
 
-    void SpawnABunchaParticles()
+    public void SpawnABunchaParticles()
     {// I love the name sorry for not being proffesional lol
         SpawnParticles(_particlesToSpawn, particles);
     }
@@ -82,9 +101,10 @@ public class LineHurtBox : MonoBehaviour
                                     Destroy(transform.root.gameObject);
                                 }
                             }
+                            
                             if (pierce == false)
                             {
-                                UpdateShape();
+                                // UpdateShape();
                                 line.SetPosition(i, transform.InverseTransformPoint(hit[r].point));
                                 for (int i2 = i; i2 < line.positionCount; i2++)
                                 {
@@ -92,11 +112,24 @@ public class LineHurtBox : MonoBehaviour
                                 }
                                 break;
                             }
+                             
                         }
+                    }
+                    else if (ghostBullet == false)
+                    {
+                        line.SetPosition(i, transform.InverseTransformPoint(hit[r].point));
+                        for (int i2 = i; i2 < line.positionCount; i2++)
+                        {
+                            line.SetPosition(i2, line.GetPosition(i));
+                        }
+                        break;
                     }
                 }
             }
         }
+
+        //for stopping the line from going trhough things
+
     }
 
     void CompareShape()
@@ -107,7 +140,7 @@ public class LineHurtBox : MonoBehaviour
         {
             if (posses[i] != lastPositions.ToArray()[i])
             {
-                UpdateShape();
+                //UpdateShape();
                 break;
             }
         }
@@ -138,7 +171,10 @@ public class LineHurtBox : MonoBehaviour
             float percent = (totalLength - (totalLength / amount) * i) / totalLength;
             Vector3 spawnPos = FindPoint(posses, totalLength, percent);
             spawnPos = transform.TransformPoint(spawnPos);
-            Instantiate(toSpawn, spawnPos, transform.rotation);
+            if (toSpawn != null)
+            {
+                Instantiate(toSpawn, spawnPos, transform.rotation);
+            }
         }
     }
 

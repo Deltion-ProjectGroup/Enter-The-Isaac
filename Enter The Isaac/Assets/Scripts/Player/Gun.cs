@@ -342,6 +342,7 @@ public class Gun : MonoBehaviour
         line.team = 0;
         line.destroyOnHit = false;
         line.pierce = gunClone.pierce;
+        line.ghostBullet = gunClone.ghostBullet;
 
         if (gunClone.destroyOnInputUp == true)
         {

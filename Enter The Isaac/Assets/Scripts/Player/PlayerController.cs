@@ -166,9 +166,18 @@ public class PlayerController : MonoBehaviour
             ammoStore[curGun] = gun.curAmmo;
         }
         //reloading
-        if (Input.GetButtonDown(reloadInput))
+        if (Input.GetButtonDown(reloadInput) && gun.IsInvoking("Reload") == false && gun.curAmmo != gun.gunClone.magazineSize)
         {
             gun.GetReloadInput();
+        }
+
+        if (gun.IsInvoking("Shoot") && gun.curAmmo != 0)
+        {
+            anim.SetFloat("isShooting", Mathf.Lerp(anim.GetFloat("isShooting") ,0.5f,Time.deltaTime * 10));
+        }
+        else
+        {
+            anim.SetFloat("isShooting", Mathf.Lerp(anim.GetFloat("isShooting") ,0,Time.deltaTime * 10));
         }
         //switch gun
         SwitchGun();

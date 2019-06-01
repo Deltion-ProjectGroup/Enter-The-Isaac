@@ -16,12 +16,12 @@ public class BaseEnemy : MonoBehaviour
     public State curState;
     [SerializeField] Hitbox hitbox;
     float timer = 0;
-    ShakeCam shakeCam;
+    [HideInInspector] public ShakeCam shakeCam;
     [SerializeField] Vector2 randomSpeedMultiplier = new Vector2(0.9f, 1.5f);
-    SoundSpawn soundSpawner;
+    [HideInInspector] public SoundSpawn soundSpawner;
     [SerializeField] AudioClip getHitSound;
     [SerializeField] AudioClip dieSound;
-    [SerializeField] AudioClip shootSound;
+    public AudioClip shootSound;
     [Header("Spawning")]
     [SerializeField] Renderer[] spawnInvisible;
     [SerializeField] GameObject spawnParticle;
@@ -37,6 +37,7 @@ public class BaseEnemy : MonoBehaviour
     public PathMethod myPathMethod = PathMethod.GoToPlayer;
     [SerializeField] float ignorePlayerDistance = 30;
     [SerializeField] bool alwaysLookAtPlayer = false;
+    [SerializeField] bool lookAtPlayerWhileWalking = true;
     [Header("Attacking")]
     [SerializeField] bool canAttackWhileWalking = true;
     public enum AttackType
@@ -50,24 +51,24 @@ public class BaseEnemy : MonoBehaviour
     }
     [SerializeField] AttackType[] attackType;
     [SerializeField] float repeatRate = 1;
-    NavMeshAgent agent;
-    Transform player;
+    [HideInInspector] public NavMeshAgent agent;
+    [HideInInspector] public Transform player;
     PlayerController playerCon;
     //animation
     Animator anim;
     Vector3 lastPos;
     float walkWaitTime = 1;
     [Header("Shooting")]
-    [SerializeField] Transform gun;
+    public Transform gun;
     Vector3 gunStartPos = Vector3.zero;
-    [SerializeField] float recoil = 1;
+    public float recoil = 1;
     [SerializeField] float recoilBackSpeed = 1;
     [SerializeField] GameObject toShoot;
     [SerializeField] Transform shootPivot;
     [SerializeField] int amountOfBullets = 1;
     [SerializeField] [Range(0, 360)] float angleRadius = 30;
     [SerializeField] float speedMuliplier = 1;
-    [SerializeField] int damage = 1;
+    public int damage = 1;
     [SerializeField] float rotateY = 0;
     [SerializeField] float lifeTime = 1;
     [SerializeField] bool parentToMe = false;
@@ -201,7 +202,7 @@ public class BaseEnemy : MonoBehaviour
     void GoToPlayer()
     {
         agent.SetDestination(player.position);
-        if (agent.isStopped == false)
+        if (agent.isStopped == false && lookAtPlayerWhileWalking == true)
         {
             transform.LookAt(new Vector3(player.position.x, transform.position.y, player.position.z));
         }
@@ -212,7 +213,10 @@ public class BaseEnemy : MonoBehaviour
         Vector3 awayFromPlayerDir = (transform.position - player.position).normalized;
         awayFromPlayerDir.y = 0;
         agent.SetDestination(player.position + (awayFromPlayerDir * distanceFromPlayer));
-        transform.LookAt(new Vector3(player.position.x, transform.position.y, player.position.z));
+        if (lookAtPlayerWhileWalking == true)
+        {
+            transform.LookAt(new Vector3(player.position.x, transform.position.y, player.position.z));
+        }
     }
 
 
