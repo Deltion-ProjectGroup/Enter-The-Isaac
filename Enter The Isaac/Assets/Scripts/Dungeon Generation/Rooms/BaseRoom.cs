@@ -121,5 +121,12 @@ public abstract class BaseRoom : MonoBehaviour
         }
         return false;
     }
+    public void ToggleAllDoors()
+    {
+        foreach (GameObject door in allDoors)
+        {
+            door.GetComponent<DungeonDoor>().ToggleDoor();
+        }
+    }
     public enum RoomTypes { Normal, End, Hallway, Shop, Event, Boss, Treasure, Spawn }
 }

@@ -1,15 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
 
-public class DungeonRoom : BaseRoom
+public class EnemyRoom : BaseRoom
 {
-    bool completed = false;
-    public void Update()
-    {
+    [HideInInspector]public bool completed = false;
+    [HideInInspector]public EnemySpawnManager spawnManager;
 
-    }
     public override void Initialize(DungeonCreator owner, GameObject parentRoom_ = null, DungeonConnectionPoint entrance = null)
     {
         base.Initialize(owner, parentRoom_, entrance);
@@ -28,19 +25,21 @@ public class DungeonRoom : BaseRoom
     {
         if (!completed)
         {
-            foreach(GameObject door in allDoors)
-            {
-                //door.GetComponent<DungeonDoor>().ToggleDoor();
-            }
+            spawnManager.onClearWaves += OnCompleteRoom;
+            spawnManager.ActivateSpawners();
             completed = true;
             print("TOGGLED");
         }
     }
     public void OnTriggerEnter(Collider other)
     {
-        if(other.tag == "Player")
+        if (other.tag == "Player")
         {
             OnEnteredRoom();
         }
+    }
+    public virtual void OnCompleteRoom()
+    {
+        ToggleAllDoors();
     }
 }

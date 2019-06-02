@@ -2,8 +2,14 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class BossRoom : BaseRoom
+public class BossRoom : EnemyRoom
 {
+    public bool hasCutscene;
+    public Sprite bossImage;
+    public string bossName;
+
+    public GameObject roomWarper;
+
     public override void SpawnRoom(DungeonConnectionPoint.ConnectionDirection wantedDir, Transform doorPoint)
     {
         throw new System.NotImplementedException();
@@ -19,5 +25,10 @@ public class BossRoom : BaseRoom
         base.OnDestroyed();
         creator.bossCount--;
         creator.roomCount--;
+    }
+    public override void OnCompleteRoom()
+    {
+        base.OnCompleteRoom();
+        roomWarper.SetActive(true);
     }
 }
