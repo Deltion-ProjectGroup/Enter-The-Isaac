@@ -7,23 +7,22 @@ public class TreasurePedestal : Spawner
     // Start is called before the first frame update
     void Start()
     {
-        SpawnObject(GetItemFromPool());
+        SpawnObject(GetRandomItem());
     }
-    public GameObject GetItemFromPool()
+    public GameObject GetRandomItem()
     {
         InGameManager inGameManager = GameObject.FindGameObjectWithTag("Manager").GetComponent<InGameManager>();
-        int randomNum = Random.Range(1, inGameManager.maxPercentage + 1);
-        foreach(InGameManager.ItemPoolData data in inGameManager.itemPool)
+        InGameManager.ItemPoolHolder itemPoolHolder = null;
+        switch(Random.Range(0, 2))
         {
-            if (randomNum >= data.percentageBorders.x && randomNum <= data.percentageBorders.y)
-            {
-                if(data.items.Length > 0)
-                {
-                    return (data.items[Random.Range(0, data.items.Length)]);
-                }
+            case 0:
+                itemPoolHolder = inGameManager.itemPool;
                 break;
-            }
+
+            case 1:
+                itemPoolHolder = inGameManager.weaponPool;
+                break;
         }
-        return null;
+        return itemPoolHolder.GetItemFromPool();
     }
 }

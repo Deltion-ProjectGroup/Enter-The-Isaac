@@ -6,7 +6,9 @@ using UnityEngine.SceneManagement;
 public class InGameManager : MonoBehaviour
 {
     [Header("ItemPoolData")]
-    public ItemPoolData[] itemPool;
+    public ItemPoolHolder weaponPool;
+    public ItemPoolHolder itemPool;
+    public ItemPoolHolder consumablePool;
     [HideInInspector]
     public int maxPercentage;
 
@@ -21,13 +23,9 @@ public class InGameManager : MonoBehaviour
         floor++;
         dungeonCreator.onGenerationComplete = SpawnPlayer;
         dungeonCreator.GenerateDungeon();
-        for(int i = 0; i < itemPool.Length; i++)
-        {
-            ItemPoolData data = itemPool[i];
-            data.percentageBorders.x = maxPercentage + 1;
-            maxPercentage += data.chance;
-            data.percentageBorders.y = maxPercentage;
-        }
+        weaponPool.Initialize();
+        itemPool.Initialize();
+        consumablePool.Initialize();
     }
 
     public void SpawnPlayer()
@@ -48,5 +46,38 @@ public class InGameManager : MonoBehaviour
         public int chance;
         public Vector2 percentageBorders;
         public GameObject[] items;
+    }
+    [System.Serializable]
+    public class ItemPoolHolder
+    {
+        public ItemPoolData[] itemPoolData;
+        public int maxPercentage;
+
+        public void Initialize()
+        {
+            for (int i = 0; i < itemPoolData.Length; i++)
+            {
+                ItemPoolData data = itemPoolData[i];
+                data.percentageBorders.x = maxPercentage + 1;
+                maxPercentage += data.chance;
+                data.percentageBorders.y = maxPercentage;
+            }
+        }
+        public GameObject GetItemFromPool()
+        {
+            int randomNum = Random.Range(1, maxPercentage + 1);
+            foreach (ItemPoolData data in itemPoolData)
+            {
+                if (randomNum >= data.percentageBorders.x && randomNum <= data.percentageBorders.y)
+                {
+                    if (data.items.Length > 0)
+                    {
+                        return (data.items[Random.Range(0, data.items.Length)]);
+                    }
+                    break;
+                }
+            }
+            return null;
+        }
     }
 }

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Consumable : Interactable
+public class Consumable : Item
 {
     public string playerTag;
     public override void OnInteract(GameObject player)

@@ -5,6 +5,16 @@ using UnityEngine;
 public class ShopItem : Interactable
 {
     public int cost;
+
+    public void Initialize(int cost_)
+    {
+        cost = cost_;
+        foreach(Interactable interactable in GetComponents<Interactable>())
+        {
+            interactable.canInteract = false;
+        }
+        canInteract = true;
+    }
     public override void OnInteract(GameObject player)
     {
         player.GetComponent<PlayerController>().money -= cost;

@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class DungeonCreator : MonoBehaviour
 {
@@ -56,6 +57,14 @@ public class DungeonCreator : MonoBehaviour
     public delegate void DelegateVoid();
     public DelegateVoid onGenerationComplete;
 
+
+    public void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.I))
+        {
+            SceneManager.LoadScene("MainGameScene");
+        }
+    }
     // Generates the dungeon
     public void GenerateDungeon() 
     {

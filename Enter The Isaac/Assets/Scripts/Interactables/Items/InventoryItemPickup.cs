@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public abstract class InventoryItemPickup : Interactable
+public abstract class InventoryItemPickup : Item
 {
     public PickupSO pickUpData;
     public override void OnInteract(GameObject player)

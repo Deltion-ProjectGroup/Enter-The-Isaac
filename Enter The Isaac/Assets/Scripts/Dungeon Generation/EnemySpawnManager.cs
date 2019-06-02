@@ -8,7 +8,7 @@ public class EnemySpawnManager : MonoBehaviour
     int currentWave;
     public PossibleWave[] waveSpawnPossibilities;
     public delegate void VoidDelegate();
-    public VoidDelegate onClearRoom;
+    public VoidDelegate onClearWaves;
     List<GameObject> aliveEnemies = new List<GameObject>();
     int openSpawnProcesses;
     [SerializeField] bool checkEnemiesInUpdate = false;
@@ -54,9 +54,9 @@ public class EnemySpawnManager : MonoBehaviour
     {
         if (currentWave >= waveSpawnPossibilities[selectedPossibility].waves.Length) //If done spawning waves
         {
-            if (onClearRoom != null)
+            if (onClearWaves != null)
             {
-                onClearRoom();
+                onClearWaves();
             }
             //print("COMPLETED ROOM");
         }

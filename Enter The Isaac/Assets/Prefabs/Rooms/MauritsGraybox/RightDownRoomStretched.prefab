@@ -13,7 +13,6 @@ GameObject:
   - component: {fileID: 7679776745321651202}
   - component: {fileID: 4007813121599246917}
   - component: {fileID: 2650616991939950977}
-  - component: {fileID: 81104992072276697}
   m_Layer: 4
   m_Name: RightDownRoomStretched
   m_TagString: Untagged
@@ -98,13 +97,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   roomDistanceFromStart: 0
   parentRoom: {fileID: 0}
-  replaced: 0
-  previousReplaced: 0
+  replacedTimes: 0
   creator: {fileID: 0}
-  availableDoors:
-  - {fileID: 5440405747986002963}
-  - {fileID: 3378750910493419207}
-  entranceDoor: {fileID: 0}
+  availableConnectionPoints: []
+  allDoors: []
+  entrancePoint: {fileID: 0}
   type: 0
 --- !u!65 &2650616991939950977
 BoxCollider:
@@ -119,22 +116,6 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 9.97, y: 0.02, z: 9.97}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!54 &81104992072276697
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 148027031407266773}
-  serializedVersion: 2
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_UseGravity: 0
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 126
-  m_CollisionDetection: 0
 --- !u!1 &3378750910493419207
 GameObject:
   m_ObjectHideFlags: 0
@@ -226,8 +207,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ownerRoom: {fileID: 4007813121599246917}
-  parentDoor: {fileID: 0}
-  connectionPoint: {fileID: 6576618013286406495}
+  pointConnectedTo: {fileID: 0}
+  objectToReplace: {fileID: 0}
   direction: 2
   id: 1
 --- !u!1 &3707466867033566362
@@ -321,8 +302,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ownerRoom: {fileID: 4007813121599246917}
-  parentDoor: {fileID: 0}
-  connectionPoint: {fileID: 0}
+  pointConnectedTo: {fileID: 0}
+  objectToReplace: {fileID: 0}
   direction: 3
   id: 3
 --- !u!1 &5440405747986002963
@@ -416,8 +397,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ownerRoom: {fileID: 4007813121599246917}
-  parentDoor: {fileID: 0}
-  connectionPoint: {fileID: 6709158759535120048}
+  pointConnectedTo: {fileID: 0}
+  objectToReplace: {fileID: 0}
   direction: 1
   id: 0
 --- !u!1 &8623271203148577698
@@ -511,7 +492,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ownerRoom: {fileID: 4007813121599246917}
-  parentDoor: {fileID: 0}
-  connectionPoint: {fileID: 0}
+  pointConnectedTo: {fileID: 0}
+  objectToReplace: {fileID: 0}
   direction: 0
   id: 2

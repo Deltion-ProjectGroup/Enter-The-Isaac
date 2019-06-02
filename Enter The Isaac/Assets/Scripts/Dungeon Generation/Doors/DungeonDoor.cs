@@ -4,15 +4,16 @@ using UnityEngine;
 
 public class DungeonDoor : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    public Animator doorAnimator;
+    public bool open;
 
-    // Update is called once per frame
-    void Update()
+    public void Start()
     {
-        
+
+    }
+    public virtual void ToggleDoor()
+    {
+        open = !open;
+        doorAnimator.SetBool("Open", open);
     }
 }
