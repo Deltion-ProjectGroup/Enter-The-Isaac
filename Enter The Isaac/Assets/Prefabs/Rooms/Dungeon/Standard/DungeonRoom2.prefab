@@ -317,8 +317,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 93443368045089328}
-  - component: {fileID: 6065801961905148500}
   - component: {fileID: 8741708739484129097}
+  - component: {fileID: 3774548039927384123}
   m_Layer: 4
   m_Name: DungeonRoom2
   m_TagString: Untagged
@@ -348,7 +348,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6065801961905148500
+--- !u!65 &8741708739484129097
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 93443368045089329}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 17.86982, y: 3.786255, z: 17.836914}
+  m_Center: {x: -1.4457626, y: 1.3931274, z: -1.5061493}
+--- !u!114 &3774548039927384123
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -357,7 +370,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 93443368045089329}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6844f2bd25e2d1f448ea4b9821b44e87, type: 3}
+  m_Script: {fileID: 11500000, guid: 6eb4771674e8a4a47b31a96a5fd1d3d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   roomDistanceFromStart: 0
@@ -372,24 +385,8 @@ MonoBehaviour:
   - {fileID: 8104499622523545123}
   entrancePoint: {fileID: 0}
   type: 0
-  selectedPossibility: 0
-  currentWave: 0
-  waveSpawnPossibilities: []
-  aliveEnemies: []
-  openSpawnProcesses: 0
---- !u!65 &8741708739484129097
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 93443368045089329}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 17.86982, y: 3.786255, z: 17.836914}
-  m_Center: {x: -1.4457626, y: 1.3931274, z: -1.5061493}
+  completed: 0
+  spawnManager: {fileID: 0}
 --- !u!1 &93443368567783665
 GameObject:
   m_ObjectHideFlags: 0
@@ -4473,7 +4470,7 @@ PrefabInstance:
         type: 3}
       propertyPath: ownerRoom
       value: 
-      objectReference: {fileID: 6065801961905148500}
+      objectReference: {fileID: 3774548039927384123}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3fe5bb9f2e7107f4d8c126bea3e9c4e8, type: 3}
 --- !u!4 &9089958007367293609 stripped
@@ -4571,7 +4568,7 @@ PrefabInstance:
         type: 3}
       propertyPath: ownerRoom
       value: 
-      objectReference: {fileID: 6065801961905148500}
+      objectReference: {fileID: 3774548039927384123}
     - target: {fileID: 3852426230661514033, guid: 3fe5bb9f2e7107f4d8c126bea3e9c4e8,
         type: 3}
       propertyPath: direction

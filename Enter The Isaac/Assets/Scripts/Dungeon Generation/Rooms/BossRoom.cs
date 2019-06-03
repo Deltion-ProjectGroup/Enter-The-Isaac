@@ -7,9 +7,18 @@ public class BossRoom : EnemyRoom
     public bool hasCutscene;
     public Sprite bossImage;
     public string bossName;
+    public GameObject button;
 
     public GameObject roomWarper;
 
+    public override void TriggerRoom()
+    {
+        if (button)
+        {
+            button.SetActive(false);
+        }
+        base.TriggerRoom();
+    }
     public override void SpawnRoom(DungeonConnectionPoint.ConnectionDirection wantedDir, Transform doorPoint)
     {
         throw new System.NotImplementedException();
@@ -19,6 +28,7 @@ public class BossRoom : EnemyRoom
         base.Initialize(owner, parentRoom_, entrance);
         creator.bossCount++;
         creator.roomCount++;
+        roomWarper.GetComponent<Teleporter>().levelToLoad = GameObject.FindGameObjectWithTag("Manager").GetComponent<InGameManager>().nextLevel;
     }
     public override void OnDestroyed()
     {

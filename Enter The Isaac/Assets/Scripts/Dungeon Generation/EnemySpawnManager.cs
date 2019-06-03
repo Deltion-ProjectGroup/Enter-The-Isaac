@@ -9,7 +9,7 @@ public class EnemySpawnManager : MonoBehaviour
     public PossibleWave[] waveSpawnPossibilities;
     public delegate void VoidDelegate();
     public VoidDelegate onClearWaves;
-    List<GameObject> aliveEnemies = new List<GameObject>();
+    [SerializeField] List<GameObject> aliveEnemies = new List<GameObject>();
     int openSpawnProcesses;
     [SerializeField] bool checkEnemiesInUpdate = false;
 
@@ -37,14 +37,6 @@ public class EnemySpawnManager : MonoBehaviour
     }
     public void CheckEnemies()
     {
-        //print("CHECKED");
-        for (int i = aliveEnemies.Count - 1; i >= 0; i--)
-        {
-            if (!aliveEnemies[i])
-            {
-                aliveEnemies.RemoveAt(i);
-            }
-        }
         if (aliveEnemies.Count <= 0)
         {
             SpawnWave();
@@ -58,7 +50,7 @@ public class EnemySpawnManager : MonoBehaviour
             {
                 onClearWaves();
             }
-            //print("COMPLETED ROOM");
+            print("COMPLETED ROOM");
         }
         else
         {
@@ -84,6 +76,7 @@ public class EnemySpawnManager : MonoBehaviour
     }
     public void RemoveEnemy(GameObject enemy)
     {
+        print("REMOVED");
         aliveEnemies.Remove(enemy);
         if (openSpawnProcesses == 0)
         {

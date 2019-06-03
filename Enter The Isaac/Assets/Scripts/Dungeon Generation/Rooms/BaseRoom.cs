@@ -111,6 +111,14 @@ public abstract class BaseRoom : MonoBehaviour
                 Collider[] hits = Physics.OverlapBox(transform.position + GetComponent<BoxCollider>().center, colliderHalfExtends, transform.rotation, creator.roomLayer);
                 if (hits.Length >= 2)
                 {
+                    if(type == RoomTypes.Boss)
+                    {
+                        foreach (Collider hit in hits)
+                        {
+                            print(hit.gameObject);
+                        }
+                        throw new System.Exception("k");
+                    }
                     return true;
                 }
                 else

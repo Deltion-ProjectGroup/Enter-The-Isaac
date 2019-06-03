@@ -4,8 +4,8 @@ using UnityEngine;
 
 public class EnemyRoom : BaseRoom
 {
-    [HideInInspector]public bool completed = false;
-    [HideInInspector]public EnemySpawnManager spawnManager;
+    public bool activateOnEnter = true;
+    public EnemySpawnManager spawnManager;
 
     public override void Initialize(DungeonCreator owner, GameObject parentRoom_ = null, DungeonConnectionPoint entrance = null)
     {
@@ -21,25 +21,27 @@ public class EnemyRoom : BaseRoom
         base.OnDestroyed();
         creator.roomCount--;
     }
-    public void OnEnteredRoom()
+    public virtual void TriggerRoom()
     {
-        if (!completed)
-        {
-            spawnManager.onClearWaves += OnCompleteRoom;
-            spawnManager.ActivateSpawners();
-            completed = true;
-            print("TOGGLED");
-        }
+        ToggleAllDoors();
+        spawnManager.onClearWaves += OnCompleteRoom;
+        spawnManager.ActivateSpawners();
+        activateOnEnter = false;
+        print("TOGGLED");
     }
     public void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
         {
-            OnEnteredRoom();
+            if(activateOnEnter && spawnManager)
+            {
+                TriggerRoom();
+            }
         }
     }
     public virtual void OnCompleteRoom()
     {
+        print("COMPL");
         ToggleAllDoors();
     }
 }

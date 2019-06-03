@@ -322,8 +322,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3148158530272993577}
-  - component: {fileID: 6885853992083737571}
   - component: {fileID: 2330375124642415832}
+  - component: {fileID: 6683545719745299726}
   m_Layer: 4
   m_Name: DungeonRoom5
   m_TagString: Untagged
@@ -352,35 +352,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6885853992083737571
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3148158530272993578}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6844f2bd25e2d1f448ea4b9821b44e87, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  roomDistanceFromStart: 0
-  parentRoom: {fileID: 0}
-  replacedTimes: 0
-  creator: {fileID: 0}
-  availableConnectionPoints:
-  - {fileID: 1951962928590273656}
-  - {fileID: 8683508122930048754}
-  allDoors:
-  - {fileID: 2816832860116412039}
-  - {fileID: 4936967597839004685}
-  entrancePoint: {fileID: 0}
-  type: 0
-  selectedPossibility: 0
-  currentWave: 0
-  waveSpawnPossibilities: []
-  aliveEnemies: []
-  openSpawnProcesses: 0
 --- !u!65 &2330375124642415832
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -394,6 +365,32 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 14.977684, y: 3.6540527, z: 5.9016724}
   m_Center: {x: 0.42934418, y: 1.3270264, z: 0.09832764}
+--- !u!114 &6683545719745299726
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3148158530272993578}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6eb4771674e8a4a47b31a96a5fd1d3d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  roomDistanceFromStart: 0
+  parentRoom: {fileID: 0}
+  replacedTimes: 0
+  creator: {fileID: 0}
+  availableConnectionPoints:
+  - {fileID: 1951962928590273656}
+  - {fileID: 8683508122930048754}
+  allDoors:
+  - {fileID: 2816832860116412039}
+  - {fileID: 7711003425128623258}
+  entrancePoint: {fileID: 0}
+  type: 0
+  completed: 0
+  spawnManager: {fileID: 0}
 --- !u!1001 &748296177468609300
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1815,7 +1812,7 @@ PrefabInstance:
         type: 3}
       propertyPath: ownerRoom
       value: 
-      objectReference: {fileID: 6885853992083737571}
+      objectReference: {fileID: 6683545719745299726}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3fe5bb9f2e7107f4d8c126bea3e9c4e8, type: 3}
 --- !u!4 &618747500596519472 stripped
@@ -1988,7 +1985,7 @@ PrefabInstance:
         type: 3}
       propertyPath: ownerRoom
       value: 
-      objectReference: {fileID: 6885853992083737571}
+      objectReference: {fileID: 6683545719745299726}
     - target: {fileID: 3852426230661514033, guid: 3fe5bb9f2e7107f4d8c126bea3e9c4e8,
         type: 3}
       propertyPath: direction
@@ -2001,9 +1998,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3fe5bb9f2e7107f4d8c126bea3e9c4e8, type: 3}
---- !u!1 &4936967597839004685 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 682071318157482446, guid: 3fe5bb9f2e7107f4d8c126bea3e9c4e8,
+--- !u!4 &7711003425128526010 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2807547266772491641, guid: 3fe5bb9f2e7107f4d8c126bea3e9c4e8,
     type: 3}
   m_PrefabInstance: {fileID: 5617279147627572675}
   m_PrefabAsset: {fileID: 0}
@@ -2019,9 +2016,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6780ef114d5f1442a9f24badc9624e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &7711003425128526010 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2807547266772491641, guid: 3fe5bb9f2e7107f4d8c126bea3e9c4e8,
+--- !u!1 &7711003425128623258 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2807547266771992921, guid: 3fe5bb9f2e7107f4d8c126bea3e9c4e8,
     type: 3}
   m_PrefabInstance: {fileID: 5617279147627572675}
   m_PrefabAsset: {fileID: 0}

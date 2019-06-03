@@ -1515,8 +1515,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2001281466216723894}
-  - component: {fileID: 6439544981000044018}
   - component: {fileID: 8331913998344871720}
+  - component: {fileID: 4825903950308912291}
   m_Layer: 4
   m_Name: NewUpDownRoom
   m_TagString: Untagged
@@ -1591,7 +1591,20 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6439544981000044018
+--- !u!65 &8331913998344871720
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4274315044872857030}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 8.8, y: 3.2, z: 8.7}
+  m_Center: {x: 2.1171448, y: 1.28, z: 0.12946606}
+--- !u!114 &4825903950308912291
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -1600,7 +1613,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 4274315044872857030}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6844f2bd25e2d1f448ea4b9821b44e87, type: 3}
+  m_Script: {fileID: 11500000, guid: 6eb4771674e8a4a47b31a96a5fd1d3d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   roomDistanceFromStart: 0
@@ -1615,19 +1628,8 @@ MonoBehaviour:
   - {fileID: 3826203210290666539}
   entrancePoint: {fileID: 0}
   type: 0
---- !u!65 &8331913998344871720
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4274315044872857030}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 8.8, y: 3.2, z: 8.7}
-  m_Center: {x: 2.1171448, y: 1.28, z: 0.12946606}
+  completed: 0
+  spawnManager: {fileID: 0}
 --- !u!1 &4496137229531681684
 GameObject:
   m_ObjectHideFlags: 0
@@ -4573,7 +4575,7 @@ PrefabInstance:
         type: 3}
       propertyPath: ownerRoom
       value: 
-      objectReference: {fileID: 6439544981000044018}
+      objectReference: {fileID: 4825903950308912291}
     - target: {fileID: 3852426230661514033, guid: 3fe5bb9f2e7107f4d8c126bea3e9c4e8,
         type: 3}
       propertyPath: direction
@@ -4681,7 +4683,7 @@ PrefabInstance:
         type: 3}
       propertyPath: ownerRoom
       value: 
-      objectReference: {fileID: 6439544981000044018}
+      objectReference: {fileID: 4825903950308912291}
     - target: {fileID: 3852426230661514033, guid: 3fe5bb9f2e7107f4d8c126bea3e9c4e8,
         type: 3}
       propertyPath: direction

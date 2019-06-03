@@ -4280,8 +4280,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8503532569153686502}
-  - component: {fileID: 7304215604552853895}
   - component: {fileID: 7021438972161071791}
+  - component: {fileID: 465708278353114445}
   m_Layer: 4
   m_Name: NewDownEndRoom
   m_TagString: Untagged
@@ -4356,28 +4356,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7304215604552853895
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8503532569153686501}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 6844f2bd25e2d1f448ea4b9821b44e87, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  roomDistanceFromStart: 0
-  parentRoom: {fileID: 0}
-  replacedTimes: 0
-  creator: {fileID: 0}
-  availableConnectionPoints:
-  - {fileID: 2123243543235483959}
-  allDoors:
-  - {fileID: 2411365056249398216}
-  entrancePoint: {fileID: 0}
-  type: 1
 --- !u!65 &7021438972161071791
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -4391,6 +4369,30 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 8.8, y: 3.2, z: 8.7}
   m_Center: {x: 2.1171448, y: 1.28, z: 0.12946606}
+--- !u!114 &465708278353114445
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8503532569153686501}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6eb4771674e8a4a47b31a96a5fd1d3d2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  roomDistanceFromStart: 0
+  parentRoom: {fileID: 0}
+  replacedTimes: 0
+  creator: {fileID: 0}
+  availableConnectionPoints:
+  - {fileID: 2123243543235483959}
+  allDoors:
+  - {fileID: 2411365056249398216}
+  entrancePoint: {fileID: 0}
+  type: 0
+  completed: 0
+  spawnManager: {fileID: 0}
 --- !u!1 &8503532569287340377
 GameObject:
   m_ObjectHideFlags: 0
@@ -4648,7 +4650,7 @@ PrefabInstance:
         type: 3}
       propertyPath: ownerRoom
       value: 
-      objectReference: {fileID: 7304215604552853895}
+      objectReference: {fileID: 465708278353114445}
     - target: {fileID: 3852426230661514033, guid: 3fe5bb9f2e7107f4d8c126bea3e9c4e8,
         type: 3}
       propertyPath: direction

@@ -1,10 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class CollisionEffect : MonoBehaviour
 {
     public LayerMask possibleTargets;
+    public UnityEvent nonEffectActivations;
     public void OnTriggerEnter(Collider other)
     {
         //print("I HIT SUMTHING");
@@ -17,5 +19,6 @@ public class CollisionEffect : MonoBehaviour
                 effect.ApplyEffect(other.gameObject);
             }
         }
+        nonEffectActivations.Invoke();
     }
 }
