@@ -135,7 +135,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   curState: 2
   hitbox: {fileID: 5147418958244692102}
+  shakeCam: {fileID: 0}
   randomSpeedMultiplier: {x: 0.9, y: 1.5}
+  soundSpawner: {fileID: 0}
   getHitSound: {fileID: 8300000, guid: 254274e694506e04ebb545065b69d615, type: 3}
   dieSound: {fileID: 8300000, guid: f66954e10e841fb418bd3efa4e87c585, type: 3}
   shootSound: {fileID: 8300000, guid: b0e82b74a8aa6104983044253e8d32c6, type: 3}
@@ -150,10 +152,14 @@ MonoBehaviour:
   myPathMethod: 1
   ignorePlayerDistance: 20
   alwaysLookAtPlayer: 1
+  lookAtPlayerWhileWalking: 1
   canAttackWhileWalking: 1
   attackType: 01000000
   repeatRate: 2
-  gun: {fileID: 5340255346356903295}
+  agent: {fileID: 0}
+  player: {fileID: 0}
+  gun:
+  - {fileID: 5340255346356903295}
   recoil: 0.3
   recoilBackSpeed: 1.5
   toShoot: {fileID: 5489075468618320679, guid: 340c32dd2b0d26c438cb4d1db8f85d6c, type: 3}

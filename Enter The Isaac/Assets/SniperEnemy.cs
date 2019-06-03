@@ -67,7 +67,7 @@ public class SniperEnemy : BaseEnemy
         hurtbox.enabled = true;
         soundSpawner.SpawnEffect(shootSound, 2, 1, 1, transform);
         shakeCam.MediumShake();
-        gun.position -= gun.right * recoil;
+        gun[0].position -= gun[0].right * recoil; // he only has 1 gun anyways, I made this game in an extremely short time, so give me a break.
         yield return new WaitForSeconds(activeTime);
         attackState = 0;
         hurtbox.enabled = false;

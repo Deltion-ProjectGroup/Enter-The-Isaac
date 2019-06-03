@@ -47,6 +47,10 @@ public class IKHoldGun : MonoBehaviour
     }
     void OnAnimatorIK()
     {
+        if (anim == null)
+        {
+            anim = GetComponent<Animator>();
+        }
         if (leftHandPos != null)
         {
             anim.SetIKPosition(AvatarIKGoal.LeftHand, leftHandPos.position);

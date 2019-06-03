@@ -221,7 +221,8 @@ MonoBehaviour:
   repeatRate: 2
   agent: {fileID: 0}
   player: {fileID: 0}
-  gun: {fileID: 8386506905346763751}
+  gun:
+  - {fileID: 8386506905346763751}
   recoil: 0.3
   recoilBackSpeed: 1.5
   toShoot: {fileID: 5489075468618320679, guid: 340c32dd2b0d26c438cb4d1db8f85d6c, type: 3}
@@ -304,6 +305,41 @@ Transform:
   m_Father: {fileID: 8386506905346763751}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &6717738989808451190
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6717738989041753740}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 12c14e5be38ba7f43a2ff6742bb57cd8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 6717738988394405501}
+  offset: {x: 0, y: 0, z: 0}
+  withIK: 1
+  lookAtPlayer: 0
+--- !u!114 &6717738989808451191
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6717738989041753740}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a099d51a3de0514ba9ed3aa286c7d3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  leftHandPos: {fileID: 5913101404094671824}
+  rightHandPos: {fileID: 3239772735960067703}
+  leftHandName: 
+  rightHandName: 
+  bellyName: 
+  rotateBelly: -42.9
+  findHandsByName: 0
 --- !u!1 &6717738989440187414
 GameObject:
   m_ObjectHideFlags: 0
@@ -460,41 +496,6 @@ MonoBehaviour:
     type: 3}
   _particlesToSpawn: 5
   ghostBullet: 0
---- !u!114 &6717738989808451191
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6717738989041753740}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8a099d51a3de0514ba9ed3aa286c7d3b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  leftHandPos: {fileID: 5913101404094671824}
-  rightHandPos: {fileID: 3239772735960067703}
-  leftHandName: 
-  rightHandName: 
-  bellyName: 
-  rotateBelly: -42.9
-  findHandsByName: 0
---- !u!114 &6717738989808451190
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6717738989041753740}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 12c14e5be38ba7f43a2ff6742bb57cd8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 6717738988394405501}
-  offset: {x: 0, y: 0, z: 0}
-  withIK: 1
-  lookAtPlayer: 0
 --- !u!1001 &6717738989041850462
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -559,10 +560,6 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 9100000, guid: fd6fdec9874a90d489df215e84d8e839, type: 2}
     - target: {fileID: 9500000, guid: dbf4ecf484d9a05499db528988d2e2eb, type: 3}
-      propertyPath: m_CullingMode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 9500000, guid: dbf4ecf484d9a05499db528988d2e2eb, type: 3}
       propertyPath: m_ApplyRootMotion
       value: 0
       objectReference: {fileID: 0}
@@ -597,21 +594,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: ShotGunPrefab
-      objectReference: {fileID: 0}
-    - target: {fileID: 1095987011132901224, guid: ca2a020c38666db42a4cfd9f4f71d0c9,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -0.135
-      objectReference: {fileID: 0}
-    - target: {fileID: 1095987011132901224, guid: ca2a020c38666db42a4cfd9f4f71d0c9,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.001
-      objectReference: {fileID: 0}
-    - target: {fileID: 1095987011132901224, guid: ca2a020c38666db42a4cfd9f4f71d0c9,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0.289
       objectReference: {fileID: 0}
     - target: {fileID: 2979394607292614495, guid: ca2a020c38666db42a4cfd9f4f71d0c9,
         type: 3}
@@ -667,6 +649,21 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1095987011132901224, guid: ca2a020c38666db42a4cfd9f4f71d0c9,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -0.135
+      objectReference: {fileID: 0}
+    - target: {fileID: 1095987011132901224, guid: ca2a020c38666db42a4cfd9f4f71d0c9,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.001
+      objectReference: {fileID: 0}
+    - target: {fileID: 1095987011132901224, guid: ca2a020c38666db42a4cfd9f4f71d0c9,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.289
       objectReference: {fileID: 0}
     - target: {fileID: 8200993519465972431, guid: ca2a020c38666db42a4cfd9f4f71d0c9,
         type: 3}

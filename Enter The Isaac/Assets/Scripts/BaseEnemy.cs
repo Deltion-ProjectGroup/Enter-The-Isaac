@@ -49,18 +49,18 @@ public class BaseEnemy : MonoBehaviour
         OnDeath,
         Overridable
     }
-    [SerializeField] AttackType[] attackType;
+    public AttackType[] attackType;
     [SerializeField] float repeatRate = 1;
     [HideInInspector] public NavMeshAgent agent;
     [HideInInspector] public Transform player;
     PlayerController playerCon;
     //animation
-    Animator anim;
+    [HideInInspector] public Animator anim;
     Vector3 lastPos;
     float walkWaitTime = 1;
     [Header("Shooting")]
-    public Transform gun;
-    Vector3 gunStartPos = Vector3.zero;
+    public Transform[] gun;
+    Vector3[] gunStartPos;
     public float recoil = 1;
     [SerializeField] float recoilBackSpeed = 1;
     [SerializeField] GameObject toShoot;
@@ -91,7 +91,11 @@ public class BaseEnemy : MonoBehaviour
         {
             Spawn();
         }
-        gunStartPos = gun.localPosition;
+        gunStartPos = new Vector3[gun.Length];
+        for (int i = 0; i < gun.Length; i++)
+        {
+            gunStartPos[i] = gun[i].localPosition;
+        }
     }
 
     void Spawn()
@@ -138,7 +142,10 @@ public class BaseEnemy : MonoBehaviour
                 transform.LookAt(new Vector3(player.position.x, transform.position.y, player.position.z));
             }
         }
-        gun.localPosition = Vector3.MoveTowards(gun.localPosition, gunStartPos, Time.deltaTime * recoilBackSpeed);
+        for (int i = 0; i < gun.Length; i++)
+        {
+            gun[i].localPosition = Vector3.MoveTowards(gun[i].localPosition, gunStartPos[i], Time.deltaTime * recoilBackSpeed);
+        }
     }
 
     void SetWalkAnim()
@@ -251,11 +258,13 @@ public class BaseEnemy : MonoBehaviour
         }
     }
 
+    int curGun = 0;
     public virtual void Attack()
     {
         soundSpawner.SpawnEffect(shootSound);
         shakeCam.SmallShake();
-        gun.position -= gun.right * recoil;
+        gun[curGun].position -= gun[curGun].right * recoil;
+        curGun = (int)Mathf.Repeat(curGun + 1, gun.Length);
         float curAngle = -angleRadius / 2;
         for (int i = 0; i < amountOfBullets; i++)
         {
@@ -273,23 +282,34 @@ public class BaseEnemy : MonoBehaviour
     }
 
     Vector3 lastGunScale = Vector3.zero;
-    public void GetHit()
+    bool hadIK = true;
+    public virtual void GetHit()
     {
+        hadIK = anim.GetComponent<IKHoldGun>().enabled;
         anim.Play("Flinch", 0);
         soundSpawner.SpawnEffect(getHitSound);
         anim.GetComponent<IKHoldGun>().enabled = false;
         if (lastGunScale == Vector3.zero)
         {
-            lastGunScale = gun.localScale;
+            lastGunScale = gun[0].localScale;
         }
-        gun.localScale = Vector3.zero;
+        for (int i = 0; i < gun.Length; i++)
+        {
+            gun[i].localScale = Vector3.zero;
+        }
         Invoke("StopGetHit", 0.2f);
     }
 
     void StopGetHit()
     {
-        anim.GetComponent<IKHoldGun>().enabled = true;
-        gun.localScale = lastGunScale;
+        if (anim.GetComponent<IKHoldGun>().enabled == false)
+        {
+            anim.GetComponent<IKHoldGun>().enabled = hadIK;
+        }
+        for (int i = 0; i < gun.Length; i++)
+        {
+            gun[i].localScale = lastGunScale;
+        }
     }
 
     void CheckAttack()
