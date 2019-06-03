@@ -18,7 +18,7 @@ public class InGameManager : MonoBehaviour
     public GameObject playerPrefab;
     public int nextLevel, hubIndex;
     // Start is called before the first frame update
-    void Awake()
+    void Start()
     {
         floor++;
         dungeonCreator.onGenerationComplete = SpawnPlayer;
@@ -32,7 +32,7 @@ public class InGameManager : MonoBehaviour
     {
         localPlayer = Instantiate(playerPrefab, dungeonCreator.startRoom.GetComponent<StartRoom>().spawnPoint.position, dungeonCreator.startRoom.GetComponent<StartRoom>().spawnPoint.rotation);
         GameObject actualPlayer = GameObject.FindGameObjectWithTag("Player");
-        GameObject.FindGameObjectWithTag("Database").GetComponent<SaveDatabase>().LoadPlayerData(actualPlayer.GetComponent<PlayerController>(), actualPlayer.GetComponent<Inventory>(), actualPlayer.GetComponent<Hitbox>());
+        GameObject.FindGameObjectWithTag("Database").GetComponent<SaveDatabase>().LoadPlayerData(actualPlayer.GetComponent<PlayerController>(), actualPlayer.GetComponent<Inventory>(), actualPlayer.GetComponentInChildren<Hitbox>());
     }
     public void ResetGame()
     {

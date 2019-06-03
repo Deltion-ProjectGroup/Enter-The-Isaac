@@ -19,7 +19,7 @@ public class SetOptionSettings : MonoBehaviour
 
     public void Awake()
     {
-        if(File.Exists(Application.persistentDataPath + "/SaveData/LevelData"))
+        if(File.Exists(Application.dataPath + "/LevelData"))
         {
             continueButton.SetActive(true);
         }

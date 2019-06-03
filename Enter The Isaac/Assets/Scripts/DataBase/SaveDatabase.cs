@@ -32,9 +32,7 @@ public class SaveDatabase : MonoBehaviour
         dataHolder.playerWeapons = new List<WeaponData>();
         for(int i = 0; i < player.guns.Count; i++)
         {
-            Debug.Log(player.ammoStore[i]);
-            Debug.Log(player.guns[i].name);
-            dataHolder.playerWeapons.Add(new WeaponData(player.guns[i].GetInstanceID(), player.ammoStore[i]));
+            dataHolder.playerWeapons.Add(new WeaponData(player.guns[i].GetInstanceID(), player.magazineStore[i], player.ammoStore[i]));
         }
 
         dataHolder.keys = player.keys;
@@ -43,23 +41,23 @@ public class SaveDatabase : MonoBehaviour
         dataHolder.fakeHealth = playerHitbox.fakeHealth;
 
         XmlSerializer playerSerializer = new XmlSerializer(typeof(PlayerSaveData));
-        FileStream playerStream = new FileStream(Application.dataPath + "/SaveData/PlayerData", FileMode.Create);
+        FileStream playerStream = new FileStream(Application.dataPath + "/PlayerData", FileMode.Create);
         playerSerializer.Serialize(playerStream, dataHolder);
         playerStream.Close();
     }
     public void SaveLevel(int levelToLoadNextTime)
     {
         XmlSerializer levelSerializer = new XmlSerializer(typeof(int));
-        FileStream levelStream = new FileStream(Application.dataPath + "/SaveData/LevelData", FileMode.Create);
+        FileStream levelStream = new FileStream(Application.dataPath + "/LevelData", FileMode.Create);
         levelSerializer.Serialize(levelStream, levelToLoadNextTime);
         levelStream.Close();
     }
     public void LoadPlayerData(PlayerController player, Inventory playerInventory, Hitbox playerHitbox)
     {
-        if(File.Exists(Application.dataPath + "/SaveData/PlayerData"))
+        if(File.Exists(Application.dataPath + "/PlayerData"))
         {
             XmlSerializer playerSerializer = new XmlSerializer(typeof(PlayerSaveData));
-            FileStream playerStream = new FileStream(Application.dataPath + "/SaveData/PlayerData", FileMode.Open);
+            FileStream playerStream = new FileStream(Application.dataPath + "/PlayerData", FileMode.Open);
             PlayerSaveData dataHolder = (PlayerSaveData)playerSerializer.Deserialize(playerStream);
             playerStream.Close();
 
@@ -88,7 +86,7 @@ public class SaveDatabase : MonoBehaviour
             }
 
             player.guns = new List<GunType>();
-            player.ammoStore = new List<int>();
+            player.magazineStore = new List<int>();
 
             foreach(WeaponData data in dataHolder.playerWeapons)
             {
@@ -100,25 +98,26 @@ public class SaveDatabase : MonoBehaviour
                         break;
                     }
                 }
-                player.ammoStore.Add(data.remainingAmmo);
+                player.magazineStore.Add(data.remainingAmmo);
+                player.ammoStore.Add(data.magazineAmmo);
             }
 
             player.keys = dataHolder.keys;
             player.money = dataHolder.money;
             playerHitbox.curHealth = dataHolder.curHealth;
             playerHitbox.fakeHealth = dataHolder.fakeHealth;
-            File.Delete(Application.dataPath + "/SaveData/PlayerData");
+            File.Delete(Application.dataPath + "/PlayerData");
         }
     }
     public int LoadSavedLevel()
     {
-        if(File.Exists(Application.dataPath + "/SaveData/LevelData"))
+        if(File.Exists(Application.dataPath + "/LevelData"))
         {
             XmlSerializer levelSerializer = new XmlSerializer(typeof(int));
-            FileStream levelStream = new FileStream(Application.dataPath + "/SaveData/LevelData", FileMode.Open);
+            FileStream levelStream = new FileStream(Application.dataPath + "/LevelData", FileMode.Open);
             int levelToLoad = (int)levelSerializer.Deserialize(levelStream);
             levelStream.Close();
-            File.Delete(Application.dataPath + "/SaveData/LevelData");
+            File.Delete(Application.dataPath + "/LevelData");
             return levelToLoad;
         }
         return 0;
@@ -138,11 +137,13 @@ public class SaveDatabase : MonoBehaviour
     {
         public int gunId;
         public int remainingAmmo;
+        public int magazineAmmo;
 
-        public WeaponData(int gunID, int ammo)
+        public WeaponData(int gunID, int ammo, int magazineAmmo_)
         {
             gunId = gunID;
             remainingAmmo = ammo;
+            magazineAmmo = magazineAmmo_;
         }
     }
 }

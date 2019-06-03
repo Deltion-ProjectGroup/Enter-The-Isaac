@@ -68,7 +68,7 @@ public class PlayerController : MonoBehaviour
     public float interactRadius;
     public LayerMask interactablesLayer;
     public GameObject closestInteractableObject;
-    void Start()
+    void Awake()
     {
         pauseSettings = FindObjectOfType<Pause>();
         cc = GetComponent<CharacterController>();
