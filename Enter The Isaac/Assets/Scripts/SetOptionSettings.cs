@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.Audio;
 using UnityEngine.UI;
 using UnityEngine.SceneManagement;
+using System.IO;
 
 public class SetOptionSettings : MonoBehaviour
 {
@@ -14,6 +15,15 @@ public class SetOptionSettings : MonoBehaviour
     [SerializeField] Slider mouseFollowSlider;
     [SerializeField] Slider nightcoreSlider;
     [SerializeField] Toggle screenShakeToggle;
+    [SerializeField] GameObject continueButton;
+
+    public void Awake()
+    {
+        if (File.Exists(Application.dataPath + "/LevelData"))
+        {
+            continueButton.SetActive(true);
+        }
+    }
     public void SetMainVolume(float value)
     {
         if (value != 0)
@@ -112,6 +122,11 @@ public class SetOptionSettings : MonoBehaviour
     public void LoadScene(string newScene)
     {
         SceneManager.LoadScene(newScene);
+    }
+
+    public void LoadSavedScene()
+    {
+        SceneManager.LoadScene(GameObject.FindGameObjectWithTag("Database").GetComponent<SaveDatabase>().LoadSavedLevel());
     }
 
     public void LoadSceneASync(float newScene)

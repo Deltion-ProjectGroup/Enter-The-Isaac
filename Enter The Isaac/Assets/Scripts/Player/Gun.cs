@@ -37,7 +37,7 @@ public class Gun : MonoBehaviour
     [Header("Delete later, for presentation")]
     [SerializeField] Text[] uiElements;
 
-    void Start()
+    public void Start()
     {
         startPos = transform.localPosition;
         gunType = myGun;
@@ -430,6 +430,7 @@ public class Gun : MonoBehaviour
         if (player != null)
         {
             player.magazineStore[player.curGun] = totalMaxAmmo;
+            player.ammoStore[player.curGun] = curAmmo;
         }
     }
 }

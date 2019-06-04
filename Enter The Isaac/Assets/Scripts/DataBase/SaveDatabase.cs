@@ -7,6 +7,8 @@ using System.IO;
 
 public class SaveDatabase : MonoBehaviour
 {
+    [SerializeField] PlayerSaveData backUpSaveData;
+
     public List<PickupSO> weapons;
     public List<PickupSO> passiveItems;
     public List<GunType> guns;
@@ -17,6 +19,7 @@ public class SaveDatabase : MonoBehaviour
 
         if(playerInventory.passiveItems != null)
         {
+            dataHolder.passiveItems = new List<int>();
             foreach(PickupSO data in playerInventory.passiveItems)
             {
                 dataHolder.passiveItems.Add(data.GetInstanceID());
@@ -24,6 +27,7 @@ public class SaveDatabase : MonoBehaviour
         }
         if (playerInventory.weaponItems != null)
         {
+            dataHolder.inventoryGuns = new List<int>();
             foreach (PickupSO data in playerInventory.weaponItems)
             {
                 dataHolder.inventoryGuns.Add(data.GetInstanceID());
@@ -61,13 +65,39 @@ public class SaveDatabase : MonoBehaviour
             PlayerSaveData dataHolder = (PlayerSaveData)playerSerializer.Deserialize(playerStream);
             playerStream.Close();
 
-            foreach(int id in dataHolder.passiveItems)
+            backUpSaveData = dataHolder;
+
+            player.guns = new List<GunType>();
+            player.magazineStore = new List<int>();
+            player.ammoStore = new List<int>();
+
+            foreach (WeaponData data in dataHolder.playerWeapons)
+            {
+                foreach (GunType gunType in guns)
+                {
+                    if (gunType.GetInstanceID() == data.gunId)
+                    {
+                        player.guns.Add(gunType);
+                        break;
+                    }
+                }
+                player.magazineStore.Add(data.remainingAmmo);
+                player.ammoStore.Add(data.magazineAmmo);
+                player.gun.Start();
+            }
+
+            foreach (int id in dataHolder.passiveItems)
             {
                 foreach (PickupSO passiveItem in passiveItems)
                 {
                     if (passiveItem.GetInstanceID() == id)
                     {
                         playerInventory.passiveItems.Add(passiveItem);
+                        Effect[] effects = passiveItem.entityPrefab.GetComponents<Effect>();
+                        foreach(Effect effect in effects)
+                        {
+                            effect.ApplyEffect(player.gameObject);
+                        }
                         break;
                     }
                 }
@@ -83,23 +113,6 @@ public class SaveDatabase : MonoBehaviour
                         break;
                     }
                 }
-            }
-
-            player.guns = new List<GunType>();
-            player.magazineStore = new List<int>();
-
-            foreach(WeaponData data in dataHolder.playerWeapons)
-            {
-                foreach(GunType gunType in guns)
-                {
-                    if(gunType.GetInstanceID() == data.gunId)
-                    {
-                        player.guns.Add(gunType);
-                        break;
-                    }
-                }
-                player.magazineStore.Add(data.remainingAmmo);
-                player.ammoStore.Add(data.magazineAmmo);
             }
 
             player.keys = dataHolder.keys;
@@ -123,6 +136,7 @@ public class SaveDatabase : MonoBehaviour
         return 0;
     }
 
+    [System.Serializable]
     public struct PlayerSaveData
     {
         public List<int> passiveItems;
@@ -133,6 +147,7 @@ public class SaveDatabase : MonoBehaviour
         public float curHealth, fakeHealth;
 
     }
+    [System.Serializable]
     public struct WeaponData
     {
         public int gunId;
