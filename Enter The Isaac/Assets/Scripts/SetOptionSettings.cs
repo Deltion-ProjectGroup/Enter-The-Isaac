@@ -128,7 +128,14 @@ public class SetOptionSettings : MonoBehaviour
     {
         SceneManager.LoadScene(GameObject.FindGameObjectWithTag("Database").GetComponent<SaveDatabase>().LoadSavedLevel());
     }
-
+    public void StartNewGame(float newScene)
+    {
+        if(File.Exists(Application.dataPath + "/LevelData"))
+        {
+            File.Delete(Application.dataPath + "/LevelData");
+        }
+        LoadSceneASync(newScene);
+    }
     public void LoadSceneASync(float newScene)
     {
         StartCoroutine(LoadSceneASyncIE(newScene));
