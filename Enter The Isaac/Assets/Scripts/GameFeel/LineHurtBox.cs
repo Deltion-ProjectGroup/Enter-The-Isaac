@@ -21,8 +21,9 @@ public class LineHurtBox : MonoBehaviour
     [SerializeField] GameObject destroyParticles;
     [SerializeField] int _particlesToSpawn = 5;
     bool alreadyStated = false;
-    [HideInInspector] public bool ghostBullet = false;
-    float width = 0;
+    public bool ghostBullet = false;
+    float swidth = 0;
+    float ewidth = 0;
 
     void Start()
     {
@@ -35,17 +36,19 @@ public class LineHurtBox : MonoBehaviour
         {
             alreadyStated = true;
             line = GetComponent<LineRenderer>();
-            width = line.startWidth;
+            swidth = line.startWidth;
+            ewidth = line.endWidth;
             line.startWidth = 0;
             line.endWidth = 0;
-            Invoke("LateStart",0.01f);
+            Invoke("LateStart", 0.01f);
             UpdateShape();
             InvokeRepeating("FrameChecker", ((float)activeFrames / (float)damageFrames) / 60, ((float)activeFrames / (float)damageFrames) / 60);
         }
     }
-    void LateStart(){
-        line.startWidth = width;
-        line.endWidth = width;
+    void LateStart()
+    {
+        line.startWidth = swidth;
+        line.endWidth = ewidth;
     }
 
     void Update()
@@ -62,12 +65,15 @@ public class LineHurtBox : MonoBehaviour
     void FrameChecker()
     {
         //also check for destroy stuff lol
-        line.SetPositions(lastPositions.ToArray());
-        LineHurtbox(true);
-        if (enabled == true)
+        if (gameObject.activeSelf == true)
         {
-            LineHurtbox(false);
-            SpawnABunchaParticles();
+            line.SetPositions(lastPositions.ToArray());
+            LineHurtbox(true);
+            if (enabled == true)
+            {
+                LineHurtbox(false);
+                SpawnABunchaParticles();
+            }
         }
     }
 
@@ -101,7 +107,7 @@ public class LineHurtBox : MonoBehaviour
                                     Destroy(transform.root.gameObject);
                                 }
                             }
-                            
+
                             if (pierce == false)
                             {
                                 // UpdateShape();
@@ -112,10 +118,10 @@ public class LineHurtBox : MonoBehaviour
                                 }
                                 break;
                             }
-                             
+
                         }
                     }
-                    else if (ghostBullet == false)
+                    else if (ghostBullet == false && hit[r].transform.tag != "Player")
                     {
                         line.SetPosition(i, transform.InverseTransformPoint(hit[r].point));
                         for (int i2 = i; i2 < line.positionCount; i2++)

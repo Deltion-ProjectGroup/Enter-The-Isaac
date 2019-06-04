@@ -9,7 +9,7 @@ public class Gun : MonoBehaviour
     [HideInInspector] public GunType gunClone;
     [HideInInspector] public float shootInput = 0;
     [HideInInspector] public bool shootFirstFrame = false;
-    public GunType[] guns;
+    public GunType myGun;
     //List<int> ammoStore = new List<int>();
     //List<int> magazineStore = new List<int>();
     int curGun = 0;
@@ -40,13 +40,14 @@ public class Gun : MonoBehaviour
     void Start()
     {
         startPos = transform.localPosition;
-        gunType = guns[curGun];
+        gunType = myGun;
 
-        gunClone = Instantiate(guns[curGun]);
         if (player != null)
         {
             gunType = player.guns[player.curGun];
         }
+
+        gunClone = Instantiate(gunType);
     }
     public void StartGun()
     {
@@ -139,25 +140,25 @@ public class Gun : MonoBehaviour
         transform.Rotate(0, 0, 90);
     }
 
-    public void GetSwitchGunInput(float scrollInput)
-    {
-        if (player != null)
-        {
-            player.ammoStore[player.curGun] = curAmmo;
-        }
-        curGun += (int)(scrollInput * 10);
-        if (curGun < 0)
-        {
-            curGun = guns.Length - 1;
-        }
-        else if (curGun > guns.Length - 1)
-        {
-            curGun = 0;
-        }
-        gunType = guns[curGun];
+    /*  public void GetSwitchGunInput(float scrollInput)
+      {
+          if (player != null)
+          {
+              player.ammoStore[player.curGun] = curAmmo;
+          }
+          curGun += (int)(scrollInput * 10);
+          if (curGun < 0)
+          {
+              curGun = guns.Length - 1;
+          }
+          else if (curGun > guns.Length - 1)
+          {
+              curGun = 0;
+          }
+          gunType = guns[curGun];
 
-    }
-
+      }
+   */
     void IgnoreInput()
     {
         //this is an invoke function
@@ -222,8 +223,8 @@ public class Gun : MonoBehaviour
     {
         if (soundSpawner != null && gunClone.sound != null)
         {
-            float randomPitch = Random.Range(0.8f,1.2f);
-            soundSpawner.SpawnEffect(gunClone.sound,0.5f,randomPitch,0,transform);
+            float randomPitch = Random.Range(0.8f, 1.2f);
+            soundSpawner.SpawnEffect(gunClone.sound, 0.5f, randomPitch, 0, transform);
         }
         if (gunClone.muzzleFlash.Length > 0)
         {

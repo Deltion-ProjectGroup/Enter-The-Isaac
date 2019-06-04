@@ -62,8 +62,8 @@ public class ConstructorHat : HATBase
     void RestSpawnTurret()
     {
         Gun gun = gHelp.transform.GetChild(0).gameObject.AddComponent<Gun>();
-        gun.guns = new GunType[1];
-        gun.guns[0] = testGun;
+        gun.myGun = new GunType();
+        gun.myGun = testGun;
         gun.curAmmo = iHelp;//iHelp = ammoUsed
         gHelp = null;
     }

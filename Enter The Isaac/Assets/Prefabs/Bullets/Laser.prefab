@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 7235445337229934339}
   - component: {fileID: 7235445337229934367}
   - component: {fileID: 5127854547610016866}
+  - component: {fileID: 366439231861479910}
   m_Layer: 0
   m_Name: Laser
   m_TagString: Untagged
@@ -187,6 +188,7 @@ MonoBehaviour:
   destroyParticles: {fileID: 1611006847910982207, guid: 378fb11853061f745a05b8568ea75ae8,
     type: 3}
   _particlesToSpawn: 10
+  ghostBullet: 0
 --- !u!114 &7235445337229934367
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -295,3 +297,19 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!123 &366439231861479910
+LensFlare:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7235445337229934338}
+  m_Enabled: 1
+  m_Flare: {fileID: 12100000, guid: e59f068002a7b47858274b3c71e10ea7, type: 2}
+  m_Color: {r: 1, g: 0.5424528, b: 0.5424528, a: 1}
+  m_Brightness: 0.5
+  m_FadeSpeed: 99999
+  m_IgnoreLayers:
+    serializedVersion: 2
+    m_Bits: 6
+  m_Directional: 0

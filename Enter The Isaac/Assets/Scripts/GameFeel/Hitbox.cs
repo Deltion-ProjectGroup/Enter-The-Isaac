@@ -148,7 +148,10 @@ public class Hitbox : MonoBehaviour
         if (!dead)
         {
             deathEvent.Invoke();
-            onDeath(gameObject);
+            if (onDeath != null)
+            {
+                onDeath(gameObject);
+            }
             if (destoy == true)
             {
                 Destroy(gameObject);
