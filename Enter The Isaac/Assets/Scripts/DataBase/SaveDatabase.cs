@@ -110,6 +110,11 @@ public class SaveDatabase : MonoBehaviour
                     if (weaponItem.GetInstanceID() == id)
                     {
                         playerInventory.weaponItems.Add(weaponItem);
+                        Effect[] effects = weaponItem.entityPrefab.GetComponents<Effect>();
+                        foreach (Effect effect in effects)
+                        {
+                            effect.ApplyEffect(player.gameObject);
+                        }
                         break;
                     }
                 }

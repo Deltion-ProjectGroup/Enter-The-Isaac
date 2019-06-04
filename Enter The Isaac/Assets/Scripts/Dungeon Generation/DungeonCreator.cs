@@ -234,7 +234,6 @@ public class DungeonCreator : MonoBehaviour
         }
         else
         {
-            print("NOT ENOUGH ENDROOMS");
             GenerateDungeon();
         }
     }
