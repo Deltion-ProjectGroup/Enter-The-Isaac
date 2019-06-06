@@ -43,7 +43,7 @@ Light:
   m_Type: 2
   m_Color: {r: 1, g: 0.0141509175, b: 0.0141509175, a: 1}
   m_Intensity: 1.47
-  m_Range: 5.2196074
+  m_Range: 23.2
   m_SpotAngle: 30
   m_CookieSize: 10
   m_Shadows:
@@ -80,6 +80,7 @@ GameObject:
   - component: {fileID: 1169533406094057776}
   - component: {fileID: 1169533406091157776}
   - component: {fileID: 1169533406092288976}
+  - component: {fileID: 6355288990844773918}
   m_Layer: 0
   m_Name: GrateGround_low
   m_TagString: Untagged
@@ -146,6 +147,19 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
+--- !u!65 &6355288990844773918
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1169533406094556432}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 3, y: 0, z: 3}
+  m_Center: {x: -1.500001, y: 0, z: 1.4999981}
 --- !u!1 &6310088770757968192
 GameObject:
   m_ObjectHideFlags: 0
