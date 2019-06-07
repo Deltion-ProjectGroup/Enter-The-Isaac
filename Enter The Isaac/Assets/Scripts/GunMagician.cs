@@ -14,10 +14,13 @@ public class GunMagician : MonoBehaviour {
     [SerializeField] float currentSpeed = 1;
     [SerializeField] AnimationCurve currentSpeedOverHealth;
     Hitbox hitbox;
+    SoundSpawn soundSpawner;
     [Header ("Teleport")]
     [SerializeField] GameObject teleportLandParticle;
     [SerializeField] GameObject teleportLocationsParent;
     [SerializeField] float teleportPlayerDistance = 5;
+    [SerializeField] AudioClip teleportInAudio;
+    [SerializeField] AudioClip teleportOutAudio;
     [Header ("Laser")]
     [SerializeField] ParticleSystem speedLines;
     [SerializeField] LensFlare laserFlare;
@@ -28,6 +31,7 @@ public class GunMagician : MonoBehaviour {
     [SerializeField] float laserShootTime = 2;
     [SerializeField] float laserRecoverTime = 0.2f;
     [SerializeField] float lookAtPlayerSpeed = 1;
+    [SerializeField] AudioClip laserAounceSound;
     [Header ("Poof 'n Pop")]
     [SerializeField] GameObject poofpopProjectile;
     [SerializeField] float poofpopProjectileSpeed = 4;
@@ -35,6 +39,7 @@ public class GunMagician : MonoBehaviour {
     [SerializeField] Transform poofnpopSpawnLocation2;
     [SerializeField] int amountOfTeleports = 5;
     int teleportsLeft = 0;
+    [SerializeField] AudioClip poofPopShootSound;
     [Header ("Point 'n Shoot")]
     [SerializeField] Transform leftHand;
     [SerializeField] Transform rightHand;
@@ -47,6 +52,7 @@ public class GunMagician : MonoBehaviour {
     [SerializeField] float pointShootAngle = 90;
     [SerializeField] float pointshootTotalAngle = 720;
     [SerializeField] float pointShootWindUpTime = 1;
+    [SerializeField] AudioClip pointshootShootAudio;
     [Header ("Clap 'n Attack")]
     [SerializeField] GameObject clapAttackProjectile;
     [SerializeField] Transform clapAttackRing1;
@@ -55,6 +61,7 @@ public class GunMagician : MonoBehaviour {
     [SerializeField] float clapAttackRing2Speed = 20;
     [SerializeField] float clapAttackWindUpTime = 0.5f;
     [SerializeField] float clapAttackRecover = 0.5f;
+    [SerializeField] AudioClip clapAudio;
     [Header ("Produce 'n Confuse")]
     [SerializeField] int amountToSpawn = 3;
     [SerializeField] float startAngle = 180;
@@ -67,8 +74,11 @@ public class GunMagician : MonoBehaviour {
     [SerializeField] float produceConfuseProjectileSpeed = 10;
     [SerializeField] float produceConfuseProjectileThrowYVelocity = 10;
     [SerializeField] float produceConfuseProjectileMass = 10;
+    [SerializeField] float ignoreProduceConfuseTime = 20;
 
     void Start () {
+        soundSpawner = FindObjectOfType<SoundSpawn>();
+        Invoke ("IgnoreProduceConfuse", ignoreProduceConfuseTime);
         flyHeight += transform.position.y;
         mainCamRipple = Camera.main.GetComponent<RippleEffect> ();
         shakeCam = GetComponent<ShakeCam> ();
@@ -79,16 +89,21 @@ public class GunMagician : MonoBehaviour {
         col = GetComponent<Collider> ();
         player = FindObjectOfType<PlayerController> ().transform;
         hitbox = GetComponent<Hitbox> ();
+        Teleport(false);
 
         InvokeRepeating ("CheckForAttack", 2 / currentSpeed, 2 / currentSpeed);
+    }
+
+    void IgnoreProduceConfuse(){
+        //invoke function lol
     }
     void Update () {
         if (Input.GetKeyDown (KeyCode.O) == true && isDoingSomething == false) {
             // Teleport(false);
             //LaserAttack();
             // PoofNPop();
-            //PointNShoot();
-            //ClapNAttack();
+           // PointNShoot();
+           // ClapNAttack();
             // ProduceNConfuse();
         }
     }
@@ -120,7 +135,10 @@ public class GunMagician : MonoBehaviour {
                     ClapNAttack ();
                     break;
                 case 5:
-                    //ProduceNConfuse ();
+                    if (IsInvoking ("IgnoreProduceConfuse") == false) {
+                        ProduceNConfuse ();
+                        Invoke ("IgnoreProduceConfuse", ignoreProduceConfuseTime);
+                    }
                     break;
             }
         }
@@ -136,6 +154,7 @@ public class GunMagician : MonoBehaviour {
     IEnumerator TeleportCoroutine (bool ignoreDoElse) {
         shakeCam.SmallShake ();
         transform.localScale = new Vector3 (transform.localScale.x * 0.3f, transform.localScale.y * 3, transform.localScale.z * 0.3f);
+        soundSpawner.SpawnEffect(teleportOutAudio);
         yield return new WaitForSeconds (0.03f / currentSpeed);
         transform.localScale = Vector3.zero;
         yield return new WaitForSeconds (0.25f / currentSpeed);
@@ -146,6 +165,7 @@ public class GunMagician : MonoBehaviour {
         transform.localScale = new Vector3 (transform.localScale.x * 0.3f, transform.localScale.y * 3, transform.localScale.z * 0.3f);
         shakeCam.MediumShake ();
         Instantiate (teleportLandParticle, transform.position, transform.rotation);
+        soundSpawner.SpawnEffect(teleportInAudio);
         yield return new WaitForSeconds (0.03f / currentSpeed);
         transform.localScale = startScale;
         yield return new WaitForSeconds (0.2f / currentSpeed);
@@ -185,6 +205,7 @@ public class GunMagician : MonoBehaviour {
         selfShake.CustomShake (Mathf.Min (0.25f, laserAnounceTime / currentSpeed), 1);
         yield return new WaitForSeconds (Mathf.Min (0.25f, laserAnounceTime / currentSpeed));
         //fire
+        soundSpawner.SpawnEffect(laserAounceSound);
         anounceLaser.SetActive (false);
         speedLines.Play ();
         shakeCam.CustomShake (laserShootTime / currentSpeed, 1);
@@ -232,6 +253,7 @@ public class GunMagician : MonoBehaviour {
         }
         shakeCam.MediumShake ();
         selfShake.SmallShake ();
+        soundSpawner.SpawnEffect(poofPopShootSound);
         yield return new WaitForSeconds (0.3f / currentSpeed);
         teleportsLeft--;
         if (teleportsLeft > 0) {
@@ -241,11 +263,13 @@ public class GunMagician : MonoBehaviour {
         }
     }
 
+    float soundPitchhelper = 0;
     public void PointNShoot () {
         pointshootLeft = pointshootTimes;
         isDoingSomething = true;
         pointshootCurAngle = pointShootAngle;
         shakeCam.CustomShake ((pointshootRepeatSpeed + pointShootWindUpTime) / currentSpeed, 0.05f);
+        soundPitchhelper = 1;
         selfShake.CustomShake ((pointshootRepeatSpeed + pointShootWindUpTime) / currentSpeed, 1.5f);
         InvokeRepeating ("PointNShootShoot", (pointshootRepeatSpeed + pointShootWindUpTime) / currentSpeed, pointshootRepeatSpeed / currentSpeed);
     }
@@ -257,6 +281,8 @@ public class GunMagician : MonoBehaviour {
         pointshootCurAngle += pointshootTotalAngle / pointshootTimes;
         //pointshootCurAngle = Random.Range(0,pointshootTotalAngle);
         shakeCam.SmallShake ();
+        soundSpawner.SpawnEffect(pointshootShootAudio,0.25f,soundPitchhelper,0,transform);
+        soundPitchhelper += 0.6f / pointshootTimes;
         if (pointshootLeft <= 0) {
             CancelInvoke ("PointNShootShoot");
             isDoingSomething = false;
@@ -271,6 +297,7 @@ public class GunMagician : MonoBehaviour {
     IEnumerator ClapAttackCoroutine () {
         yield return new WaitForSeconds (clapAttackWindUpTime / currentSpeed); //startup
         //attack
+        soundSpawner.SpawnEffect(clapAudio);
         for (int i = 0; i < clapAttackRing1.childCount; i++) {
             Instantiate (clapAttackProjectile, clapAttackRing1.GetChild (i).position, Quaternion.LookRotation (clapAttackRing1.GetChild (i).position - transform.position)).GetComponent<AutoRotate> ().tranformV3.z = clapAttackRing1Speed;
         }

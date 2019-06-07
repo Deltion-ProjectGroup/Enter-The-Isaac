@@ -196,6 +196,11 @@ MonoBehaviour:
   possibleTargets:
     serializedVersion: 2
     m_Bits: 4294967295
+  nonEffectActivations:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!114 &8625839732049308942
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -342,6 +347,7 @@ GameObject:
   - component: {fileID: 862159619565669682}
   - component: {fileID: 2673750206812898037}
   - component: {fileID: 4585178634559871535}
+  - component: {fileID: 1080739620630214530}
   m_Layer: 2
   m_Name: New Sprite
   m_TagString: Untagged
@@ -370,7 +376,7 @@ SpriteRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8078996280024089520}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 0
   m_ReceiveShadows: 0
   m_DynamicOccludee: 1
@@ -418,7 +424,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8078996280024089520}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 8d39242476ad1cd4ab2bcb2407e4a8c5, type: 3}
   m_Name: 
@@ -430,6 +436,22 @@ MonoBehaviour:
   moveInEditMode: 0
   scaleLerp: 1
   ignoreScale: 1
+--- !u!123 &1080739620630214530
+LensFlare:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8078996280024089520}
+  m_Enabled: 1
+  m_Flare: {fileID: 12100000, guid: f3cd23d6d3e3d490cb471c69069c97a1, type: 2}
+  m_Color: {r: 0.9866618, g: 1, b: 0.6273585, a: 0}
+  m_Brightness: 0.51
+  m_FadeSpeed: 999
+  m_IgnoreLayers:
+    serializedVersion: 2
+    m_Bits: 6
+  m_Directional: 0
 --- !u!1001 &950912609299033431
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -521,6 +543,26 @@ PrefabInstance:
         type: 3}
       propertyPath: m_IsActive
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2230699531425331608, guid: cee98e1bc60baa44588075ea81b3482e,
+        type: 3}
+      propertyPath: simulationSpeed
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2230699531425331608, guid: cee98e1bc60baa44588075ea81b3482e,
+        type: 3}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2230699531425331608, guid: cee98e1bc60baa44588075ea81b3482e,
+        type: 3}
+      propertyPath: ShapeModule.radius.value
+      value: 0.0001
+      objectReference: {fileID: 0}
+    - target: {fileID: 2230699531425331608, guid: cee98e1bc60baa44588075ea81b3482e,
+        type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[0].value
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4719437420404946565, guid: cee98e1bc60baa44588075ea81b3482e,
         type: 3}
@@ -641,26 +683,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[3].value
       value: 0.1798561
-      objectReference: {fileID: 0}
-    - target: {fileID: 2230699531425331608, guid: cee98e1bc60baa44588075ea81b3482e,
-        type: 3}
-      propertyPath: simulationSpeed
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2230699531425331608, guid: cee98e1bc60baa44588075ea81b3482e,
-        type: 3}
-      propertyPath: InitialModule.startLifetime.scalar
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2230699531425331608, guid: cee98e1bc60baa44588075ea81b3482e,
-        type: 3}
-      propertyPath: ShapeModule.radius.value
-      value: 0.0001
-      objectReference: {fileID: 0}
-    - target: {fileID: 2230699531425331608, guid: cee98e1bc60baa44588075ea81b3482e,
-        type: 3}
-      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[0].value
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cee98e1bc60baa44588075ea81b3482e, type: 3}

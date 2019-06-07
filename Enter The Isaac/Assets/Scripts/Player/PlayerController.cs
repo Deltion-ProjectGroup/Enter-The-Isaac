@@ -318,6 +318,7 @@ public class PlayerController : MonoBehaviour {
 
     Vector3 lastGunScale = Vector3.zero;
     public void GetHit (float timeStopTime) {
+        cam.GetComponent<RippleEffect>().Emit();
         Invoke ("StopHitControl", timeStopTime);
         StopAllCoroutines ();
         moveV3 = Vector3.zero;
