@@ -1070,7 +1070,7 @@ MonoBehaviour:
   knockBackTrans: {fileID: 0}
   knockbackWaitTime: 0.01
   lastPos: {x: 0, y: 0, z: 0}
-  destoy: 1
+  destoy: 0
 --- !u!65 &7129523558497025246
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -1097,7 +1097,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   toSpawn:
-  - {fileID: 8158331382286321570, guid: 0ebfa3aed7b2a5448802bbb678241437, type: 3}
+  - {fileID: 315427981512426691, guid: f53bbec3705359141adffcd0536034ae, type: 3}
 --- !u!114 &7129523558497025184
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5818,14 +5818,6 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7129523558497025243}
     m_Modifications:
-    - target: {fileID: 13700000, guid: 24e86a2d07105b941a75741ca083d519, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: d079ae706a2cc8146b6b8c8a2c5bbebc, type: 2}
-    - target: {fileID: 9500000, guid: 24e86a2d07105b941a75741ca083d519, type: 3}
-      propertyPath: m_Controller
-      value: 
-      objectReference: {fileID: 9100000, guid: 727f525c43c586546b06021a72da3eb5, type: 2}
     - target: {fileID: 100000, guid: 24e86a2d07105b941a75741ca083d519, type: 3}
       propertyPath: m_Name
       value: Bat
@@ -5886,6 +5878,14 @@ PrefabInstance:
       propertyPath: m_LocalScale.z
       value: 2.5396814
       objectReference: {fileID: 0}
+    - target: {fileID: 13700000, guid: 24e86a2d07105b941a75741ca083d519, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: d079ae706a2cc8146b6b8c8a2c5bbebc, type: 2}
+    - target: {fileID: 9500000, guid: 24e86a2d07105b941a75741ca083d519, type: 3}
+      propertyPath: m_Controller
+      value: 
+      objectReference: {fileID: 9100000, guid: 727f525c43c586546b06021a72da3eb5, type: 2}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 24e86a2d07105b941a75741ca083d519, type: 3}
 --- !u!4 &1793040070 stripped

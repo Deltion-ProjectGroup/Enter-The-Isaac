@@ -6,7 +6,7 @@ public class Cam : MonoBehaviour
 {
 
     [SerializeField] Transform[] target;
-    [SerializeField] Vector3 offset;
+    public Vector3 offset;
     [SerializeField] float speed = 10;
     Camera cam;
     float startFOV = 0;

@@ -73,7 +73,7 @@ public class BaseEnemy : MonoBehaviour
     [SerializeField] float lifeTime = 1;
     [SerializeField] bool parentToMe = false;
 
-    void Start()
+    void Awake()
     {
         StartBase();
     }
@@ -369,7 +369,7 @@ public class BaseEnemy : MonoBehaviour
         if (player.GetComponent<PlayerController>().curState != PlayerController.State.Roll)//fix this line
         {
             RaycastHit hit;
-            if (Physics.Raycast(transform.position + new Vector3(0, 0.15f, 0), player.position - transform.position, out hit, Vector3.Distance(transform.position, player.position)))
+            if (Physics.Raycast(transform.position + new Vector3(0, 0.15f, 0), player.position - transform.position, out hit, Vector3.Distance(transform.position, player.position),LayerMask.GetMask("Player","Default"),QueryTriggerInteraction.Collide))
             {
                 if (hit.transform.tag == player.tag)
                 {

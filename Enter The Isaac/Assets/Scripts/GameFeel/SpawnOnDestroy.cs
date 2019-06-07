@@ -5,7 +5,7 @@ using UnityEngine.SceneManagement;
 using UnityEditor;
 public class SpawnOnDestroy : MonoBehaviour
 {
-    [SerializeField] GameObject[] toSpawn;
+    public GameObject[] toSpawn;
     void OnDestroy()
     {
         if (SceneManager.GetActiveScene().isLoaded == true)//prevents them from spawning while loading a scene
