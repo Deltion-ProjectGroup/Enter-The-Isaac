@@ -84,6 +84,7 @@ public class BaseEnemy : MonoBehaviour {
         anim = transform.GetChild (0).GetComponent<Animator> ();
         if (skipParticle == false) {
             Spawn ();
+            hitbox.enabled = false;
         }
         gunStartPos = new Vector3[gun.Length];
         for (int i = 0; i < gun.Length; i++) {
@@ -160,6 +161,8 @@ public class BaseEnemy : MonoBehaviour {
             } else {
                 agent.isStopped = true;
             }
+        } else {
+            DieEvent ();
         }
     }
 
@@ -243,17 +246,21 @@ public class BaseEnemy : MonoBehaviour {
     Vector3 lastGunScale = Vector3.zero;
     bool hadIK = true;
     public virtual void GetHit () {
-        hadIK = anim.GetComponent<IKHoldGun> ().enabled;
-        anim.Play ("Flinch", 0);
-        soundSpawner.SpawnEffect (getHitSound);
-        anim.GetComponent<IKHoldGun> ().enabled = false;
-        if (lastGunScale == Vector3.zero) {
-            lastGunScale = gun[0].localScale;
+        if (hitbox.enabled == true) {
+            if (IsInvoking ("StopGetHit") == false) {
+                hadIK = anim.GetComponent<IKHoldGun> ().enabled;
+            }
+            anim.Play ("Flinch", 0);
+            soundSpawner.SpawnEffect (getHitSound);
+            anim.GetComponent<IKHoldGun> ().enabled = false;
+            if (lastGunScale == Vector3.zero) {
+                lastGunScale = gun[0].localScale;
+            }
+            for (int i = 0; i < gun.Length; i++) {
+                gun[i].localScale = Vector3.zero;
+            }
+            Invoke ("StopGetHit", 0.2f);
         }
-        for (int i = 0; i < gun.Length; i++) {
-            gun[i].localScale = Vector3.zero;
-        }
-        Invoke ("StopGetHit", 0.2f);
     }
 
     void StopGetHit () {

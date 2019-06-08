@@ -75,9 +75,13 @@ public class GunMagician : MonoBehaviour {
     [SerializeField] float produceConfuseProjectileThrowYVelocity = 10;
     [SerializeField] float produceConfuseProjectileMass = 10;
     [SerializeField] float ignoreProduceConfuseTime = 20;
+    float centerX = 0;
+    [Header ("Intro")]
+    [SerializeField] Transform introCamPos;
 
     void Start () {
-        soundSpawner = FindObjectOfType<SoundSpawn>();
+        centerX = transform.position.x;
+        soundSpawner = FindObjectOfType<SoundSpawn> ();
         Invoke ("IgnoreProduceConfuse", ignoreProduceConfuseTime);
         flyHeight += transform.position.y;
         mainCamRipple = Camera.main.GetComponent<RippleEffect> ();
@@ -89,12 +93,31 @@ public class GunMagician : MonoBehaviour {
         col = GetComponent<Collider> ();
         player = FindObjectOfType<PlayerController> ().transform;
         hitbox = GetComponent<Hitbox> ();
-        Teleport(false);
 
-        InvokeRepeating ("CheckForAttack", 2 / currentSpeed, 2 / currentSpeed);
+        mainCam.GetComponent<Cam> ().enabled = false;
+        shakeCam.CustomShake(0.4f,2);
+        InvokeRepeating ("SmoothIntroCam", 0, 0.01f);
+        FindObjectOfType<MusicManager>().UpdateMusic(1);
+        soundSpawner.SpawnEffect(laserAounceSound);
+        FindObjectOfType<PlayerController>().SetInControll(false);
+        FindObjectOfType<PlayerController>().keyUICounter.transform.parent.parent.gameObject.SetActive(false);
     }
 
-    void IgnoreProduceConfuse(){
+    public void SmoothIntroCam () {
+        mainCam.transform.position = Vector3.MoveTowards (mainCam.transform.position, introCamPos.position, Time.deltaTime * 25);
+        mainCam.transform.rotation = Quaternion.Lerp (mainCam.transform.rotation, introCamPos.rotation, Time.deltaTime * 5);
+    }
+
+    public void StartAttacking () {
+        FindObjectOfType<PlayerController>().SetInControll(true);
+        mainCam.GetComponent<Cam> ().enabled = true;
+        Teleport (false);
+        FindObjectOfType<PlayerController>().keyUICounter.transform.parent.parent.gameObject.SetActive(true);
+        InvokeRepeating ("CheckForAttack", 2 / currentSpeed, 2 / currentSpeed);
+        CancelInvoke ("SmoothIntroCam");
+    }
+
+    void IgnoreProduceConfuse () {
         //invoke function lol
     }
     void Update () {
@@ -102,9 +125,9 @@ public class GunMagician : MonoBehaviour {
             // Teleport(false);
             //LaserAttack();
             // PoofNPop();
-           // PointNShoot();
-           // ClapNAttack();
-            // ProduceNConfuse();
+            // PointNShoot();
+            // ClapNAttack();
+            //ProduceNConfuse();
         }
     }
 
@@ -154,7 +177,7 @@ public class GunMagician : MonoBehaviour {
     IEnumerator TeleportCoroutine (bool ignoreDoElse) {
         shakeCam.SmallShake ();
         transform.localScale = new Vector3 (transform.localScale.x * 0.3f, transform.localScale.y * 3, transform.localScale.z * 0.3f);
-        soundSpawner.SpawnEffect(teleportOutAudio);
+        soundSpawner.SpawnEffect (teleportOutAudio);
         yield return new WaitForSeconds (0.03f / currentSpeed);
         transform.localScale = Vector3.zero;
         yield return new WaitForSeconds (0.25f / currentSpeed);
@@ -165,7 +188,7 @@ public class GunMagician : MonoBehaviour {
         transform.localScale = new Vector3 (transform.localScale.x * 0.3f, transform.localScale.y * 3, transform.localScale.z * 0.3f);
         shakeCam.MediumShake ();
         Instantiate (teleportLandParticle, transform.position, transform.rotation);
-        soundSpawner.SpawnEffect(teleportInAudio);
+        soundSpawner.SpawnEffect (teleportInAudio);
         yield return new WaitForSeconds (0.03f / currentSpeed);
         transform.localScale = startScale;
         yield return new WaitForSeconds (0.2f / currentSpeed);
@@ -200,12 +223,13 @@ public class GunMagician : MonoBehaviour {
         yield return new WaitForSeconds (laserAimTime / currentSpeed);
         //anounce
         laserFlare.enabled = true;
-        shakeCam.CustomShake (Mathf.Min (0.25f, laserAnounceTime / currentSpeed), 0.3f);
+        shakeCam.CustomShake (Mathf.Max (0.25f, laserAnounceTime / currentSpeed), 0.3f);
         anounceLaser.SetActive (true);
-        selfShake.CustomShake (Mathf.Min (0.25f, laserAnounceTime / currentSpeed), 1);
-        yield return new WaitForSeconds (Mathf.Min (0.25f, laserAnounceTime / currentSpeed));
+        selfShake.CustomShake (Mathf.Max (0.25f, laserAnounceTime / currentSpeed), 1);
+        yield return new WaitForSeconds (Mathf.Max (0.25f, laserAnounceTime / currentSpeed));
         //fire
-        soundSpawner.SpawnEffect(laserAounceSound);
+        selfShake.enabled = false;
+        soundSpawner.SpawnEffect (laserAounceSound);
         anounceLaser.SetActive (false);
         speedLines.Play ();
         shakeCam.CustomShake (laserShootTime / currentSpeed, 1);
@@ -213,6 +237,7 @@ public class GunMagician : MonoBehaviour {
         laser.SetActive (true);
         yield return new WaitForSeconds (laserShootTime / currentSpeed);
         //stop & recover
+        selfShake.enabled = true;
         CancelInvoke ("SmoothLookAtPlayer");
         speedLines.Stop ();
         laserFlare.enabled = false;
@@ -253,7 +278,7 @@ public class GunMagician : MonoBehaviour {
         }
         shakeCam.MediumShake ();
         selfShake.SmallShake ();
-        soundSpawner.SpawnEffect(poofPopShootSound);
+        soundSpawner.SpawnEffect (poofPopShootSound);
         yield return new WaitForSeconds (0.3f / currentSpeed);
         teleportsLeft--;
         if (teleportsLeft > 0) {
@@ -281,7 +306,7 @@ public class GunMagician : MonoBehaviour {
         pointshootCurAngle += pointshootTotalAngle / pointshootTimes;
         //pointshootCurAngle = Random.Range(0,pointshootTotalAngle);
         shakeCam.SmallShake ();
-        soundSpawner.SpawnEffect(pointshootShootAudio,0.25f,soundPitchhelper,0,transform);
+        soundSpawner.SpawnEffect (pointshootShootAudio, 0.25f, soundPitchhelper, 0, transform);
         soundPitchhelper += 0.6f / pointshootTimes;
         if (pointshootLeft <= 0) {
             CancelInvoke ("PointNShootShoot");
@@ -297,7 +322,7 @@ public class GunMagician : MonoBehaviour {
     IEnumerator ClapAttackCoroutine () {
         yield return new WaitForSeconds (clapAttackWindUpTime / currentSpeed); //startup
         //attack
-        soundSpawner.SpawnEffect(clapAudio);
+        soundSpawner.SpawnEffect (clapAudio);
         for (int i = 0; i < clapAttackRing1.childCount; i++) {
             Instantiate (clapAttackProjectile, clapAttackRing1.GetChild (i).position, Quaternion.LookRotation (clapAttackRing1.GetChild (i).position - transform.position)).GetComponent<AutoRotate> ().tranformV3.z = clapAttackRing1Speed;
         }
@@ -319,14 +344,26 @@ public class GunMagician : MonoBehaviour {
 
     IEnumerator ProduceNConfuseCoroutine () {
         yield return new WaitForSeconds (produceConfuseWindUpTime / currentSpeed);
-        for (int i = 0; i < amountToSpawn; i++) {
-            GameObject g = Instantiate (produceConfuseProjectile, leftHand.position, leftHand.rotation * produceConfuseProjectile.transform.rotation * Quaternion.Euler (0, produceConfuseCurAngle, 0));
-            g.GetComponent<Rigidbody> ().velocity = new Vector3 (0, produceConfuseProjectileThrowYVelocity, 0);
-            g.GetComponent<AutoRotate> ().tranformV3.z = produceConfuseProjectileSpeed;
-            g.GetComponent<Rigidbody> ().mass = produceConfuseProjectileMass;
-            g.GetComponent<SpawnOnDestroy> ().toSpawn = new GameObject[1];
-            g.GetComponent<SpawnOnDestroy> ().toSpawn[0] = produceConfuseProjectileEnemy;
-            produceConfuseCurAngle += angleAppart;
+        if (transform.position.x < centerX) {
+            for (int i = 0; i < amountToSpawn; i++) {
+                GameObject g = Instantiate (produceConfuseProjectile, leftHand.position, leftHand.rotation * produceConfuseProjectile.transform.rotation * Quaternion.Euler (0, produceConfuseCurAngle, 0));
+                g.GetComponent<Rigidbody> ().velocity = new Vector3 (0, produceConfuseProjectileThrowYVelocity, 0);
+                g.GetComponent<AutoRotate> ().tranformV3.z = produceConfuseProjectileSpeed;
+                g.GetComponent<Rigidbody> ().mass = produceConfuseProjectileMass;
+                g.GetComponent<SpawnOnDestroy> ().toSpawn = new GameObject[1];
+                g.GetComponent<SpawnOnDestroy> ().toSpawn[0] = produceConfuseProjectileEnemy;
+                produceConfuseCurAngle += angleAppart;
+            }
+        } else {
+            for (int i = 0; i < amountToSpawn; i++) {
+                GameObject g = Instantiate (produceConfuseProjectile, rightHand.position, rightHand.rotation * produceConfuseProjectile.transform.rotation * Quaternion.Euler (0, produceConfuseCurAngle + 180, 0));
+                g.GetComponent<Rigidbody> ().velocity = new Vector3 (0, produceConfuseProjectileThrowYVelocity, 0);
+                g.GetComponent<AutoRotate> ().tranformV3.z = produceConfuseProjectileSpeed;
+                g.GetComponent<Rigidbody> ().mass = produceConfuseProjectileMass;
+                g.GetComponent<SpawnOnDestroy> ().toSpawn = new GameObject[1];
+                g.GetComponent<SpawnOnDestroy> ().toSpawn[0] = produceConfuseProjectileEnemy;
+                produceConfuseCurAngle -= angleAppart;
+            }
         }
         yield return new WaitForSeconds (produceConfuseRecover / currentSpeed);
         isDoingSomething = false;

@@ -18,7 +18,7 @@ public class SoundSpawn : MonoBehaviour
             source.clip = clip;
             source.Play();
             source.outputAudioMixerGroup = mixerGroup;
-            if (GetComponent<AudioSource>() != null)
+            if (gameObject != null && GetComponent<AudioSource>() != null)
             {
                 AudioSource mySource = GetComponent<AudioSource>();
                 source.volume = mySource.volume;

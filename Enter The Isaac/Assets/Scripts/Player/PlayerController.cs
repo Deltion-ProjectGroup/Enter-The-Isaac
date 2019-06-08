@@ -6,6 +6,7 @@ using UnityEngine.UI;
 
 public class PlayerController : MonoBehaviour {
     CharacterController cc;
+    public bool inControll = true;
     [HideInInspector] public Vector3 moveV3;
     Transform cam;
     Animator anim;
@@ -88,10 +89,14 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+    public void SetInControll (bool newValue) {
+        inControll = newValue;
+    }
+
     void Update () {
         anim.enabled = !pauseSettings.isPaused;
         reloadIcon.SetActive (!pauseSettings.isPaused);
-        if (pauseSettings.isPaused == false) {
+        if (pauseSettings.isPaused == false && inControll == true) {
             switch (curState) {
                 case State.Normal:
                     if (gun != null) {
@@ -195,14 +200,14 @@ public class PlayerController : MonoBehaviour {
 
     void CheckRollInput () {
         if (Input.GetButtonDown (rollInput) == true) {
-            if (GameObject.FindGameObjectWithTag ("LaserHold") != null && Input.GetAxis (shootInput) != 0 && IsInvoking("IgnoreRollInput") == false) {
+            if (GameObject.FindGameObjectWithTag ("LaserHold") != null && Input.GetAxis (shootInput) != 0 && IsInvoking ("IgnoreRollInput") == false) {
                 Destroy (GameObject.FindGameObjectWithTag ("LaserHold"));
             }
             StartCoroutine (RollEvent ());
         }
     }
 
-    void IgnoreRollInput(){
+    void IgnoreRollInput () {
         //invoke function lol
     }
 
@@ -246,7 +251,7 @@ public class PlayerController : MonoBehaviour {
         if (new Vector2 (Input.GetAxis (horInput), Input.GetAxis (vertInput)).sqrMagnitude == 0) {
             anim.Play ("Run", 1);
         }
-        Invoke("IgnoreRollInput",ignoreRollTime);
+        Invoke ("IgnoreRollInput", ignoreRollTime);
     }
 
     void RotateCrosshair () {
@@ -318,7 +323,7 @@ public class PlayerController : MonoBehaviour {
 
     Vector3 lastGunScale = Vector3.zero;
     public void GetHit (float timeStopTime) {
-        cam.GetComponent<RippleEffect>().Emit();
+        cam.GetComponent<RippleEffect> ().Emit ();
         Invoke ("StopHitControl", timeStopTime);
         StopAllCoroutines ();
         moveV3 = Vector3.zero;

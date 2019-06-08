@@ -107,7 +107,7 @@ SphereCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5489075468618320679}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 86f8675706934e04aabf0ced409b5f2f, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -128,6 +128,7 @@ MonoBehaviour:
   toSpawn:
   - {fileID: 5147418959096718469, guid: c976ce3c268d9de4eb3364b8f97e65b2, type: 3}
   - {fileID: 8158331382286321570, guid: 0ebfa3aed7b2a5448802bbb678241437, type: 3}
+  addMyRotationInSpawn: 0
 --- !u!114 &5489075468618320703
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -203,6 +204,7 @@ MonoBehaviour:
       m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
   triggerOnly: 0
+  mustBeFloor: 1
 --- !u!114 &1653014159552891479
 MonoBehaviour:
   m_ObjectHideFlags: 0
