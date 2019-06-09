@@ -75,6 +75,7 @@ public class BaseEnemy : MonoBehaviour {
     }
 
     public void StartBase () {
+        transform.tag = "Enemy";
         soundSpawner = FindObjectOfType<SoundSpawn> ();
         shakeCam = GetComponent<ShakeCam> ();
         agent = GetComponent<NavMeshAgent> ();

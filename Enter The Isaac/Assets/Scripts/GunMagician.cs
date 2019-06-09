@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 public class GunMagician : MonoBehaviour {
+    [SerializeField] bool skipIntro = false;
     [SerializeField] float flyHeight = 2;
     RippleEffect mainCamRipple;
     Vector3 startScale = Vector3.zero;
@@ -78,7 +79,15 @@ public class GunMagician : MonoBehaviour {
     float centerX = 0;
     [Header ("Intro")]
     [SerializeField] Transform introCamPos;
+    [Header("Death")]
+    [SerializeField] AudioClip deathSound;
+    [SerializeField] GameObject deathCam;
 
+    void Awake () {
+        if (skipIntro == false) {
+            enabled = false;
+        }
+    }
     void Start () {
         centerX = transform.position.x;
         soundSpawner = FindObjectOfType<SoundSpawn> ();
@@ -93,14 +102,20 @@ public class GunMagician : MonoBehaviour {
         col = GetComponent<Collider> ();
         player = FindObjectOfType<PlayerController> ().transform;
         hitbox = GetComponent<Hitbox> ();
-
         mainCam.GetComponent<Cam> ().enabled = false;
-        shakeCam.CustomShake(0.4f,2);
-        InvokeRepeating ("SmoothIntroCam", 0, 0.01f);
-        FindObjectOfType<MusicManager>().UpdateMusic(1);
-        soundSpawner.SpawnEffect(laserAounceSound);
-        FindObjectOfType<PlayerController>().SetInControll(false);
-        FindObjectOfType<PlayerController>().keyUICounter.transform.parent.parent.gameObject.SetActive(false);
+        FindObjectOfType<MusicManager> ().UpdateMusic (1);
+
+        if (skipIntro == false) {
+            shakeCam.CustomShake (0.4f, 2);
+            InvokeRepeating ("SmoothIntroCam", 0, 0.01f);
+            soundSpawner.SpawnEffect (laserAounceSound);
+            FindObjectOfType<PlayerController> ().SetInControll (false);
+            FindObjectOfType<PlayerController> ().keyUICounter.transform.parent.parent.gameObject.SetActive (false);
+        } else {
+            StartAttacking ();
+            transform.parent.GetComponentInChildren<CollisionEvent> ().gameObject.SetActive (false);
+            transform.parent.GetComponentInChildren<Canvas>(true).gameObject.SetActive(true);
+        }
     }
 
     public void SmoothIntroCam () {
@@ -109,10 +124,10 @@ public class GunMagician : MonoBehaviour {
     }
 
     public void StartAttacking () {
-        FindObjectOfType<PlayerController>().SetInControll(true);
+        FindObjectOfType<PlayerController> ().SetInControll (true);
         mainCam.GetComponent<Cam> ().enabled = true;
         Teleport (false);
-        FindObjectOfType<PlayerController>().keyUICounter.transform.parent.parent.gameObject.SetActive(true);
+        FindObjectOfType<PlayerController> ().keyUICounter.transform.parent.parent.gameObject.SetActive (true);
         InvokeRepeating ("CheckForAttack", 2 / currentSpeed, 2 / currentSpeed);
         CancelInvoke ("SmoothIntroCam");
     }
@@ -120,15 +135,57 @@ public class GunMagician : MonoBehaviour {
     void IgnoreProduceConfuse () {
         //invoke function lol
     }
-    void Update () {
-        if (Input.GetKeyDown (KeyCode.O) == true && isDoingSomething == false) {
-            // Teleport(false);
-            //LaserAttack();
-            // PoofNPop();
-            // PointNShoot();
-            // ClapNAttack();
-            //ProduceNConfuse();
+
+    public void Death () {
+        StopAllCoroutines ();
+        shakeCam.HardShake ();
+        //laser
+        laserFlare.enabled = false;
+        laser.SetActive (false);
+        anounceLaser.SetActive (false);
+        speedLines.Stop ();
+        CancelInvoke ("SmoothLookAtPlayer");
+        //ProduceNConfuse
+        GameObject[] enemies = GameObject.FindGameObjectsWithTag ("Enemy");
+        for (int i = 0; i < enemies.Length; i++) {
+            if (enemies[i] != gameObject) {
+                Destroy (enemies[i]);
+            }
         }
+        //Teleport
+        transform.localScale = startScale;
+        //pointnshoot
+        CancelInvoke ("PointNShootShoot");
+        Hurtbox[] hurtboxes = GameObject.FindObjectsOfType<Hurtbox> ();
+        for (int i = 0; i < hurtboxes.Length; i++) {
+            hurtboxes[i].damage = 0;
+        }
+        CancelInvoke();
+
+        //Game feel shit
+        FindObjectOfType<MusicManager> ().UpdateMusic (4);
+        FindObjectOfType<Pause>().enabled = false;
+        FindObjectOfType<Pause>().isPaused = false;
+        Time.timeScale = 0.3f;
+        col.enabled = false;
+        mainCamRipple.Emit();
+        StartDeathCam();
+        transform.parent.GetComponentInChildren<Canvas>(true).gameObject.SetActive(false);
+        player.parent.GetComponentInChildren<Canvas>(true).gameObject.SetActive(false);
+    }
+
+    void StartDeathCam(){
+        soundSpawner.SpawnEffect(deathSound);
+        mainCam.GetComponent<Cam> ().offset = new Vector3 (0, 7, -6);
+        deathCam.SetActive(true);
+        Invoke("StopDeathCam",5f * Time.timeScale);
+    }
+    void StopDeathCam(){
+        Time.timeScale = 1;
+       deathCam.SetActive(false); 
+       FindObjectOfType<Pause>().enabled = true;
+       FindObjectOfType<MusicManager> ().UpdateMusic (5);
+       player.parent.GetComponentInChildren<Canvas>(true).gameObject.SetActive(true);
     }
 
     public void UpdateCurrentSpeed () {
@@ -158,9 +215,12 @@ public class GunMagician : MonoBehaviour {
                     ClapNAttack ();
                     break;
                 case 5:
-                    if (IsInvoking ("IgnoreProduceConfuse") == false) {
+                    int numOfEnemies = GameObject.FindGameObjectsWithTag ("Enemy").Length;
+                    if (IsInvoking ("IgnoreProduceConfuse") == false && numOfEnemies - 1 == 0) {
                         ProduceNConfuse ();
                         Invoke ("IgnoreProduceConfuse", ignoreProduceConfuseTime);
+                    } else {
+                        Teleport (false);
                     }
                     break;
             }
@@ -255,6 +315,7 @@ public class GunMagician : MonoBehaviour {
 
     public void PoofNPop () {
         isDoingSomething = true;
+        col.enabled = false;
         teleportsLeft = amountOfTeleports;
         StartCoroutine (PoofNPopCoroutine ());
     }
@@ -284,6 +345,7 @@ public class GunMagician : MonoBehaviour {
         if (teleportsLeft > 0) {
             StartCoroutine (PoofNPopCoroutine ());
         } else {
+            col.enabled = true;
             isDoingSomething = false;
         }
     }

@@ -6,7 +6,7 @@ public class ShakeCam : MonoBehaviour
 {
 
     Shake camShake;
-    void Start()
+    void Awake()
     {
         if (Camera.main != null && Camera.main.GetComponent<Shake>() != null)
         {
