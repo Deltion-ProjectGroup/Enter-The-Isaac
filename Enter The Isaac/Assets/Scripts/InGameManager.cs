@@ -5,12 +5,6 @@ using UnityEngine.SceneManagement;
 
 public class InGameManager : MonoBehaviour
 {
-    [Header("ItemPoolData")]
-    public ItemPoolHolder weaponPool;
-    public ItemPoolHolder itemPool;
-    public ItemPoolHolder consumablePool;
-    [HideInInspector]
-    public int maxPercentage;
 
     public static int floor = 0;
     public GameObject localPlayer;
@@ -23,9 +17,6 @@ public class InGameManager : MonoBehaviour
         floor++;
         dungeonCreator.onGenerationComplete = SpawnPlayer;
         dungeonCreator.GenerateDungeon();
-        weaponPool.Initialize();
-        itemPool.Initialize();
-        consumablePool.Initialize();
     }
 
     public void SpawnPlayer()
@@ -41,45 +32,5 @@ public class InGameManager : MonoBehaviour
     public void ReturnToHub()
     {
         SceneManager.LoadScene(hubIndex);
-    }
-    [System.Serializable]
-    public class ItemPoolData
-    {
-        public int chance;
-        public Vector2 percentageBorders;
-        public GameObject[] items;
-    }
-    [System.Serializable]
-    public class ItemPoolHolder
-    {
-        public ItemPoolData[] itemPoolData;
-        public int maxPercentage;
-
-        public void Initialize()
-        {
-            for (int i = 0; i < itemPoolData.Length; i++)
-            {
-                ItemPoolData data = itemPoolData[i];
-                data.percentageBorders.x = maxPercentage + 1;
-                maxPercentage += data.chance;
-                data.percentageBorders.y = maxPercentage;
-            }
-        }
-        public GameObject GetItemFromPool()
-        {
-            int randomNum = Random.Range(1, maxPercentage + 1);
-            foreach (ItemPoolData data in itemPoolData)
-            {
-                if (randomNum >= data.percentageBorders.x && randomNum <= data.percentageBorders.y)
-                {
-                    if (data.items.Length > 0)
-                    {
-                        return (data.items[Random.Range(0, data.items.Length)]);
-                    }
-                    break;
-                }
-            }
-            return null;
-        }
     }
 }

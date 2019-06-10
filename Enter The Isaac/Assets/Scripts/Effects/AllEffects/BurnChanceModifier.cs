@@ -7,10 +7,10 @@ public class BurnChanceModifier : Effect
     public int modifyAmount;
     public override void ApplyEffect(GameObject target)
     {
-        target.GetComponent<BuffManager>().fireBuffChance += modifyAmount;
+        target.GetComponent<ChanceManager>().fireBuffChance += modifyAmount;
     }
     public override void RemoveEffect(GameObject target)
     {
-        target.GetComponent<BuffManager>().fireBuffChance -= modifyAmount;
+        target.GetComponent<ChanceManager>().fireBuffChance -= modifyAmount;
     }
 }

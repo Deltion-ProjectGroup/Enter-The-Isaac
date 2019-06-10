@@ -18,22 +18,22 @@ public class ShopRoom : BaseRoom
 
     public void InitializeShop()
     {
-        InGameManager inGameManager = GameObject.FindGameObjectWithTag("Manager").GetComponent<InGameManager>();
+        ChanceManager chanceManager = GameObject.FindGameObjectWithTag("Manager").GetComponent<ChanceManager>();
         foreach (Spawner spawner in consumableSpawners)
         {
-            GameObject item = spawner.SpawnObject(inGameManager.consumablePool.GetItemFromPool());
+            GameObject item = spawner.SpawnObject(chanceManager.consumablePool.GetItemFromPool());
             ShopItem itemData = item.AddComponent<ShopItem>();
             itemData.Initialize(0);
         }
         foreach (Spawner spawner in itemSpawners)
         {
-            GameObject item = spawner.SpawnObject(inGameManager.itemPool.GetItemFromPool());
+            GameObject item = spawner.SpawnObject(chanceManager.itemPool.GetItemFromPool());
             ShopItem itemData = item.AddComponent<ShopItem>();
             itemData.Initialize(0);
         }
         foreach (Spawner spawner in weaponSpawners)
         {
-            GameObject item = spawner.SpawnObject(inGameManager.weaponPool.GetItemFromPool());
+            GameObject item = spawner.SpawnObject(chanceManager.weaponPool.GetItemFromPool());
             ShopItem itemData = item.AddComponent<ShopItem>();
             itemData.Initialize(0);
         }

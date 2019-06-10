@@ -11,16 +11,16 @@ public class TreasurePedestal : Spawner
     }
     public GameObject GetRandomItem()
     {
-        InGameManager inGameManager = GameObject.FindGameObjectWithTag("Manager").GetComponent<InGameManager>();
-        InGameManager.ItemPoolHolder itemPoolHolder = null;
+        ChanceManager chanceManager = GameObject.FindGameObjectWithTag("Manager").GetComponent<ChanceManager>();
+        ChanceManager.ItemPoolHolder itemPoolHolder = null;
         switch(Random.Range(0, 2))
         {
             case 0:
-                itemPoolHolder = inGameManager.itemPool;
+                itemPoolHolder = chanceManager.itemPool;
                 break;
 
             case 1:
-                itemPoolHolder = inGameManager.weaponPool;
+                itemPoolHolder = chanceManager.weaponPool;
                 break;
         }
         return itemPoolHolder.GetItemFromPool();

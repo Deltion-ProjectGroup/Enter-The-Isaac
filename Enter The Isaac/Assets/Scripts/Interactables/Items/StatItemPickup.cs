@@ -10,14 +10,14 @@ public class StatItemPickup : PassiveItemPickup
 
     public override void OnInteract(GameObject player)
     {
-        BuffManager buffManager = GameObject.FindGameObjectWithTag("Manager").GetComponent<BuffManager>();
+        ChanceManager buffManager = GameObject.FindGameObjectWithTag("Manager").GetComponent<ChanceManager>();
         buffManager.fireBuffChance += fireChanceModifier;
         base.OnInteract(player);
 
     }
     public override void OnDropItem(GameObject player)
     {
-        BuffManager buffManager = GameObject.FindGameObjectWithTag("Manager").GetComponent<BuffManager>();
+        ChanceManager buffManager = GameObject.FindGameObjectWithTag("Manager").GetComponent<ChanceManager>();
         buffManager.fireBuffChance -= fireChanceModifier;
         base.OnDropItem(player);
     }

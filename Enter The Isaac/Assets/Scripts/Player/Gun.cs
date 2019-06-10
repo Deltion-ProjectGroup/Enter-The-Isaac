@@ -319,7 +319,7 @@ public class Gun : MonoBehaviour
                 CancelInvoke("LaserHoldAmmo");
                 InvokeRepeating("LaserHoldAmmo", 0, 1f);
             }
-            GameObject.FindGameObjectWithTag("Manager").GetComponent<BuffManager>().ApplyBuffEffects(bullet);
+            GameObject.FindGameObjectWithTag("Manager").GetComponent<ChanceManager>().ApplyBuffEffects(bullet);
         }
         curAmmo -= 1;
 
