@@ -86,6 +86,7 @@ public class BaseEnemy : MonoBehaviour {
         if (skipParticle == false) {
             Spawn ();
             hitbox.enabled = false;
+            GetComponent<Collider> ().enabled = false;
         }
         gunStartPos = new Vector3[gun.Length];
         for (int i = 0; i < gun.Length; i++) {
@@ -104,6 +105,7 @@ public class BaseEnemy : MonoBehaviour {
     }
 
     void AfterSpawnComplete () {
+        GetComponent<Collider> ().enabled = true;
         hitbox.enabled = true;
         for (int i = 0; i < spawnInvisible.Length; i++) {
             spawnInvisible[i].enabled = true;
@@ -209,9 +211,12 @@ public class BaseEnemy : MonoBehaviour {
             transform.LookAt (transform.position + GetComponent<Hitbox> ().impactDir);
         }
         if (hitbox.enabled == true) {
-            soundSpawner.SpawnEffect (dieSound);
+            if (soundSpawner != null) {
+                soundSpawner.SpawnEffect (dieSound);
+            }
             shakeCam.SmallShake ();
             hitbox.enabled = false;
+            GetComponent<Collider> ().enabled = false;
         }
         timer += Time.deltaTime;
         if (timer < 0.05f) {
@@ -226,7 +231,9 @@ public class BaseEnemy : MonoBehaviour {
 
     int curGun = 0;
     public virtual void Attack () {
-        soundSpawner.SpawnEffect (shootSound);
+        if (soundSpawner != null) {
+            soundSpawner.SpawnEffect (shootSound);
+        }
         shakeCam.SmallShake ();
         gun[curGun].position -= gun[curGun].right * recoil;
         curGun = (int) Mathf.Repeat (curGun + 1, gun.Length);
@@ -252,7 +259,9 @@ public class BaseEnemy : MonoBehaviour {
                 hadIK = anim.GetComponent<IKHoldGun> ().enabled;
             }
             anim.Play ("Flinch", 0);
-            soundSpawner.SpawnEffect (getHitSound);
+            if (soundSpawner != null) {
+                soundSpawner.SpawnEffect (getHitSound);
+            }
             anim.GetComponent<IKHoldGun> ().enabled = false;
             if (lastGunScale == Vector3.zero) {
                 lastGunScale = gun[0].localScale;

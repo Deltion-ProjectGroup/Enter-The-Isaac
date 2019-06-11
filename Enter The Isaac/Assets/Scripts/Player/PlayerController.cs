@@ -64,6 +64,7 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] AudioClip rollSound;
     [SerializeField] GameObject rollParticle;
     [SerializeField] float ignoreRollTime = 0.4f;
+    Vector3 lastGunScale = Vector3.zero;
     [Header ("INTERACTION")]
     public string interactButton;
     public float interactRadius;
@@ -216,7 +217,7 @@ public class PlayerController : MonoBehaviour {
         anim.Play ("Dash", 0);
         anim.SetLayerWeight (1, 0);
         GetComponentInChildren<IKHoldGun> ().enabled = false;
-        Vector3 lastGunScale = Vector3.zero;
+        lastGunScale = Vector3.zero;
         if (gun != null) {
             lastGunScale = gun.transform.localScale;
             gun.transform.localScale = Vector3.zero;
@@ -226,7 +227,6 @@ public class PlayerController : MonoBehaviour {
         curState = State.Roll;
         float oldRotSpeed = rotateSpeed;
         rotateSpeed = rotateCrosshairSpeed * 8f;
-        hitbox.SetActive (false);
         if (gun != null) {
             gun.CancelInvoke ("Shoot");
         }
@@ -246,7 +246,6 @@ public class PlayerController : MonoBehaviour {
         GetComponentInChildren<IKHoldGun> ().enabled = true;
         rotateSpeed = oldRotSpeed;
         curState = State.Normal;
-        hitbox.SetActive (true);
         transform.Find ("Line").gameObject.SetActive (false);
         if (new Vector2 (Input.GetAxis (horInput), Input.GetAxis (vertInput)).sqrMagnitude == 0) {
             anim.Play ("Run", 1);
@@ -321,20 +320,20 @@ public class PlayerController : MonoBehaviour {
         cc.Move (moveV3 * Time.deltaTime);
     }
 
-    Vector3 lastGunScale = Vector3.zero;
     public void GetHit (float timeStopTime) {
         cam.GetComponent<RippleEffect> ().Emit ();
         Invoke ("StopHitControl", timeStopTime);
         StopAllCoroutines ();
         moveV3 = Vector3.zero;
         curState = State.GetHit;
+         transform.Find ("Line").gameObject.SetActive (false);
         if (gun != null) {
             gun.StopAllCoroutines ();
         }
         anim.Play ("Flinch", 0);
         anim.SetLayerWeight (1, 0);
         anim.GetComponent<IKHoldGun> ().enabled = false;
-        if (gun != null) {
+        if (gun != null && gun.transform.localScale != Vector3.zero) {
             lastGunScale = gun.transform.localScale;
             gun.transform.localScale = Vector3.zero;
         }

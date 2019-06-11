@@ -54,6 +54,7 @@ public class GunMagician : MonoBehaviour {
     [SerializeField] float pointshootTotalAngle = 720;
     [SerializeField] float pointShootWindUpTime = 1;
     [SerializeField] AudioClip pointshootShootAudio;
+    int currentPointShootVersion = 0;
     [Header ("Clap 'n Attack")]
     [SerializeField] GameObject clapAttackProjectile;
     [SerializeField] Transform clapAttackRing1;
@@ -79,7 +80,7 @@ public class GunMagician : MonoBehaviour {
     float centerX = 0;
     [Header ("Intro")]
     [SerializeField] Transform introCamPos;
-    [Header("Death")]
+    [Header ("Death")]
     [SerializeField] AudioClip deathSound;
     [SerializeField] GameObject deathCam;
 
@@ -114,7 +115,7 @@ public class GunMagician : MonoBehaviour {
         } else {
             StartAttacking ();
             transform.parent.GetComponentInChildren<CollisionEvent> ().gameObject.SetActive (false);
-            transform.parent.GetComponentInChildren<Canvas>(true).gameObject.SetActive(true);
+            transform.parent.GetComponentInChildren<Canvas> (true).gameObject.SetActive (true);
         }
     }
 
@@ -160,32 +161,32 @@ public class GunMagician : MonoBehaviour {
         for (int i = 0; i < hurtboxes.Length; i++) {
             hurtboxes[i].damage = 0;
         }
-        CancelInvoke();
+        CancelInvoke ();
 
         //Game feel shit
         FindObjectOfType<MusicManager> ().UpdateMusic (4);
-        FindObjectOfType<Pause>().enabled = false;
-        FindObjectOfType<Pause>().isPaused = false;
+        FindObjectOfType<Pause> ().enabled = false;
+        FindObjectOfType<Pause> ().isPaused = false;
         Time.timeScale = 0.3f;
         col.enabled = false;
-        mainCamRipple.Emit();
-        StartDeathCam();
-        transform.parent.GetComponentInChildren<Canvas>(true).gameObject.SetActive(false);
-        player.parent.GetComponentInChildren<Canvas>(true).gameObject.SetActive(false);
+        mainCamRipple.Emit ();
+        StartDeathCam ();
+        transform.parent.GetComponentInChildren<Canvas> (true).gameObject.SetActive (false);
+        player.parent.GetComponentInChildren<Canvas> (true).gameObject.SetActive (false);
     }
 
-    void StartDeathCam(){
-        soundSpawner.SpawnEffect(deathSound);
+    void StartDeathCam () {
+        soundSpawner.SpawnEffect (deathSound);
         mainCam.GetComponent<Cam> ().offset = new Vector3 (0, 7, -6);
-        deathCam.SetActive(true);
-        Invoke("StopDeathCam",5f * Time.timeScale);
+        deathCam.SetActive (true);
+        Invoke ("StopDeathCam", 5f * Time.timeScale);
     }
-    void StopDeathCam(){
+    void StopDeathCam () {
         Time.timeScale = 1;
-       deathCam.SetActive(false); 
-       FindObjectOfType<Pause>().enabled = true;
-       FindObjectOfType<MusicManager> ().UpdateMusic (5);
-       player.parent.GetComponentInChildren<Canvas>(true).gameObject.SetActive(true);
+        deathCam.SetActive (false);
+        FindObjectOfType<Pause> ().enabled = true;
+        FindObjectOfType<MusicManager> ().UpdateMusic (5);
+        player.parent.GetComponentInChildren<Canvas> (true).gameObject.SetActive (true);
     }
 
     public void UpdateCurrentSpeed () {
@@ -283,10 +284,10 @@ public class GunMagician : MonoBehaviour {
         yield return new WaitForSeconds (laserAimTime / currentSpeed);
         //anounce
         laserFlare.enabled = true;
-        shakeCam.CustomShake (Mathf.Max (0.25f, laserAnounceTime / currentSpeed), 0.3f);
+        shakeCam.CustomShake (Mathf.Max (0.35f, laserAnounceTime / currentSpeed), 0.3f);
         anounceLaser.SetActive (true);
-        selfShake.CustomShake (Mathf.Max (0.25f, laserAnounceTime / currentSpeed), 1);
-        yield return new WaitForSeconds (Mathf.Max (0.25f, laserAnounceTime / currentSpeed));
+        selfShake.CustomShake (Mathf.Max (0.35f, laserAnounceTime / currentSpeed), 1);
+        yield return new WaitForSeconds (Mathf.Max (0.35f, laserAnounceTime / currentSpeed));
         //fire
         selfShake.enabled = false;
         soundSpawner.SpawnEffect (laserAounceSound);
@@ -352,6 +353,7 @@ public class GunMagician : MonoBehaviour {
 
     float soundPitchhelper = 0;
     public void PointNShoot () {
+        currentPointShootVersion = Random.Range(0,2);
         pointshootLeft = pointshootTimes;
         isDoingSomething = true;
         pointshootCurAngle = pointShootAngle;
@@ -365,8 +367,11 @@ public class GunMagician : MonoBehaviour {
         Instantiate (pointshootProjectile, leftHand.position, leftHand.rotation * pointshootProjectile.transform.rotation * Quaternion.Euler (0, pointshootCurAngle, 0)).GetComponent<AutoRotate> ().tranformV3.z = pointShootProjectileSpeed;
         Instantiate (pointshootProjectile, rightHand.position, rightHand.rotation * pointshootProjectile.transform.rotation * Quaternion.Euler (0, -pointshootCurAngle, 0)).GetComponent<AutoRotate> ().tranformV3.z = pointShootProjectileSpeed;
         pointshootLeft--;
-        pointshootCurAngle += pointshootTotalAngle / pointshootTimes;
-        //pointshootCurAngle = Random.Range(0,pointshootTotalAngle);
+        if (currentPointShootVersion == 0) {
+            pointshootCurAngle += pointshootTotalAngle / pointshootTimes;
+        } else {
+            pointshootCurAngle = Random.Range (0, 360);
+        }
         shakeCam.SmallShake ();
         soundSpawner.SpawnEffect (pointshootShootAudio, 0.25f, soundPitchhelper, 0, transform);
         soundPitchhelper += 0.6f / pointshootTimes;

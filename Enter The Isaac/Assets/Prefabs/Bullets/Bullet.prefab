@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 4395145269313031296}
   - component: {fileID: 1971995093565730999}
   - component: {fileID: 3795080908979913247}
-  m_Layer: 2
+  m_Layer: 14
   m_Name: Bullet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -428,6 +428,26 @@ PrefabInstance:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2230699531425331608, guid: cee98e1bc60baa44588075ea81b3482e,
+        type: 3}
+      propertyPath: simulationSpeed
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2230699531425331608, guid: cee98e1bc60baa44588075ea81b3482e,
+        type: 3}
+      propertyPath: InitialModule.startLifetime.scalar
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2230699531425331608, guid: cee98e1bc60baa44588075ea81b3482e,
+        type: 3}
+      propertyPath: ShapeModule.radius.value
+      value: 0.0001
+      objectReference: {fileID: 0}
+    - target: {fileID: 2230699531425331608, guid: cee98e1bc60baa44588075ea81b3482e,
+        type: 3}
+      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[0].value
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4719437420404946565, guid: cee98e1bc60baa44588075ea81b3482e,
         type: 3}
       propertyPath: InitialModule.startColor.maxColor.r
@@ -547,26 +567,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Parameters.widthCurve.m_Curve.Array.data[3].value
       value: 0.1798561
-      objectReference: {fileID: 0}
-    - target: {fileID: 2230699531425331608, guid: cee98e1bc60baa44588075ea81b3482e,
-        type: 3}
-      propertyPath: simulationSpeed
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2230699531425331608, guid: cee98e1bc60baa44588075ea81b3482e,
-        type: 3}
-      propertyPath: InitialModule.startLifetime.scalar
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2230699531425331608, guid: cee98e1bc60baa44588075ea81b3482e,
-        type: 3}
-      propertyPath: ShapeModule.radius.value
-      value: 0.0001
-      objectReference: {fileID: 0}
-    - target: {fileID: 2230699531425331608, guid: cee98e1bc60baa44588075ea81b3482e,
-        type: 3}
-      propertyPath: SizeModule.curve.maxCurve.m_Curve.Array.data[0].value
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cee98e1bc60baa44588075ea81b3482e, type: 3}
