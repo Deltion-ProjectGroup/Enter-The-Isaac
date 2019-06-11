@@ -89,6 +89,7 @@ public class BaseEnemy : MonoBehaviour {
             hitbox.enabled = false;
             GetComponent<Collider> ().enabled = false;
             contactDmg = GameObject.Find("ContactDamage");
+            contactDmg.layer = 10;//10 = enemy layer
             contactDmg.SetActive(false);
         }
         gunStartPos = new Vector3[gun.Length];

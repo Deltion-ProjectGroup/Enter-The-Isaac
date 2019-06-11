@@ -4476,7 +4476,7 @@ GameObject:
   - component: {fileID: 360421245}
   - component: {fileID: 360421244}
   - component: {fileID: 360421243}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: ContactDamageBox
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -7748,6 +7748,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: BaseEnemy
       objectReference: {fileID: 0}
+    - target: {fileID: 5147418959096718469, guid: c976ce3c268d9de4eb3364b8f97e65b2,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5147418959096952997, guid: c976ce3c268d9de4eb3364b8f97e65b2,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -9267,10 +9272,14 @@ MonoBehaviour:
     maxPercentage: 0
   baseAmmoChance: 0
   baseHealthChance: 0
+  baseKeyChance: 0
   ammoPickup: {fileID: 0}
   healthPickup: {fileID: 0}
+  keyPickup: {fileID: 0}
   ammoChancePerPercentMissing: 0
   healthChancePerPercentMissing: 0
+  maxKeysBeforeChanceDrop: 0
+  keyChanceMultiplier: 0
   fireBuffData: {fileID: 11400000, guid: b2a3bc53b66664143bd85a5826772a17, type: 2}
   fireBuffChance: 0
   explosionBuffChance: 0
@@ -11103,7 +11112,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &851462688
 Transform:
   m_ObjectHideFlags: 0
@@ -11227,6 +11236,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: SniperEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 1897557240992634389, guid: a1bfa735e0753104b868c76f21773078,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1897557240992336437, guid: a1bfa735e0753104b868c76f21773078,
         type: 3}
@@ -11616,6 +11630,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: BatEnemy
+      objectReference: {fileID: 0}
+    - target: {fileID: 7129523558497025242, guid: a6d05cfdf7244a84aa9896bc5543d6fd,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7129523558497025243, guid: a6d05cfdf7244a84aa9896bc5543d6fd,
         type: 3}
@@ -13354,6 +13373,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: SergeantEnemy
       objectReference: {fileID: 0}
+    - target: {fileID: 6713005394100740138, guid: 2f190754276ca46419cb5636ac9f46dd,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6713005394100255754, guid: 2f190754276ca46419cb5636ac9f46dd,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -14208,7 +14232,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1128178558
 Transform:
   m_ObjectHideFlags: 0
@@ -15370,6 +15394,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: PrivateEnemy (Blue)
       objectReference: {fileID: 0}
+    - target: {fileID: 1571601653302356727, guid: 4231d15c0d754a945aa0408e03e08c86,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1571601653302785751, guid: 4231d15c0d754a945aa0408e03e08c86,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -16489,6 +16518,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: BigBat
+      objectReference: {fileID: 0}
+    - target: {fileID: 8177181223158001203, guid: bed91ea3a64a49742ada83a561733b58,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8177181223158001212, guid: bed91ea3a64a49742ada83a561733b58,
         type: 3}
@@ -24064,6 +24098,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: PrivateEnemy
       objectReference: {fileID: 0}
+    - target: {fileID: 2360543679749722569, guid: 53c978f7e0f06cd48affa2d9bef4fc80,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2360543679749361129, guid: 53c978f7e0f06cd48affa2d9bef4fc80,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -27209,6 +27248,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: BatEnemy (Blue)
       objectReference: {fileID: 0}
+    - target: {fileID: 7036029733255593545, guid: af93a44fd0604ec4e9b509d80c18cad5,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7036029733255593544, guid: af93a44fd0604ec4e9b509d80c18cad5,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -27938,6 +27982,11 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 65470452268045502, guid: 8d7fad365328ae84f91c121c1068e847,
+        type: 3}
+      propertyPath: m_CullingMask.m_Bits
+      value: 57111
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8d7fad365328ae84f91c121c1068e847, type: 3}
 --- !u!1001 &1533028263857226411
@@ -27951,6 +28000,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: SergeantEnemy (Purple)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5219403428757834239, guid: 09c3378c5636e9e489d0610e8738675c,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5219403428758197727, guid: 09c3378c5636e9e489d0610e8738675c,
         type: 3}
@@ -28045,6 +28099,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: SniperEnemy (Blue)
       objectReference: {fileID: 0}
+    - target: {fileID: 4123927476388192464, guid: 246bc225189f4f545919792fadc87ffb,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4123927476387773680, guid: 246bc225189f4f545919792fadc87ffb,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -28114,6 +28173,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: BatEnemy (Purple)
       objectReference: {fileID: 0}
+    - target: {fileID: 6125204232048152843, guid: 05143f89a7d9a7a4bbb8b23a897f014b,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 6125204232048152842, guid: 05143f89a7d9a7a4bbb8b23a897f014b,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -28182,6 +28246,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: BigBat (Blue)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3505606299938817355, guid: 3295c5cb705dc8c4bba1eb264e9c125a,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3505606299938817348, guid: 3295c5cb705dc8c4bba1eb264e9c125a,
         type: 3}
@@ -28264,6 +28333,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: SniperEnemy (Purple)
       objectReference: {fileID: 0}
+    - target: {fileID: 5569348261447040626, guid: 47b39d836ea262b4db4a3ad4ee88c2b9,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5569348261446869586, guid: 47b39d836ea262b4db4a3ad4ee88c2b9,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -28332,6 +28406,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: PrivateEnemy (Purple)
+      objectReference: {fileID: 0}
+    - target: {fileID: 5311357526834104364, guid: 02f1ab88efb55384fb8c0f430359b2c9,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 5311357526834205708, guid: 02f1ab88efb55384fb8c0f430359b2c9,
         type: 3}
@@ -28426,6 +28505,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: BigBat (Purple)
       objectReference: {fileID: 0}
+    - target: {fileID: 1791867267553279415, guid: f5c5a266a8655bb44909bf7d1099bf70,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 1791867267553279416, guid: f5c5a266a8655bb44909bf7d1099bf70,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -28494,6 +28578,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: BaseEnemy (Purple)
+      objectReference: {fileID: 0}
+    - target: {fileID: 3991642085945027765, guid: e469a7ac8e37b7043921ad708032c3b1,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3991642085945454741, guid: e469a7ac8e37b7043921ad708032c3b1,
         type: 3}
@@ -28576,6 +28665,11 @@ PrefabInstance:
       propertyPath: m_Name
       value: BaseEnemy (Blue)
       objectReference: {fileID: 0}
+    - target: {fileID: 3467661685434995652, guid: 9b53e229ae02be348950871ebcd1f809,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3467661685434765284, guid: 9b53e229ae02be348950871ebcd1f809,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -28644,6 +28738,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: SergeantEnemy (Blue)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2588156744913086052, guid: cffb82bc4273bab40a38dd5821257ec1,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2588156744913189444, guid: cffb82bc4273bab40a38dd5821257ec1,
         type: 3}
