@@ -211,7 +211,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ca8bd342b38a3542aec7c36a87b57d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  curHealth: 45
+  curHealth: 10
   fakeHealth: 0
   team: 1
   maxHealth: 1
@@ -598,6 +598,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Private LP
       objectReference: {fileID: 0}
+    - target: {fileID: 13700000, guid: 3ba41376c11b9e64c8712b7cc80ff663, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 1a20819c8bbaed44b9ffeba420035c44, type: 2}
     - target: {fileID: 400042, guid: 3ba41376c11b9e64c8712b7cc80ff663, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -650,10 +654,6 @@ PrefabInstance:
       propertyPath: m_ApplyRootMotion
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 13700000, guid: 3ba41376c11b9e64c8712b7cc80ff663, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 1a20819c8bbaed44b9ffeba420035c44, type: 2}
     - target: {fileID: 400014, guid: 3ba41376c11b9e64c8712b7cc80ff663, type: 3}
       propertyPath: m_LocalRotation.x
       value: 0.044693414
