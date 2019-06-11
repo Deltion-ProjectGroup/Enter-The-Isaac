@@ -432,5 +432,6 @@ public class Gun : MonoBehaviour
             player.magazineStore[player.curGun] = totalMaxAmmo;
             player.ammoStore[player.curGun] = curAmmo;
         }
+        GameObject.FindGameObjectWithTag("Manager").GetComponent<ChanceManager>().RecalculateEnemyDropRate((int)player.hitbox.GetComponent<Hitbox>().curHealth, (int)player.hitbox.GetComponent<Hitbox>().maxHealth, player.magazineStore[player.curGun], player.gun.gunClone.maxAmmo, player.keys);
     }
 }

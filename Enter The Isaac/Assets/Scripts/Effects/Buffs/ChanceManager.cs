@@ -11,11 +11,11 @@ public class ChanceManager : MonoBehaviour
 
     [Header("EnemyDropsData")]
     public ItemPoolHolder enemyDropPool;
-    public int baseAmmoChance;
-    public int baseHealthChance;
-    public GameObject ammoPickup, healthPickup;
-    public int ammoChancePerPercentMissing;
-    public int healthChancePerPercentMissing;
+    public int baseAmmoChance, baseHealthChance, baseKeyChance;
+    public GameObject ammoPickup, healthPickup, keyPickup;
+    public int ammoChancePerPercentMissing, healthChancePerPercentMissing;
+    public int maxKeysBeforeChanceDrop;
+    public float keyChanceMultiplier;
 
     public DOTBuffSO fireBuffData;
     public int fireBuffChance;
@@ -48,13 +48,41 @@ public class ChanceManager : MonoBehaviour
         }
     }
 
-    public void RecalculateEnemyDropRate(int curHealth, int maxHealth, int curAmmoStore, int maxAmmoStore)
+    public void RecalculateEnemyDropRate(int curHealth, int maxHealth, int curAmmoStore, int maxAmmoStore, int keyCount)
     {
-        int missingHealth = 100 - (curHealth / maxHealth * 100);
-        int missingAmmo = 100 - (curAmmoStore / maxAmmoStore * 100);
+        int missingHealth = Mathf.RoundToInt(100 - ((float)curHealth / (float)maxHealth * 100));
+        int missingAmmo = Mathf.RoundToInt(100 - ((float)curAmmoStore / (float)maxAmmoStore * 100));
+
+        float keyChance = baseKeyChance;
+        if(keyCount >= maxKeysBeforeChanceDrop)
+        {
+            for(int i = -1; i < keyCount - maxKeysBeforeChanceDrop; i++)
+            {
+                keyChance = Mathf.Sqrt(keyChance);
+            }
+        }
+
+        //Calculates the keyDrops
+        foreach (ItemPoolData data in enemyDropPool.itemPoolData)
+        {
+            bool done = false;
+            foreach (GameObject item in data.items)
+            {
+                if (item == keyPickup)
+                {
+                    data.chance = (int)(keyChance * keyChanceMultiplier);
+                    done = true;
+                    break;
+                }
+            }
+            if (done)
+            {
+                break;
+            }
+        }
 
         //Calculates the healthDrops
-        foreach(ItemPoolData data in enemyDropPool.itemPoolData)
+        foreach (ItemPoolData data in enemyDropPool.itemPoolData)
         {
             bool done = false;
             foreach(GameObject item in data.items)

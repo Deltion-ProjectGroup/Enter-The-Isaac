@@ -156,6 +156,11 @@ public class BatBehaviour : MonoBehaviour
         }
         if (timer > 0.25f)
         {
+            GameObject dropToSpawn = GameObject.FindGameObjectWithTag("Manager").GetComponent<ChanceManager>().enemyDropPool.GetItemFromPool();
+            if (dropToSpawn)
+            {
+                Instantiate(dropToSpawn, transform.position, Quaternion.identity);
+            }
             Destroy(gameObject);
         }
     }

@@ -26,6 +26,7 @@ public class Hitbox : MonoBehaviour {
     public delegate void VoidDelegate ();
     public delegate void GameObjectDelegate (GameObject thisObject);
     public GameObjectDelegate onDeath;
+    public VoidDelegate onHit;
 
     void Start () {
         StartStuff ();
@@ -61,6 +62,10 @@ public class Hitbox : MonoBehaviour {
             if (curHealth <= 0) {
                 Die ();
             } else {
+                if(onHit != null)
+                {
+                    onHit();
+                }
                 Invoke ("Invincible", invincibleTime);
                 float totalTime = 0;
                 for (int i = 0; i < timedEvents.Length; i++) {
