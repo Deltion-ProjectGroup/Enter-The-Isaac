@@ -16,6 +16,7 @@ public class GunMagician : MonoBehaviour {
     [SerializeField] AnimationCurve currentSpeedOverHealth;
     Hitbox hitbox;
     SoundSpawn soundSpawner;
+    [SerializeField] GameObject contactDamageBox;
     [Header ("Teleport")]
     [SerializeField] GameObject teleportLandParticle;
     [SerializeField] GameObject teleportLocationsParent;
@@ -84,6 +85,14 @@ public class GunMagician : MonoBehaviour {
     [SerializeField] AudioClip deathSound;
     [SerializeField] GameObject deathCam;
 
+
+    //#if UnityEngine
+    void Update(){
+        if(Input.GetKeyDown(KeyCode.O)){
+            Death();
+        }
+    }
+   // #endif
     void Awake () {
         if (skipIntro == false) {
             enabled = false;
@@ -164,6 +173,7 @@ public class GunMagician : MonoBehaviour {
         CancelInvoke ();
 
         //Game feel shit
+        contactDamageBox.SetActive(false);
         FindObjectOfType<MusicManager> ().UpdateMusic (4);
         FindObjectOfType<Pause> ().enabled = false;
         FindObjectOfType<Pause> ().isPaused = false;

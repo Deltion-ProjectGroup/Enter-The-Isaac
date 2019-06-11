@@ -69,6 +69,7 @@ public class BaseEnemy : MonoBehaviour {
     [SerializeField] float rotateY = 0;
     [SerializeField] float lifeTime = 1;
     [SerializeField] bool parentToMe = false;
+    GameObject contactDmg;
 
     void Awake () {
         StartBase ();
@@ -87,6 +88,8 @@ public class BaseEnemy : MonoBehaviour {
             Spawn ();
             hitbox.enabled = false;
             GetComponent<Collider> ().enabled = false;
+            contactDmg = GameObject.Find("ContactDamage");
+            contactDmg.SetActive(false);
         }
         gunStartPos = new Vector3[gun.Length];
         for (int i = 0; i < gun.Length; i++) {
@@ -107,6 +110,7 @@ public class BaseEnemy : MonoBehaviour {
     void AfterSpawnComplete () {
         GetComponent<Collider> ().enabled = true;
         hitbox.enabled = true;
+        contactDmg.SetActive(true);
         for (int i = 0; i < spawnInvisible.Length; i++) {
             spawnInvisible[i].enabled = true;
         }
