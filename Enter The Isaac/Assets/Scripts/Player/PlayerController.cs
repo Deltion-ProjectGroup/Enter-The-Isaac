@@ -75,6 +75,7 @@ public class PlayerController : MonoBehaviour {
         cc = GetComponent<CharacterController> ();
         cam = Camera.main.transform;
         soundSpawn = FindObjectOfType<SoundSpawn> ();
+        hitbox.GetComponent<Hitbox>().onHit += OnTookDamage;
 
         for (int i = 0; i < guns.Count; i++) {
             ammoStore.Add (guns[i].magazineSize);
@@ -338,7 +339,10 @@ public class PlayerController : MonoBehaviour {
             gun.transform.localScale = Vector3.zero;
         }
     }
-
+    public void OnTookDamage()
+    {
+        GameObject.FindGameObjectWithTag("Manager").GetComponent<ChanceManager>().RecalculateEnemyDropRate((int)hitbox.GetComponent<Hitbox>().curHealth, (int)hitbox.GetComponent<Hitbox>().maxHealth, magazineStore[curGun], gun.gunClone.maxAmmo, keys);
+    }
     void StopHitControl () {
         curState = State.Normal;
         anim.SetLayerWeight (1, 1);

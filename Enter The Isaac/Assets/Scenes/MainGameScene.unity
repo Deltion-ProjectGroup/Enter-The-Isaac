@@ -325,29 +325,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2d538c4431678aa4a8c51caa4144d5a6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  weaponPool:
-    itemPoolData:
-    - chance: 100
-      percentageBorders: {x: 0, y: 0}
-      items:
-      - {fileID: 5496543056268999194, guid: 2c31b22775cc2b5419f93b195c56fafb, type: 3}
-    maxPercentage: 0
-  itemPool:
-    itemPoolData:
-    - chance: 100
-      percentageBorders: {x: 0, y: 0}
-      items:
-      - {fileID: 146287797357915031, guid: db34f6a2f74710246858d67398947672, type: 3}
-      - {fileID: 146287797357915031, guid: 11056447b8b75ab47b331df5b2c27874, type: 3}
-    maxPercentage: 0
-  consumablePool:
-    itemPoolData:
-    - chance: 100
-      percentageBorders: {x: 0, y: 0}
-      items:
-      - {fileID: 31600477805297308, guid: 06a860b8da587a142bc78fda89328876, type: 3}
-    maxPercentage: 0
-  maxPercentage: 0
   localPlayer: {fileID: 0}
   dungeonCreator: {fileID: 1859468205}
   playerPrefab: {fileID: 65470453131414240, guid: 8d7fad365328ae84f91c121c1068e847,
@@ -380,6 +357,54 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d6872a1b71da9e844b28fdbe840f1426, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  weaponPool:
+    itemPoolData:
+    - chance: 100
+      percentageBorders: {x: 0, y: 0}
+      items:
+      - {fileID: 5496543056268999194, guid: 2c31b22775cc2b5419f93b195c56fafb, type: 3}
+    maxPercentage: 0
+  itemPool:
+    itemPoolData:
+    - chance: 100
+      percentageBorders: {x: 0, y: 0}
+      items:
+      - {fileID: 146287797357915031, guid: db34f6a2f74710246858d67398947672, type: 3}
+    maxPercentage: 0
+  consumablePool:
+    itemPoolData:
+    - chance: 100
+      percentageBorders: {x: 0, y: 0}
+      items:
+      - {fileID: 31600477805297308, guid: 06a860b8da587a142bc78fda89328876, type: 3}
+    maxPercentage: 0
+  enemyDropPool:
+    itemPoolData:
+    - chance: 10
+      percentageBorders: {x: 0, y: 0}
+      items:
+      - {fileID: 8924400645496208314, guid: 27ac727e307aeae4da3d378abb654496, type: 3}
+    - chance: 10
+      percentageBorders: {x: 0, y: 0}
+      items:
+      - {fileID: 31600477805297308, guid: 06a860b8da587a142bc78fda89328876, type: 3}
+    - chance: 10
+      percentageBorders: {x: 0, y: 0}
+      items:
+      - {fileID: 100000, guid: f8371ac655ae44d4dad585a461b0d08a, type: 3}
+    maxPercentage: 0
+  baseAmmoChance: 10
+  baseHealthChance: 10
+  baseKeyChance: 10
+  ammoPickup: {fileID: 31600477805297308, guid: 06a860b8da587a142bc78fda89328876,
+    type: 3}
+  healthPickup: {fileID: 8924400645496208314, guid: 27ac727e307aeae4da3d378abb654496,
+    type: 3}
+  keyPickup: {fileID: 100000, guid: f8371ac655ae44d4dad585a461b0d08a, type: 3}
+  ammoChancePerPercentMissing: 1
+  healthChancePerPercentMissing: 1
+  maxKeysBeforeChanceDrop: 0
+  keyChanceMultiplier: 1
   fireBuffData: {fileID: 11400000, guid: b2a3bc53b66664143bd85a5826772a17, type: 2}
   fireBuffChance: 100
   explosionBuffChance: 0
