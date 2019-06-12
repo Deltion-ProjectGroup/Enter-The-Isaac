@@ -275,12 +275,16 @@ MonoBehaviour:
   bossCount: 0
   treasureCount: 0
   eventRoomsThisFloor: 0
+  roomPercentages:
+    intPoolData: []
+    maxPercentage: 0
   shopChance: 1
   eventRoomChance: 1
   bossRoomChance: 1
   treasureRoomChance: 5
   endRooms: []
   entireDungeon: []
+  enemyRooms: []
 --- !u!4 &501272395
 Transform:
   m_ObjectHideFlags: 0
@@ -359,36 +363,47 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   weaponPool:
     itemPoolData:
-    - chance: 100
+    - unlocksAtFloor: 0
+      chance: 100
       percentageBorders: {x: 0, y: 0}
       items:
       - {fileID: 5496543056268999194, guid: 2c31b22775cc2b5419f93b195c56fafb, type: 3}
     maxPercentage: 0
   itemPool:
     itemPoolData:
-    - chance: 100
+    - unlocksAtFloor: 0
+      chance: 100
       percentageBorders: {x: 0, y: 0}
       items:
       - {fileID: 146287797357915031, guid: db34f6a2f74710246858d67398947672, type: 3}
     maxPercentage: 0
   consumablePool:
     itemPoolData:
-    - chance: 100
+    - unlocksAtFloor: 0
+      chance: 100
       percentageBorders: {x: 0, y: 0}
       items:
       - {fileID: 31600477805297308, guid: 06a860b8da587a142bc78fda89328876, type: 3}
     maxPercentage: 0
   enemyDropPool:
     itemPoolData:
-    - chance: 10
+    - unlocksAtFloor: 0
+      chance: 10
       percentageBorders: {x: 0, y: 0}
       items:
       - {fileID: 8924400645496208314, guid: 27ac727e307aeae4da3d378abb654496, type: 3}
-    - chance: 10
+    - unlocksAtFloor: 0
+      chance: 10
       percentageBorders: {x: 0, y: 0}
       items:
       - {fileID: 31600477805297308, guid: 06a860b8da587a142bc78fda89328876, type: 3}
-    - chance: 10
+    - unlocksAtFloor: 0
+      chance: 10
+      percentageBorders: {x: 0, y: 0}
+      items:
+      - {fileID: 4497377686298868263, guid: 7a94d879b7d87934b87c28ecc0587e32, type: 3}
+    - unlocksAtFloor: 0
+      chance: 100
       percentageBorders: {x: 0, y: 0}
       items:
       - {fileID: 100000, guid: f8371ac655ae44d4dad585a461b0d08a, type: 3}
@@ -400,7 +415,8 @@ MonoBehaviour:
     type: 3}
   healthPickup: {fileID: 8924400645496208314, guid: 27ac727e307aeae4da3d378abb654496,
     type: 3}
-  keyPickup: {fileID: 100000, guid: f8371ac655ae44d4dad585a461b0d08a, type: 3}
+  keyPickup: {fileID: 4497377686298868263, guid: 7a94d879b7d87934b87c28ecc0587e32,
+    type: 3}
   ammoChancePerPercentMissing: 1
   healthChancePerPercentMissing: 1
   maxKeysBeforeChanceDrop: 0
@@ -509,12 +525,25 @@ MonoBehaviour:
   bossCount: 0
   treasureCount: 0
   eventRoomsThisFloor: 0
+  roomPercentages:
+    intPoolData:
+    - chance: 30
+      percentageBorders: {x: 0, y: 0}
+      amount: 1
+    - chance: 60
+      percentageBorders: {x: 0, y: 0}
+      amount: 2
+    - chance: 10
+      percentageBorders: {x: 0, y: 0}
+      amount: 3
+    maxPercentage: 0
   shopChance: 8
   eventRoomChance: 1
   bossRoomChance: 100
   treasureRoomChance: 5
   endRooms: []
   entireDungeon: []
+  enemyRooms: []
 --- !u!4 &1859468206
 Transform:
   m_ObjectHideFlags: 0
@@ -629,12 +658,16 @@ MonoBehaviour:
   bossCount: 0
   treasureCount: 0
   eventRoomsThisFloor: 0
+  roomPercentages:
+    intPoolData: []
+    maxPercentage: 0
   shopChance: 1
   eventRoomChance: 1
   bossRoomChance: 1
   treasureRoomChance: 5
   endRooms: []
   entireDungeon: []
+  enemyRooms: []
 --- !u!4 &1995347975
 Transform:
   m_ObjectHideFlags: 0

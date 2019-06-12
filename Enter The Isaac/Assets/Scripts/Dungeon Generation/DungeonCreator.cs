@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using Chance;
 
 public class DungeonCreator : MonoBehaviour
 {
@@ -40,6 +41,8 @@ public class DungeonCreator : MonoBehaviour
     public static int eventRoomCount;
     public int eventRoomsThisFloor;
 
+    public IntChanceHolder roomPercentages;
+
 
     [Header("Spawn Odds")]
     [Range(0, 100)]
@@ -53,10 +56,15 @@ public class DungeonCreator : MonoBehaviour
 
     public List<GameObject> endRooms;
     public List<GameObject> entireDungeon;
+    public List<GameObject> enemyRooms;
 
     public delegate void DelegateVoid();
     public DelegateVoid onGenerationComplete;
 
+    public void Awake()
+    {
+        roomPercentages.Initialize();
+    }
 
     public void Update()
     {
@@ -96,14 +104,6 @@ public class DungeonCreator : MonoBehaviour
     public Vector3 GetLocationData(Transform thisObject, Transform selectedConnectionPoint, Transform connectionPointToSnapTo)
     {
         return connectionPointToSnapTo.position + (thisObject.position - selectedConnectionPoint.position);
-    }
-    public void SpawnRandomHallway(GameObject thisRoom, Transform doorPoint, DungeonConnectionPoint.ConnectionDirection requiredDirection)
-    {
-        SpawnDungeonPartAlt(hallways, requiredDirection, thisRoom, doorPoint, BaseRoom.RoomTypes.Hallway);
-    }
-    public void SpawnRandomRoom(GameObject thisRoom, Transform doorPoint, DungeonConnectionPoint.ConnectionDirection requiredDirection)
-    {
-        SpawnDungeonPartAlt(rooms, requiredDirection, thisRoom, doorPoint, BaseRoom.RoomTypes.Normal);
     }
     public void SpawnDungeonPartAlt(List<GameObject> allRooms, DungeonConnectionPoint.ConnectionDirection requiredDirection, GameObject parentRoom, Transform pointToConnectTo, BaseRoom.RoomTypes roomType)
     {
@@ -206,9 +206,46 @@ public class DungeonCreator : MonoBehaviour
             }
             else
             {
-                StartCoroutine(Finalize());
+                StartCoroutine(InitializeEnemyRooms());
             }
         }
+    }
+    public IEnumerator InitializeEnemyRooms()
+    {
+        List<GameObject> enemyRoomsCopy = new List<GameObject>(enemyRooms);
+        int backupCount = enemyRoomsCopy.Count;
+        print(enemyRoomsCopy.Count);
+        foreach(ChanceIntData data in roomPercentages.intPoolData)
+        {
+            float percentage = (float)data.chance / (float)roomPercentages.maxPercentage;
+            int remainingRoomsToChange = (int)(backupCount * percentage);
+
+            print(remainingRoomsToChange);
+            while(enemyRoomsCopy.Count > 0 && remainingRoomsToChange > 0)
+            {
+                GameObject selectedRoom = enemyRoomsCopy[Random.Range(0, enemyRoomsCopy.Count)];
+                print(selectedRoom);
+                selectedRoom.GetComponent<EnemyRoom>().spawnManager.requiredWaveAmount = data.amount;
+                enemyRoomsCopy.Remove(selectedRoom);
+                remainingRoomsToChange--;
+                yield return null;
+            }
+        }
+        if(enemyRoomsCopy.Count > 0)
+        {
+            while(enemyRoomsCopy.Count > 0)
+            {
+                enemyRoomsCopy[0].GetComponent<EnemyRoom>().spawnManager.requiredWaveAmount = roomPercentages.intPoolData[roomPercentages.intPoolData.Length - 1].amount;
+                enemyRoomsCopy.RemoveAt(0);
+            }
+        }
+        foreach(GameObject enemyRoom in enemyRooms)
+        {
+            yield return null;
+            enemyRoom.GetComponent<EnemyRoom>().spawnManager.GenerateCustomWaves();
+        }
+        yield return null;
+        StartCoroutine(Finalize());
     }
     public IEnumerator Finalize()
     {

@@ -5,12 +5,12 @@ using UnityEngine;
 public class ChanceManager : MonoBehaviour
 {
     [Header("ItemPoolData")]
-    public ItemPoolHolder weaponPool;
-    public ItemPoolHolder itemPool;
-    public ItemPoolHolder consumablePool;
+    public Chance.ItemPoolHolder weaponPool;
+    public Chance.ItemPoolHolder itemPool;
+    public Chance.ItemPoolHolder consumablePool;
 
     [Header("EnemyDropsData")]
-    public ItemPoolHolder enemyDropPool;
+    public Chance.ItemPoolHolder enemyDropPool;
     public int baseAmmoChance, baseHealthChance, baseKeyChance;
     public GameObject ammoPickup, healthPickup, keyPickup;
     public int ammoChancePerPercentMissing, healthChancePerPercentMissing;
@@ -35,7 +35,7 @@ public class ChanceManager : MonoBehaviour
     public void ApplyBuffEffects(GameObject target)
     {
         int randomChance = Random.Range(1, 101);
-        if(randomChance <= fireBuffChance)
+        if (randomChance <= fireBuffChance)
         {
             BurnEffect burnEffect = target.AddComponent<BurnEffect>();
             burnEffect.burnData = fireBuffData;
@@ -54,16 +54,16 @@ public class ChanceManager : MonoBehaviour
         int missingAmmo = Mathf.RoundToInt(100 - ((float)curAmmoStore / (float)maxAmmoStore * 100));
 
         float keyChance = baseKeyChance;
-        if(keyCount >= maxKeysBeforeChanceDrop)
+        if (keyCount >= maxKeysBeforeChanceDrop)
         {
-            for(int i = -1; i < keyCount - maxKeysBeforeChanceDrop; i++)
+            for (int i = -1; i < keyCount - maxKeysBeforeChanceDrop; i++)
             {
                 keyChance = Mathf.Sqrt(keyChance);
             }
         }
 
         //Calculates the keyDrops
-        foreach (ItemPoolData data in enemyDropPool.itemPoolData)
+        foreach (Chance.ItemPoolData data in enemyDropPool.itemPoolData)
         {
             bool done = false;
             foreach (GameObject item in data.items)
@@ -82,12 +82,12 @@ public class ChanceManager : MonoBehaviour
         }
 
         //Calculates the healthDrops
-        foreach (ItemPoolData data in enemyDropPool.itemPoolData)
+        foreach (Chance.ItemPoolData data in enemyDropPool.itemPoolData)
         {
             bool done = false;
-            foreach(GameObject item in data.items)
+            foreach (GameObject item in data.items)
             {
-                if(item == healthPickup)
+                if (item == healthPickup)
                 {
                     data.chance = baseHealthChance + (missingHealth * healthChancePerPercentMissing);
                     done = true;
@@ -101,7 +101,7 @@ public class ChanceManager : MonoBehaviour
         }
 
         //Calculates the ammoDrops
-        foreach (ItemPoolData data in enemyDropPool.itemPoolData)
+        foreach (Chance.ItemPoolData data in enemyDropPool.itemPoolData)
         {
             bool done = false;
             foreach (GameObject item in data.items)
@@ -120,11 +120,13 @@ public class ChanceManager : MonoBehaviour
         }
         enemyDropPool.Initialize();
     }
-
-
+}
+namespace Chance
+{
     [System.Serializable]
     public class ItemPoolData
     {
+        public int unlocksAtFloor = 0;
         public int chance;
         public Vector2 percentageBorders;
         public GameObject[] items;
@@ -141,12 +143,15 @@ public class ChanceManager : MonoBehaviour
             for (int i = 0; i < itemPoolData.Length; i++)
             {
                 ItemPoolData data = itemPoolData[i];
-                data.percentageBorders.x = maxPercentage + 1;
-                maxPercentage += data.chance;
-                data.percentageBorders.y = maxPercentage;
+                if (data.unlocksAtFloor <= InGameManager.floor)
+                {
+                    data.percentageBorders.x = maxPercentage + 1;
+                    maxPercentage += data.chance;
+                    data.percentageBorders.y = maxPercentage;
+                }
             }
         }
-        public GameObject GetItemFromPool()
+        public GameObject GetInstanceFromPool()
         {
             int randomNum = Random.Range(1, maxPercentage + 1);
             foreach (ItemPoolData data in itemPoolData)
@@ -161,6 +166,44 @@ public class ChanceManager : MonoBehaviour
                 }
             }
             return null;
+        }
+    }
+
+    [System.Serializable]
+    public class ChanceIntData
+    {
+        public int chance;
+        public Vector2 percentageBorders;
+        public int amount;
+    }
+    [System.Serializable]
+    public class IntChanceHolder
+    {
+        public ChanceIntData[] intPoolData;
+        public int maxPercentage;
+
+        public void Initialize()
+        {
+            maxPercentage = 0;
+            for (int i = 0; i < intPoolData.Length; i++)
+            {
+                ChanceIntData data = intPoolData[i];
+                data.percentageBorders.x = maxPercentage + 1;
+                maxPercentage += data.chance;
+                data.percentageBorders.y = maxPercentage;
+            }
+        }
+        public int GetIntFromPool()
+        {
+            int randomNum = Random.Range(1, maxPercentage + 1);
+            foreach (ChanceIntData data in intPoolData)
+            {
+                if (randomNum >= data.percentageBorders.x && randomNum <= data.percentageBorders.y)
+                {
+                    return data.amount;
+                }
+            }
+            return 0;
         }
     }
 }

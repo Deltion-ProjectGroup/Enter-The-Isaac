@@ -1,18 +1,63 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Chance;
 
 public class EnemySpawnManager : MonoBehaviour
 {
     int selectedPossibility;
     int currentWave;
-    public PossibleWave[] waveSpawnPossibilities;
+    public int requiredWaveAmount;
+    public int minSpawnersToUse, maxSpawnersToUse;
+    public int minEnemiesPerSpawner, maxEnemiesPerSpawner;
+    public int minEnemiesPerRoom, maxEnemiesPerRoom;
+    public float minEnemySpawnDelay, maxEnemySpawnDelay;
+    int totalEnemiesToSpawn = 0;
+    public ItemPoolHolder enemyPool;
+    public Spawner[] enemySpawners;
+    public List<WaveData> waves = new List<WaveData>();
     public delegate void VoidDelegate();
     public VoidDelegate onClearWaves;
     [SerializeField] List<GameObject> aliveEnemies = new List<GameObject>();
     int openSpawnProcesses;
     [SerializeField] bool checkEnemiesInUpdate = false;
 
+
+    public void GenerateCustomWaves()
+    {
+        enemyPool.Initialize();
+        List<Spawner> availableSpawners = new List<Spawner>(enemySpawners);
+        //Generates the minimal requirements to be set
+        for (int currentWaveAmount = 0; currentWaveAmount < requiredWaveAmount; currentWaveAmount++)
+        {
+            WaveData newWave = new WaveData();
+            newWave.spawnData = new List<SpawnData>();
+            int spawnerAmountToUse = Random.Range(minSpawnersToUse, maxSpawnersToUse + 1);
+            for(int spawnerAmount = 0; spawnerAmount < spawnerAmountToUse; spawnerAmount++)
+            {
+                Spawner selectedSpawner = availableSpawners[Random.Range(0, availableSpawners.Count)];
+                SpawnData newSpawnerSpawnData = new SpawnData();
+                newSpawnerSpawnData.enemySpawnData = new List<EnemySpawnData>();
+                newSpawnerSpawnData.spawner = selectedSpawner;
+                for(int spawnerEnemyCount = 0; spawnerEnemyCount < minEnemiesPerSpawner; spawnerEnemyCount++)
+                {
+                    EnemySpawnData enemyToSpawnData = new EnemySpawnData();
+                    enemyToSpawnData.enemy = enemyPool.GetInstanceFromPool();
+                    enemyToSpawnData.delayBeforeSpawn = Random.Range(minEnemySpawnDelay, maxEnemySpawnDelay + 1);
+                    newSpawnerSpawnData.enemySpawnData.Add(enemyToSpawnData);
+                    totalEnemiesToSpawn++;
+                }
+                newWave.spawnData.Add(newSpawnerSpawnData);
+            }
+            waves.Add(newWave);
+        }
+        int remainingEnemyAmount = Random.Range(0 , maxEnemiesPerRoom - totalEnemiesToSpawn);
+
+        for(int counter = remainingEnemyAmount; counter > 0; counter--)
+        {
+
+        }
+    }
     void Start(){
         InvokeRepeating("UpdateEveryHalfASecond",0,0.5f);
     }
@@ -25,11 +70,7 @@ public class EnemySpawnManager : MonoBehaviour
     }
     public void ActivateSpawners()
     {
-        if (waveSpawnPossibilities.Length > 0)
-        {
-            selectedPossibility = Random.Range(0, waveSpawnPossibilities.Length);
-            SpawnWave();
-        }
+        SpawnWave();
     }
 
     void IgnoreSpawn(){
@@ -44,7 +85,7 @@ public class EnemySpawnManager : MonoBehaviour
     }
     public void SpawnWave()
     {
-        if (currentWave >= waveSpawnPossibilities[selectedPossibility].waves.Length) //If done spawning waves
+        if (currentWave >= waves.Count) //If done spawning waves
         {
             if (onClearWaves != null)
             {
@@ -54,7 +95,7 @@ public class EnemySpawnManager : MonoBehaviour
         }
         else
         {
-            foreach (SpawnData spawnable in waveSpawnPossibilities[selectedPossibility].waves[currentWave].spawnData)
+            foreach (SpawnData spawnable in waves[currentWave].spawnData)
             {
                 StartCoroutine(SpawnQeue(spawnable));
             }
@@ -93,16 +134,12 @@ public class EnemySpawnManager : MonoBehaviour
     public struct SpawnData
     {
         public Spawner spawner;
-        public EnemySpawnData[] enemySpawnData;
+        public List<EnemySpawnData> enemySpawnData;
+        public int maxSpawnAmount;
     }
     [System.Serializable]
     public struct WaveData
     {
-        public SpawnData[] spawnData;
-    }
-    [System.Serializable]
-    public struct PossibleWave
-    {
-        public WaveData[] waves;
+        public List<SpawnData> spawnData;
     }
 }

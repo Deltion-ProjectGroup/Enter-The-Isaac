@@ -11,6 +11,11 @@ public class EnemyRoom : BaseRoom
     {
         base.Initialize(owner, parentRoom_, entrance);
         creator.roomCount++;
+        creator.enemyRooms.Add(gameObject);
+    }
+    public void InitializeEnemyGeneration()
+    {
+
     }
     public override void SpawnRoom(DungeonConnectionPoint.ConnectionDirection wantedDir, Transform doorPoint)
     {
@@ -18,6 +23,7 @@ public class EnemyRoom : BaseRoom
     }
     public override void OnDestroyed()
     {
+        creator.enemyRooms.Remove(gameObject);
         base.OnDestroyed();
         creator.roomCount--;
     }
