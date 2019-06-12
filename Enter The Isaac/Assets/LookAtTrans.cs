@@ -5,11 +5,14 @@ using UnityEngine;
 public class LookAtTrans : MonoBehaviour
 {
     [SerializeField] Transform lookAtTrans;
+    [SerializeField] bool lookAtPlayer = false;
     [SerializeField] float rotSpeed = 5;
     [SerializeField] Vector3 offsetV3 = Vector3.zero;
     void Start()
     {
-        
+        if(lookAtTrans == null && lookAtPlayer == true){
+            lookAtTrans = FindObjectOfType<PlayerController>().transform;
+        }
     }
 
     void Update()

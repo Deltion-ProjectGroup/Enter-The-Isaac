@@ -34,6 +34,7 @@ public class GunMagician : MonoBehaviour {
     [SerializeField] float laserRecoverTime = 0.2f;
     [SerializeField] float lookAtPlayerSpeed = 1;
     [SerializeField] AudioClip laserAounceSound;
+    [SerializeField] float minAnounceTime = 0.5f;
     [Header ("Poof 'n Pop")]
     [SerializeField] GameObject poofpopProjectile;
     [SerializeField] float poofpopProjectileSpeed = 4;
@@ -55,7 +56,8 @@ public class GunMagician : MonoBehaviour {
     [SerializeField] float pointshootTotalAngle = 720;
     [SerializeField] float pointShootWindUpTime = 1;
     [SerializeField] AudioClip pointshootShootAudio;
-    int currentPointShootVersion = 0;
+    int currentPointShootVersionL = 0;
+    int currentPointShootVersionR = 0;
     [Header ("Clap 'n Attack")]
     [SerializeField] GameObject clapAttackProjectile;
     [SerializeField] Transform clapAttackRing1;
@@ -85,14 +87,13 @@ public class GunMagician : MonoBehaviour {
     [SerializeField] AudioClip deathSound;
     [SerializeField] GameObject deathCam;
 
-
     //#if UnityEngine
-    void Update(){
-        if(Input.GetKeyDown(KeyCode.O)){
-            Death();
+    void Update () {
+        if (Input.GetKeyDown (KeyCode.O) && isDoingSomething == false) {
+            //PointNShoot ();
         }
     }
-   // #endif
+    // #endif
     void Awake () {
         if (skipIntro == false) {
             enabled = false;
@@ -173,7 +174,7 @@ public class GunMagician : MonoBehaviour {
         CancelInvoke ();
 
         //Game feel shit
-        contactDamageBox.SetActive(false);
+        contactDamageBox.SetActive (false);
         FindObjectOfType<MusicManager> ().UpdateMusic (4);
         FindObjectOfType<Pause> ().enabled = false;
         FindObjectOfType<Pause> ().isPaused = false;
@@ -294,10 +295,10 @@ public class GunMagician : MonoBehaviour {
         yield return new WaitForSeconds (laserAimTime / currentSpeed);
         //anounce
         laserFlare.enabled = true;
-        shakeCam.CustomShake (Mathf.Max (0.35f, laserAnounceTime / currentSpeed), 0.3f);
+        shakeCam.CustomShake (Mathf.Max (minAnounceTime, laserAnounceTime / currentSpeed), 0.3f);
         anounceLaser.SetActive (true);
-        selfShake.CustomShake (Mathf.Max (0.35f, laserAnounceTime / currentSpeed), 1);
-        yield return new WaitForSeconds (Mathf.Max (0.35f, laserAnounceTime / currentSpeed));
+        selfShake.CustomShake (Mathf.Max (minAnounceTime, laserAnounceTime / currentSpeed), 1);
+        yield return new WaitForSeconds (Mathf.Max (minAnounceTime, laserAnounceTime / currentSpeed));
         //fire
         selfShake.enabled = false;
         soundSpawner.SpawnEffect (laserAounceSound);
@@ -363,7 +364,8 @@ public class GunMagician : MonoBehaviour {
 
     float soundPitchhelper = 0;
     public void PointNShoot () {
-        currentPointShootVersion = Random.Range(0,2);
+        currentPointShootVersionL = Random.Range (0, 2);
+        currentPointShootVersionR = Random.Range (0, 2);
         pointshootLeft = pointshootTimes;
         isDoingSomething = true;
         pointshootCurAngle = pointShootAngle;
@@ -374,14 +376,19 @@ public class GunMagician : MonoBehaviour {
     }
 
     void PointNShootShoot () {
-        Instantiate (pointshootProjectile, leftHand.position, leftHand.rotation * pointshootProjectile.transform.rotation * Quaternion.Euler (0, pointshootCurAngle, 0)).GetComponent<AutoRotate> ().tranformV3.z = pointShootProjectileSpeed;
-        Instantiate (pointshootProjectile, rightHand.position, rightHand.rotation * pointshootProjectile.transform.rotation * Quaternion.Euler (0, -pointshootCurAngle, 0)).GetComponent<AutoRotate> ().tranformV3.z = pointShootProjectileSpeed;
-        pointshootLeft--;
-        if (currentPointShootVersion == 0) {
-            pointshootCurAngle += pointshootTotalAngle / pointshootTimes;
+        if (currentPointShootVersionL == 0) {
+            Instantiate (pointshootProjectile, leftHand.position, leftHand.rotation * pointshootProjectile.transform.rotation * Quaternion.Euler (0, -pointshootCurAngle, 0)).GetComponent<AutoRotate> ().tranformV3.z = pointShootProjectileSpeed;
         } else {
-            pointshootCurAngle = Random.Range (0, 360);
+            Instantiate (pointshootProjectile, leftHand.position, leftHand.rotation * pointshootProjectile.transform.rotation * Quaternion.Euler (0, Random.Range(0,pointshootTotalAngle), 0)).GetComponent<AutoRotate> ().tranformV3.z = pointShootProjectileSpeed;
         }
+        if (currentPointShootVersionR == 0) {
+            Instantiate (pointshootProjectile, rightHand.position, rightHand.rotation * pointshootProjectile.transform.rotation * Quaternion.Euler (0, pointshootCurAngle, 0)).GetComponent<AutoRotate> ().tranformV3.z = pointShootProjectileSpeed;
+        } else {
+            Instantiate (pointshootProjectile, rightHand.position, rightHand.rotation * pointshootProjectile.transform.rotation * Quaternion.Euler (0, Random.Range(0,pointshootTotalAngle), 0)).GetComponent<AutoRotate> ().tranformV3.z = pointShootProjectileSpeed;
+
+        }
+        pointshootLeft--;
+        pointshootCurAngle += pointshootTotalAngle / pointshootTimes;
         shakeCam.SmallShake ();
         soundSpawner.SpawnEffect (pointshootShootAudio, 0.25f, soundPitchhelper, 0, transform);
         soundPitchhelper += 0.6f / pointshootTimes;
