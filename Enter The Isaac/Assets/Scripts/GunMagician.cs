@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 public class GunMagician : MonoBehaviour {
     [SerializeField] bool skipIntro = false;
+    [SerializeField] bool dontAttack = false;
     [SerializeField] float flyHeight = 2;
     RippleEffect mainCamRipple;
     Vector3 startScale = Vector3.zero;
@@ -35,6 +36,12 @@ public class GunMagician : MonoBehaviour {
     [SerializeField] float lookAtPlayerSpeed = 1;
     [SerializeField] AudioClip laserAounceSound;
     [SerializeField] float minAnounceTime = 0.5f;
+    [Space]
+    float laserPointShootCurAngle = 0;
+    [SerializeField] float laserPointShootFireRate = 0.3f;
+    [SerializeField] float laserPointShootProjectileSpeed = 10;
+    [SerializeField] float laserPointShootStartAngle = -40;
+    [SerializeField] float laserPointShootAddedAnglePerShot = 7;
     [Header ("Poof 'n Pop")]
     [SerializeField] GameObject poofpopProjectile;
     [SerializeField] float poofpopProjectileSpeed = 4;
@@ -90,7 +97,7 @@ public class GunMagician : MonoBehaviour {
     //#if UnityEngine
     void Update () {
         if (Input.GetKeyDown (KeyCode.O) && isDoingSomething == false) {
-            //PointNShoot ();
+            LaserAttack ();
         }
     }
     // #endif
@@ -139,7 +146,9 @@ public class GunMagician : MonoBehaviour {
         mainCam.GetComponent<Cam> ().enabled = true;
         Teleport (false);
         FindObjectOfType<PlayerController> ().keyUICounter.transform.parent.parent.gameObject.SetActive (true);
-        InvokeRepeating ("CheckForAttack", 2 / currentSpeed, 2 / currentSpeed);
+        if (dontAttack == false) {
+            InvokeRepeating ("CheckForAttack", 2 / currentSpeed, 2 / currentSpeed);
+        }
         CancelInvoke ("SmoothIntroCam");
     }
 
@@ -285,7 +294,13 @@ public class GunMagician : MonoBehaviour {
 
     public void LaserAttack () {
         isDoingSomething = true;
+        laserPointShootCurAngle = laserPointShootStartAngle;
         StartCoroutine (LaserCoroutine ());
+    }
+
+    void LaserPointShoot () {
+        Instantiate (pointshootProjectile, leftHand.position, leftHand.rotation * pointshootProjectile.transform.rotation * Quaternion.Euler (0, laserPointShootCurAngle + 180, 0)).GetComponent<AutoRotate> ().tranformV3.z = laserPointShootProjectileSpeed;
+        laserPointShootCurAngle += laserPointShootAddedAnglePerShot;
     }
 
     IEnumerator LaserCoroutine () {
@@ -307,8 +322,14 @@ public class GunMagician : MonoBehaviour {
         shakeCam.CustomShake (laserShootTime / currentSpeed, 1);
         mainCam.fieldOfView = 80;
         laser.SetActive (true);
+
+        //laser pointshoot
+        if (hitbox.curHealth < hitbox.maxHealth / 2) {
+        InvokeRepeating ("LaserPointShoot", laserPointShootFireRate / currentSpeed, laserPointShootFireRate / currentSpeed);
+        }
         yield return new WaitForSeconds (laserShootTime / currentSpeed);
         //stop & recover
+        CancelInvoke ("LaserPointShoot");
         selfShake.enabled = true;
         CancelInvoke ("SmoothLookAtPlayer");
         speedLines.Stop ();
@@ -379,12 +400,12 @@ public class GunMagician : MonoBehaviour {
         if (currentPointShootVersionL == 0) {
             Instantiate (pointshootProjectile, leftHand.position, leftHand.rotation * pointshootProjectile.transform.rotation * Quaternion.Euler (0, -pointshootCurAngle, 0)).GetComponent<AutoRotate> ().tranformV3.z = pointShootProjectileSpeed;
         } else {
-            Instantiate (pointshootProjectile, leftHand.position, leftHand.rotation * pointshootProjectile.transform.rotation * Quaternion.Euler (0, Random.Range(0,pointshootTotalAngle), 0)).GetComponent<AutoRotate> ().tranformV3.z = pointShootProjectileSpeed;
+            Instantiate (pointshootProjectile, leftHand.position, leftHand.rotation * pointshootProjectile.transform.rotation * Quaternion.Euler (0, Random.Range (0, pointshootTotalAngle), 0)).GetComponent<AutoRotate> ().tranformV3.z = pointShootProjectileSpeed;
         }
         if (currentPointShootVersionR == 0) {
             Instantiate (pointshootProjectile, rightHand.position, rightHand.rotation * pointshootProjectile.transform.rotation * Quaternion.Euler (0, pointshootCurAngle, 0)).GetComponent<AutoRotate> ().tranformV3.z = pointShootProjectileSpeed;
         } else {
-            Instantiate (pointshootProjectile, rightHand.position, rightHand.rotation * pointshootProjectile.transform.rotation * Quaternion.Euler (0, Random.Range(0,pointshootTotalAngle), 0)).GetComponent<AutoRotate> ().tranformV3.z = pointShootProjectileSpeed;
+            Instantiate (pointshootProjectile, rightHand.position, rightHand.rotation * pointshootProjectile.transform.rotation * Quaternion.Euler (0, Random.Range (0, pointshootTotalAngle), 0)).GetComponent<AutoRotate> ().tranformV3.z = pointShootProjectileSpeed;
 
         }
         pointshootLeft--;
