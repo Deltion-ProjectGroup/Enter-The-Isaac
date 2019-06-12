@@ -62,11 +62,12 @@ public class Hitbox : MonoBehaviour {
             if (curHealth <= 0) {
                 Die ();
             } else {
-                if(onHit != null)
-                {
-                    onHit();
+                if (onHit != null) {
+                    onHit ();
                 }
-                Invoke ("Invincible", invincibleTime);
+                if (invincibleTime > 0) {
+                    Invoke ("Invincible", invincibleTime);
+                }
                 float totalTime = 0;
                 for (int i = 0; i < timedEvents.Length; i++) {
                     totalTime += timedEvents[i].nextEvent;

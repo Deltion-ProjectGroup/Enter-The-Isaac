@@ -74,6 +74,7 @@ public class GunMagician : MonoBehaviour {
     [SerializeField] float clapAttackWindUpTime = 0.5f;
     [SerializeField] float clapAttackRecover = 0.5f;
     [SerializeField] AudioClip clapAudio;
+    float clapAttackTwoStartSpeedMultiplier = 1;
     [Header ("Produce 'n Confuse")]
     [SerializeField] int amountToSpawn = 3;
     [SerializeField] float startAngle = 180;
@@ -97,7 +98,7 @@ public class GunMagician : MonoBehaviour {
     //#if UnityEngine
     void Update () {
         if (Input.GetKeyDown (KeyCode.O) && isDoingSomething == false) {
-            LaserAttack ();
+            ClapNAttack();
         }
     }
     // #endif
@@ -146,6 +147,7 @@ public class GunMagician : MonoBehaviour {
         mainCam.GetComponent<Cam> ().enabled = true;
         Teleport (false);
         FindObjectOfType<PlayerController> ().keyUICounter.transform.parent.parent.gameObject.SetActive (true);
+        hitbox.enabled = true;
         if (dontAttack == false) {
             InvokeRepeating ("CheckForAttack", 2 / currentSpeed, 2 / currentSpeed);
         }
@@ -325,7 +327,7 @@ public class GunMagician : MonoBehaviour {
 
         //laser pointshoot
         if (hitbox.curHealth < hitbox.maxHealth / 2) {
-        InvokeRepeating ("LaserPointShoot", laserPointShootFireRate / currentSpeed, laserPointShootFireRate / currentSpeed);
+            InvokeRepeating ("LaserPointShoot", laserPointShootFireRate / currentSpeed, laserPointShootFireRate / currentSpeed);
         }
         yield return new WaitForSeconds (laserShootTime / currentSpeed);
         //stop & recover
@@ -421,13 +423,16 @@ public class GunMagician : MonoBehaviour {
 
     public void ClapNAttack () {
         isDoingSomething = true;
+        clapAttackTwoStartSpeedMultiplier = 1;
         StartCoroutine (ClapAttackCoroutine ());
     }
 
     IEnumerator ClapAttackCoroutine () {
-        yield return new WaitForSeconds (clapAttackWindUpTime / currentSpeed); //startup
+        yield return new WaitForSeconds (clapAttackWindUpTime / clapAttackTwoStartSpeedMultiplier / currentSpeed); //startup
         //attack
         soundSpawner.SpawnEffect (clapAudio);
+        clapAttackRing1.Rotate(0,10,0);
+        clapAttackRing2.Rotate(0,10,0);
         for (int i = 0; i < clapAttackRing1.childCount; i++) {
             Instantiate (clapAttackProjectile, clapAttackRing1.GetChild (i).position, Quaternion.LookRotation (clapAttackRing1.GetChild (i).position - transform.position)).GetComponent<AutoRotate> ().tranformV3.z = clapAttackRing1Speed;
         }
@@ -437,8 +442,16 @@ public class GunMagician : MonoBehaviour {
         mainCamRipple.Emit (new Vector2 (0.5f, 0.5f));
         shakeCam.HardShake ();
 
-        yield return new WaitForSeconds (clapAttackRecover / currentSpeed); //recover
-        isDoingSomething = false;
+        yield return new WaitForSeconds (clapAttackRecover / clapAttackTwoStartSpeedMultiplier / currentSpeed); //recover
+        float randomFloat = Random.Range (0, 100);
+        float curHealthPercent = (1 - (hitbox.curHealth / hitbox.maxHealth)) + 1;
+        if (randomFloat > (30 * curHealthPercent) - (clapAttackTwoStartSpeedMultiplier * 5)) {
+            isDoingSomething = false;
+        } else {
+            clapAttackTwoStartSpeedMultiplier += 1;
+            clapAttackTwoStartSpeedMultiplier = Mathf.Min(clapAttackTwoStartSpeedMultiplier,3);
+            StartCoroutine (ClapAttackCoroutine ());
+        }
     }
 
     public void ProduceNConfuse () {

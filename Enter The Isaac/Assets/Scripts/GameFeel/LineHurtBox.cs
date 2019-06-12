@@ -88,7 +88,7 @@ public class LineHurtBox : MonoBehaviour
         for (int i = 1; i < line.positionCount; i++)
         {
             Ray ray = new Ray(transform.TransformPoint(line.GetPosition(i - 1)), (transform.TransformPoint(line.GetPosition(i)) - transform.TransformPoint(line.GetPosition(i - 1))));
-            RaycastHit[] hit = Physics.RaycastAll(ray.origin, ray.direction, Vector3.Distance(line.GetPosition(i), line.GetPosition(i - 1)) * transform.localScale.x);
+            RaycastHit[] hit = Physics.RaycastAll(ray.origin, ray.direction, Vector3.Distance(line.GetPosition(i), line.GetPosition(i - 1)) * transform.localScale.x,~LayerMask.GetMask("IgnoreRaycast","Bullet","EnemyBullet"));
             if (hit.Length > 0)
             {
                 for (int r = 0; r < hit.Length; r++)
