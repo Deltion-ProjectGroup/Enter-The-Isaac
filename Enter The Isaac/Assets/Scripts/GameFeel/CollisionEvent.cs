@@ -25,7 +25,6 @@ public class CollisionEvent : MonoBehaviour {
     void OnTriggerExit(Collider other){
         if (other.GetComponent (requiredComponent) != null && other.name != transform.name) {
             exitEvent.Invoke();
-            print("brexit");
         }
     }
 
