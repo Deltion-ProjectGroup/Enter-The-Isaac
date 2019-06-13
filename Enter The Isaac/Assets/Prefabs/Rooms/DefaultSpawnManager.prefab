@@ -413,11 +413,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   requiredWaveAmount: 0
   minSpawnersToUse: 2
-  maxSpawnersToUse: 0
+  maxSpawnersToUse: 4
   minEnemiesPerSpawner: 1
-  maxEnemiesPerSpawner: 1
-  minEnemiesPerRoom: 0
-  maxEnemiesPerRoom: 0
+  maxEnemiesPerSpawner: 20
   minEnemySpawnDelay: 0
   maxEnemySpawnDelay: 0
   enemyPool:
@@ -431,13 +429,12 @@ MonoBehaviour:
       chance: 50
       percentageBorders: {x: 0, y: 0}
       items:
-      - {fileID: 5147418959096718469, guid: c976ce3c268d9de4eb3364b8f97e65b2, type: 3}
+      - {fileID: 8177181223158001203, guid: bed91ea3a64a49742ada83a561733b58, type: 3}
     maxPercentage: 0
   enemySpawners:
   - {fileID: 9016478174974547558}
   - {fileID: 8505169387141568681}
   - {fileID: 8416680995844982476}
   - {fileID: 3854975411535637920}
-  waves: []
   aliveEnemies: []
   checkEnemiesInUpdate: 0
