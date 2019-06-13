@@ -48,7 +48,7 @@ public class Crosshair : MonoBehaviour
     {
         if (Vector2.SqrMagnitude(new Vector2(Input.GetAxis(inputHor), Input.GetAxis(inputVert))) > 0)
         {
-            transform.position = player.position + new Vector3(Input.GetAxis(inputHor), transform.position.y, Input.GetAxis(inputVert));
+            transform.position = player.position + new Vector3(Input.GetAxis(inputHor) * 30, transform.position.y, Input.GetAxis(inputVert) * 30);
         }
         else
         {

@@ -98,7 +98,7 @@ public class GunMagician : MonoBehaviour {
     //#if UnityEngine
     void Update () {
         if (Input.GetKeyDown (KeyCode.O) && isDoingSomething == false) {
-            ClapNAttack();
+            ClapNAttack ();
         }
     }
     // #endif
@@ -303,6 +303,7 @@ public class GunMagician : MonoBehaviour {
     void LaserPointShoot () {
         Instantiate (pointshootProjectile, leftHand.position, leftHand.rotation * pointshootProjectile.transform.rotation * Quaternion.Euler (0, laserPointShootCurAngle + 180, 0)).GetComponent<AutoRotate> ().tranformV3.z = laserPointShootProjectileSpeed;
         laserPointShootCurAngle += laserPointShootAddedAnglePerShot;
+        soundSpawner.SpawnEffect (pointshootShootAudio, 0.5f, Random.Range (0.8f, 1.2f), 0, transform);
     }
 
     IEnumerator LaserCoroutine () {
@@ -401,20 +402,23 @@ public class GunMagician : MonoBehaviour {
     void PointNShootShoot () {
         if (currentPointShootVersionL == 0) {
             Instantiate (pointshootProjectile, leftHand.position, leftHand.rotation * pointshootProjectile.transform.rotation * Quaternion.Euler (0, -pointshootCurAngle, 0)).GetComponent<AutoRotate> ().tranformV3.z = pointShootProjectileSpeed;
+            soundSpawner.SpawnEffect (pointshootShootAudio, 0.25f, soundPitchhelper, 0, transform);
         } else {
             Instantiate (pointshootProjectile, leftHand.position, leftHand.rotation * pointshootProjectile.transform.rotation * Quaternion.Euler (0, Random.Range (0, pointshootTotalAngle), 0)).GetComponent<AutoRotate> ().tranformV3.z = pointShootProjectileSpeed;
+            soundSpawner.SpawnEffect (pointshootShootAudio, 0.25f, Random.Range (0.8f, 1.2f), 0, transform);
         }
         if (currentPointShootVersionR == 0) {
             Instantiate (pointshootProjectile, rightHand.position, rightHand.rotation * pointshootProjectile.transform.rotation * Quaternion.Euler (0, pointshootCurAngle, 0)).GetComponent<AutoRotate> ().tranformV3.z = pointShootProjectileSpeed;
+            soundSpawner.SpawnEffect (pointshootShootAudio, 0.25f, soundPitchhelper, 0, transform);
         } else {
             Instantiate (pointshootProjectile, rightHand.position, rightHand.rotation * pointshootProjectile.transform.rotation * Quaternion.Euler (0, Random.Range (0, pointshootTotalAngle), 0)).GetComponent<AutoRotate> ().tranformV3.z = pointShootProjectileSpeed;
-
+            soundSpawner.SpawnEffect (pointshootShootAudio, 0.25f, Random.Range (0.8f, 1.2f), 0, transform);
         }
         pointshootLeft--;
         pointshootCurAngle += pointshootTotalAngle / pointshootTimes;
         shakeCam.SmallShake ();
-        soundSpawner.SpawnEffect (pointshootShootAudio, 0.25f, soundPitchhelper, 0, transform);
-        soundPitchhelper += 0.6f / pointshootTimes;
+        soundPitchhelper += 0.01f;
+        soundPitchhelper = Mathf.Min(soundPitchhelper,2);
         if (pointshootLeft <= 0) {
             CancelInvoke ("PointNShootShoot");
             isDoingSomething = false;
@@ -431,8 +435,8 @@ public class GunMagician : MonoBehaviour {
         yield return new WaitForSeconds (clapAttackWindUpTime / clapAttackTwoStartSpeedMultiplier / currentSpeed); //startup
         //attack
         soundSpawner.SpawnEffect (clapAudio);
-        clapAttackRing1.Rotate(0,10,0);
-        clapAttackRing2.Rotate(0,10,0);
+        clapAttackRing1.Rotate (0, 10, 0);
+        clapAttackRing2.Rotate (0, 10, 0);
         for (int i = 0; i < clapAttackRing1.childCount; i++) {
             Instantiate (clapAttackProjectile, clapAttackRing1.GetChild (i).position, Quaternion.LookRotation (clapAttackRing1.GetChild (i).position - transform.position)).GetComponent<AutoRotate> ().tranformV3.z = clapAttackRing1Speed;
         }
@@ -449,7 +453,7 @@ public class GunMagician : MonoBehaviour {
             isDoingSomething = false;
         } else {
             clapAttackTwoStartSpeedMultiplier += 1;
-            clapAttackTwoStartSpeedMultiplier = Mathf.Min(clapAttackTwoStartSpeedMultiplier,3);
+            clapAttackTwoStartSpeedMultiplier = Mathf.Min (clapAttackTwoStartSpeedMultiplier, 3);
             StartCoroutine (ClapAttackCoroutine ());
         }
     }

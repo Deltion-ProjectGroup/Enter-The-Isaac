@@ -37,6 +37,11 @@ public class SetOptionSettings : MonoBehaviour
         PlayerPrefs.SetFloat("masterVolume", value);
     }
 
+    public void QuitGame(){
+        print("quiting");
+        Application.Quit();
+    }
+
     public void SetSFXVolume(float value)
     {
         if (value != 0)
