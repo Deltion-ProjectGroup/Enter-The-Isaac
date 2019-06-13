@@ -15,6 +15,7 @@ public class SetOptionSettings : MonoBehaviour
     [SerializeField] Slider mouseFollowSlider;
     [SerializeField] Slider nightcoreSlider;
     [SerializeField] Toggle screenShakeToggle;
+    [SerializeField] Toggle doomMusicToggle;
     [SerializeField] GameObject continueButton;
 
     public void Awake()
@@ -35,6 +36,21 @@ public class SetOptionSettings : MonoBehaviour
             mixer.SetFloat("masterVolume", -80);
         }
         PlayerPrefs.SetFloat("masterVolume", value);
+    }
+
+    public void SetDOOMMusic(bool value){
+         if (value == false)
+        {
+            PlayerPrefs.SetInt("doomMusic", 0);
+        }
+        else
+        {
+            PlayerPrefs.SetInt("doomMusic", 1);
+        }
+        if(FindObjectOfType<MusicManager>() != null){
+            FindObjectOfType<MusicManager>().SetTrackPool();
+            FindObjectOfType<MusicManager>().UpdateMusic(FindObjectOfType<MusicManager>().curTrack);
+        }
     }
 
     public void QuitGame(){
@@ -102,6 +118,7 @@ public class SetOptionSettings : MonoBehaviour
         mouseFollowSlider.value = 0.5f;
         nightcoreSlider.value = 0.5f;
         screenShakeToggle.isOn = true;
+        doomMusicToggle.isOn = false;
     }
 
     void Start()
@@ -117,6 +134,7 @@ public class SetOptionSettings : MonoBehaviour
         mouseFollowSlider.value = PlayerPrefs.GetFloat("mouseFollowAmount");
         nightcoreSlider.value = PlayerPrefs.GetFloat("musicPitch");
         screenShakeToggle.isOn = (PlayerPrefs.GetInt("screenshake") == 1);
+        doomMusicToggle.isOn = (PlayerPrefs.GetInt("doomMusic") == 1);
     }
 
     public void LoadScene(int newScene)

@@ -1,22 +1,27 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class MusicManager : MonoBehaviour
 {
 
     AudioSource source;
-    [SerializeField] Soundtrack[] soundTrack;
+    [SerializeField] SoundTracks[] soundTrack;
+    public int currentSoundtrackPool = 0;
     List<float> savedTimes = new List<float>();
     int randomSoundtrack = 0;
-    [SerializeField] int curTrack = 0;
+    public int curTrack = 0;
     int lastTrack = 0;
     int fadeState = 0;
+    [SerializeField] string dungeonLevelName = "BossScene";
+    [SerializeField] bool useDoomSoundtrack = false;
 
-    void Start()
+    void Awake()
     {
-        randomSoundtrack = Random.Range(0, soundTrack.Length);
-        float[] helper = new float[soundTrack[randomSoundtrack].ost.Length];
+        SetTrackPool();
+        randomSoundtrack = Random.Range(0, soundTrack[currentSoundtrackPool].soundTrack.Length);
+        float[] helper = new float[soundTrack[currentSoundtrackPool].soundTrack[randomSoundtrack].ost.Length];
         savedTimes.AddRange(helper);
 
         source = GetComponent<AudioSource>();
@@ -24,11 +29,25 @@ public class MusicManager : MonoBehaviour
         UpdateMusic(curTrack);
     }
 
+    public void SetTrackPool(){
+        useDoomSoundtrack = (PlayerPrefs.GetInt("doomMusic") == 1);
+        if(SceneManager.GetActiveScene().name == dungeonLevelName){
+            currentSoundtrackPool = 0;
+        } else {
+            currentSoundtrackPool = 1;
+        }
+
+        if(useDoomSoundtrack == true){
+            currentSoundtrackPool += 2;
+        }
+        //currentSoundtrackPool = 
+    }
+
     void Update()
     {
         if (curTrack != lastTrack)
         {
-            UpdateMusic(soundTrack[randomSoundtrack].ost[curTrack].clip);
+            UpdateMusic(soundTrack[currentSoundtrackPool].soundTrack[randomSoundtrack].ost[curTrack].clip);
             lastTrack = curTrack;
         }
 
@@ -47,7 +66,7 @@ public class MusicManager : MonoBehaviour
 
     public void UpdateMusic(AudioClip clip)
     {
-        if (soundTrack[randomSoundtrack].ost[curTrack].rememberTime == true && source.clip != clip)
+        if (soundTrack[currentSoundtrackPool].soundTrack[randomSoundtrack].ost[curTrack].rememberTime == true && source.clip != clip)
         {
             savedTimes[curTrack] = source.time;
         }
@@ -55,21 +74,23 @@ public class MusicManager : MonoBehaviour
         source.clip = clip;
         if (clip != null)
         {
-            Invoke("PlaySource", 0.6f);
+            //Invoke("PlaySource", 0.6f);
+            PlaySource();
         }
     }
     public void UpdateMusic(int clip)
     {
-        if (soundTrack[randomSoundtrack].ost[curTrack].rememberTime == true && curTrack != clip)
+        if (soundTrack[currentSoundtrackPool].soundTrack[randomSoundtrack].ost[curTrack].rememberTime == true && curTrack != clip)
         {
             savedTimes[curTrack] = source.time;
         }
 
         curTrack = clip;
-        source.clip = soundTrack[randomSoundtrack].ost[curTrack].clip;
-        if (soundTrack[randomSoundtrack].ost[curTrack].clip != null)
+        source.clip = soundTrack[currentSoundtrackPool].soundTrack[randomSoundtrack].ost[curTrack].clip;
+        if (soundTrack[currentSoundtrackPool].soundTrack[randomSoundtrack].ost[curTrack].clip != null)
         {
-            Invoke("PlaySource", 0.6f);
+            //Invoke("PlaySource", 0.6f);
+            PlaySource();
         }
     }
 
@@ -90,7 +111,7 @@ public class MusicManager : MonoBehaviour
     {
         source.Stop();
         source.time = savedTimes[curTrack];
-        source.volume = soundTrack[randomSoundtrack].ost[curTrack].volume;
+        source.volume = soundTrack[currentSoundtrackPool].soundTrack[randomSoundtrack].ost[curTrack].volume;
         source.Play();
     }
 
@@ -122,4 +143,9 @@ public class MusicManager : MonoBehaviour
                 break;
         }
     }
+}
+[System.Serializable]
+public class SoundTracks
+{
+    public Soundtrack[] soundTrack;
 }

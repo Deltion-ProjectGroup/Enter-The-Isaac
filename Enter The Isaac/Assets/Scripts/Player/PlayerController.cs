@@ -75,7 +75,7 @@ public class PlayerController : MonoBehaviour {
         cc = GetComponent<CharacterController> ();
         cam = Camera.main.transform;
         soundSpawn = FindObjectOfType<SoundSpawn> ();
-        hitbox.GetComponent<Hitbox>().onHit += OnTookDamage;
+        hitbox.GetComponent<Hitbox> ().onHit += OnTookDamage;
 
         for (int i = 0; i < guns.Count; i++) {
             ammoStore.Add (guns[i].magazineSize);
@@ -152,7 +152,7 @@ public class PlayerController : MonoBehaviour {
             ammoStore[curGun] = gun.curAmmo;
         }
         //reloading
-        if (Input.GetButtonDown (reloadInput) && gun.IsInvoking ("Reload") == false && gun.curAmmo != gun.gunClone.magazineSize) {
+        if (Input.GetAxis (reloadInput) > 0 && gun.IsInvoking ("Reload") == false && gun.curAmmo != gun.gunClone.magazineSize) {
             gun.GetReloadInput ();
         }
 
@@ -166,7 +166,7 @@ public class PlayerController : MonoBehaviour {
     }
 
     void SwitchGun () {
-        if (Input.GetAxis (scrollInput) != 0 && Input.GetAxis (shootInput) == 0 && GameObject.FindGameObjectWithTag ("LaserHold") == null && IsInvoking ("NoSwitchGun") == false && gun.IsInvoking ("Reload") == false) {
+        if (Input.GetAxis (scrollInput) != 0 && Input.GetAxis (shootInput) <= 0 && GameObject.FindGameObjectWithTag ("LaserHold") == null && IsInvoking ("NoSwitchGun") == false && gun.IsInvoking ("Reload") == false) {
             Invoke ("NoSwitchGun", 0.2f);
             gun.transform.Rotate (-90, 0, 0);
             soundSpawn.SpawnEffect (reloadSound);
@@ -200,12 +200,16 @@ public class PlayerController : MonoBehaviour {
         soundSpawn.SpawnEffect (footStepSound, 0.4f, 0.8f, 1, transform);
     }
 
+    bool justRolled = false;
     void CheckRollInput () {
-        if (Input.GetButtonDown (rollInput) == true) {
+        if (Input.GetAxis (rollInput) > 0 && justRolled == false) {
+            justRolled = true;
             if (GameObject.FindGameObjectWithTag ("LaserHold") != null && Input.GetAxis (shootInput) != 0 && IsInvoking ("IgnoreRollInput") == false) {
                 Destroy (GameObject.FindGameObjectWithTag ("LaserHold"));
             }
             StartCoroutine (RollEvent ());
+        } else if (Input.GetAxis (rollInput) <= 0) {
+            justRolled = false;
         }
     }
 
@@ -327,7 +331,7 @@ public class PlayerController : MonoBehaviour {
         StopAllCoroutines ();
         moveV3 = Vector3.zero;
         curState = State.GetHit;
-         transform.Find ("Line").gameObject.SetActive (false);
+        transform.Find ("Line").gameObject.SetActive (false);
         if (gun != null) {
             gun.StopAllCoroutines ();
         }
@@ -339,9 +343,8 @@ public class PlayerController : MonoBehaviour {
             gun.transform.localScale = Vector3.zero;
         }
     }
-    public void OnTookDamage()
-    {
-        GameObject.FindGameObjectWithTag("Manager").GetComponent<ChanceManager>().RecalculateEnemyDropRate((int)hitbox.GetComponent<Hitbox>().curHealth, (int)hitbox.GetComponent<Hitbox>().maxHealth, magazineStore[curGun], gun.gunClone.maxAmmo, keys);
+    public void OnTookDamage () {
+        GameObject.FindGameObjectWithTag ("Manager").GetComponent<ChanceManager> ().RecalculateEnemyDropRate ((int) hitbox.GetComponent<Hitbox> ().curHealth, (int) hitbox.GetComponent<Hitbox> ().maxHealth, magazineStore[curGun], gun.gunClone.maxAmmo, keys);
     }
     void StopHitControl () {
         curState = State.Normal;

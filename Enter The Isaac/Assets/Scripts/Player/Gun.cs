@@ -195,7 +195,7 @@ public class Gun : MonoBehaviour
 
     public void Shoot()
     {
-        if (shootInput != 0 && GameObject.FindGameObjectWithTag("LaserHold") == null)
+        if (shootInput > 0 && GameObject.FindGameObjectWithTag("LaserHold") == null)
         {
             if (curAmmo >= 1)
             {
