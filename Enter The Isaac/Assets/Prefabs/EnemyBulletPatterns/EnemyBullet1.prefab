@@ -55,7 +55,7 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5489075468618320679}
   m_Enabled: 1
-  m_CastShadows: 1
+  m_CastShadows: 0
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
   m_MotionVectors: 1
@@ -121,7 +121,7 @@ MonoBehaviour:
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   enabled: 1
-  knockBackForward: 1
+  knockBackForward: 0
   knockBackMultiply: 1
 --- !u!135 &5489075468618320677
 SphereCollider:
@@ -196,6 +196,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   requiredComponent: Collider
+  componentExeption: CharacterController
   timedEvents:
   - nextEvent: 0
     curEvent:

@@ -6,6 +6,7 @@ using UnityEngine.Events;
 public class CollisionEvent : MonoBehaviour {
 
     [SerializeField] string requiredComponent;
+    [SerializeField] string componentExeption;
     [SerializeField] EventArray[] timedEvents;
     [SerializeField] bool triggerOnly = true;
     [SerializeField] bool mustBeFloor = false;
@@ -21,7 +22,7 @@ public class CollisionEvent : MonoBehaviour {
     }
     void OnCollisionEnter (Collision other) {
         if (triggerOnly == false) {
-            if (other.transform.GetComponent (requiredComponent) != null && other.transform.name != transform.name) {
+            if (other.transform.GetComponent (requiredComponent) != null && other.transform.name != transform.name && other.transform.GetComponent (componentExeption) == null) {
                 bool checker = false;
                 if (mustBeFloor == true && Physics.Raycast (transform.position, Vector3.down, transform.localScale.y) == false) {
                     checker = true;

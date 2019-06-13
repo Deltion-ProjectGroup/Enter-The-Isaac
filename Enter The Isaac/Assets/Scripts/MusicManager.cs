@@ -3,13 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
-public class MusicManager : MonoBehaviour
-{
+public class MusicManager : MonoBehaviour {
 
     AudioSource source;
     [SerializeField] SoundTracks[] soundTrack;
     public int currentSoundtrackPool = 0;
-    List<float> savedTimes = new List<float>();
+    List<float> savedTimes = new List<float> ();
     int randomSoundtrack = 0;
     public int curTrack = 0;
     int lastTrack = 0;
@@ -17,37 +16,43 @@ public class MusicManager : MonoBehaviour
     [SerializeField] string dungeonLevelName = "BossScene";
     [SerializeField] bool useDoomSoundtrack = false;
 
-    void Awake()
-    {
-        SetTrackPool();
-        randomSoundtrack = Random.Range(0, soundTrack[currentSoundtrackPool].soundTrack.Length);
+    void Awake () {
+        SetTrackPool ();
+        randomSoundtrack = Random.Range (0, soundTrack[currentSoundtrackPool].soundTrack.Length);
         float[] helper = new float[soundTrack[currentSoundtrackPool].soundTrack[randomSoundtrack].ost.Length];
-        savedTimes.AddRange(helper);
+        savedTimes.AddRange (helper);
 
-        source = GetComponent<AudioSource>();
+        source = GetComponent<AudioSource> ();
         lastTrack = curTrack;
-        UpdateMusic(curTrack);
+
+
+
+        curTrack = 0;
+        source.clip = soundTrack[currentSoundtrackPool].soundTrack[randomSoundtrack].ost[curTrack].clip;
+        if (soundTrack[currentSoundtrackPool].soundTrack[randomSoundtrack].ost[curTrack].clip != null) {
+            //Invoke("PlaySource", 0.6f);
+            PlaySource ();
+        }
+
     }
 
-    public void SetTrackPool(){
-        useDoomSoundtrack = (PlayerPrefs.GetInt("doomMusic") == 1);
-        if(SceneManager.GetActiveScene().name == dungeonLevelName){
+    public void SetTrackPool () {
+        useDoomSoundtrack = (PlayerPrefs.GetInt ("doomMusic") == 1);
+        if (SceneManager.GetActiveScene ().name == dungeonLevelName) {
             currentSoundtrackPool = 0;
         } else {
             currentSoundtrackPool = 1;
         }
 
-        if(useDoomSoundtrack == true){
+        if (useDoomSoundtrack == true) {
             currentSoundtrackPool += 2;
         }
         //currentSoundtrackPool = 
     }
 
-    void Update()
-    {
-        if (curTrack != lastTrack)
-        {
-            UpdateMusic(soundTrack[currentSoundtrackPool].soundTrack[randomSoundtrack].ost[curTrack].clip);
+    void Update () {
+        if (curTrack != lastTrack) {
+            UpdateMusic (soundTrack[currentSoundtrackPool].soundTrack[randomSoundtrack].ost[curTrack].clip);
             lastTrack = curTrack;
         }
 
@@ -64,88 +69,80 @@ public class MusicManager : MonoBehaviour
         */
     }
 
-    public void UpdateMusic(AudioClip clip)
-    {
-        if (soundTrack[currentSoundtrackPool].soundTrack[randomSoundtrack].ost[curTrack].rememberTime == true && source.clip != clip)
-        {
-            savedTimes[curTrack] = source.time;
-        }
+    public void UpdateMusic (AudioClip clip) {
+        if (source.clip != clip) {
+            if (soundTrack[currentSoundtrackPool].soundTrack[randomSoundtrack].ost[curTrack].rememberTime == true && source.clip != clip) {
+                savedTimes[curTrack] = source.time;
+            }
 
-        source.clip = clip;
-        if (clip != null)
-        {
-            //Invoke("PlaySource", 0.6f);
-            PlaySource();
+            source.clip = clip;
+            if (clip != null) {
+                //Invoke("PlaySource", 0.6f);
+                PlaySource ();
+            }
         }
     }
-    public void UpdateMusic(int clip)
-    {
-        if (soundTrack[currentSoundtrackPool].soundTrack[randomSoundtrack].ost[curTrack].rememberTime == true && curTrack != clip)
-        {
-            savedTimes[curTrack] = source.time;
-        }
+    public void UpdateMusic (int clip) {
+        if (source.clip != soundTrack[currentSoundtrackPool].soundTrack[randomSoundtrack].ost[clip].clip) {
+            if (soundTrack[currentSoundtrackPool].soundTrack[randomSoundtrack].ost[curTrack].rememberTime == true && curTrack != clip) {
+                savedTimes[curTrack] = source.time;
+            }
 
-        curTrack = clip;
-        source.clip = soundTrack[currentSoundtrackPool].soundTrack[randomSoundtrack].ost[curTrack].clip;
-        if (soundTrack[currentSoundtrackPool].soundTrack[randomSoundtrack].ost[curTrack].clip != null)
-        {
-            //Invoke("PlaySource", 0.6f);
-            PlaySource();
+            curTrack = clip;
+            source.clip = soundTrack[currentSoundtrackPool].soundTrack[randomSoundtrack].ost[curTrack].clip;
+            if (soundTrack[currentSoundtrackPool].soundTrack[randomSoundtrack].ost[curTrack].clip != null) {
+                //Invoke("PlaySource", 0.6f);
+                PlaySource ();
+            }
         }
     }
 
-    public void FadeToNewMusic(int newTrack)
-    {
-        StopCoroutine("MusicFadeEvent");
-        StartCoroutine(MusicFadeEvent(newTrack));
+    public void FadeToNewMusic (int newTrack) {
+        if (source.clip != soundTrack[currentSoundtrackPool].soundTrack[randomSoundtrack].ost[newTrack].clip) {
+            StopCoroutine ("MusicFadeEvent");
+            StartCoroutine (MusicFadeEvent (newTrack));
+        }
     }
 
-    IEnumerator MusicFadeEvent(int newSong)
-    {
-        FadeMusic();
-        yield return new WaitUntil(() => fadeState != 0);
-        UpdateMusic(newSong);
+    IEnumerator MusicFadeEvent (int newSong) {
+        FadeMusic ();
+        yield return new WaitUntil (() => fadeState != 0);
+        UpdateMusic (newSong);
     }
 
-    void PlaySource()
-    {
-        source.Stop();
+    void PlaySource () {
+        source.Stop ();
         source.time = savedTimes[curTrack];
         source.volume = soundTrack[currentSoundtrackPool].soundTrack[randomSoundtrack].ost[curTrack].volume;
-        source.Play();
+        source.Play ();
     }
 
-    void FadeMusic()
-    {
+    void FadeMusic () {
         fadeState = 0;
-        CancelInvoke("FadeMusicEvent");
-        InvokeRepeating("FadeMusicEvent", 0, 0.01f);
+        CancelInvoke ("FadeMusicEvent");
+        InvokeRepeating ("FadeMusicEvent", 0, 0.01f);
     }
 
-    void FadeMusicEvent()
-    {
-        switch (fadeState)
-        {
+    void FadeMusicEvent () {
+        switch (fadeState) {
             case 0:
-                source.volume = Mathf.MoveTowards(source.volume, 0, Time.unscaledDeltaTime);
-                if (source.volume == 0)
-                {
+                source.volume = Mathf.MoveTowards (source.volume, 0, Time.unscaledDeltaTime);
+                if (source.volume == 0) {
                     fadeState = 1;
                 }
                 break;
             case 1:
-                source.volume = Mathf.MoveTowards(source.volume, 1, Time.unscaledDeltaTime);
-                if (source.volume == 1)
-                {
+                source.volume = Mathf.MoveTowards (source.volume, 1, Time.unscaledDeltaTime);
+                if (source.volume == 1) {
                     fadeState = 0;
-                    CancelInvoke("FadeMusicEvent");
+                    CancelInvoke ("FadeMusicEvent");
                 }
                 break;
         }
     }
 }
+
 [System.Serializable]
-public class SoundTracks
-{
+public class SoundTracks {
     public Soundtrack[] soundTrack;
 }
