@@ -24,62 +24,68 @@ public class EnemySpawnManager : MonoBehaviour
 
     public void GenerateCustomWaves()
     {
-        enemyPool.Initialize();
-        maxEnemiesPerRoom = maxEnemiesPerSpawner * maxSpawnersToUse * requiredWaveAmount;
-        List<SpawnerInfo> waveInfo = new List<SpawnerInfo>();
-        //Generates the minimal requirements to be set
-        for (int currentWaveAmount = 0; currentWaveAmount < requiredWaveAmount; currentWaveAmount++)
+        if(enemySpawners.Length > 0)
         {
-            WaveData newWave = new WaveData();
-            newWave.spawnData = new List<SpawnData>();
-            int spawnerAmountToUse = Random.Range(minSpawnersToUse, maxSpawnersToUse + 1);
-            List<Spawner> availableSpawnersToSelect = new List<Spawner>(enemySpawners);
-            for (int spawnerAmount = 0; spawnerAmount < spawnerAmountToUse; spawnerAmount++)
+            enemyPool.Initialize();
+            maxEnemiesPerRoom = maxEnemiesPerSpawner * maxSpawnersToUse * requiredWaveAmount;
+            List<SpawnerInfo> waveInfo = new List<SpawnerInfo>();
+            //Generates the minimal requirements to be set
+            for (int currentWaveAmount = 0; currentWaveAmount < requiredWaveAmount; currentWaveAmount++)
             {
-                Spawner selectedSpawner = availableSpawnersToSelect[Random.Range(0, availableSpawnersToSelect.Count)];
-                availableSpawnersToSelect.Remove(selectedSpawner);
-                SpawnData newSpawnerSpawnData = new SpawnData();
-                newSpawnerSpawnData.enemySpawnData = new List<EnemySpawnData>();
-                newSpawnerSpawnData.spawner = selectedSpawner;
-                for(int spawnerEnemyCount = 0; spawnerEnemyCount < minEnemiesPerSpawner; spawnerEnemyCount++)
+                WaveData newWave = new WaveData();
+                newWave.spawnData = new List<SpawnData>();
+                int spawnerAmountToUse = Random.Range(minSpawnersToUse, maxSpawnersToUse + 1);
+                List<Spawner> availableSpawnersToSelect = new List<Spawner>(enemySpawners);
+                for (int spawnerAmount = 0; spawnerAmount < spawnerAmountToUse; spawnerAmount++)
                 {
-                    EnemySpawnData enemyToSpawnData = new EnemySpawnData(enemyPool.GetInstanceFromPool(), Random.Range(minEnemySpawnDelay, maxEnemySpawnDelay + 1));
-                    newSpawnerSpawnData.enemySpawnData.Add(enemyToSpawnData);
-                    totalEnemiesToSpawn++;
-                }
-                newWave.spawnData.Add(newSpawnerSpawnData);
-            }
-            waves.Add(newWave);
-        }
-        if(maxEnemiesPerSpawner != minEnemiesPerSpawner && totalEnemiesToSpawn < maxEnemiesPerRoom)
-        {
-            for(int i = 0; i < waves.Count; i++)
-            {
-                SpawnerInfo thisWaveInfo = new SpawnerInfo();
-                thisWaveInfo.waveIndex = i;
-                thisWaveInfo.availableSpawners = new List<SpawnData>(waves[i].spawnData);
-                waveInfo.Add(thisWaveInfo);
-            }
-        }
-        if(waveInfo.Count > 0)
-        {
-            int remainingEnemyAmount = Random.Range(0, maxEnemiesPerRoom - totalEnemiesToSpawn);
-
-            for (int counter = remainingEnemyAmount; counter > 0; counter--)
-            {
-                SpawnerInfo selectedWave = waveInfo[Random.Range(0, waveInfo.Count)];
-                SpawnData selectedSpawner = selectedWave.availableSpawners[Random.Range(0, selectedWave.availableSpawners.Count)];
-                selectedSpawner.enemySpawnData.Add(new EnemySpawnData(enemyPool.GetInstanceFromPool(), Random.Range(minEnemySpawnDelay, maxEnemySpawnDelay)));
-                totalEnemiesToSpawn++;
-                if(selectedSpawner.enemySpawnData.Count >= maxEnemiesPerSpawner)
-                {
-                    selectedWave.availableSpawners.Remove(selectedSpawner);
-                    if(selectedWave.availableSpawners.Count <= 0)
+                    if(availableSpawnersToSelect.Count > 0)
                     {
-                        waveInfo.Remove(selectedWave);
-                        if(waveInfo.Count <= 0)
+                        Spawner selectedSpawner = availableSpawnersToSelect[Random.Range(0, availableSpawnersToSelect.Count)];
+                        availableSpawnersToSelect.Remove(selectedSpawner);
+                        SpawnData newSpawnerSpawnData = new SpawnData();
+                        newSpawnerSpawnData.enemySpawnData = new List<EnemySpawnData>();
+                        newSpawnerSpawnData.spawner = selectedSpawner;
+                        for (int spawnerEnemyCount = 0; spawnerEnemyCount < minEnemiesPerSpawner; spawnerEnemyCount++)
                         {
-                            break;
+                            EnemySpawnData enemyToSpawnData = new EnemySpawnData(enemyPool.GetInstanceFromPool(), Random.Range(minEnemySpawnDelay, maxEnemySpawnDelay + 1));
+                            newSpawnerSpawnData.enemySpawnData.Add(enemyToSpawnData);
+                            totalEnemiesToSpawn++;
+                        }
+                        newWave.spawnData.Add(newSpawnerSpawnData);
+                    }
+                }
+                waves.Add(newWave);
+            }
+            if (maxEnemiesPerSpawner != minEnemiesPerSpawner && totalEnemiesToSpawn < maxEnemiesPerRoom)
+            {
+                for (int i = 0; i < waves.Count; i++)
+                {
+                    SpawnerInfo thisWaveInfo = new SpawnerInfo();
+                    thisWaveInfo.waveIndex = i;
+                    thisWaveInfo.availableSpawners = new List<SpawnData>(waves[i].spawnData);
+                    waveInfo.Add(thisWaveInfo);
+                }
+            }
+            if (waveInfo.Count > 0)
+            {
+                int remainingEnemyAmount = Random.Range(0, maxEnemiesPerRoom - totalEnemiesToSpawn);
+
+                for (int counter = remainingEnemyAmount; counter > 0; counter--)
+                {
+                    SpawnerInfo selectedWave = waveInfo[Random.Range(0, waveInfo.Count)];
+                    SpawnData selectedSpawner = selectedWave.availableSpawners[Random.Range(0, selectedWave.availableSpawners.Count)];
+                    selectedSpawner.enemySpawnData.Add(new EnemySpawnData(enemyPool.GetInstanceFromPool(), Random.Range(minEnemySpawnDelay, maxEnemySpawnDelay)));
+                    totalEnemiesToSpawn++;
+                    if (selectedSpawner.enemySpawnData.Count >= maxEnemiesPerSpawner)
+                    {
+                        selectedWave.availableSpawners.Remove(selectedSpawner);
+                        if (selectedWave.availableSpawners.Count <= 0)
+                        {
+                            waveInfo.Remove(selectedWave);
+                            if (waveInfo.Count <= 0)
+                            {
+                                break;
+                            }
                         }
                     }
                 }
