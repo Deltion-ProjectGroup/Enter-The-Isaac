@@ -15,6 +15,7 @@ public class MusicManager : MonoBehaviour {
     int fadeState = 0;
     [SerializeField] string dungeonLevelName = "BossScene";
     [SerializeField] bool useDoomSoundtrack = false;
+    AudioClip bufferedClip = null;
 
     void Awake () {
         SetTrackPool ();
@@ -24,6 +25,7 @@ public class MusicManager : MonoBehaviour {
 
         source = GetComponent<AudioSource> ();
         lastTrack = curTrack;
+        bufferedClip = source.clip;
 
 
 
@@ -98,8 +100,10 @@ public class MusicManager : MonoBehaviour {
     }
 
     public void FadeToNewMusic (int newTrack) {
-        if (source.clip != soundTrack[currentSoundtrackPool].soundTrack[randomSoundtrack].ost[newTrack].clip) {
-            StopCoroutine ("MusicFadeEvent");
+        if (soundTrack[currentSoundtrackPool].soundTrack[randomSoundtrack].ost[newTrack].clip != bufferedClip) {
+            bufferedClip = soundTrack[currentSoundtrackPool].soundTrack[randomSoundtrack].ost[newTrack].clip;
+            StopAllCoroutines();
+            CancelInvoke();
             StartCoroutine (MusicFadeEvent (newTrack));
         }
     }
