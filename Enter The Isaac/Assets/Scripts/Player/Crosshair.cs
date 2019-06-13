@@ -46,13 +46,15 @@ public class Crosshair : MonoBehaviour
 
     void ButtonAim()
     {
+        Vector3 inputToCam = new Vector3(Input.GetAxis(inputHor),0,Input.GetAxis(inputVert));
+        inputToCam = mainCam.transform.TransformDirection(inputToCam);
         if (Vector2.SqrMagnitude(new Vector2(Input.GetAxis(inputHor), Input.GetAxis(inputVert))) > 0)
         {
-            transform.position = player.position + new Vector3(Input.GetAxis(inputHor) * 30, transform.position.y, Input.GetAxis(inputVert) * 30);
+            transform.position = player.position + new Vector3(inputToCam.x * 30, transform.position.y, inputToCam.z * 30);
         }
         else
         {
-            transform.position = player.position + (-player.forward * 10);
+            transform.position = player.position + (-player.forward * 30);
         }
         transform.position = new Vector3(transform.position.x, player.position.y, transform.position.z);
     }
