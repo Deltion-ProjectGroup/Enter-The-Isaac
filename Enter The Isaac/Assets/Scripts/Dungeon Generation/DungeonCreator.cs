@@ -145,7 +145,7 @@ public class DungeonCreator : MonoBehaviour
             }
             DungeonConnectionPoint selectedConnectionPoint = availableConnectionPoints[Random.Range(0, availableConnectionPoints.Count)];
             int selectedDoorId = selectedConnectionPoint.id;
-            GameObject spawnedRoom = Instantiate(roomToSpawn, GetLocationData(roomToSpawn.transform, selectedConnectionPoint.transform, pointToConnectTo), Quaternion.identity);
+            GameObject spawnedRoom = Instantiate(roomToSpawn, GetLocationData(roomToSpawn.transform, selectedConnectionPoint.transform, pointToConnectTo), roomToSpawn.transform.rotation);
             for (int i = 0; i < spawnedRoom.GetComponent<BaseRoom>().availableConnectionPoints.Count; i++)
             {
                 DungeonConnectionPoint thisConnectionPoint = spawnedRoom.GetComponent<BaseRoom>().availableConnectionPoints[i];
@@ -349,7 +349,7 @@ public class DungeonCreator : MonoBehaviour
             selectedConnectionPoint = availableConnectionPoints[Random.Range(0, availableConnectionPoints.Count)];
             selectedDoorId = selectedConnectionPoint.id;
 
-            finalRoom = Instantiate(option, GetLocationData(option.transform, selectedConnectionPoint.transform, backupParentConnectionPoint.transform), Quaternion.identity);
+            finalRoom = Instantiate(option, GetLocationData(option.transform, selectedConnectionPoint.transform, backupParentConnectionPoint.transform), option.transform.rotation);
 
             for (int i = 0; i < finalRoom.GetComponent<BaseRoom>().availableConnectionPoints.Count; i++)
             {
@@ -451,7 +451,7 @@ public class DungeonCreator : MonoBehaviour
                         selectedConnectionPoint = availableConnectionPoints[Random.Range(0, availableConnectionPoints.Count)];
                         selectedDoorId = selectedConnectionPoint.id;
 
-                        finalRoom = Instantiate(option, GetLocationData(option.transform, selectedConnectionPoint.transform, roomToReplace.GetComponent<BaseRoom>().entrancePoint.pointConnectedTo.transform), Quaternion.identity);
+                        finalRoom = Instantiate(option, GetLocationData(option.transform, selectedConnectionPoint.transform, roomToReplace.GetComponent<BaseRoom>().entrancePoint.pointConnectedTo.transform), option.transform.rotation);
 
                         for (int i = 0; i < finalRoom.GetComponent<BaseRoom>().availableConnectionPoints.Count; i++)
                         {
