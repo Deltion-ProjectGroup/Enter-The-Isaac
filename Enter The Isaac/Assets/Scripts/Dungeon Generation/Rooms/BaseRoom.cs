@@ -4,6 +4,8 @@ using UnityEngine;
 
 public abstract class BaseRoom : MonoBehaviour
 {
+    public Mesh cube;
+
     public int roomDistanceFromStart;
     public GameObject parentRoom;
     public int replacedTimes;
@@ -137,4 +139,14 @@ public abstract class BaseRoom : MonoBehaviour
         }
     }
     public enum RoomTypes { Normal, End, Hallway, Shop, Event, Boss, Treasure, Spawn }
+    private void OnDrawGizmos()
+    {
+        /*
+        Vector3 colliderHalfExtends = transform.GetComponent<BoxCollider>().size;
+        colliderHalfExtends.x *= transform.lossyScale.x;
+        colliderHalfExtends.y *= transform.lossyScale.y;
+        colliderHalfExtends.z *= transform.lossyScale.z;
+        Gizmos.DrawMesh(cube, transform.position + GetComponent<BoxCollider>().center, transform.rotation, colliderHalfExtends);
+        */
+    }
 }
