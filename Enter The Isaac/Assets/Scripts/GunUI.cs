@@ -43,7 +43,7 @@ public class GunUI : MonoBehaviour
         }
         for (int i = 0; i < curGunAmmo.Length; i++)
         {
-            curGunAmmo[i].text = toSet;
+            curGunAmmo[i].text = " / " + toSet;
         }
     }
     void SetMagazineText()
