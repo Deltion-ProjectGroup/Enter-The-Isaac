@@ -40,8 +40,8 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] AudioClip reloadSound;
     public AudioClip realReloadSound;
     [Header ("Input")]
-    [SerializeField] string horInput = "Horizontal";
-    [SerializeField] string vertInput = "Vertical";
+    public string horInput = "Horizontal";
+    public string vertInput = "Vertical";
     [SerializeField] string rollInput = "Fire3";
     public string shootInput = "Fire1";
     [SerializeField] string reloadInput = "Fire2";
@@ -142,9 +142,11 @@ public class PlayerController : MonoBehaviour {
         }
     }
 
+    float lastShootInput = -1;
     void GunInput () {
         //shooting
-        gun.shootFirstFrame = Input.GetButtonDown (shootInput);
+        gun.shootFirstFrame = (Input.GetAxis(shootInput) > 0 && lastShootInput <= 0);
+        lastShootInput = Input.GetAxis(shootInput);
         gun.shootInput = Input.GetAxis (shootInput);
         if (Input.GetAxis (shootInput) != 0) //was originally getbuttondown
         {
@@ -204,7 +206,7 @@ public class PlayerController : MonoBehaviour {
     void CheckRollInput () {
         if (Input.GetAxis (rollInput) > 0 && justRolled == false) {
             justRolled = true;
-            if (GameObject.FindGameObjectWithTag ("LaserHold") != null && Input.GetAxis (shootInput) != 0 && IsInvoking ("IgnoreRollInput") == false) {
+            if (GameObject.FindGameObjectWithTag ("LaserHold") != null && Input.GetAxis (shootInput) <= 0 && IsInvoking ("IgnoreRollInput") == false) {
                 Destroy (GameObject.FindGameObjectWithTag ("LaserHold"));
             }
             StartCoroutine (RollEvent ());

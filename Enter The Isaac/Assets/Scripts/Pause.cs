@@ -12,12 +12,30 @@ public class Pause : MonoBehaviour {
     [SerializeField] UnityEvent unPauseEvent;
     [SerializeField] PostProcessVolume ppVolume;
     [SerializeField] AudioMixerGroup audioMixer;
+    Crosshair cross;
+
     float ignorePause = 0;
+
+    void Start(){
+        cross = FindObjectOfType<Crosshair>();
+    }
     void Update () {
         if (Input.GetButtonDown (pauseButton) == true && Mathf.Approximately (ignorePause, 0) == true) {
             PauseFuntion ();
         }
         ignorePause = Mathf.MoveTowards (ignorePause, 0, Time.unscaledDeltaTime);
+
+
+        //related to mouse visibility when pausing
+        if (cross != null) {
+            if (cross.mouseControlled == false && isPaused == false) {
+                Cursor.visible = false;
+            } else {
+                Cursor.visible = true;
+            }
+        } else {
+            Cursor.visible = true;
+        }
     }
 
     public void PauseFuntion () {
@@ -29,6 +47,10 @@ public class Pause : MonoBehaviour {
         }
         ignorePause = 0.3f;
         StartCoroutine (InvokedPauseSetter ());
+
+        if(cross != null && cross.mouseControlled == false && FindObjectOfType<MoveMouseWithInput>() != null){
+            FindObjectOfType<MoveMouseWithInput>().SetMouseToCenter();
+        }
     }
 
     IEnumerator InvokedPauseSetter () {
@@ -44,4 +66,6 @@ public class Pause : MonoBehaviour {
             audioMixer.audioMixer.SetFloat ("pauseEffect", 300);
         }
     }
+
 }
+

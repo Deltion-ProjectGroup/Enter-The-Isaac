@@ -8,7 +8,7 @@ public class DestroyOnButtonUp : MonoBehaviour
 
     void Update()
     {
-        if(Input.GetAxis(destroyInput) == 0 && Time.timeScale != 0){
+        if(Input.GetAxis(destroyInput) <= 0 && Time.timeScale != 0){
             Destroy(gameObject);
         }
     }

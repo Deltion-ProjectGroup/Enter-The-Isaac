@@ -7,12 +7,13 @@ public class Crosshair : MonoBehaviour
 
     Camera mainCam;
     [SerializeField] Transform player;
-    public bool mouseControlled = false;
+    public bool mouseControlled = true;
     [SerializeField] string inputHor = "Horizontal";
     [SerializeField] string inputVert = "Vertical";
     void Start()
     {
         mainCam = Camera.main;
+        mouseControlled = true;
     }
 
     void Update()
