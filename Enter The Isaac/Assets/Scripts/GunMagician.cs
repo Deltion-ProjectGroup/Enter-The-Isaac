@@ -19,7 +19,8 @@ public class GunMagician : MonoBehaviour {
     SoundSpawn soundSpawner;
     [SerializeField] GameObject contactDamageBox;
     [Header ("Teleport")]
-    [SerializeField] GameObject teleportLandParticle;
+    [SerializeField] GameObject teleportInPartilce;
+    [SerializeField] GameObject teleportOutParticle;
     [SerializeField] GameObject teleportLocationsParent;
     [SerializeField] float teleportPlayerDistance = 5;
     [SerializeField] AudioClip teleportInAudio;
@@ -67,6 +68,7 @@ public class GunMagician : MonoBehaviour {
     int currentPointShootVersionR = 0;
     [Header ("Clap 'n Attack")]
     [SerializeField] GameObject clapAttackProjectile;
+    [SerializeField] GameObject clapParticle;
     [SerializeField] Transform clapAttackRing1;
     [SerializeField] Transform clapAttackRing2;
     [SerializeField] float clapAttackRing1Speed = 10;
@@ -261,6 +263,7 @@ public class GunMagician : MonoBehaviour {
         shakeCam.SmallShake ();
         transform.localScale = new Vector3 (transform.localScale.x * 0.3f, transform.localScale.y * 3, transform.localScale.z * 0.3f);
         soundSpawner.SpawnEffect (teleportOutAudio);
+        Instantiate (teleportOutParticle, transform.position, transform.rotation);
         yield return new WaitForSeconds (0.03f / currentSpeed);
         transform.localScale = Vector3.zero;
         yield return new WaitForSeconds (0.25f / currentSpeed);
@@ -270,7 +273,7 @@ public class GunMagician : MonoBehaviour {
         transform.localScale = startScale;
         transform.localScale = new Vector3 (transform.localScale.x * 0.3f, transform.localScale.y * 3, transform.localScale.z * 0.3f);
         shakeCam.MediumShake ();
-        Instantiate (teleportLandParticle, transform.position, transform.rotation);
+        Instantiate (teleportInPartilce, transform.position, transform.rotation);
         soundSpawner.SpawnEffect (teleportInAudio);
         yield return new WaitForSeconds (0.03f / currentSpeed);
         transform.localScale = startScale;
@@ -435,6 +438,7 @@ public class GunMagician : MonoBehaviour {
         yield return new WaitForSeconds (clapAttackWindUpTime / clapAttackTwoStartSpeedMultiplier / currentSpeed); //startup
         //attack
         soundSpawner.SpawnEffect (clapAudio);
+        Instantiate(clapParticle,transform.position,transform.rotation);
         clapAttackRing1.Rotate (0, 10, 0);
         clapAttackRing2.Rotate (0, 10, 0);
         for (int i = 0; i < clapAttackRing1.childCount; i++) {

@@ -2276,7 +2276,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 194705296}
-  m_LocalRotation: {x: 0.19561252, y: -0.25752568, z: 0.5723703, w: -0.75353074}
+  m_LocalRotation: {x: 0.027634207, y: 0.32221153, z: 0.08085892, w: 0.94280326}
   m_LocalPosition: {x: 12.200017, y: 6.499977, z: 9.999978}
   m_LocalScale: {x: 7.3230004, y: 7.3230004, z: 7.3230004}
   m_Children: []
@@ -3175,7 +3175,7 @@ LensFlare:
   m_GameObject: {fileID: 238866022}
   m_Enabled: 0
   m_Flare: {fileID: 12100000, guid: e59f068002a7b47858274b3c71e10ea7, type: 2}
-  m_Color: {r: 1, g: 0.5235849, b: 0.5235849, a: 0}
+  m_Color: {r: 1, g: 0.5254902, b: 0.9741005, a: 0}
   m_Brightness: 1
   m_FadeSpeed: 3
   m_IgnoreLayers:
@@ -3483,7 +3483,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 01f51dd844ea3a343a280295a93387c3, type: 2}
+  - {fileID: 2100000, guid: 37c304c45f19fc043b493fa02d2ea41f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -18782,7 +18782,9 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   contactDamageBox: {fileID: 360421242}
-  teleportLandParticle: {fileID: 8158331382286321570, guid: 0ebfa3aed7b2a5448802bbb678241437,
+  teleportInPartilce: {fileID: 4974622466388586985, guid: 306db93cb7ab5d7459e2fa2c22520e9d,
+    type: 3}
+  teleportOutParticle: {fileID: 5620989006097910806, guid: 2bbfddaea5774db49b09a24ee0fae739,
     type: 3}
   teleportLocationsParent: {fileID: 916654378}
   teleportPlayerDistance: 10
@@ -18823,6 +18825,8 @@ MonoBehaviour:
   pointshootShootAudio: {fileID: 8300000, guid: 6c545a93eab446742ac02987ab893dca,
     type: 3}
   clapAttackProjectile: {fileID: 5489075468618320679, guid: 8913f7367f6a94443a061909cb7500ed,
+    type: 3}
+  clapParticle: {fileID: 6155153295292285919, guid: 959445e6ed4a5ab428fd49f188478757,
     type: 3}
   clapAttackRing1: {fileID: 1957492562}
   clapAttackRing2: {fileID: 1273015684}
@@ -24224,7 +24228,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1850083390}
-  m_LocalRotation: {x: 0.024127616, y: 0.05857232, z: -0.38011366, w: -0.92276806}
+  m_LocalRotation: {x: -0.05718094, y: -0.02726182, z: 0.9008458, w: 0.42949262}
   m_LocalPosition: {x: -13.960014, y: 8.730038, z: 10.869987}
   m_LocalScale: {x: 14.562519, y: 14.562519, z: 14.562519}
   m_Children: []
@@ -26227,7 +26231,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1969539481
 Transform:
   m_ObjectHideFlags: 0
@@ -27448,7 +27452,7 @@ MonoBehaviour:
   tranformV3: {x: 0, y: 0, z: 0}
   eulerV3: {x: 0.3, y: 0, z: -0.2}
   scaleV3: {x: 0.0668484, y: 0.0668484, z: 0.0668484}
-  speed: 6
+  speed: 4
   moveInEditMode: 0
   scaleLerp: 0
   ignoreScale: 0
