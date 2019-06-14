@@ -170,8 +170,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ownerRoom: {fileID: 0}
-  parentDoor: {fileID: 0}
-  connectionPoint: {fileID: 1308812252}
+  pointConnectedTo: {fileID: 0}
+  objectToReplace: {fileID: 0}
   direction: 1
   id: 0
 --- !u!1 &399738749
@@ -344,8 +344,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ownerRoom: {fileID: 0}
-  parentDoor: {fileID: 0}
-  connectionPoint: {fileID: 737579264}
+  pointConnectedTo: {fileID: 0}
+  objectToReplace: {fileID: 0}
   direction: 1
   id: 0
 --- !u!1 &521865426
@@ -595,8 +595,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ownerRoom: {fileID: 0}
-  parentDoor: {fileID: 0}
-  connectionPoint: {fileID: 1116779050}
+  pointConnectedTo: {fileID: 0}
+  objectToReplace: {fileID: 0}
   direction: 1
   id: 0
 --- !u!1 &598036967
@@ -1986,8 +1986,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ownerRoom: {fileID: 0}
-  parentDoor: {fileID: 0}
-  connectionPoint: {fileID: 1177304951}
+  pointConnectedTo: {fileID: 0}
+  objectToReplace: {fileID: 0}
   direction: 1
   id: 0
 --- !u!1 &1539470880
@@ -2631,6 +2631,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 4639601612895793470}
+  - component: {fileID: 3898679869358012299}
   m_Layer: 0
   m_Name: DungeonRoomHorde
   m_TagString: Untagged
@@ -2675,6 +2676,34 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &3898679869358012299
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4639601612895793471}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 696c714e4837dd8468ef9de7307363fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cube: {fileID: 0}
+  roomDistanceFromStart: 0
+  parentRoom: {fileID: 0}
+  replacedTimes: 0
+  creator: {fileID: 0}
+  availableConnectionPoints: []
+  allDoors: []
+  entrancePoint: {fileID: 0}
+  type: 0
+  activateOnEnter: 1
+  spawnManager: {fileID: 0}
+  hasCutscene: 0
+  bossImage: {fileID: 0}
+  bossName: 
+  button: {fileID: 0}
+  roomWarper: {fileID: 0}
 --- !u!1 &4639601613002897800
 GameObject:
   m_ObjectHideFlags: 0

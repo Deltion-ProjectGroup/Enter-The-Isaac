@@ -13,10 +13,6 @@ public class EnemyRoom : BaseRoom
         creator.roomCount++;
         creator.enemyRooms.Add(gameObject);
     }
-    public void InitializeEnemyGeneration()
-    {
-
-    }
     public override void SpawnRoom(DungeonConnectionPoint.ConnectionDirection wantedDir, Transform doorPoint)
     {
         creator.SpawnDungeonPartAlt(creator.hallways, wantedDir, gameObject, doorPoint, RoomTypes.Hallway);
@@ -35,7 +31,7 @@ public class EnemyRoom : BaseRoom
         activateOnEnter = false;
         print("TOGGLED");
     }
-    public void OnTriggerEnter(Collider other)
+    public virtual void OnTriggerEnter(Collider other)
     {
         if (other.tag == "Player")
         {

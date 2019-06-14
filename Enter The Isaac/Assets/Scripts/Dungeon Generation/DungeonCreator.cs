@@ -290,7 +290,7 @@ public class DungeonCreator : MonoBehaviour
             connectionPointToRemove.ownerRoom.type = BaseRoom.RoomTypes.End;
             endRooms.Add(connectionPointToRemove.ownerRoom.gameObject);
         }
-        DestroyImmediate(connectionPointToRemove);
+        DestroyImmediate(connectionPointToRemove.objectToReplace);
     }
     public void ReplaceRoom(GameObject roomToReplace, DungeonConnectionPoint.ConnectionDirection entranceDirection, List<GameObject> staticOptions = null)
     {

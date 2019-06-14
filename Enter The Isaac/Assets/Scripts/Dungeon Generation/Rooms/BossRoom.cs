@@ -19,9 +19,13 @@ public class BossRoom : EnemyRoom
         }
         base.TriggerRoom();
     }
+    public override void OnTriggerEnter(Collider other)
+    {
+
+    }
     public override void SpawnRoom(DungeonConnectionPoint.ConnectionDirection wantedDir, Transform doorPoint)
     {
-        throw new System.NotImplementedException();
+
     }
     public override void Initialize(DungeonCreator owner, GameObject parentRoom_ = null, DungeonConnectionPoint entrance = null)
     {
@@ -29,6 +33,12 @@ public class BossRoom : EnemyRoom
         creator.bossCount++;
         creator.roomCount++;
         roomWarper.GetComponent<Teleporter>().levelToLoad = GameObject.FindGameObjectWithTag("Manager").GetComponent<InGameManager>().nextLevel;
+        allDoors = new List<GameObject>();
+        allDoors.Add(entrancePoint.objectToReplace.GetComponentInChildren<DungeonDoor>().gameObject);
+        while (availableConnectionPoints.Count > 0)
+        {
+            creator.RemoveConnectionPoint(availableConnectionPoints[0]);
+        }
     }
     public override void OnDestroyed()
     {
