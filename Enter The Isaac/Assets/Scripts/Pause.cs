@@ -18,6 +18,11 @@ public class Pause : MonoBehaviour {
 
     void Start(){
         cross = FindObjectOfType<Crosshair>();
+        if(isPaused == false){
+            Time.timeScale = 1;
+        } else {
+            Time.timeScale = 0;
+        }
     }
     void Update () {
         if (Input.GetButtonDown (pauseButton) == true && Mathf.Approximately (ignorePause, 0) == true) {

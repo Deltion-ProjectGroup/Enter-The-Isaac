@@ -16,6 +16,7 @@ public class PlayerController : MonoBehaviour {
     public int money = 0;
     public int keys = 0;
     public Text keyUICounter;
+    public Text moneyUICounter;
     [SerializeField] GameObject reloadIcon;
     public GameObject reloadBar;
     SoundSpawn soundSpawn;
@@ -70,6 +71,11 @@ public class PlayerController : MonoBehaviour {
     public float interactRadius;
     public LayerMask interactablesLayer;
     public GameObject closestInteractableObject;
+    [Header("Death")]
+    [SerializeField] AudioClip deathSound;
+    [SerializeField] GameObject deathCam;
+    [SerializeField] GameObject deathText;
+
     void Awake () {
         pauseSettings = FindObjectOfType<Pause> ();
         cc = GetComponent<CharacterController> ();
@@ -95,7 +101,50 @@ public class PlayerController : MonoBehaviour {
         inControll = newValue;
     }
 
+    public void Death(){
+        StopAllCoroutines ();
+        StartCoroutine(DeathEvent());
+    }
+
+    IEnumerator DeathEvent(){
+        soundSpawn.SpawnEffect(deathSound);
+        deathCam.SetActive(true);
+        FindObjectOfType<Pause>().enabled = false;
+        Canvas[] uis = FindObjectsOfType<Canvas>();
+        for (int i = 0; i < uis.Length; i++)
+        {
+            uis[i].enabled = false;
+        }
+        Time.timeScale = 0.1f;
+        anim.Play("Flinch",0,0.1f);
+        anim.speed = 0;
+        moveV3 = Vector3.zero;
+        transform.Find ("Line").gameObject.SetActive (false);
+        if (gun != null) {
+            gun.StopAllCoroutines ();
+        }
+        anim.SetLayerWeight (1, 0);
+        anim.GetComponent<IKHoldGun> ().enabled = false;
+        anim.GetComponent<IKTest1> ().enabled = false;
+        gun.gameObject.SetActive(false);
+        SetInControll(false);
+        cam.GetComponent<Cam>().enabled = false;
+        reloadIcon.GetComponent<SpriteRenderer>().enabled = false;
+        reloadBar.SetActive(false);
+        hitbox.GetComponent<Collider>().enabled = false;
+        
+       yield return new WaitForSecondsRealtime(4); 
+       Time.timeScale = 0;
+       deathText.gameObject.SetActive(true);
+       Cursor.lockState = CursorLockMode.Locked;
+       Cursor.lockState = CursorLockMode.None;
+       Cursor.visible = true;
+    }
+
     void Update () {
+        if(Input.GetKeyDown(KeyCode.O)){
+            Death();
+        }
         anim.enabled = !pauseSettings.isPaused;
         reloadIcon.SetActive (!pauseSettings.isPaused);
         if (pauseSettings.isPaused == false && inControll == true) {
@@ -126,9 +175,16 @@ public class PlayerController : MonoBehaviour {
             SetAnimValues ();
             if (keyUICounter != null) {
                 if (keys >= 10) {
-                    keyUICounter.text = "X " + keys;
+                    keyUICounter.text = ": " + keys;
                 } else {
-                    keyUICounter.text = "X 0" + keys; //lazyness intensfies
+                    keyUICounter.text = ": 0" + keys; //lazyness intensfies
+                }
+            }
+            if (moneyUICounter != null) {
+                if (keys >= 10) {
+                    moneyUICounter.text = ": " + money;
+                } else {
+                    moneyUICounter.text = ": 0" + money; //lazyness intensfies
                 }
             }
             //setting the reload icon

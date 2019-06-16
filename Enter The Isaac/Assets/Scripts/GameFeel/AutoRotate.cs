@@ -13,6 +13,7 @@ public class AutoRotate : MonoBehaviour
     [SerializeField] bool moveInEditMode = false;
     [SerializeField] bool scaleLerp = true;
     [SerializeField] bool ignoreScale = true;
+    [SerializeField] bool scaledDeltaTime = true;
 
     void Start()
     {
@@ -21,6 +22,10 @@ public class AutoRotate : MonoBehaviour
 
     void Update()
     {
+        float deltaTime = Time.deltaTime;
+        if(scaledDeltaTime == false){
+            deltaTime = Time.unscaledTime;
+        }
         bool ignore = false;
         if (Application.isPlaying == false && moveInEditMode == false)
         {
@@ -28,17 +33,17 @@ public class AutoRotate : MonoBehaviour
         }
         if (ignore == false)
         {
-            transform.position += transform.TransformDirection(tranformV3 * speed * Time.deltaTime);
-            transform.Rotate(eulerV3 * speed * Time.deltaTime);
+            transform.position += transform.TransformDirection(tranformV3 * speed * deltaTime);
+            transform.Rotate(eulerV3 * speed * deltaTime);
             if (ignoreScale == false)
             {
                 if (scaleLerp == true)
                 {
-                    transform.localScale = Vector3.Lerp(transform.localScale, scaleV3, speed * Time.deltaTime);
+                    transform.localScale = Vector3.Lerp(transform.localScale, scaleV3, speed * deltaTime);
                 }
                 else
                 {
-                    transform.localScale = Vector3.MoveTowards(transform.localScale, scaleV3, speed * Time.deltaTime);
+                    transform.localScale = Vector3.MoveTowards(transform.localScale, scaleV3, speed * deltaTime);
                 }
             }
         }

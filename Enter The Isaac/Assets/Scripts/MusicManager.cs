@@ -85,6 +85,10 @@ public class MusicManager : MonoBehaviour {
         }
     }
     public void UpdateMusic (int clip) {
+        int lastRandom = randomSoundtrack;
+        if(PlayerPrefs.GetInt("doomMusic") == 1){
+            randomSoundtrack = 0;
+        }
         if (source.clip != soundTrack[currentSoundtrackPool].soundTrack[randomSoundtrack].ost[clip].clip) {
             if (soundTrack[currentSoundtrackPool].soundTrack[randomSoundtrack].ost[curTrack].rememberTime == true && curTrack != clip) {
                 savedTimes[curTrack] = source.time;
@@ -97,6 +101,7 @@ public class MusicManager : MonoBehaviour {
                 PlaySource ();
             }
         }
+        randomSoundtrack = lastRandom;
     }
 
     public void FadeToNewMusic (int newTrack) {
