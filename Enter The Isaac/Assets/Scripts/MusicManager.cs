@@ -54,7 +54,9 @@ public class MusicManager : MonoBehaviour {
 
     void Update () {
         if (curTrack != lastTrack) {
+            if(soundTrack[currentSoundtrackPool].soundTrack[randomSoundtrack].ost[curTrack].clip != null){
             UpdateMusic (soundTrack[currentSoundtrackPool].soundTrack[randomSoundtrack].ost[curTrack].clip);
+            }
             lastTrack = curTrack;
         }
 

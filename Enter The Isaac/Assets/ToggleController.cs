@@ -12,7 +12,7 @@ public class ToggleController : MonoBehaviour, IPointerEnterHandler, IPointerExi
     }
 
     void Update () {
-        if (isOver == true && Input.GetButtonDown (input) == true) {
+        if (isOver == true && Input.GetButtonDown (input) == true && Input.GetButtonDown ("Fire1") == false) {
             toggle.isOn = !toggle.isOn;
         }
     }
