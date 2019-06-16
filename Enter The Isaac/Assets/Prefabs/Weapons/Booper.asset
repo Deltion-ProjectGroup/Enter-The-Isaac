@@ -10,35 +10,35 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 23cfbedfe35a87248982214a440ad0a3, type: 3}
-  m_Name: DebugLaserGun
+  m_Name: Booper
   m_EditorClassIdentifier: 
-  activeFrames: 30
-  damageFrames: 3
-  bulletDecelerationSpeed: 0
-  fireRate: 0.6
-  dmg: 6
-  magazineSize: 3
-  maxAmmo: 40
+  activeFrames: 0
+  damageFrames: 0
+  bulletDecelerationSpeed: 10
+  fireRate: 0.3
+  dmg: 20
+  magazineSize: 20
+  maxAmmo: 60
   reloadTime: 0.64
   bulletCount: 1
-  accuracy: 0
-  lifeTime: 0.4
-  forwardStart: 0
-  pierce: 1
+  accuracy: 1
+  lifeTime: 10
+  forwardStart: 1
+  pierce: 0
   ghostBullet: 0
-  destroyOnInputUp: 1
-  ricochet: 1
-  parentToGun: 1
-  bulletSpeed: {x: 150, y: 180}
-  projectileModel: {fileID: 7235445337229934338, guid: 3f36fb9db21465645af7309d5b87ff35,
+  destroyOnInputUp: 0
+  ricochet: 0
+  parentToGun: 0
+  bulletSpeed: {x: 5, y: 5}
+  projectileModel: {fileID: 334168290025920454, guid: 12292ed68274fdd42b590e3ea2fb3a6b,
     type: 3}
-  gunModel: {fileID: 3734062980094691057, guid: 354502ce1314a734aaf41b9e9888ffa8,
+  gunModel: {fileID: 5340255346962640094, guid: ba49d5577f13db84ca513ef469922b83,
     type: 3}
-  recoil: 0.1
-  sound: {fileID: 8300000, guid: dec7b94510490a0439b807b36d9e498a, type: 3}
+  recoil: 0.2
+  sound: {fileID: 8300000, guid: 1207420421d9f5e4ea609d0c58430a21, type: 3}
   muzzleFlash:
   - {fileID: 196731903992000112, guid: 1ff5a52b392197b4fb900b8cd7875260, type: 3}
   screenShakeTime: 0.1
-  screenshakeStrength: 0.2
+  screenshakeStrength: 0.5
   camFov: 67
   kickBack: 0

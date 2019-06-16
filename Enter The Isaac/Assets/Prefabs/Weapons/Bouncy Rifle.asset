@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23cfbedfe35a87248982214a440ad0a3, type: 3}
+  m_Name: Bouncy Rifle
+  m_EditorClassIdentifier: 
+  activeFrames: 0
+  damageFrames: 0
+  bulletDecelerationSpeed: 10
+  fireRate: 0.2
+  dmg: 5
+  magazineSize: 10
+  maxAmmo: 300
+  reloadTime: 0.64
+  bulletCount: 1
+  accuracy: 15
+  lifeTime: 5
+  forwardStart: 1
+  pierce: 1
+  ghostBullet: 1
+  destroyOnInputUp: 0
+  ricochet: 1
+  parentToGun: 0
+  bulletSpeed: {x: 100, y: 100}
+  projectileModel: {fileID: 334168290025920454, guid: 12292ed68274fdd42b590e3ea2fb3a6b,
+    type: 3}
+  gunModel: {fileID: 5944489813415270829, guid: 9b44f8cffb27573459abd704cb820278,
+    type: 3}
+  recoil: 0.2
+  sound: {fileID: 8300000, guid: b5ee82de682405e45bb5ea5201477f69, type: 3}
+  muzzleFlash:
+  - {fileID: 196731903992000112, guid: 1ff5a52b392197b4fb900b8cd7875260, type: 3}
+  screenShakeTime: 0.1
+  screenshakeStrength: 0.25
+  camFov: 67
+  kickBack: 2

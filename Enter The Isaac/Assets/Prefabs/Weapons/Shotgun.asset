@@ -10,33 +10,34 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 23cfbedfe35a87248982214a440ad0a3, type: 3}
-  m_Name: DebugGrenadeLauncher
+  m_Name: Shotgun
   m_EditorClassIdentifier: 
   activeFrames: 0
   damageFrames: 0
   bulletDecelerationSpeed: 5
-  fireRate: 0.4
-  dmg: 50
-  magazineSize: 1
-  maxAmmo: 20
-  reloadTime: 0.4
-  bulletCount: 1
-  accuracy: 20
-  lifeTime: 0.4
+  fireRate: 0.5
+  dmg: 7
+  magazineSize: 8
+  maxAmmo: 75
+  reloadTime: 0.64
+  bulletCount: 7
+  accuracy: 30
+  lifeTime: 0.6
   forwardStart: 2
   pierce: 0
   ghostBullet: 0
   destroyOnInputUp: 0
-  ricochet: 0
+  ricochet: 1
   parentToGun: 0
-  bulletSpeed: {x: 20, y: 30}
-  projectileModel: {fileID: 334168290025920454, guid: b9f3e57f7f15839448cbc30f2f0d2006,
+  bulletSpeed: {x: 60, y: 70}
+  projectileModel: {fileID: 334168290025920454, guid: 3e200a906488c3146a139ec4eb40ca54,
     type: 3}
-  gunModel: {fileID: 5174279927373041143, guid: 917340225fc189548932a475a6c0e1dc,
+  gunModel: {fileID: 2979394607292614494, guid: ca2a020c38666db42a4cfd9f4f71d0c9,
     type: 3}
   recoil: 0.5
-  sound: {fileID: 8300000, guid: 3090746bc32e3d640a4aa71b3604b972, type: 3}
-  muzzleFlash: []
+  sound: {fileID: 8300000, guid: 0581bb85f7052fc4cb3e1b5e2eb07a18, type: 3}
+  muzzleFlash:
+  - {fileID: 196731903992000112, guid: 1ff5a52b392197b4fb900b8cd7875260, type: 3}
   screenShakeTime: 0.1
   screenshakeStrength: 1
   camFov: 67

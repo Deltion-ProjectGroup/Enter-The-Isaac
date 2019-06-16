@@ -1,0 +1,44 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23cfbedfe35a87248982214a440ad0a3, type: 3}
+  m_Name: Bolt-Action Sniper
+  m_EditorClassIdentifier: 
+  activeFrames: 0
+  damageFrames: 0
+  bulletDecelerationSpeed: 10
+  fireRate: 0.3
+  dmg: 30
+  magazineSize: 1
+  maxAmmo: 50
+  reloadTime: 0.4
+  bulletCount: 1
+  accuracy: 1
+  lifeTime: 5
+  forwardStart: 1
+  pierce: 0
+  ghostBullet: 0
+  destroyOnInputUp: 0
+  ricochet: 0
+  parentToGun: 0
+  bulletSpeed: {x: 125, y: 125}
+  projectileModel: {fileID: 334168290025920454, guid: 12292ed68274fdd42b590e3ea2fb3a6b,
+    type: 3}
+  gunModel: {fileID: 5340255346962640094, guid: ba49d5577f13db84ca513ef469922b83,
+    type: 3}
+  recoil: 0.2
+  sound: {fileID: 8300000, guid: bbbd6800812f75f429a0e26cc4a4d2cc, type: 3}
+  muzzleFlash:
+  - {fileID: 196731903992000112, guid: 1ff5a52b392197b4fb900b8cd7875260, type: 3}
+  screenShakeTime: 0.1
+  screenshakeStrength: 0.5
+  camFov: 67
+  kickBack: 0
