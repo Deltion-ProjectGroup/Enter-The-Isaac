@@ -102,6 +102,7 @@ public class DungeonCreator : MonoBehaviour
         }
         entireDungeon = new List<GameObject>();
         endRooms = new List<GameObject>();
+        enemyRooms = new List<GameObject>();
     }
     public Vector3 GetLocationData(Transform thisObject, Transform selectedConnectionPoint, Transform connectionPointToSnapTo)
     {
@@ -135,32 +136,43 @@ public class DungeonCreator : MonoBehaviour
                 }
             }
 
-            GameObject roomToSpawn = possibleRooms[Random.Range(0, possibleRooms.Count)];
-            List<DungeonConnectionPoint> availableConnectionPoints = new List<DungeonConnectionPoint>();
-            for (int i = 0; i < roomToSpawn.GetComponent<BaseRoom>().availableConnectionPoints.Count; i++)
+            if(possibleRooms.Count > 0)
             {
-                DungeonConnectionPoint thisConnectionPoint = roomToSpawn.GetComponent<BaseRoom>().availableConnectionPoints[i];
-                if (thisConnectionPoint.direction == requiredDirection)
+                GameObject roomToSpawn = possibleRooms[Random.Range(0, possibleRooms.Count)];
+                List<DungeonConnectionPoint> availableConnectionPoints = new List<DungeonConnectionPoint>();
+                for (int i = 0; i < roomToSpawn.GetComponent<BaseRoom>().availableConnectionPoints.Count; i++)
                 {
-                    availableConnectionPoints.Add(thisConnectionPoint);
+                    DungeonConnectionPoint thisConnectionPoint = roomToSpawn.GetComponent<BaseRoom>().availableConnectionPoints[i];
+                    if (thisConnectionPoint.direction == requiredDirection)
+                    {
+                        availableConnectionPoints.Add(thisConnectionPoint);
+                    }
                 }
-            }
-            DungeonConnectionPoint selectedConnectionPoint = availableConnectionPoints[Random.Range(0, availableConnectionPoints.Count)];
-            int selectedDoorId = selectedConnectionPoint.id;
-            GameObject spawnedRoom = Instantiate(roomToSpawn, GetLocationData(roomToSpawn.transform, selectedConnectionPoint.transform, pointToConnectTo), roomToSpawn.transform.rotation);
-            for (int i = 0; i < spawnedRoom.GetComponent<BaseRoom>().availableConnectionPoints.Count; i++)
-            {
-                DungeonConnectionPoint thisConnectionPoint = spawnedRoom.GetComponent<BaseRoom>().availableConnectionPoints[i];
-                if (thisConnectionPoint.id == selectedDoorId)
+                DungeonConnectionPoint selectedConnectionPoint = availableConnectionPoints[Random.Range(0, availableConnectionPoints.Count)];
+                int selectedDoorId = selectedConnectionPoint.id;
+                GameObject spawnedRoom = Instantiate(roomToSpawn, GetLocationData(roomToSpawn.transform, selectedConnectionPoint.transform, pointToConnectTo), roomToSpawn.transform.rotation);
+                for (int i = 0; i < spawnedRoom.GetComponent<BaseRoom>().availableConnectionPoints.Count; i++)
                 {
-                    selectedConnectionPoint = thisConnectionPoint;
-                    break;
+                    DungeonConnectionPoint thisConnectionPoint = spawnedRoom.GetComponent<BaseRoom>().availableConnectionPoints[i];
+                    if (thisConnectionPoint.id == selectedDoorId)
+                    {
+                        selectedConnectionPoint = thisConnectionPoint;
+                        break;
+                    }
                 }
-            }
 
-            spawnedRoom.GetComponent<BaseRoom>().Initialize(this, parentRoom, selectedConnectionPoint);
-            spawnedRoom.GetComponent<BaseRoom>().entrancePoint.pointConnectedTo = pointToConnectTo.gameObject;
-            CheckPartCollision(spawnedRoom, selectedConnectionPoint.direction);
+                spawnedRoom.GetComponent<BaseRoom>().Initialize(this, parentRoom, selectedConnectionPoint);
+                spawnedRoom.GetComponent<BaseRoom>().entrancePoint.pointConnectedTo = pointToConnectTo.gameObject;
+                CheckPartCollision(spawnedRoom, selectedConnectionPoint.direction);
+            }
+            else
+            {
+                RemoveConnectionPoint(pointToConnectTo.GetComponent<DungeonConnectionPoint>());
+                if (openProcesses == 0)
+                {
+                    CheckRoomCount();
+                }
+            }
         }
         else
         {
@@ -288,8 +300,13 @@ public class DungeonCreator : MonoBehaviour
             hallway.GetComponent<BaseRoom>().OnDestroyed();
             DestroyImmediate(hallway);
         }
+        print(connectionPointToRemove.ownerRoom);
         GameObject newWall = Instantiate(walls[Random.Range(0, walls.Length)], connectionPointToRemove.objectToReplace.transform.position, connectionPointToRemove.objectToReplace.transform.rotation, connectionPointToRemove.objectToReplace.transform.parent);
         connectionPointToRemove.ownerRoom.availableConnectionPoints.Remove(connectionPointToRemove);
+        if(connectionPointToRemove.ownerRoom is EnemyRoom)
+        {
+            connectionPointToRemove.ownerRoom.allDoors.Remove(connectionPointToRemove.objectToReplace.GetComponentInChildren<DungeonDoor>().gameObject);
+        }
         if (connectionPointToRemove.ownerRoom.availableConnectionPoints.Count <= 0 && connectionPointToRemove.ownerRoom.replacedTimes <= maxReplacementTimes)
         {
             connectionPointToRemove.ownerRoom.type = BaseRoom.RoomTypes.End;
