@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using Chance;
+using UnityEngine.AI;
 
 public class DungeonCreator : MonoBehaviour
 {
+    public NavMeshSurface navMeshHolder;
     public int iterations;
     public int maxReplacementTimes;
     public GameObject startRoom;
@@ -257,6 +259,9 @@ public class DungeonCreator : MonoBehaviour
             }
             yield return null;
         }
+        yield return null;
+        navMeshHolder.BuildNavMesh();
+        yield return null;
         onGenerationComplete();
     }
     public void ProceedGeneration()
