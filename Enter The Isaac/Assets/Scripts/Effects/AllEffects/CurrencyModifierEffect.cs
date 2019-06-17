@@ -2,13 +2,13 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class AddAmmoEffect : Effect
+public class CurrencyModifierEffect : Effect
 {
-    public int ammoAmount;
+    public int value;
     public override void ApplyEffect(GameObject target)
     {
         PlayerController player = target.GetComponent<PlayerController>();
-        player.magazineStore[player.curGun] = Mathf.Min(player.magazineStore[player.curGun] + ammoAmount, player.gun.gunClone.maxAmmo);
+        player.money += value;
     }
     public override void RemoveEffect(GameObject target)
     {

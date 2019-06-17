@@ -18,7 +18,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &22118454
 Transform:
   m_ObjectHideFlags: 0
@@ -109,7 +109,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &369323330
 Transform:
   m_ObjectHideFlags: 0
@@ -200,7 +200,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &501718632
 Transform:
   m_ObjectHideFlags: 0
@@ -291,7 +291,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &854983500
 Transform:
   m_ObjectHideFlags: 0
@@ -382,7 +382,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1994690752
 Transform:
   m_ObjectHideFlags: 0
@@ -588,7 +588,7 @@ GameObject:
   - component: {fileID: 7862944203223238109}
   - component: {fileID: 3267246232773465967}
   - component: {fileID: 5339651988498677653}
-  m_Layer: 4
+  m_Layer: 11
   m_Name: DungeonRoom4
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -660,6 +660,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6eb4771674e8a4a47b31a96a5fd1d3d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cube: {fileID: 0}
   roomDistanceFromStart: 0
   parentRoom: {fileID: 0}
   replacedTimes: 0
@@ -972,6 +973,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7862944203223238109}
     m_Modifications:
+    - target: {fileID: 2807547266771992921, guid: 3fe5bb9f2e7107f4d8c126bea3e9c4e8,
+        type: 3}
+      propertyPath: m_Name
+      value: DoorWall_low (1)
+      objectReference: {fileID: 0}
     - target: {fileID: 2807547266772491641, guid: 3fe5bb9f2e7107f4d8c126bea3e9c4e8,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1036,11 +1042,6 @@ PrefabInstance:
         type: 3}
       propertyPath: direction
       value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 2807547266771992921, guid: 3fe5bb9f2e7107f4d8c126bea3e9c4e8,
-        type: 3}
-      propertyPath: m_Name
-      value: DoorWall_low (1)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3fe5bb9f2e7107f4d8c126bea3e9c4e8, type: 3}
@@ -1715,6 +1716,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7862944203223238109}
     m_Modifications:
+    - target: {fileID: 2807547266771992921, guid: 3fe5bb9f2e7107f4d8c126bea3e9c4e8,
+        type: 3}
+      propertyPath: m_Name
+      value: DoorWall_low (4)
+      objectReference: {fileID: 0}
     - target: {fileID: 2807547266772491641, guid: 3fe5bb9f2e7107f4d8c126bea3e9c4e8,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1785,11 +1791,6 @@ PrefabInstance:
       propertyPath: id
       value: 3
       objectReference: {fileID: 0}
-    - target: {fileID: 2807547266771992921, guid: 3fe5bb9f2e7107f4d8c126bea3e9c4e8,
-        type: 3}
-      propertyPath: m_Name
-      value: DoorWall_low (4)
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3fe5bb9f2e7107f4d8c126bea3e9c4e8, type: 3}
 --- !u!114 &8332491301017535284 stripped
@@ -1823,6 +1824,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7862944203223238109}
     m_Modifications:
+    - target: {fileID: 2807547266771992921, guid: 3fe5bb9f2e7107f4d8c126bea3e9c4e8,
+        type: 3}
+      propertyPath: m_Name
+      value: DoorWall_low (3)
+      objectReference: {fileID: 0}
     - target: {fileID: 2807547266772491641, guid: 3fe5bb9f2e7107f4d8c126bea3e9c4e8,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -1892,11 +1898,6 @@ PrefabInstance:
         type: 3}
       propertyPath: id
       value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 2807547266771992921, guid: 3fe5bb9f2e7107f4d8c126bea3e9c4e8,
-        type: 3}
-      propertyPath: m_Name
-      value: DoorWall_low (3)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3fe5bb9f2e7107f4d8c126bea3e9c4e8, type: 3}
@@ -5495,6 +5496,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 7862944203223238109}
     m_Modifications:
+    - target: {fileID: 2807547266771992921, guid: 3fe5bb9f2e7107f4d8c126bea3e9c4e8,
+        type: 3}
+      propertyPath: m_Name
+      value: DoorWall_low (2)
+      objectReference: {fileID: 0}
     - target: {fileID: 2807547266772491641, guid: 3fe5bb9f2e7107f4d8c126bea3e9c4e8,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -5559,11 +5565,6 @@ PrefabInstance:
         type: 3}
       propertyPath: id
       value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2807547266771992921, guid: 3fe5bb9f2e7107f4d8c126bea3e9c4e8,
-        type: 3}
-      propertyPath: m_Name
-      value: DoorWall_low (2)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3fe5bb9f2e7107f4d8c126bea3e9c4e8, type: 3}

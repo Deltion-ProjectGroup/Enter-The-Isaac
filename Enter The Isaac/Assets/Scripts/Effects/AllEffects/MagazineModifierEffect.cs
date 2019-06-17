@@ -2,23 +2,24 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class FireRateModfierEffect : GunEffect
+public class MagazineModifierEffect : Effect
 {
-    public float modifyAmount;
+    public int modifyAmount;
     public override void ApplyEffect(GameObject target)
     {
         Gun gun = target.GetComponent<PlayerController>().gun;
-        gun.gunClone.fireRate = Mathf.Max(gun.gunClone.fireRate - modifyAmount, gun.gunClone.minFireRate);
+        gun.gunClone.magazineSize += modifyAmount;
         gun.onSwapGun += OnSwapGun;
+
     }
     public override void RemoveEffect(GameObject target)
     {
         Gun gun = target.GetComponent<PlayerController>().gun;
-        gun.gunClone.fireRate += modifyAmount;
+        gun.gunClone.magazineSize -= modifyAmount;
         gun.onSwapGun -= OnSwapGun;
     }
-    public void OnSwapGun(Gun gunSwappedTo)
+    public void OnSwapGun(Gun newGun)
     {
-        gunSwappedTo.gunClone.fireRate = Mathf.Max(gunSwappedTo.gunClone.fireRate - modifyAmount, gunSwappedTo.gunClone.minFireRate);
+        newGun.gunClone.magazineSize += modifyAmount;
     }
 }

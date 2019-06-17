@@ -18,7 +18,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &651416366
 Transform:
   m_ObjectHideFlags: 0
@@ -109,7 +109,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &1619703564
 Transform:
   m_ObjectHideFlags: 0
@@ -200,7 +200,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!4 &2013847645
 Transform:
   m_ObjectHideFlags: 0
@@ -332,12 +332,12 @@ MonoBehaviour:
       chance: 50
       percentageBorders: {x: 0, y: 0}
       items:
-      - {fileID: 7129523558497025242, guid: a6d05cfdf7244a84aa9896bc5543d6fd, type: 3}
+      - {fileID: 5147418959096718469, guid: c976ce3c268d9de4eb3364b8f97e65b2, type: 3}
     - unlocksAtFloor: 2
       chance: 50
       percentageBorders: {x: 0, y: 0}
       items:
-      - {fileID: 8177181223158001203, guid: bed91ea3a64a49742ada83a561733b58, type: 3}
+      - {fileID: 1897557240992634389, guid: a1bfa735e0753104b868c76f21773078, type: 3}
     maxPercentage: 0
   enemySpawners:
   - {fileID: 2662267463992567629}
@@ -438,7 +438,7 @@ GameObject:
   - component: {fileID: 3148158530272993577}
   - component: {fileID: 2330375124642415832}
   - component: {fileID: 6683545719745299726}
-  m_Layer: 4
+  m_Layer: 11
   m_Name: DungeonRoom5
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -503,6 +503,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6eb4771674e8a4a47b31a96a5fd1d3d2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cube: {fileID: 0}
   roomDistanceFromStart: 0
   parentRoom: {fileID: 0}
   replacedTimes: 0
@@ -512,7 +513,7 @@ MonoBehaviour:
   - {fileID: 8683508122930048754}
   allDoors:
   - {fileID: 2816832860116412039}
-  - {fileID: 7711003425128623258}
+  - {fileID: 4936967597839004685}
   entrancePoint: {fileID: 0}
   type: 0
   activateOnEnter: 1
@@ -2478,6 +2479,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3148158530272993577}
     m_Modifications:
+    - target: {fileID: 2807547266771992921, guid: 3fe5bb9f2e7107f4d8c126bea3e9c4e8,
+        type: 3}
+      propertyPath: m_Name
+      value: DoorWall_low (2)
+      objectReference: {fileID: 0}
     - target: {fileID: 2807547266772491641, guid: 3fe5bb9f2e7107f4d8c126bea3e9c4e8,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2538,11 +2544,6 @@ PrefabInstance:
       propertyPath: ownerRoom
       value: 
       objectReference: {fileID: 6683545719745299726}
-    - target: {fileID: 2807547266771992921, guid: 3fe5bb9f2e7107f4d8c126bea3e9c4e8,
-        type: 3}
-      propertyPath: m_Name
-      value: DoorWall_low (2)
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3fe5bb9f2e7107f4d8c126bea3e9c4e8, type: 3}
 --- !u!114 &1951962928590273656 stripped
@@ -2801,6 +2802,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 3148158530272993577}
     m_Modifications:
+    - target: {fileID: 2807547266771992921, guid: 3fe5bb9f2e7107f4d8c126bea3e9c4e8,
+        type: 3}
+      propertyPath: m_Name
+      value: DoorWall_low (1)
+      objectReference: {fileID: 0}
     - target: {fileID: 2807547266772491641, guid: 3fe5bb9f2e7107f4d8c126bea3e9c4e8,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2871,11 +2877,6 @@ PrefabInstance:
       propertyPath: id
       value: 1
       objectReference: {fileID: 0}
-    - target: {fileID: 2807547266771992921, guid: 3fe5bb9f2e7107f4d8c126bea3e9c4e8,
-        type: 3}
-      propertyPath: m_Name
-      value: DoorWall_low (1)
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 3fe5bb9f2e7107f4d8c126bea3e9c4e8, type: 3}
 --- !u!114 &8683508122930048754 stripped
@@ -2890,15 +2891,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e6780ef114d5f1442a9f24badc9624e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!4 &7711003425128526010 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 2807547266772491641, guid: 3fe5bb9f2e7107f4d8c126bea3e9c4e8,
+--- !u!1 &4936967597839004685 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 682071318157482446, guid: 3fe5bb9f2e7107f4d8c126bea3e9c4e8,
     type: 3}
   m_PrefabInstance: {fileID: 5617279147627572675}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &7711003425128623258 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2807547266771992921, guid: 3fe5bb9f2e7107f4d8c126bea3e9c4e8,
+--- !u!4 &7711003425128526010 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2807547266772491641, guid: 3fe5bb9f2e7107f4d8c126bea3e9c4e8,
     type: 3}
   m_PrefabInstance: {fileID: 5617279147627572675}
   m_PrefabAsset: {fileID: 0}

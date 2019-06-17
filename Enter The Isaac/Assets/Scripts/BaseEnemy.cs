@@ -71,6 +71,9 @@ public class BaseEnemy : MonoBehaviour {
     [SerializeField] bool parentToMe = false;
     GameObject contactDmg;
 
+    [Header("Currency")]
+    [SerializeField] int minValue, maxValue;
+
     void Awake () {
         StartBase ();
     }
@@ -230,6 +233,10 @@ public class BaseEnemy : MonoBehaviour {
         if (timer > 0.25f) {
             shakeCam.SmallShake ();
             Camera.main.fieldOfView = 60;
+            int currencyValue = Random.Range(minValue, maxValue);
+            GameObject currency = Instantiate(GameObject.FindGameObjectWithTag("Manager").GetComponent<ChanceManager>().getCorrespondingGem(currencyValue));
+            currency.GetComponent<MoveToTarget>().target = GameObject.FindGameObjectWithTag("Player");
+            currency.GetComponent<MoveToTarget>().StartMove();
             Destroy (gameObject);
         }
     }

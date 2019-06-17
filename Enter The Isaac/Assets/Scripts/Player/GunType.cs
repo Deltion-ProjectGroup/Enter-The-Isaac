@@ -12,6 +12,7 @@ public class GunType : ScriptableObject
     public float bulletDecelerationSpeed = 10;
     [Header("Balancable Stats")]
     public float fireRate = 0;
+    public float minFireRate = 0;
     public float dmg = 0;
     public int magazineSize = 0;
     public int maxAmmo = 0;

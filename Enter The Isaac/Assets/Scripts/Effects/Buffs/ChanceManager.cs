@@ -10,6 +10,7 @@ public class ChanceManager : MonoBehaviour
     public Chance.ItemPoolHolder consumablePool;
 
     [Header("EnemyDropsData")]
+    public Chance.IntAndGOHolder[] currencyDrops;
     public Chance.ItemPoolHolder enemyDropPool;
     public int baseAmmoChance, baseHealthChance, baseKeyChance;
     public GameObject ammoPickup, healthPickup, keyPickup;
@@ -31,6 +32,24 @@ public class ChanceManager : MonoBehaviour
         itemPool.Initialize();
         consumablePool.Initialize();
         enemyDropPool.Initialize();
+    }
+    public GameObject getCorrespondingGem(int value)
+    {
+        if(currencyDrops.Length > 0)
+        {
+            foreach (Chance.IntAndGOHolder holder in currencyDrops)
+            {
+                if (value < holder.value)
+                {
+                    return holder.thisObject;
+                }
+            }
+            return currencyDrops[currencyDrops.Length - 1].thisObject;
+        }
+        else
+        {
+            return null;
+        }
     }
     public void ApplyBuffEffects(GameObject target)
     {
@@ -205,5 +224,12 @@ namespace Chance
             }
             return 0;
         }
+    }
+
+    [System.Serializable]
+    public struct IntAndGOHolder
+    {
+        public int value;
+        public GameObject thisObject;
     }
 }

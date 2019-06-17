@@ -7,6 +7,6 @@ public class Spawner : MonoBehaviour
     public Transform spawnPoint;
     public GameObject SpawnObject(GameObject objectToSpawn)
     {
-        return Instantiate(objectToSpawn, spawnPoint.position, Quaternion.identity);
+        return Instantiate(objectToSpawn, spawnPoint.position, Quaternion.identity, spawnPoint);
     }
 }

@@ -141,6 +141,7 @@ public class EnemySpawnManager : MonoBehaviour
         openSpawnProcesses++;
         foreach (EnemySpawnData enemieSpawn in spawnData.enemySpawnData)
         {
+            print("SPAWNED");
             Invoke("IgnoreSpawn",enemieSpawn.delayBeforeSpawn);
             yield return new WaitForSeconds(enemieSpawn.delayBeforeSpawn);
             GameObject enemy = spawnData.spawner.SpawnObject(enemieSpawn.enemy);

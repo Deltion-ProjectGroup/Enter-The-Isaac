@@ -9,6 +9,7 @@ public class CollisionEffect : MonoBehaviour
     public UnityEvent nonEffectActivations;
     public void OnTriggerEnter(Collider other)
     {
+        print(other.gameObject);
         //print("I HIT SUMTHING");
         if(other.gameObject.GetComponent<Hitbox>())
         {
@@ -20,5 +21,6 @@ public class CollisionEffect : MonoBehaviour
             }
         }
         nonEffectActivations.Invoke();
+        Destroy(gameObject);
     }
 }
