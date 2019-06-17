@@ -242,7 +242,7 @@ public class PlayerController : MonoBehaviour {
             magazineStore[0] = cheatGun.maxAmmo;
             ammoStore[0] = cheatGun.magazineSize;
         }
-        if (Input.GetKeyDown (KeyCode.Alpha0)) {
+        if (Input.GetButtonDown("TopDownToggle") == true) {
             if (isCamTopDown == false) {
                 cam.GetComponent<Cam> ().offset += new Vector3 (0, 5, 4.65f);
                 cam.GetComponent<Cam> ().startRot += new Vector3(30,0,0);
