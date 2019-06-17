@@ -227,8 +227,14 @@ public class BaseEnemy : MonoBehaviour {
             GetComponent<Collider> ().enabled = false;
         }
         timer += Time.deltaTime;
+        Vector3 oldPos = transform.position;
         if (timer < 0.05f) {
             transform.position -= transform.forward * 100 * Time.deltaTime;
+        }
+         RaycastHit hit;
+        if(Physics.Raycast(oldPos,transform.position - oldPos,out hit,Vector3.Distance(transform.position,oldPos),LayerMask.GetMask("Default"),QueryTriggerInteraction.Ignore)){
+            transform.position = hit.point;
+            timer = 0.26f;
         }
         if (timer > 0.25f) {
             shakeCam.SmallShake ();
