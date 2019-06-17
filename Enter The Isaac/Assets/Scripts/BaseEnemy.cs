@@ -80,6 +80,7 @@ public class BaseEnemy : MonoBehaviour {
 
     public void StartBase () {
         transform.tag = "Enemy";
+        transform.gameObject.layer = 10;
         soundSpawner = FindObjectOfType<SoundSpawn> ();
         shakeCam = GetComponent<ShakeCam> ();
         agent = GetComponent<NavMeshAgent> ();
