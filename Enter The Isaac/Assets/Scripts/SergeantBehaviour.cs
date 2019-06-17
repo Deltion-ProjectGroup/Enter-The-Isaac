@@ -13,7 +13,7 @@ public class SergeantBehaviour : BaseEnemy
     [SerializeField] int enemiesToSpawn = 3;
     [SerializeField] GameObject _spawnParticle;
     [SerializeField] float spawnDistance = 5;
-    [SerializeField] GameObject enemyToSpawn;
+    [SerializeField] GameObject[] enemyToSpawn;
     [SerializeField] int maxEnemies = 3;
     [SerializeField] float initialDelay = 1;
     List<GameObject> spawnParticles = new List<GameObject>();
@@ -125,7 +125,7 @@ public class SergeantBehaviour : BaseEnemy
         //spawn
         for (int i = 0; i < spawnLocations.Count; i++)
         {
-            Instantiate(enemyToSpawn, spawnLocations[i].transform.position, transform.rotation);
+            Instantiate(enemyToSpawn[Random.Range(0,enemyToSpawn.Length)], spawnLocations[i].transform.position, transform.rotation);
         }
         for (int i = 0; i < spawnLocations.Count; i++)
         {
