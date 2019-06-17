@@ -88,7 +88,7 @@ public class BaseEnemy : MonoBehaviour {
             Spawn ();
             hitbox.enabled = false;
             GetComponent<Collider> ().enabled = false;
-            contactDmg = GameObject.Find("ContactDamage");
+            contactDmg = transform.Find("ContactDamage").gameObject;
             contactDmg.layer = 10;//10 = enemy layer
             contactDmg.SetActive(false);
         }

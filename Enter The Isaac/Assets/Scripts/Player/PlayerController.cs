@@ -71,10 +71,12 @@ public class PlayerController : MonoBehaviour {
     public float interactRadius;
     public LayerMask interactablesLayer;
     public GameObject closestInteractableObject;
-    [Header("Death")]
+    [Header ("Death")]
     [SerializeField] AudioClip deathSound;
     [SerializeField] GameObject deathCam;
     [SerializeField] GameObject deathText;
+    [Header("Cheat")]
+    [SerializeField]GunType  cheatGun; 
 
     void Awake () {
         pauseSettings = FindObjectOfType<Pause> ();
@@ -99,24 +101,27 @@ public class PlayerController : MonoBehaviour {
 
     public void SetInControll (bool newValue) {
         inControll = newValue;
+        if (gun != null) {
+            gun.CancelInvoke ("Shoot");
+        }
     }
 
-    public void Death(){
+    public void Death () {
         StopAllCoroutines ();
-        StartCoroutine(DeathEvent());
+        StartCoroutine (DeathEvent ());
     }
 
-    IEnumerator DeathEvent(){
-        soundSpawn.SpawnEffect(deathSound);
-        deathCam.SetActive(true);
-        FindObjectOfType<Pause>().enabled = false;
-        Canvas[] uis = FindObjectsOfType<Canvas>();
-        for (int i = 0; i < uis.Length; i++)
-        {
+    IEnumerator DeathEvent () {
+        FindObjectOfType<MusicManager> ().FadeToNewMusic (4);
+        soundSpawn.SpawnEffect (deathSound);
+        deathCam.SetActive (true);
+        FindObjectOfType<Pause> ().enabled = false;
+        Canvas[] uis = FindObjectsOfType<Canvas> ();
+        for (int i = 0; i < uis.Length; i++) {
             uis[i].enabled = false;
         }
         Time.timeScale = 0.1f;
-        anim.Play("Flinch",0,0.1f);
+        anim.Play ("Flinch", 0, 0.1f);
         anim.speed = 0;
         moveV3 = Vector3.zero;
         transform.Find ("Line").gameObject.SetActive (false);
@@ -126,24 +131,24 @@ public class PlayerController : MonoBehaviour {
         anim.SetLayerWeight (1, 0);
         anim.GetComponent<IKHoldGun> ().enabled = false;
         anim.GetComponent<IKTest1> ().enabled = false;
-        gun.gameObject.SetActive(false);
-        SetInControll(false);
-        cam.GetComponent<Cam>().enabled = false;
-        reloadIcon.GetComponent<SpriteRenderer>().enabled = false;
-        reloadBar.SetActive(false);
-        hitbox.GetComponent<Collider>().enabled = false;
-        
-       yield return new WaitForSecondsRealtime(4); 
-       Time.timeScale = 0;
-       deathText.gameObject.SetActive(true);
-       Cursor.lockState = CursorLockMode.Locked;
-       Cursor.lockState = CursorLockMode.None;
-       Cursor.visible = true;
+        gun.gameObject.SetActive (false);
+        SetInControll (false);
+        cam.GetComponent<Cam> ().enabled = false;
+        reloadIcon.GetComponent<SpriteRenderer> ().enabled = false;
+        reloadBar.SetActive (false);
+        hitbox.GetComponent<Collider> ().enabled = false;
+
+        yield return new WaitForSecondsRealtime (4);
+        Time.timeScale = 0;
+        deathText.gameObject.SetActive (true);
+        Cursor.lockState = CursorLockMode.Locked;
+        Cursor.lockState = CursorLockMode.None;
+        Cursor.visible = true;
     }
 
     void Update () {
-        if(Input.GetKeyDown(KeyCode.O)){
-            Death();
+        if (Input.GetKeyDown (KeyCode.O)) {
+            Death ();
         }
         anim.enabled = !pauseSettings.isPaused;
         reloadIcon.SetActive (!pauseSettings.isPaused);
@@ -195,14 +200,54 @@ public class PlayerController : MonoBehaviour {
             reloadIcon.SetActive (!gun.IsInvoking ("Reload"));
             CheckClosestInteractable ();
             Interact ();
+            Cheat ();
+        }
+    }
+
+    void Cheat () {
+        if (Input.GetKeyDown (KeyCode.Alpha3)) {
+            transform.position += transform.forward * -5;
+        }
+        if (Input.GetKeyDown (KeyCode.Alpha4)) {
+            transform.position += transform.up * 5;
+        }
+        if (Input.GetKeyDown (KeyCode.Alpha5)) {
+            hitbox.GetComponent<Hitbox> ().maxHealth = 40;
+            hitbox.GetComponent<Hitbox> ().fakeHealth = 0;
+            hitbox.GetComponent<Hitbox> ().AddHealth (40);
+        }
+        if (Input.GetKeyDown (KeyCode.Alpha6)) {
+            if (hitbox.GetComponent<Hitbox> ().team == 0) {
+                hitbox.GetComponent<Hitbox> ().team = 1;
+            } else {
+                hitbox.GetComponent<Hitbox> ().team = 0;
+            }
+        }
+        if(Input.GetKeyDown (KeyCode.Alpha7)){
+            if(walkSpeed < 7){
+            walkSpeed *= 4;
+            rollSpeed *= 2;
+            } else {
+                 walkSpeed /= 4;
+                 rollSpeed /= 2;
+            }
+        }
+        if(Input.GetKeyDown (KeyCode.Alpha8)){
+            keys = 99;
+            money = 99;
+        }
+        if(Input.GetKeyDown (KeyCode.Alpha9)){
+            guns[0] = cheatGun;
+            magazineStore[0] = cheatGun.maxAmmo;
+            ammoStore[0] = cheatGun.magazineSize;
         }
     }
 
     float lastShootInput = -1;
     void GunInput () {
         //shooting
-        gun.shootFirstFrame = (Input.GetAxis(shootInput) > 0 && lastShootInput <= 0);
-        lastShootInput = Input.GetAxis(shootInput);
+        gun.shootFirstFrame = (Input.GetAxis (shootInput) > 0 && lastShootInput <= 0);
+        lastShootInput = Input.GetAxis (shootInput);
         gun.shootInput = Input.GetAxis (shootInput);
         if (Input.GetAxis (shootInput) != 0) //was originally getbuttondown
         {

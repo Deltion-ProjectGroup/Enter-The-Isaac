@@ -980,6 +980,81 @@ MonoBehaviour:
   scaleLerp: 1
   ignoreScale: 1
   scaledDeltaTime: 1
+--- !u!1 &1139284474
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1139284475}
+  - component: {fileID: 1139284477}
+  - component: {fileID: 1139284476}
+  m_Layer: 5
+  m_Name: Cheatmenu
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1139284475
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1139284474}
+  m_LocalRotation: {x: -0, y: -0, z: 0.70710677, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 9.639199, y: 31.159502, z: 17.10181}
+  m_Children:
+  - {fileID: 1294897921}
+  m_Father: {fileID: 6708433332622052867}
+  m_RootOrder: 10
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 90.00001}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 22, y: 78}
+  m_SizeDelta: {x: 352.6, y: 224.5}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &1139284477
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1139284474}
+  m_CullTransparentMesh: 0
+--- !u!114 &1139284476
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1139284474}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: -765806418, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_RaycastTarget: 0
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_Sprite: {fileID: 21300000, guid: 316471cc5b86a1340afd8562a369373f, type: 3}
+  m_Type: 0
+  m_PreserveAspect: 1
+  m_FillCenter: 1
+  m_FillMethod: 4
+  m_FillAmount: 1
+  m_FillClockwise: 1
+  m_FillOrigin: 0
+  m_UseSpriteMesh: 0
 --- !u!1 &1160883655
 GameObject:
   m_ObjectHideFlags: 0
@@ -1109,6 +1184,99 @@ MonoBehaviour:
   moveMouseHor: PauseHor
   moveMouseVert: PauseVert
   speed: 15
+--- !u!1 &1294897920
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1294897921}
+  - component: {fileID: 1294897924}
+  - component: {fileID: 1294897923}
+  m_Layer: 5
+  m_Name: Cheats
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &1294897921
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1294897920}
+  m_LocalRotation: {x: -0, y: -0, z: -0.70710677, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 0.09470724, y: 0.30614895, z: 0.1725566}
+  m_Children: []
+  m_Father: {fileID: 1139284475}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -12.4, y: -3.9}
+  m_SizeDelta: {x: 333.17, y: 259.5}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!222 &1294897924
+CanvasRenderer:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1294897920}
+  m_CullTransparentMesh: 0
+--- !u!114 &1294897923
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1294897920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 708705254, guid: f70555f144d8491a825f0804e09c671c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Material: {fileID: 0}
+  m_Color: {r: 0.19607843, g: 0.19607843, b: 0.19607843, a: 1}
+  m_RaycastTarget: 0
+  m_OnCullStateChanged:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.UI.MaskableGraphic+CullStateChangedEvent, UnityEngine.UI,
+      Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
+  m_FontData:
+    m_Font: {fileID: 12800000, guid: 62427a04346924c42a6f417adf88252f, type: 3}
+    m_FontSize: 28
+    m_FontStyle: 0
+    m_BestFit: 0
+    m_MinSize: 10
+    m_MaxSize: 40
+    m_Alignment: 0
+    m_AlignByGeometry: 0
+    m_RichText: 1
+    m_HorizontalOverflow: 0
+    m_VerticalOverflow: 0
+    m_LineSpacing: 1
+  m_Text: 'Cheats:
+
+    3 = teleport forward
+
+    4 = teleport up
+
+    5 = max health
+
+    6 = no damage / damage
+
+    7 = speed up
+
+    8 = max money & keys
+
+    9 = overpowered gun'
 --- !u!1 &1470218479
 GameObject:
   m_ObjectHideFlags: 0
@@ -3002,10 +3170,7 @@ MonoBehaviour:
   gun: {fileID: 65470453587846303}
   guns:
   - {fileID: 11400000, guid: 64e96425528dce348a6df4aa6d9dc3dd, type: 2}
-  - {fileID: 11400000, guid: e631141ea86048b43a5c41f83b3b58cc, type: 2}
-  - {fileID: 11400000, guid: 88e2302c7ce07a740b29ef5e5413438f, type: 2}
-  - {fileID: 11400000, guid: a0207214a85a407439564341b58d1b5b, type: 2}
-  - {fileID: 11400000, guid: 11396cd665c684e4bbc5b452b97efcc2, type: 2}
+  - {fileID: 11400000, guid: a750c47dfc3bb554cb789527430e2b17, type: 2}
   curGun: 0
   ammoStore: 
   magazineStore: 
@@ -3033,6 +3198,7 @@ MonoBehaviour:
   deathSound: {fileID: 8300000, guid: 591b2997e5416c5439894acfee8f9737, type: 3}
   deathCam: {fileID: 174394364}
   deathText: {fileID: 1160883655}
+  cheatGun: {fileID: 11400000, guid: 1cdc146868ed6e64d8e94b661b58f976, type: 2}
 --- !u!114 &3507938396887331855
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5391,17 +5557,6 @@ MonoBehaviour:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-      - m_Target: {fileID: 4924895925555366732}
-        m_MethodName: FadeToNewMusic
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 4
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 0
@@ -13396,6 +13551,17 @@ MonoBehaviour:
           m_FloatArgument: 0
           m_StringArgument: 
           m_BoolArgument: 1
+        m_CallState: 2
+      - m_Target: {fileID: 1139284474}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
         m_CallState: 2
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
@@ -22691,6 +22857,7 @@ RectTransform:
   - {fileID: 6708433332058730759}
   - {fileID: 6708433332811283431}
   - {fileID: 6708433332024464717}
+  - {fileID: 1139284475}
   m_Father: {fileID: 3493892934234482235}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -22912,6 +23079,7 @@ GameObject:
   - component: {fileID: 6708433333123516555}
   - component: {fileID: 6708433333123516552}
   - component: {fileID: 6708433333123516554}
+  - component: {fileID: 1600225451}
   m_Layer: 5
   m_Name: Head
   m_TagString: Untagged
@@ -22928,7 +23096,7 @@ RectTransform:
   m_GameObject: {fileID: 6708433333123516566}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.27018762, y: 0.27018762, z: 0.2701876}
+  m_LocalScale: {x: 0.049123064, y: 0.049123064, z: 0.04912306}
   m_Children: []
   m_Father: {fileID: 6708433332622052867}
   m_RootOrder: 2
@@ -22960,7 +23128,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
   m_Color: {r: 1, g: 1, b: 1, a: 0.6509804}
-  m_RaycastTarget: 0
+  m_RaycastTarget: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
@@ -22989,6 +23157,45 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   scale: -10
   lerpSpeed: 10
+--- !u!114 &1600225451
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6708433333123516566}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 46eef1fe19e81cd4a9bf8d39f689c35c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mouseEnterEvent:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  mouseExitEvent:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  clickEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1139284474}
+        m_MethodName: SetActive
+        m_Mode: 6
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 1
+        m_CallState: 2
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  inputName: uiSelect
 --- !u!1 &6708433333131775045
 GameObject:
   m_ObjectHideFlags: 0
