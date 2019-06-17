@@ -66,7 +66,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ca8bd342b38a3542aec7c36a87b57d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  curHealth: 16
+  curHealth: 8
   fakeHealth: 0
   team: 1
   maxHealth: 1
@@ -220,7 +220,7 @@ MonoBehaviour:
   lookAtPlayerWhileWalking: 0
   canAttackWhileWalking: 1
   attackType: 05000000
-  repeatRate: 2
+  repeatRate: 1
   agent: {fileID: 0}
   player: {fileID: 0}
   anim: {fileID: 0}
@@ -237,6 +237,8 @@ MonoBehaviour:
   rotateY: 0
   lifeTime: 2
   parentToMe: 0
+  minValue: 0
+  maxValue: 0
   hurtbox: {fileID: 6717738989440187499}
   aimColor: {r: 1, g: 0, b: 0, a: 0.30588236}
   lockColor: {r: 1, g: 0.43867922, b: 0.4558728, a: 1}
@@ -246,7 +248,7 @@ MonoBehaviour:
   aimTime: 3
   shootDelay: 0.3
   activeTime: 0.1
-  lookAtPlayerSpeed: 5
+  lookAtPlayerSpeed: 10
   warningSound: {fileID: 8300000, guid: 8a8d9123aa5f7584e83845b21a509f42, type: 3}
 --- !u!1 &2981150788786009230
 GameObject:
@@ -813,21 +815,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8200993519465972431, guid: ca2a020c38666db42a4cfd9f4f71d0c9,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.14
-      objectReference: {fileID: 0}
-    - target: {fileID: 8200993519465972431, guid: ca2a020c38666db42a4cfd9f4f71d0c9,
-        type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.092
-      objectReference: {fileID: 0}
-    - target: {fileID: 8200993519465972431, guid: ca2a020c38666db42a4cfd9f4f71d0c9,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0.1659
-      objectReference: {fileID: 0}
     - target: {fileID: 1095987011132901224, guid: ca2a020c38666db42a4cfd9f4f71d0c9,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -843,17 +830,37 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 0.248
       objectReference: {fileID: 0}
+    - target: {fileID: 8200993519465972431, guid: ca2a020c38666db42a4cfd9f4f71d0c9,
+        type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0.14
+      objectReference: {fileID: 0}
+    - target: {fileID: 8200993519465972431, guid: ca2a020c38666db42a4cfd9f4f71d0c9,
+        type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.092
+      objectReference: {fileID: 0}
+    - target: {fileID: 8200993519465972431, guid: ca2a020c38666db42a4cfd9f4f71d0c9,
+        type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0.1659
+      objectReference: {fileID: 0}
     - target: {fileID: 7114159744769742931, guid: ca2a020c38666db42a4cfd9f4f71d0c9,
         type: 3}
       propertyPath: m_Name
       value: RotateBelly(enemy)
       objectReference: {fileID: 0}
-    - target: {fileID: 2979394608731548737, guid: ca2a020c38666db42a4cfd9f4f71d0c9,
+    - target: {fileID: 3150768679125445182, guid: ca2a020c38666db42a4cfd9f4f71d0c9,
+        type: 3}
+      propertyPath: m_Name
+      value: LeftHandIK(enemy)
+      objectReference: {fileID: 0}
+    - target: {fileID: 2979394607718552094, guid: ca2a020c38666db42a4cfd9f4f71d0c9,
         type: 3}
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 2979394607718552094, guid: ca2a020c38666db42a4cfd9f4f71d0c9,
+    - target: {fileID: 2979394608731548737, guid: ca2a020c38666db42a4cfd9f4f71d0c9,
         type: 3}
       propertyPath: m_IsActive
       value: 0
@@ -862,11 +869,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: RightHandIK(enemy)
-      objectReference: {fileID: 0}
-    - target: {fileID: 3150768679125445182, guid: ca2a020c38666db42a4cfd9f4f71d0c9,
-        type: 3}
-      propertyPath: m_Name
-      value: LeftHandIK(enemy)
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ca2a020c38666db42a4cfd9f4f71d0c9, type: 3}

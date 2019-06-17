@@ -216,7 +216,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ca8bd342b38a3542aec7c36a87b57d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  curHealth: 45
+  curHealth: 15
   fakeHealth: 0
   team: 1
   maxHealth: 1
@@ -306,7 +306,7 @@ MonoBehaviour:
   lookAtPlayerWhileWalking: 1
   canAttackWhileWalking: 1
   attackType: 01000000
-  repeatRate: 2
+  repeatRate: 1
   agent: {fileID: 0}
   player: {fileID: 0}
   anim: {fileID: 0}
@@ -314,15 +314,17 @@ MonoBehaviour:
   - {fileID: 4185536068762293583}
   recoil: 0.3
   recoilBackSpeed: 1.5
-  toShoot: {fileID: 5489075468618320679, guid: 340c32dd2b0d26c438cb4d1db8f85d6c, type: 3}
+  toShoot: {fileID: 5489075468618320679, guid: 8913f7367f6a94443a061909cb7500ed, type: 3}
   shootPivot: {fileID: 319614617722654255}
-  amountOfBullets: 5
-  angleRadius: 31
-  speedMuliplier: 1
+  amountOfBullets: 1
+  angleRadius: 0
+  speedMuliplier: 0.2
   damage: 1
   rotateY: 0
-  lifeTime: 2
+  lifeTime: 10
   parentToMe: 0
+  minValue: 0
+  maxValue: 0
 --- !u!114 &3991642086697584829
 MonoBehaviour:
   m_ObjectHideFlags: 0
