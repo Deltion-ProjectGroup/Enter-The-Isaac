@@ -118,7 +118,7 @@ public class GunMagician : MonoBehaviour {
         shakeCam = GetComponent<ShakeCam> ();
         selfShake = GetComponent<Shake> ();
         mainCam = Camera.main;
-        mainCam.GetComponent<Cam> ().offset = new Vector3 (0, 10, -10);
+        mainCam.GetComponent<Cam> ().offset += new Vector3 (0, 3, -1);
         startScale = transform.localScale;
         col = GetComponent<Collider> ();
         player = FindObjectOfType<PlayerController> ().transform;
@@ -195,13 +195,13 @@ public class GunMagician : MonoBehaviour {
         col.enabled = false;
         mainCamRipple.Emit ();
         StartDeathCam ();
-        transform.parent.GetComponentInChildren<Canvas> (true).gameObject.SetActive (false);
-        player.parent.GetComponentInChildren<Canvas> (true).gameObject.SetActive (false);
+        transform.parent.GetComponentInChildren<Canvas> (true).enabled = false;
+        player.parent.Find("Canvas").gameObject.SetActive(false);
     }
 
     void StartDeathCam () {
         soundSpawner.SpawnEffect (deathSound);
-        mainCam.GetComponent<Cam> ().offset = new Vector3 (0, 7, -6);
+        mainCam.GetComponent<Cam> ().offset -= new Vector3 (0, 3, -1);
         deathCam.SetActive (true);
         Invoke ("StopDeathCam", 5f * Time.timeScale);
     }
@@ -210,7 +210,7 @@ public class GunMagician : MonoBehaviour {
         deathCam.SetActive (false);
         FindObjectOfType<Pause> ().enabled = true;
         FindObjectOfType<MusicManager> ().UpdateMusic (5);
-        player.parent.GetComponentInChildren<Canvas> (true).gameObject.SetActive (true);
+        player.parent.Find("Canvas").gameObject.SetActive(true);
     }
 
     public void UpdateCurrentSpeed () {

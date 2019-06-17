@@ -12,7 +12,7 @@ public class Cam : MonoBehaviour {
     [SerializeField] float fovResetSpeed = 3;
     [SerializeField] float followMouseAmount = 4;
     [SerializeField] float followMouseIgnore = 1;
-    Vector3 startRot;
+    [HideInInspector] public Vector3 startRot;
     [SerializeField] float rotAmount = 30;
     [SerializeField] Crosshair crosshair; //this is used for controller mousefollow.
     PlayerController player;

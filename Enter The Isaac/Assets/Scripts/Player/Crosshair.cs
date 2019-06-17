@@ -48,7 +48,7 @@ public class Crosshair : MonoBehaviour
     void ButtonAim()
     {
         Vector3 inputToCam = new Vector3(Input.GetAxis(inputHor),0,Input.GetAxis(inputVert));
-        inputToCam = mainCam.transform.TransformDirection(inputToCam);
+        inputToCam.y += mainCam.transform.eulerAngles.y;
         if (Vector2.SqrMagnitude(new Vector2(Input.GetAxis(inputHor), Input.GetAxis(inputVert))) > 0)
         {
             transform.position = player.position + new Vector3(inputToCam.x * 30, transform.position.y, inputToCam.z * 30);

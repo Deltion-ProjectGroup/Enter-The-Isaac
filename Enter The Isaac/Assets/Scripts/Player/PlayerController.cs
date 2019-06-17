@@ -75,8 +75,9 @@ public class PlayerController : MonoBehaviour {
     [SerializeField] AudioClip deathSound;
     [SerializeField] GameObject deathCam;
     [SerializeField] GameObject deathText;
-    [Header("Cheat")]
-    [SerializeField]GunType  cheatGun; 
+    [Header ("Cheat")]
+    [SerializeField] GunType cheatGun;
+    bool isCamTopDown = false;
 
     void Awake () {
         pauseSettings = FindObjectOfType<Pause> ();
@@ -223,23 +224,33 @@ public class PlayerController : MonoBehaviour {
                 hitbox.GetComponent<Hitbox> ().team = 0;
             }
         }
-        if(Input.GetKeyDown (KeyCode.Alpha7)){
-            if(walkSpeed < 7){
-            walkSpeed *= 4;
-            rollSpeed *= 2;
+        if (Input.GetKeyDown (KeyCode.Alpha7)) {
+            if (walkSpeed < 7) {
+                walkSpeed *= 4;
+                rollSpeed *= 2;
             } else {
-                 walkSpeed /= 4;
-                 rollSpeed /= 2;
+                walkSpeed /= 4;
+                rollSpeed /= 2;
             }
         }
-        if(Input.GetKeyDown (KeyCode.Alpha8)){
+        if (Input.GetKeyDown (KeyCode.Alpha8)) {
             keys = 99;
             money = 99;
         }
-        if(Input.GetKeyDown (KeyCode.Alpha9)){
+        if (Input.GetKeyDown (KeyCode.Alpha9)) {
             guns[0] = cheatGun;
             magazineStore[0] = cheatGun.maxAmmo;
             ammoStore[0] = cheatGun.magazineSize;
+        }
+        if (Input.GetKeyDown (KeyCode.Alpha0)) {
+            if (isCamTopDown == false) {
+                cam.GetComponent<Cam> ().offset += new Vector3 (0, 5, 4.65f);
+                cam.GetComponent<Cam> ().startRot += new Vector3(30,0,0);
+            } else {
+                cam.GetComponent<Cam> ().offset -= new Vector3 (0, 5, 4.65f);
+                cam.GetComponent<Cam> ().startRot -= new Vector3(30,0,0);
+            }
+            isCamTopDown = !isCamTopDown;
         }
     }
 
