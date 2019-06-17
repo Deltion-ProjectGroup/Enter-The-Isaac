@@ -9,18 +9,17 @@ public class CollisionEffect : MonoBehaviour
     public UnityEvent nonEffectActivations;
     public void OnTriggerEnter(Collider other)
     {
-        print(other.gameObject);
         //print("I HIT SUMTHING");
-        if(other.gameObject.GetComponent<Hitbox>())
+        if(other.gameObject.GetComponent<Hitbox>() && other.gameObject.tag == "Player")
         {
-            //print("I HIT RITE LAYER");
+            print("I HIT RITE LAYER");
             Effect[] effectsToApply = GetComponents<Effect>();
             foreach(Effect effect in effectsToApply)
             {
-                effect.ApplyEffect(other.gameObject);
+                effect.ApplyEffect(other.GetComponentInParent<PlayerController>().gameObject);
             }
+            nonEffectActivations.Invoke();
+            Destroy(gameObject);
         }
-        nonEffectActivations.Invoke();
-        Destroy(gameObject);
     }
 }
