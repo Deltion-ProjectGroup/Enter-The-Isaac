@@ -148,9 +148,6 @@ public class PlayerController : MonoBehaviour {
     }
 
     void Update () {
-        if (Input.GetKeyDown (KeyCode.O)) {
-            Death ();
-        }
         anim.enabled = !pauseSettings.isPaused;
         reloadIcon.SetActive (!pauseSettings.isPaused);
         if (pauseSettings.isPaused == false && inControll == true) {

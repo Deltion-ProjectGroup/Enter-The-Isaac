@@ -137,7 +137,7 @@ public class GunMagician : MonoBehaviour {
     }
 
     public void SmoothIntroCam () {
-        mainCam.transform.position = Vector3.MoveTowards (mainCam.transform.position, introCamPos.position, Time.deltaTime * 25);
+        mainCam.transform.position = Vector3.MoveTowards (mainCam.transform.position, introCamPos.position, Time.deltaTime * 15);
         mainCam.transform.rotation = Quaternion.Lerp (mainCam.transform.rotation, introCamPos.rotation, Time.deltaTime * 5);
     }
 
