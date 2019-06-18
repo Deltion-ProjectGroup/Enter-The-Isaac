@@ -101,7 +101,7 @@ public class GunMagician : MonoBehaviour {
     //#if UnityEngine
     void Update () {
         if (Input.GetKeyDown (KeyCode.I) && isDoingSomething == false) {
-            PointNShoot();
+            PoofNPop();
         }
     }
     // #endif
@@ -205,6 +205,10 @@ public class GunMagician : MonoBehaviour {
         soundSpawner.SpawnEffect (deathSound);
         mainCam.GetComponent<Cam> ().offset -= new Vector3 (0, 3, -1);
         deathCam.SetActive (true);
+        anim.SetLayerWeight(1,0);
+        anim.SetLayerWeight(2,0);
+        anim.Play("metarig|Death",0,0.6f);
+        anim.speed = 0.1f;
         Invoke ("StopDeathCam", 5f * Time.timeScale);
     }
     void StopDeathCam () {
@@ -213,6 +217,9 @@ public class GunMagician : MonoBehaviour {
         FindObjectOfType<Pause> ().enabled = true;
         FindObjectOfType<MusicManager> ().UpdateMusic (5);
         player.parent.Find ("Canvas").gameObject.SetActive (true);
+        anim.speed = 1;
+        transform.position += Vector3.up / 5;
+        transform.Rotate(0,180,0);
     }
 
     public void UpdateCurrentSpeed () {
@@ -387,6 +394,9 @@ public class GunMagician : MonoBehaviour {
         Teleport (true);
         yield return new WaitForSeconds (0.5f / currentSpeed);
         //shoot
+        anim.SetLayerWeight(1,0);
+        anim.SetLayerWeight(2,0);
+        anim.Play("metarig|Poof 'n pop");
         int random = Random.Range (0, 2);
         Transform transToUse;
         if (random == 0) {
@@ -409,6 +419,7 @@ public class GunMagician : MonoBehaviour {
             StartCoroutine (PoofNPopCoroutine ());
         } else {
             col.enabled = true;
+            anim.Play("metarig|Poof 'n pop (GoBack)",0,1);
             isDoingSomething = false;
         }
     }
