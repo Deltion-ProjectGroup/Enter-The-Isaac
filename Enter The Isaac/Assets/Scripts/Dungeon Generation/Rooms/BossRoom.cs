@@ -27,9 +27,9 @@ public class BossRoom : EnemyRoom
     {
 
     }
-    public override void Initialize(DungeonCreator owner, GameObject parentRoom_ = null, DungeonConnectionPoint entrance = null)
+    public override void Initialize(DungeonCreator owner, GameObject parentRoom_ = null, DungeonConnectionPoint entrance = null, GameObject pointConnectingTo = null)
     {
-        base.Initialize(owner, parentRoom_, entrance);
+        base.Initialize(owner, parentRoom_, entrance, pointConnectingTo);
         creator.bossCount++;
         creator.roomCount++;
         roomWarper.GetComponent<Teleporter>().levelToLoad = GameObject.FindGameObjectWithTag("Manager").GetComponent<InGameManager>().nextLevel;

@@ -7,9 +7,9 @@ public class EnemyRoom : BaseRoom
     public bool activateOnEnter = true;
     public EnemySpawnManager spawnManager;
 
-    public override void Initialize(DungeonCreator owner, GameObject parentRoom_ = null, DungeonConnectionPoint entrance = null)
+    public override void Initialize(DungeonCreator owner, GameObject parentRoom_ = null, DungeonConnectionPoint entrance = null, GameObject pointConnectingTo = null)
     {
-        base.Initialize(owner, parentRoom_, entrance);
+        base.Initialize(owner, parentRoom_, entrance, pointConnectingTo);
         creator.roomCount++;
         creator.enemyRooms.Add(gameObject);
     }
@@ -31,8 +31,9 @@ public class EnemyRoom : BaseRoom
         activateOnEnter = false;
         print("TOGGLED");
     }
-    public virtual void OnTriggerEnter(Collider other)
+    public override void OnTriggerEnter(Collider other)
     {
+        base.OnTriggerEnter(other);
         if (other.tag == "Player")
         {
             if(activateOnEnter && spawnManager)

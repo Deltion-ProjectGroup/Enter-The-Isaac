@@ -4,9 +4,9 @@ using UnityEngine;
 
 public class EventRoom : BaseRoom
 {
-    public override void Initialize(DungeonCreator owner, GameObject parentRoom_ = null, DungeonConnectionPoint entrance = null)
+    public override void Initialize(DungeonCreator owner, GameObject parentRoom_ = null, DungeonConnectionPoint entrance = null, GameObject pointConnectingTo = null)
     {
-        base.Initialize(owner, parentRoom_, entrance);
+        base.Initialize(owner, parentRoom_, entrance, pointConnectingTo);
         creator.eventRoomsThisFloor++;
         DungeonCreator.eventRoomCount++;
         creator.roomCount++;

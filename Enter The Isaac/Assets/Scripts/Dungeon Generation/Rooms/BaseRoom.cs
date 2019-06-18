@@ -4,7 +4,10 @@ using UnityEngine;
 
 public abstract class BaseRoom : MonoBehaviour
 {
-    public Mesh cube;
+    CustomOccluder culler;
+
+    public GameObject occluder;
+    public GameObject roomHolder;
 
     public int roomDistanceFromStart;
     public GameObject parentRoom;
@@ -15,10 +18,13 @@ public abstract class BaseRoom : MonoBehaviour
     public List<DungeonConnectionPoint> availableConnectionPoints;
     public List<GameObject> allDoors;
     public DungeonConnectionPoint entrancePoint;
+    [HideInInspector] public List<DungeonConnectionPoint> allConnectionPoints;
     public RoomTypes type;
 
-    public virtual void Initialize(DungeonCreator owner, GameObject parentRoom_ = null, DungeonConnectionPoint entrance = null)
+    public virtual void Initialize(DungeonCreator owner, GameObject parentRoom_ = null, DungeonConnectionPoint entrance = null, GameObject pointConnectingTo = null)
     {
+        culler = GameObject.FindGameObjectWithTag("DungeonCreator").GetComponentInChildren<CustomOccluder>();
+        allConnectionPoints = new List<DungeonConnectionPoint>(availableConnectionPoints);
         creator = owner;
         if (parentRoom_ != null)
         {
@@ -33,6 +39,14 @@ public abstract class BaseRoom : MonoBehaviour
         {
             entrancePoint = entrance;
             availableConnectionPoints.Remove(entrance);
+            if (type == RoomTypes.Normal)
+            {
+                print("NORMAL");
+            }
+            if (pointConnectingTo != null)
+            {
+                pointConnectingTo.GetComponent<DungeonConnectionPoint>().pointConnectedTo = entrancePoint.gameObject;
+            }
         }
         if (type == RoomTypes.End)
         {
@@ -148,5 +162,45 @@ public abstract class BaseRoom : MonoBehaviour
         colliderHalfExtends.z *= transform.lossyScale.z;
         Gizmos.DrawMesh(cube, transform.position + GetComponent<BoxCollider>().center, transform.rotation, colliderHalfExtends);
         */
+    }
+    public virtual void OnTriggerEnter(Collider other)
+    {
+        List<GameObject> occludersToUncull = new List<GameObject>();
+        foreach(DungeonConnectionPoint connectionPoint in allConnectionPoints)
+        {
+            GameObject roomConnectedToThisPoint = connectionPoint.pointConnectedTo.GetComponent<DungeonConnectionPoint>().ownerRoom.gameObject;
+            if (!roomConnectedToThisPoint.GetComponent<BaseRoom>().roomHolder.activeSelf)
+            {
+                occludersToUncull.Add(roomConnectedToThisPoint);
+            }
+        }
+        if(occludersToUncull.Count > 0)
+        {
+            print("YEAS");
+            StartCoroutine(culler.ClearOccludeRooms(occludersToUncull.ToArray()));
+        }
+        if(creator.RoomPlayerWasIn != null)
+        {
+            occludersToUncull = new List<GameObject>();
+            BaseRoom previousRoom = creator.RoomPlayerWasIn.GetComponent<BaseRoom>();
+            foreach (DungeonConnectionPoint connectionPoint in previousRoom.allConnectionPoints)
+            {
+                GameObject roomConnectedToThisPoint = connectionPoint.pointConnectedTo.GetComponent<DungeonConnectionPoint>().ownerRoom.gameObject;
+                if (roomConnectedToThisPoint != gameObject)
+                {
+                    occludersToUncull.Add(roomConnectedToThisPoint);
+                }
+            }
+            if(occludersToUncull.Count > 0)
+            {
+                StartCoroutine(culler.OccludeRooms(occludersToUncull.ToArray()));
+            }
+        }
+        creator.RoomPlayerWasIn = gameObject;
+    }
+    public virtual void OnTriggerExit(Collider other)
+    {
+        List<GameObject> occluderToCull = new List<GameObject>();
+
     }
 }

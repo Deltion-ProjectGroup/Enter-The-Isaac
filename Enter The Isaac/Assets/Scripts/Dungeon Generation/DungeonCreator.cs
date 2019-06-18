@@ -63,6 +63,8 @@ public class DungeonCreator : MonoBehaviour
     public delegate void DelegateVoid();
     public DelegateVoid onGenerationComplete;
 
+    public GameObject RoomPlayerWasIn;
+
     public void Awake()
     {
         roomPercentages.Initialize();
@@ -161,7 +163,7 @@ public class DungeonCreator : MonoBehaviour
                     }
                 }
 
-                spawnedRoom.GetComponent<BaseRoom>().Initialize(this, parentRoom, selectedConnectionPoint);
+                spawnedRoom.GetComponent<BaseRoom>().Initialize(this, parentRoom, selectedConnectionPoint, pointToConnectTo.gameObject);
                 spawnedRoom.GetComponent<BaseRoom>().entrancePoint.pointConnectedTo = pointToConnectTo.gameObject;
                 CheckPartCollision(spawnedRoom, selectedConnectionPoint.direction);
             }
@@ -293,17 +295,17 @@ public class DungeonCreator : MonoBehaviour
     }
     public void RemoveConnectionPoint(DungeonConnectionPoint connectionPointToRemove)
     {
-        if (connectionPointToRemove.objectToReplace.transform.parent.GetComponent<BaseRoom>().type == BaseRoom.RoomTypes.Hallway)
+        if (connectionPointToRemove.gameObject.GetAbsoluteParent().GetComponent<BaseRoom>().type == BaseRoom.RoomTypes.Hallway)
         {
-            GameObject hallway = connectionPointToRemove.objectToReplace.transform.parent.gameObject;
+            GameObject hallway = connectionPointToRemove.objectToReplace.transform.gameObject.GetAbsoluteParent();
             connectionPointToRemove = hallway.GetComponent<BaseRoom>().entrancePoint.pointConnectedTo.GetComponent<DungeonConnectionPoint>();
             hallway.GetComponent<BaseRoom>().OnDestroyed();
             DestroyImmediate(hallway);
         }
-        print(connectionPointToRemove.ownerRoom);
         GameObject newWall = Instantiate(walls[Random.Range(0, walls.Length)], connectionPointToRemove.objectToReplace.transform.position, connectionPointToRemove.objectToReplace.transform.rotation, connectionPointToRemove.objectToReplace.transform.parent);
         connectionPointToRemove.ownerRoom.availableConnectionPoints.Remove(connectionPointToRemove);
-        if(connectionPointToRemove.ownerRoom is EnemyRoom)
+        connectionPointToRemove.ownerRoom.allConnectionPoints.Remove(connectionPointToRemove);
+        if (connectionPointToRemove.ownerRoom is EnemyRoom)
         {
             connectionPointToRemove.ownerRoom.allDoors.Remove(connectionPointToRemove.objectToReplace.GetComponentInChildren<DungeonDoor>().gameObject);
         }
@@ -383,7 +385,7 @@ public class DungeonCreator : MonoBehaviour
                 }
             }
 
-            finalRoom.GetComponent<BaseRoom>().Initialize(this, backupParent, selectedConnectionPoint);
+            finalRoom.GetComponent<BaseRoom>().Initialize(this, backupParent, selectedConnectionPoint, backupParentConnectionPoint);
             finalRoom.GetComponent<BaseRoom>().entrancePoint.pointConnectedTo = backupParentConnectionPoint;
             finalRoom.GetComponent<BaseRoom>().replacedTimes = backupReplacedAmount;
             if (finalRoom.GetComponent<BaseRoom>().HasCollision(true))
@@ -485,7 +487,7 @@ public class DungeonCreator : MonoBehaviour
                             }
                         }
 
-                        finalRoom.GetComponent<BaseRoom>().Initialize(this, roomToReplace.GetComponent<BaseRoom>().parentRoom, selectedConnectionPoint);
+                        finalRoom.GetComponent<BaseRoom>().Initialize(this, roomToReplace.GetComponent<BaseRoom>().parentRoom, selectedConnectionPoint, roomToReplace.GetComponent<BaseRoom>().entrancePoint.pointConnectedTo);
                         finalRoom.GetComponent<BaseRoom>().entrancePoint.pointConnectedTo = roomToReplace.GetComponent<BaseRoom>().entrancePoint.pointConnectedTo;
                         if (finalRoom.GetComponent<BaseRoom>().HasCollision(true))
                         {
