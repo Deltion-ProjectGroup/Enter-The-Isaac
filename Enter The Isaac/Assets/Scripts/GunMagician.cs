@@ -17,6 +17,7 @@ public class GunMagician : MonoBehaviour {
     [SerializeField] AnimationCurve currentSpeedOverHealth;
     Hitbox hitbox;
     SoundSpawn soundSpawner;
+    Animator anim;
     [SerializeField] GameObject contactDamageBox;
     [Header ("Teleport")]
     [SerializeField] GameObject teleportInPartilce;
@@ -99,8 +100,8 @@ public class GunMagician : MonoBehaviour {
 
     //#if UnityEngine
     void Update () {
-        if (Input.GetKeyDown (KeyCode.O) && isDoingSomething == false) {
-            ClapNAttack ();
+        if (Input.GetKeyDown (KeyCode.I) && isDoingSomething == false) {
+            PointNShoot();
         }
     }
     // #endif
@@ -110,6 +111,7 @@ public class GunMagician : MonoBehaviour {
         }
     }
     void Start () {
+        anim = transform.GetChild (0).GetComponent<Animator> ();
         centerX = transform.position.x;
         soundSpawner = FindObjectOfType<SoundSpawn> ();
         Invoke ("IgnoreProduceConfuse", ignoreProduceConfuseTime);
@@ -196,7 +198,7 @@ public class GunMagician : MonoBehaviour {
         mainCamRipple.Emit ();
         StartDeathCam ();
         transform.parent.GetComponentInChildren<Canvas> (true).enabled = false;
-        player.parent.Find("Canvas").gameObject.SetActive(false);
+        player.parent.Find ("Canvas").gameObject.SetActive (false);
     }
 
     void StartDeathCam () {
@@ -210,7 +212,7 @@ public class GunMagician : MonoBehaviour {
         deathCam.SetActive (false);
         FindObjectOfType<Pause> ().enabled = true;
         FindObjectOfType<MusicManager> ().UpdateMusic (5);
-        player.parent.Find("Canvas").gameObject.SetActive(true);
+        player.parent.Find ("Canvas").gameObject.SetActive (true);
     }
 
     public void UpdateCurrentSpeed () {
@@ -256,10 +258,13 @@ public class GunMagician : MonoBehaviour {
         if (ignoreDoElse == false) {
             isDoingSomething = true;
         }
+        StopCoroutine ("TeleportCoroutine");
         StartCoroutine (TeleportCoroutine (ignoreDoElse));
     }
 
     IEnumerator TeleportCoroutine (bool ignoreDoElse) {
+        anim.SetLayerWeight (1, 0);
+        anim.SetLayerWeight (2, 0);
         shakeCam.SmallShake ();
         transform.localScale = new Vector3 (transform.localScale.x * 0.3f, transform.localScale.y * 3, transform.localScale.z * 0.3f);
         soundSpawner.SpawnEffect (teleportOutAudio);
@@ -272,6 +277,7 @@ public class GunMagician : MonoBehaviour {
         yield return new WaitForSeconds (0.03f / currentSpeed);
         transform.localScale = startScale;
         transform.localScale = new Vector3 (transform.localScale.x * 0.3f, transform.localScale.y * 3, transform.localScale.z * 0.3f);
+        anim.Play ("metarig|Teleport");
         shakeCam.MediumShake ();
         Instantiate (teleportInPartilce, transform.position, transform.rotation);
         soundSpawner.SpawnEffect (teleportInAudio);
@@ -280,6 +286,10 @@ public class GunMagician : MonoBehaviour {
         yield return new WaitForSeconds (0.2f / currentSpeed);
         if (ignoreDoElse == false) {
             isDoingSomething = false;
+        }
+        yield return new WaitForSeconds (0.4f);
+        if (anim.GetCurrentAnimatorStateInfo (0).IsName ("metarig|Teleport")) {
+            anim.Play ("metarig|Idle");
         }
     }
 
@@ -304,7 +314,7 @@ public class GunMagician : MonoBehaviour {
     }
 
     void LaserPointShoot () {
-        Instantiate (pointshootProjectile, leftHand.position, leftHand.rotation * pointshootProjectile.transform.rotation * Quaternion.Euler (0, laserPointShootCurAngle + 180, 0)).GetComponent<AutoRotate> ().tranformV3.z = laserPointShootProjectileSpeed;
+        Instantiate (pointshootProjectile, leftHand.position, pointshootProjectile.transform.rotation * Quaternion.Euler (180, laserPointShootCurAngle + 130, 180)).GetComponent<AutoRotate> ().tranformV3.z = laserPointShootProjectileSpeed;
         laserPointShootCurAngle += laserPointShootAddedAnglePerShot;
         soundSpawner.SpawnEffect (pointshootShootAudio, 0.5f, Random.Range (0.8f, 1.2f), 0, transform);
     }
@@ -313,6 +323,13 @@ public class GunMagician : MonoBehaviour {
         //aim
         Vector3 startAngle = transform.eulerAngles;
         InvokeRepeating ("SmoothLookAtPlayer", 0, 0.01f);
+        anim.SetLayerWeight (1, 1);
+        anim.SetLayerWeight (2, 0);
+        if (hitbox.curHealth < hitbox.maxHealth / 2) {
+            anim.SetLayerWeight (1, 1);
+            anim.Play ("metarig|Point 'n shoot (Wind up and Recovery Left Hand)", 1);
+        }
+        anim.Play ("metarig|Laser (Wind Up)");
         yield return new WaitForSeconds (laserAimTime / currentSpeed);
         //anounce
         laserFlare.enabled = true;
@@ -321,6 +338,7 @@ public class GunMagician : MonoBehaviour {
         selfShake.CustomShake (Mathf.Max (minAnounceTime, laserAnounceTime / currentSpeed), 1);
         yield return new WaitForSeconds (Mathf.Max (minAnounceTime, laserAnounceTime / currentSpeed));
         //fire
+        anim.Play ("metarig|Laser (Attack)");
         selfShake.enabled = false;
         soundSpawner.SpawnEffect (laserAounceSound);
         anounceLaser.SetActive (false);
@@ -332,6 +350,8 @@ public class GunMagician : MonoBehaviour {
         //laser pointshoot
         if (hitbox.curHealth < hitbox.maxHealth / 2) {
             InvokeRepeating ("LaserPointShoot", laserPointShootFireRate / currentSpeed, laserPointShootFireRate / currentSpeed);
+            anim.SetLayerWeight (1, 1);
+            anim.Play ("metarig|Point 'n shoot (Attack Left Hand)", 1);
         }
         yield return new WaitForSeconds (laserShootTime / currentSpeed);
         //stop & recover
@@ -343,8 +363,12 @@ public class GunMagician : MonoBehaviour {
         laser.SetActive (false);
         yield return new WaitForSeconds (laserRecoverTime / currentSpeed);
         //end
+        anim.Play ("metarig|Laser (Recovery)");
+        anim.Play ("metarig|Idle", 1);
+        anim.SetLayerWeight (2, 0);
+        anim.SetLayerWeight (1, 0);
         transform.eulerAngles = startAngle;
-        isDoingSomething = false;
+        Teleport (false);
     }
 
     void SmoothLookAtPlayer () {
@@ -393,9 +417,18 @@ public class GunMagician : MonoBehaviour {
     public void PointNShoot () {
         currentPointShootVersionL = Random.Range (0, 2);
         currentPointShootVersionR = Random.Range (0, 2);
+        currentPointShootVersionL = 1;
+        currentPointShootVersionR = 1;
+        if(currentPointShootVersionR == 0){
+            anim.Play("metarig|Point 'n shoot v1 (Wind up and Recovery)",2);
+        } else {
+             anim.Play("metarig|Point 'n shoot v2 (Wind up and Recovery)",2);
+        }
+        anim.SetLayerWeight(1,1);
+        anim.SetLayerWeight(2,1);
         pointshootLeft = pointshootTimes;
         isDoingSomething = true;
-        pointshootCurAngle = pointShootAngle;
+        pointshootCurAngle = pointShootAngle + 180;
         shakeCam.CustomShake ((pointshootRepeatSpeed + pointShootWindUpTime) / currentSpeed, 0.05f);
         soundPitchhelper = 1;
         selfShake.CustomShake ((pointshootRepeatSpeed + pointShootWindUpTime) / currentSpeed, 1.5f);
@@ -404,27 +437,29 @@ public class GunMagician : MonoBehaviour {
 
     void PointNShootShoot () {
         if (currentPointShootVersionL == 0) {
-            Instantiate (pointshootProjectile, leftHand.position, leftHand.rotation * pointshootProjectile.transform.rotation * Quaternion.Euler (0, -pointshootCurAngle, 0)).GetComponent<AutoRotate> ().tranformV3.z = pointShootProjectileSpeed;
+            Instantiate (pointshootProjectile, leftHand.position, pointshootProjectile.transform.rotation * Quaternion.Euler (0, -pointshootCurAngle, 0)).GetComponent<AutoRotate> ().tranformV3.z = pointShootProjectileSpeed;
             soundSpawner.SpawnEffect (pointshootShootAudio, 0.25f, soundPitchhelper, 0, transform);
         } else {
-            Instantiate (pointshootProjectile, leftHand.position, leftHand.rotation * pointshootProjectile.transform.rotation * Quaternion.Euler (0, Random.Range (0, pointshootTotalAngle), 0)).GetComponent<AutoRotate> ().tranformV3.z = pointShootProjectileSpeed;
+            Instantiate (pointshootProjectile, leftHand.position, pointshootProjectile.transform.rotation * Quaternion.Euler (0, Random.Range (0, pointshootTotalAngle), 0)).GetComponent<AutoRotate> ().tranformV3.z = pointShootProjectileSpeed;
             soundSpawner.SpawnEffect (pointshootShootAudio, 0.25f, Random.Range (0.8f, 1.2f), 0, transform);
         }
         if (currentPointShootVersionR == 0) {
-            Instantiate (pointshootProjectile, rightHand.position, rightHand.rotation * pointshootProjectile.transform.rotation * Quaternion.Euler (0, pointshootCurAngle, 0)).GetComponent<AutoRotate> ().tranformV3.z = pointShootProjectileSpeed;
+            Instantiate (pointshootProjectile, rightHand.position, pointshootProjectile.transform.rotation * Quaternion.Euler (0, pointshootCurAngle, 0)).GetComponent<AutoRotate> ().tranformV3.z = pointShootProjectileSpeed;
             soundSpawner.SpawnEffect (pointshootShootAudio, 0.25f, soundPitchhelper, 0, transform);
         } else {
-            Instantiate (pointshootProjectile, rightHand.position, rightHand.rotation * pointshootProjectile.transform.rotation * Quaternion.Euler (0, Random.Range (0, pointshootTotalAngle), 0)).GetComponent<AutoRotate> ().tranformV3.z = pointShootProjectileSpeed;
+            Instantiate (pointshootProjectile, rightHand.position, pointshootProjectile.transform.rotation * Quaternion.Euler (0, Random.Range (0, pointshootTotalAngle), 0)).GetComponent<AutoRotate> ().tranformV3.z = pointShootProjectileSpeed;
             soundSpawner.SpawnEffect (pointshootShootAudio, 0.25f, Random.Range (0.8f, 1.2f), 0, transform);
         }
         pointshootLeft--;
         pointshootCurAngle += pointshootTotalAngle / pointshootTimes;
         shakeCam.SmallShake ();
         soundPitchhelper += 0.01f;
-        soundPitchhelper = Mathf.Min(soundPitchhelper,2);
+        soundPitchhelper = Mathf.Min (soundPitchhelper, 2);
         if (pointshootLeft <= 0) {
             CancelInvoke ("PointNShootShoot");
             isDoingSomething = false;
+            anim.SetLayerWeight(1,0);
+        anim.SetLayerWeight(2,0);
         }
     }
 
@@ -435,10 +470,14 @@ public class GunMagician : MonoBehaviour {
     }
 
     IEnumerator ClapAttackCoroutine () {
+        anim.Play ("metarig|Clap (Wind Up)");
+        anim.SetLayerWeight (1, 0);
+        anim.SetLayerWeight (2, 0);
         yield return new WaitForSeconds (clapAttackWindUpTime / clapAttackTwoStartSpeedMultiplier / currentSpeed); //startup
         //attack
+        anim.Play ("metarig|Clap (Attack)");
         soundSpawner.SpawnEffect (clapAudio);
-        Instantiate(clapParticle,transform.position,transform.rotation);
+        Instantiate (clapParticle, transform.position, transform.rotation);
         clapAttackRing1.Rotate (0, 10, 0);
         clapAttackRing2.Rotate (0, 10, 0);
         for (int i = 0; i < clapAttackRing1.childCount; i++) {
@@ -455,6 +494,7 @@ public class GunMagician : MonoBehaviour {
         float curHealthPercent = (1 - (hitbox.curHealth / hitbox.maxHealth)) + 1;
         if (randomFloat > (30 * curHealthPercent) - (clapAttackTwoStartSpeedMultiplier * 5)) {
             isDoingSomething = false;
+            anim.Play ("metarig|Clap (Recovery)");
         } else {
             clapAttackTwoStartSpeedMultiplier += 1;
             clapAttackTwoStartSpeedMultiplier = Mathf.Min (clapAttackTwoStartSpeedMultiplier, 3);

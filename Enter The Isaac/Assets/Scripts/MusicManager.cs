@@ -29,7 +29,7 @@ public class MusicManager : MonoBehaviour {
 
 
 
-        curTrack = 0;
+        //curTrack = 0;
         source.clip = soundTrack[currentSoundtrackPool].soundTrack[randomSoundtrack].ost[curTrack].clip;
         if (soundTrack[currentSoundtrackPool].soundTrack[randomSoundtrack].ost[curTrack].clip != null) {
             //Invoke("PlaySource", 0.6f);
