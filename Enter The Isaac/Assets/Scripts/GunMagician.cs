@@ -317,7 +317,7 @@ public class GunMagician : MonoBehaviour {
     }
 
     void LaserPointShoot () {
-        Instantiate (pointshootProjectile, leftHand.position, pointshootProjectile.transform.rotation * Quaternion.Euler (180, laserPointShootCurAngle + 130, 180)).GetComponent<AutoRotate> ().tranformV3.z = laserPointShootProjectileSpeed;
+        Instantiate (pointshootProjectile, leftHand.position, pointshootProjectile.transform.rotation * Quaternion.Euler (180, laserPointShootCurAngle + transform.eulerAngles.y, 180)).GetComponent<AutoRotate> ().tranformV3.z = laserPointShootProjectileSpeed;
         laserPointShootCurAngle += laserPointShootAddedAnglePerShot;
         soundSpawner.SpawnEffect (pointshootShootAudio, 0.5f, Random.Range (0.8f, 1.2f), 0, transform);
     }
@@ -424,8 +424,6 @@ public class GunMagician : MonoBehaviour {
     public void PointNShoot () {
         currentPointShootVersionL = Random.Range (0, 2);
         currentPointShootVersionR = Random.Range (0, 2);
-        currentPointShootVersionL = 1;
-        currentPointShootVersionR = 1;
         anim.SetLayerWeight (1, 1);
         anim.SetLayerWeight (2, 1);
         pointshootLeft = pointshootTimes;
