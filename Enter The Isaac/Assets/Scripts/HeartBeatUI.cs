@@ -35,7 +35,7 @@ public class HeartBeatUI : MonoBehaviour
         }
     }
 
-	void Update(){
+	void LateUpdate(){
 		 for (int i = 0; i < hearts.Count; i++)
         {
             hearts[i].localScale = Vector3.Lerp(hearts[i].localScale,startScale,Time.deltaTime * 10);

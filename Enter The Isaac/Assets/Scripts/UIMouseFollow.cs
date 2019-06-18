@@ -22,6 +22,6 @@ public class UIMouseFollow : MonoBehaviour
         mousePos = new Vector3(Mathf.Max(mousePos.x, -0.5f), Mathf.Max(mousePos.y, -0.5f), Mathf.Max(mousePos.z, -0.5f));
         mousePos = new Vector3(Mathf.Min(mousePos.x, 0.5f), Mathf.Min(mousePos.y, 0.5f), Mathf.Min(mousePos.z, 0.5f));
         mousePos = new Vector3(mousePos.x,mousePos.z,mousePos.y);
-        rect.position = Vector3.Lerp(rect.position,startPos + mousePos * scale,Time.unscaledDeltaTime * lerpSpeed);
+        rect.position = Vector3.Lerp(rect.position,startPos + mousePos * (scale / 2),Time.unscaledDeltaTime * lerpSpeed);
     }
 }
