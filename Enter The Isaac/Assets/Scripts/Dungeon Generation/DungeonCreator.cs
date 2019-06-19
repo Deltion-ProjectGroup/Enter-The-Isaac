@@ -100,6 +100,13 @@ public class DungeonCreator : MonoBehaviour
         treasureCount = 0;
         foreach (GameObject dungeonPart in entireDungeon) /// Destroys the current dungeon if removePreviousDungeon is true;
         {
+            if(dungeonPart.GetComponent<BaseRoom>().type == BaseRoom.RoomTypes.Shop)
+            {
+                while(dungeonPart.GetComponent<ShopRoom>().allItemsInRoom.Count > 0)
+                {
+                    Destroy(dungeonPart.GetComponent<ShopRoom>().allItemsInRoom[0]);
+                }
+            }
             DestroyImmediate(dungeonPart);
         }
         entireDungeon = new List<GameObject>();
@@ -276,6 +283,12 @@ public class DungeonCreator : MonoBehaviour
         yield return null;
         navMeshHolder.BuildNavMesh();
         yield return null;
+        foreach(GameObject room in entireDungeon)
+        {
+            room.GetComponent<BaseRoom>().roomHolder.SetActive(false);
+            yield return null;
+        }
+        startRoom.GetComponent<BaseRoom>().roomHolder.SetActive(true);
         onGenerationComplete();
     }
     public void ProceedGeneration()
