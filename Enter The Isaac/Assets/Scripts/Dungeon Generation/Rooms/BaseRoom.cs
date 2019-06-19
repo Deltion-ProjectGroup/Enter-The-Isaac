@@ -165,6 +165,9 @@ public abstract class BaseRoom : MonoBehaviour
     }
     public virtual void OnTriggerEnter(Collider other)
     {
+        creator.roomsPlayerCouldBeIn.Add(gameObject);
+
+
         enteredBefore = true;
         List<GameObject> occludersToUncull = new List<GameObject>();
         foreach(DungeonConnectionPoint connectionPoint in allConnectionPoints)
@@ -177,31 +180,34 @@ public abstract class BaseRoom : MonoBehaviour
         }
         if(occludersToUncull.Count > 0)
         {
-            print("YEAS");
             StartCoroutine(culler.ClearOccludeRooms(occludersToUncull));
         }
-        if(creator.RoomPlayerWasIn != null)
-        {
-            occludersToUncull = new List<GameObject>();
-            BaseRoom previousRoom = creator.RoomPlayerWasIn.GetComponent<BaseRoom>();
-            foreach (DungeonConnectionPoint connectionPoint in previousRoom.allConnectionPoints)
-            {
-                GameObject roomConnectedToThisPoint = connectionPoint.pointConnectedTo.GetComponent<DungeonConnectionPoint>().ownerRoom.gameObject;
-                if (roomConnectedToThisPoint != gameObject)
-                {
-                    occludersToUncull.Add(roomConnectedToThisPoint);
-                }
-            }
-            if(occludersToUncull.Count > 0)
-            {
-                StartCoroutine(culler.OccludeRooms(occludersToUncull));
-            }
-        }
-        creator.RoomPlayerWasIn = gameObject;
+        print(creator.roomsPlayerCouldBeIn.Count + "A");
     }
     public virtual void OnTriggerExit(Collider other)
     {
-        List<GameObject> occluderToCull = new List<GameObject>();
-
+        StartCoroutine(UC(other));
+    }
+    public IEnumerator UC(Collider other_)
+    {
+        creator.roomsPlayerCouldBeIn.Remove(gameObject);
+        if (creator.roomsPlayerCouldBeIn.Count <= 0)
+        {
+            yield return null;
+        }
+        List<GameObject> occludersToUncull = new List<GameObject>();
+        print(creator.roomsPlayerCouldBeIn.Count + "R");
+        foreach (DungeonConnectionPoint connectionPoint in allConnectionPoints)
+        {
+            GameObject roomConnectedToThisPoint = connectionPoint.pointConnectedTo.GetComponent<DungeonConnectionPoint>().ownerRoom.gameObject;
+            if (roomConnectedToThisPoint != creator.roomsPlayerCouldBeIn[0])
+            {
+                occludersToUncull.Add(roomConnectedToThisPoint);
+            }
+        }
+        if (occludersToUncull.Count > 0)
+        {
+            StartCoroutine(culler.OccludeRooms(occludersToUncull));
+        }
     }
 }

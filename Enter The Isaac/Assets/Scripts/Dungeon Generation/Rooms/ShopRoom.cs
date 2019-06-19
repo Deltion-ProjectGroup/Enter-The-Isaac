@@ -1,15 +1,19 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class ShopRoom : BaseRoom
 {
     public GameObject priceObject;
-    public int heightFromObject;
+    public Vector3 priceOffsetFromSpawner;
 
     public Spawner[] itemSpawners;
     public Spawner[] weaponSpawners;
     public Spawner[] consumableSpawners;
+
+
+    public List<GameObject> allItemsInRoom = new List<GameObject>();
     public override void Initialize(DungeonCreator owner, GameObject parentRoom_ = null, DungeonConnectionPoint entrance = null, GameObject pointConnectingTo = null)
     {
         base.Initialize(owner, parentRoom_, entrance, pointConnectingTo);
@@ -29,7 +33,10 @@ public class ShopRoom : BaseRoom
             Vector2 cost = Vector2.zero;
             cost.x = item.GetComponent<Item>().minValue;
             cost.y = item.GetComponent<Item>().maxValue;
-            itemData.Initialize((int)Random.Range(cost.x, cost.y + 1));
+            GameObject pricetag = Instantiate(priceObject, spawner.transform.position + priceOffsetFromSpawner, priceObject.transform.rotation, GameObject.FindGameObjectWithTag("Manager").GetComponent<InGameUIManager>().worldSpaceCanvas.transform);
+            itemData.Initialize((int)Random.Range(cost.x, cost.y + 1), pricetag, this);
+            pricetag.GetComponent<Text>().text = itemData.cost.ToString();
+            allItemsInRoom.Add(item);
         }
         foreach (Spawner spawner in itemSpawners)
         {
@@ -38,7 +45,10 @@ public class ShopRoom : BaseRoom
             Vector2 cost = Vector2.zero;
             cost.x = item.GetComponent<Item>().minValue;
             cost.y = item.GetComponent<Item>().maxValue;
-            itemData.Initialize((int)Random.Range(cost.x, cost.y + 1));
+            GameObject pricetag = Instantiate(priceObject, spawner.transform.position + priceOffsetFromSpawner, priceObject.transform.rotation, GameObject.FindGameObjectWithTag("Manager").GetComponent<InGameUIManager>().worldSpaceCanvas.transform);
+            itemData.Initialize((int)Random.Range(cost.x, cost.y + 1), pricetag, this);
+            pricetag.GetComponent<Text>().text = itemData.cost.ToString();
+            allItemsInRoom.Add(item);
         }
         foreach (Spawner spawner in weaponSpawners)
         {
@@ -47,7 +57,10 @@ public class ShopRoom : BaseRoom
             Vector2 cost = Vector2.zero;
             cost.x = item.GetComponent<Item>().minValue;
             cost.y = item.GetComponent<Item>().maxValue;
-            itemData.Initialize((int)Random.Range(cost.x, cost.y + 1));
+            GameObject pricetag = Instantiate(priceObject, spawner.transform.position + priceOffsetFromSpawner, priceObject.transform.rotation, GameObject.FindGameObjectWithTag("Manager").GetComponent<InGameUIManager>().worldSpaceCanvas.transform);
+            itemData.Initialize((int)Random.Range(cost.x, cost.y + 1), pricetag, this);
+            pricetag.GetComponent<Text>().text = itemData.cost.ToString();
+            allItemsInRoom.Add(item);
         }
     }
 
@@ -60,5 +73,9 @@ public class ShopRoom : BaseRoom
         base.OnDestroyed();
         creator.shopCount--;
         creator.roomCount--;
+        foreach(GameObject item in allItemsInRoom)
+        {
+            Destroy(item.GetComponent<ShopItem>().attachedValueHolder);
+        }
     }
 }

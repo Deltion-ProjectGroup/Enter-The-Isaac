@@ -21,6 +21,9 @@ public class BossRoom : EnemyRoom
     }
     public override void OnTriggerEnter(Collider other)
     {
+        creator.roomsPlayerCouldBeIn.Add(gameObject);
+
+
         enteredBefore = true;
         List<GameObject> occludersToUncull = new List<GameObject>();
         foreach (DungeonConnectionPoint connectionPoint in allConnectionPoints)
@@ -36,24 +39,6 @@ public class BossRoom : EnemyRoom
             print("YEAS");
             StartCoroutine(culler.ClearOccludeRooms(occludersToUncull));
         }
-        if (creator.RoomPlayerWasIn != null)
-        {
-            occludersToUncull = new List<GameObject>();
-            BaseRoom previousRoom = creator.RoomPlayerWasIn.GetComponent<BaseRoom>();
-            foreach (DungeonConnectionPoint connectionPoint in previousRoom.allConnectionPoints)
-            {
-                GameObject roomConnectedToThisPoint = connectionPoint.pointConnectedTo.GetComponent<DungeonConnectionPoint>().ownerRoom.gameObject;
-                if (roomConnectedToThisPoint != gameObject)
-                {
-                    occludersToUncull.Add(roomConnectedToThisPoint);
-                }
-            }
-            if (occludersToUncull.Count > 0)
-            {
-                StartCoroutine(culler.OccludeRooms(occludersToUncull));
-            }
-        }
-        creator.RoomPlayerWasIn = gameObject;
     }
     public override void SpawnRoom(DungeonConnectionPoint.ConnectionDirection wantedDir, Transform doorPoint)
     {

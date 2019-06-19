@@ -12,7 +12,6 @@ public class CustomOccluder : MonoBehaviour
     public Material occluderMat, occluderRemoveMat, occluderStayMat;
     public IEnumerator OccludeRooms(List<GameObject> roomsToOcclude)
     {
-        print("REMOVIN");
         foreach (GameObject room in roomsToOcclude)
         {
             room.GetComponent<BaseRoom>().occluder.SetActive(true);
@@ -26,7 +25,6 @@ public class CustomOccluder : MonoBehaviour
         {
             yield return null;
             modifyColor.a = Mathf.Min(modifyColor.a + (occludeAppearSpeed * Time.deltaTime), 1);
-            print(modifyColor.a);
             occluderMat.color = modifyColor;
         }
         yield return null;

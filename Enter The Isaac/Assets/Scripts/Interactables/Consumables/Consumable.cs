@@ -22,7 +22,7 @@ public class Consumable : Item
     {
         if(canInteract && hit.transform.tag == playerTag)
         {
-            ApplyEffects(hit.gameObject.transform.parent.gameObject);
+            ApplyEffects(hit.gameObject);
         }
     }
 }

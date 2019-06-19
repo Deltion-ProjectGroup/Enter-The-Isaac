@@ -63,7 +63,7 @@ public class DungeonCreator : MonoBehaviour
     public delegate void DelegateVoid();
     public DelegateVoid onGenerationComplete;
 
-    public GameObject RoomPlayerWasIn;
+    public List<GameObject> roomsPlayerCouldBeIn = new List<GameObject>();
 
     public void Awake()
     {
