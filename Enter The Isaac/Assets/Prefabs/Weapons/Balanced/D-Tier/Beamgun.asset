@@ -1,0 +1,45 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 23cfbedfe35a87248982214a440ad0a3, type: 3}
+  m_Name: Beamgun
+  m_EditorClassIdentifier: 
+  activeFrames: 30
+  damageFrames: 3
+  bulletDecelerationSpeed: 0
+  fireRate: 0.6
+  minFireRate: 0
+  dmg: 6
+  magazineSize: 3
+  maxAmmo: 75
+  reloadTime: 0.64
+  bulletCount: 1
+  accuracy: 0
+  lifeTime: 0.4
+  forwardStart: 0
+  pierce: 1
+  ghostBullet: 0
+  destroyOnInputUp: 1
+  ricochet: 1
+  parentToGun: 1
+  bulletSpeed: {x: 150, y: 180}
+  projectileModel: {fileID: 7235445337229934338, guid: 3f36fb9db21465645af7309d5b87ff35,
+    type: 3}
+  gunModel: {fileID: 3734062980094691057, guid: 354502ce1314a734aaf41b9e9888ffa8,
+    type: 3}
+  recoil: 0.1
+  sound: {fileID: 8300000, guid: dec7b94510490a0439b807b36d9e498a, type: 3}
+  muzzleFlash:
+  - {fileID: 196731903992000112, guid: 1ff5a52b392197b4fb900b8cd7875260, type: 3}
+  screenShakeTime: 0.1
+  screenshakeStrength: 0.2
+  camFov: 67
+  kickBack: 0
