@@ -4,7 +4,6 @@ using UnityEngine;
 
 public class EnemyRoom : BaseRoom
 {
-    public bool activateOnEnter = true;
     public EnemySpawnManager spawnManager;
 
     public override void Initialize(DungeonCreator owner, GameObject parentRoom_ = null, DungeonConnectionPoint entrance = null, GameObject pointConnectingTo = null)
@@ -28,19 +27,18 @@ public class EnemyRoom : BaseRoom
         ToggleAllDoors();
         spawnManager.onClearWaves += OnCompleteRoom;
         spawnManager.ActivateSpawners();
-        activateOnEnter = false;
         print("TOGGLED");
     }
     public override void OnTriggerEnter(Collider other)
     {
-        base.OnTriggerEnter(other);
         if (other.tag == "Player")
         {
-            if(activateOnEnter && spawnManager)
+            if (!enteredBefore && spawnManager)
             {
                 TriggerRoom();
             }
         }
+        base.OnTriggerEnter(other);
     }
     public virtual void OnCompleteRoom()
     {

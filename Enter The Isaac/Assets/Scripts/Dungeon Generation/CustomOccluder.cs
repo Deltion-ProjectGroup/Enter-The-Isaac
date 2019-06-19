@@ -10,7 +10,7 @@ public class CustomOccluder : MonoBehaviour
     //Then Remove occlusion of prev rooms
     public float occludeSpeed;
     public Material occluderMat, occluderRemoveMat, occluderStayMat;
-    public IEnumerator OccludeRooms(GameObject[] roomsToOcclude)
+    public IEnumerator OccludeRooms(List<GameObject> roomsToOcclude)
     {
         print("REMOVIN");
         foreach (GameObject room in roomsToOcclude)
@@ -39,7 +39,7 @@ public class CustomOccluder : MonoBehaviour
         }
     }
 
-    public IEnumerator ClearOccludeRooms(GameObject[] roomsToRemoveOcclude)
+    public IEnumerator ClearOccludeRooms(List<GameObject> roomsToRemoveOcclude)
     {
         foreach (GameObject room in roomsToRemoveOcclude)
         {

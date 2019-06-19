@@ -12,7 +12,7 @@ public abstract class BaseRoom : MonoBehaviour
     public int roomDistanceFromStart;
     public GameObject parentRoom;
     public int replacedTimes;
-
+    public bool enteredBefore = false;
 
     public DungeonCreator creator;
     public List<DungeonConnectionPoint> availableConnectionPoints;
@@ -165,6 +165,7 @@ public abstract class BaseRoom : MonoBehaviour
     }
     public virtual void OnTriggerEnter(Collider other)
     {
+        enteredBefore = true;
         List<GameObject> occludersToUncull = new List<GameObject>();
         foreach(DungeonConnectionPoint connectionPoint in allConnectionPoints)
         {
@@ -177,7 +178,7 @@ public abstract class BaseRoom : MonoBehaviour
         if(occludersToUncull.Count > 0)
         {
             print("YEAS");
-            StartCoroutine(culler.ClearOccludeRooms(occludersToUncull.ToArray()));
+            StartCoroutine(culler.ClearOccludeRooms(occludersToUncull));
         }
         if(creator.RoomPlayerWasIn != null)
         {
@@ -193,7 +194,7 @@ public abstract class BaseRoom : MonoBehaviour
             }
             if(occludersToUncull.Count > 0)
             {
-                StartCoroutine(culler.OccludeRooms(occludersToUncull.ToArray()));
+                StartCoroutine(culler.OccludeRooms(occludersToUncull));
             }
         }
         creator.RoomPlayerWasIn = gameObject;
