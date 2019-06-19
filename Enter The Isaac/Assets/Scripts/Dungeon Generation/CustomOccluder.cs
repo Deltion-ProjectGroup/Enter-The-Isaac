@@ -16,6 +16,7 @@ public class CustomOccluder : MonoBehaviour
         {
             room.GetComponent<BaseRoom>().occluder.SetActive(true);
             room.GetComponent<BaseRoom>().occluder.GetComponent<MeshRenderer>().material = occluderMat;
+            room.GetComponent<BaseRoom>().isCulled = true;
         }
         Color modifyColor = occluderMat.color;
         modifyColor.a = 0;
@@ -43,6 +44,7 @@ public class CustomOccluder : MonoBehaviour
     {
         foreach (GameObject room in roomsToRemoveOcclude)
         {
+            room.GetComponent<BaseRoom>().isCulled = false;
             room.GetComponent<BaseRoom>().roomHolder.SetActive(true);
             room.GetComponent<BaseRoom>().occluder.GetComponent<MeshRenderer>().material = occluderRemoveMat;
         }

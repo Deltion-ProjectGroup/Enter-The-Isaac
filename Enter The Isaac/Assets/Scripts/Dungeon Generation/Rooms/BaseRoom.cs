@@ -8,6 +8,7 @@ public abstract class BaseRoom : MonoBehaviour
 
     public GameObject occluder;
     public GameObject roomHolder;
+    public bool isCulled = true;
 
     public int roomDistanceFromStart;
     public GameObject parentRoom;
@@ -165,30 +166,35 @@ public abstract class BaseRoom : MonoBehaviour
     }
     public virtual void OnTriggerEnter(Collider other)
     {
+        UC(other);
+    }
+    public virtual void OnTriggerExit(Collider other)
+    {
+        StartCoroutine(C(other));
+    }
+    public void UC(Collider other_)
+    {
+
         creator.roomsPlayerCouldBeIn.Add(gameObject);
 
 
         enteredBefore = true;
         List<GameObject> occludersToUncull = new List<GameObject>();
-        foreach(DungeonConnectionPoint connectionPoint in allConnectionPoints)
+        foreach (DungeonConnectionPoint connectionPoint in allConnectionPoints)
         {
             GameObject roomConnectedToThisPoint = connectionPoint.pointConnectedTo.GetComponent<DungeonConnectionPoint>().ownerRoom.gameObject;
-            if (!roomConnectedToThisPoint.GetComponent<BaseRoom>().roomHolder.activeSelf)
+            if (roomConnectedToThisPoint.GetComponent<BaseRoom>().isCulled)
             {
                 occludersToUncull.Add(roomConnectedToThisPoint);
             }
         }
-        if(occludersToUncull.Count > 0)
+        if (occludersToUncull.Count > 0)
         {
             StartCoroutine(culler.ClearOccludeRooms(occludersToUncull));
         }
         print(creator.roomsPlayerCouldBeIn.Count + "A");
     }
-    public virtual void OnTriggerExit(Collider other)
-    {
-        StartCoroutine(UC(other));
-    }
-    public IEnumerator UC(Collider other_)
+    public IEnumerator C(Collider other_)
     {
         creator.roomsPlayerCouldBeIn.Remove(gameObject);
         if (creator.roomsPlayerCouldBeIn.Count <= 0)
