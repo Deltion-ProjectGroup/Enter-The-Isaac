@@ -105,6 +105,12 @@ public class GunMagician : MonoBehaviour {
             enabled = false;
         }
     }
+
+    void Update () {
+        if (Input.GetKeyDown (KeyCode.O)) {
+            PointNShoot ();
+        }
+    }
     void Start () {
         anim = transform.GetChild (0).GetComponent<Animator> ();
         centerX = transform.position.x;
@@ -424,6 +430,8 @@ public class GunMagician : MonoBehaviour {
     public void PointNShoot () {
         currentPointShootVersionL = Random.Range (0, 2);
         currentPointShootVersionR = Random.Range (0, 2);
+       // currentPointShootVersionL = 1;
+      //  currentPointShootVersionR = 1;
         anim.SetLayerWeight (1, 1);
         anim.SetLayerWeight (2, 1);
         pointshootLeft = pointshootTimes;
@@ -437,8 +445,16 @@ public class GunMagician : MonoBehaviour {
     }
 
     void StartPointShootAnim () {
-        anim.Play ("metarig|Point 'n shoot v1 (Wind up and Recovery)", 2);
-        anim.Play ("metarig|Point 'n shoot (Wind up and Recovery Left Hand) 0", 1);
+        if (currentPointShootVersionR == 0) {
+            anim.Play ("metarig|Point 'n shoot v1 (Wind up and Recovery)", 2);
+        } else {
+            anim.Play ("metarig|Point 'n shoot v2 (Wind up and Recovery)", 2);
+        }
+        if (currentPointShootVersionL == 0) {
+            anim.Play ("metarig|Point 'n shoot (Wind up and Recovery Left Hand) 0", 1);
+        } else {
+            anim.Play ("metarig|Point 'n shoot (Wind up and Recovery Left Hand) 0", 1);//THIS IS WRONG
+        }
     }
 
     void PointNShootShoot () {

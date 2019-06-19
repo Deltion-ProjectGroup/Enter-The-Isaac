@@ -431,7 +431,7 @@ public class PlayerController : MonoBehaviour {
 
     void Gravity () {
         //moveV3.y = -9.81f;
-        moveV3.y = -0.5f; // our floor is extremely thin, so if there's a little lag you fall through the floor, so almost no gravity this time
+        moveV3.y = -6.5f; // our floor is extremely thin, so if there's a little lag you fall through the floor, so almost no gravity this time
     }
 
     void FinalMove () {
