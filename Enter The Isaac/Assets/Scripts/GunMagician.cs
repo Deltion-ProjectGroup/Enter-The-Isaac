@@ -204,7 +204,7 @@ public class GunMagician : MonoBehaviour {
         anim.SetLayerWeight (2, 0);
         anim.Play ("metarig|Death", 0, 0.6f);
         anim.speed = 0.1f;
-        Invoke ("StopDeathCam", 5f * Time.timeScale);
+        Invoke ("StopDeathCam", 3f * Time.timeScale);
     }
     void StopDeathCam () {
         Time.timeScale = 1;
