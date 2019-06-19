@@ -119,7 +119,9 @@ public class PlayerController : MonoBehaviour {
         FindObjectOfType<Pause> ().enabled = false;
         Canvas[] uis = FindObjectsOfType<Canvas> ();
         for (int i = 0; i < uis.Length; i++) {
+            if(uis[i].gameObject.layer != 14){
             uis[i].enabled = false;
+            }
         }
         Time.timeScale = 0.1f;
         anim.Play ("Flinch", 0, 0.1f);
