@@ -363,7 +363,9 @@ public class BaseEnemy : MonoBehaviour {
     }
     void AttackRepeatFunction () {
         //basically this is the actual called function
+        if(gameObject.activeSelf == true){
         Attack ();
+        }
     }
 
     void AttackResponseFire () {

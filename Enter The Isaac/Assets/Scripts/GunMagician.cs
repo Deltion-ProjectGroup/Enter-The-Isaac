@@ -108,7 +108,7 @@ public class GunMagician : MonoBehaviour {
 
     void Update () {
         if (Input.GetKeyDown (KeyCode.O)) {
-            PointNShoot ();
+            ClapNAttack ();
         }
     }
     void Start () {
