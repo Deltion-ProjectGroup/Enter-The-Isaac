@@ -106,11 +106,6 @@ public class GunMagician : MonoBehaviour {
         }
     }
 
-    void Update () {
-        if (Input.GetKeyDown (KeyCode.O)) {
-            ClapNAttack ();
-        }
-    }
     void Start () {
         anim = transform.GetChild (0).GetComponent<Animator> ();
         centerX = transform.position.x;
