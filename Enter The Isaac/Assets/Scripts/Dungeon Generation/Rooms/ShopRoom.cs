@@ -4,6 +4,9 @@ using UnityEngine;
 
 public class ShopRoom : BaseRoom
 {
+    public GameObject priceObject;
+    public int heightFromObject;
+
     public Spawner[] itemSpawners;
     public Spawner[] weaponSpawners;
     public Spawner[] consumableSpawners;
@@ -23,19 +26,28 @@ public class ShopRoom : BaseRoom
         {
             GameObject item = spawner.SpawnObject(chanceManager.consumablePool.GetInstanceFromPool());
             ShopItem itemData = item.AddComponent<ShopItem>();
-            itemData.Initialize(0);
+            Vector2 cost = Vector2.zero;
+            cost.x = item.GetComponent<Item>().minValue;
+            cost.y = item.GetComponent<Item>().maxValue;
+            itemData.Initialize((int)Random.Range(cost.x, cost.y + 1));
         }
         foreach (Spawner spawner in itemSpawners)
         {
             GameObject item = spawner.SpawnObject(chanceManager.itemPool.GetInstanceFromPool());
             ShopItem itemData = item.AddComponent<ShopItem>();
-            itemData.Initialize(0);
+            Vector2 cost = Vector2.zero;
+            cost.x = item.GetComponent<Item>().minValue;
+            cost.y = item.GetComponent<Item>().maxValue;
+            itemData.Initialize((int)Random.Range(cost.x, cost.y + 1));
         }
         foreach (Spawner spawner in weaponSpawners)
         {
             GameObject item = spawner.SpawnObject(chanceManager.weaponPool.GetInstanceFromPool());
             ShopItem itemData = item.AddComponent<ShopItem>();
-            itemData.Initialize(0);
+            Vector2 cost = Vector2.zero;
+            cost.x = item.GetComponent<Item>().minValue;
+            cost.y = item.GetComponent<Item>().maxValue;
+            itemData.Initialize((int)Random.Range(cost.x, cost.y + 1));
         }
     }
 

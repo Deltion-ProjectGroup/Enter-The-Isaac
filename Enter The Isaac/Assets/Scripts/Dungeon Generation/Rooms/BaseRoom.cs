@@ -4,7 +4,7 @@ using UnityEngine;
 
 public abstract class BaseRoom : MonoBehaviour
 {
-    CustomOccluder culler;
+    [HideInInspector]public CustomOccluder culler;
 
     public GameObject occluder;
     public GameObject roomHolder;

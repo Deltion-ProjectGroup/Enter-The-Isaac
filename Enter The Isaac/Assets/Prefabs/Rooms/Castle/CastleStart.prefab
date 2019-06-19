@@ -1172,8 +1172,8 @@ MeshRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5678580497427508706}
   m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
+  m_CastShadows: 0
+  m_ReceiveShadows: 0
   m_DynamicOccludee: 1
   m_MotionVectors: 1
   m_LightProbeUsage: 1
@@ -2182,11 +2182,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6772c83542f442e47a2773d500ff966b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  culler: {fileID: 0}
   occluder: {fileID: 5678580497427508706}
   roomHolder: {fileID: 7485908260138310850}
   roomDistanceFromStart: 0
   parentRoom: {fileID: 0}
   replacedTimes: 0
+  enteredBefore: 0
   creator: {fileID: 0}
   availableConnectionPoints:
   - {fileID: 930410245672964452}

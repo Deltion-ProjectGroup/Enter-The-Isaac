@@ -21,7 +21,39 @@ public class BossRoom : EnemyRoom
     }
     public override void OnTriggerEnter(Collider other)
     {
-
+        enteredBefore = true;
+        List<GameObject> occludersToUncull = new List<GameObject>();
+        foreach (DungeonConnectionPoint connectionPoint in allConnectionPoints)
+        {
+            GameObject roomConnectedToThisPoint = connectionPoint.pointConnectedTo.GetComponent<DungeonConnectionPoint>().ownerRoom.gameObject;
+            if (!roomConnectedToThisPoint.GetComponent<BaseRoom>().roomHolder.activeSelf)
+            {
+                occludersToUncull.Add(roomConnectedToThisPoint);
+            }
+        }
+        if (occludersToUncull.Count > 0)
+        {
+            print("YEAS");
+            StartCoroutine(culler.ClearOccludeRooms(occludersToUncull));
+        }
+        if (creator.RoomPlayerWasIn != null)
+        {
+            occludersToUncull = new List<GameObject>();
+            BaseRoom previousRoom = creator.RoomPlayerWasIn.GetComponent<BaseRoom>();
+            foreach (DungeonConnectionPoint connectionPoint in previousRoom.allConnectionPoints)
+            {
+                GameObject roomConnectedToThisPoint = connectionPoint.pointConnectedTo.GetComponent<DungeonConnectionPoint>().ownerRoom.gameObject;
+                if (roomConnectedToThisPoint != gameObject)
+                {
+                    occludersToUncull.Add(roomConnectedToThisPoint);
+                }
+            }
+            if (occludersToUncull.Count > 0)
+            {
+                StartCoroutine(culler.OccludeRooms(occludersToUncull));
+            }
+        }
+        creator.RoomPlayerWasIn = gameObject;
     }
     public override void SpawnRoom(DungeonConnectionPoint.ConnectionDirection wantedDir, Transform doorPoint)
     {
@@ -29,9 +61,41 @@ public class BossRoom : EnemyRoom
     }
     public override void Initialize(DungeonCreator owner, GameObject parentRoom_ = null, DungeonConnectionPoint entrance = null, GameObject pointConnectingTo = null)
     {
-        base.Initialize(owner, parentRoom_, entrance, pointConnectingTo);
+
+        culler = GameObject.FindGameObjectWithTag("DungeonCreator").GetComponentInChildren<CustomOccluder>();
+        allConnectionPoints = new List<DungeonConnectionPoint>(availableConnectionPoints);
+        creator = owner;
+        if (parentRoom_ != null)
+        {
+            parentRoom = parentRoom_;
+            roomDistanceFromStart = parentRoom.GetComponent<BaseRoom>().roomDistanceFromStart;
+            if (type != RoomTypes.Hallway)
+            {
+                roomDistanceFromStart++;
+            }
+        }
+        if (entrance)
+        {
+            entrancePoint = entrance;
+            availableConnectionPoints.Remove(entrance);
+            if (type == RoomTypes.Normal)
+            {
+                print("NORMAL");
+            }
+            if (pointConnectingTo != null)
+            {
+                pointConnectingTo.GetComponent<DungeonConnectionPoint>().pointConnectedTo = entrancePoint.gameObject;
+            }
+        }
+        if (type == RoomTypes.End)
+        {
+            creator.endRooms.Add(gameObject);
+        }
+        creator.entireDungeon.Add(gameObject);
+
         creator.bossCount++;
         creator.roomCount++;
+
         roomWarper.GetComponent<Teleporter>().levelToLoad = GameObject.FindGameObjectWithTag("Manager").GetComponent<InGameManager>().nextLevel;
         allDoors = new List<GameObject>();
         allDoors.Add(entrancePoint.objectToReplace.GetComponentInChildren<DungeonDoor>().gameObject);
