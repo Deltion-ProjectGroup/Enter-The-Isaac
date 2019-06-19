@@ -45,6 +45,10 @@ public class BatBehaviour : MonoBehaviour
     void Start()
     {
         soundSpawner = FindObjectOfType<SoundSpawn>();
+        RaycastHit hit;
+        if(Physics.Raycast(transform.position,-Vector3.up,out hit,3,LayerMask.GetMask("Default"))){
+            transform.position = hit.point + (Vector3.up / 10);
+        }
         transform.position += transform.up;
         anim = transform.GetComponentInChildren<Animator>();
         startRot = transform.eulerAngles;
@@ -133,6 +137,8 @@ public class BatBehaviour : MonoBehaviour
 
     public void Die()
     {
+        StopAllCoroutines();
+        CancelInvoke();
         curState = State.Die;
         timer = 0;
         soundSpawner.SpawnEffect(deathSound);

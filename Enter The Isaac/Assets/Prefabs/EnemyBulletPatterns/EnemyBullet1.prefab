@@ -13,11 +13,11 @@ GameObject:
   - component: {fileID: 5489075468618320696}
   - component: {fileID: 5489075468618320699}
   - component: {fileID: 5489075468618320698}
-  - component: {fileID: 5489075468618320677}
   - component: {fileID: 5489075468618320676}
   - component: {fileID: 5489075468618320703}
   - component: {fileID: 5489075468618320700}
   - component: {fileID: 8027730533494117617}
+  - component: {fileID: 4006699554951937699}
   m_Layer: 15
   m_Name: EnemyBullet1
   m_TagString: Untagged
@@ -123,19 +123,6 @@ MonoBehaviour:
   enabled: 1
   knockBackForward: 0
   knockBackMultiply: 1
---- !u!135 &5489075468618320677
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5489075468618320679}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.22
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &5489075468618320676
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -170,6 +157,7 @@ MonoBehaviour:
   moveInEditMode: 0
   scaleLerp: 1
   ignoreScale: 1
+  scaledDeltaTime: 1
 --- !u!114 &5489075468618320700
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -215,5 +203,24 @@ MonoBehaviour:
           m_CallState: 2
       m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
         Culture=neutral, PublicKeyToken=null
+  exitEvent:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
   triggerOnly: 1
   mustBeFloor: 0
+--- !u!136 &4006699554951937699
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5489075468618320679}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.06
+  m_Height: 4.44
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
