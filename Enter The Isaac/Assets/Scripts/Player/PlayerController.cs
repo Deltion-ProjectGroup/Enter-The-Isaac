@@ -36,7 +36,7 @@ public class PlayerController : MonoBehaviour {
     public List<GunType> guns;
     [HideInInspector] public int curGun = 0;
     public List<int> ammoStore = new List<int> ();
-    [HideInInspector] public List<int> magazineStore = new List<int> ();
+    public List<int> magazineStore = new List<int> ();
     public Gun.voidDelegate gunDel;
     [SerializeField] AudioClip reloadSound;
     public AudioClip realReloadSound;

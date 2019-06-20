@@ -5,6 +5,8 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New Gun", menuName = "GunType")]
 public class GunType : ScriptableObject
 {
+    [Header("Drop Prefab")]
+    public GameObject dropPrefab;
     [Header("Laser Only")]
     public int activeFrames = 0;
     public int damageFrames = 0;
