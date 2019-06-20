@@ -4,8 +4,10 @@ using UnityEngine;
 
 public class PassiveItemPickup : InventoryItemPickup
 {
+    public AudioClip pickUpSound;
     public override void OnInteract(GameObject player)
     {
+        GameObject.FindGameObjectWithTag("Manager").GetComponent<SoundSpawn>().SpawnEffect(pickUpSound);
         Effect[] effects = GetComponents<Effect>();
         foreach(Effect effect in effects)
         {

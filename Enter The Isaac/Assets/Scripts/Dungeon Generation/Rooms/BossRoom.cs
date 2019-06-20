@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class BossRoom : EnemyRoom
 {
+    public AudioClip triggerRoomSound;
+    bool triggered;
     public bool hasCutscene;
     public Sprite bossImage;
     public string bossName;
@@ -13,31 +15,21 @@ public class BossRoom : EnemyRoom
 
     public override void TriggerRoom()
     {
-        if (button)
+        if (button && !triggered)
         {
-            button.SetActive(false);
+            GameObject.FindGameObjectWithTag("Manager").GetComponent<SoundSpawn>().SpawnEffect(triggerRoomSound);
+            Animator buttonAnimator = button.GetComponent<Animator>();
+            triggered = true;
+            buttonAnimator.SetTrigger("Trigger");
+            buttonAnimator.SetBool("Triggered", triggered);
+            base.TriggerRoom();
         }
-        base.TriggerRoom();
     }
     public override void OnTriggerEnter(Collider other)
     {
-        creator.roomsPlayerCouldBeIn.Add(gameObject);
-
-
-        enteredBefore = true;
-        List<GameObject> occludersToUncull = new List<GameObject>();
-        foreach (DungeonConnectionPoint connectionPoint in allConnectionPoints)
+        if (other.tag == "Player")
         {
-            GameObject roomConnectedToThisPoint = connectionPoint.pointConnectedTo.GetComponent<DungeonConnectionPoint>().ownerRoom.gameObject;
-            if (!roomConnectedToThisPoint.GetComponent<BaseRoom>().roomHolder.activeSelf)
-            {
-                occludersToUncull.Add(roomConnectedToThisPoint);
-            }
-        }
-        if (occludersToUncull.Count > 0)
-        {
-            print("YEAS");
-            StartCoroutine(culler.ClearOccludeRooms(occludersToUncull));
+            UC(other);
         }
     }
     public override void SpawnRoom(DungeonConnectionPoint.ConnectionDirection wantedDir, Transform doorPoint)

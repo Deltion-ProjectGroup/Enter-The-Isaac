@@ -9,7 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 7107172470063328872}
-  - component: {fileID: 7107172470055600522}
+  - component: {fileID: 8454028433587580454}
+  - component: {fileID: 6366971331250508120}
   m_Layer: 0
   m_Name: Button
   m_TagString: Untagged
@@ -33,7 +34,28 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: -90.00001, z: 0}
---- !u!95 &7107172470055600522
+--- !u!114 &8454028433587580454
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7107172470062903880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 946cd30cb48ad8b418d2635bc4aad3aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  possibleTargets:
+    serializedVersion: 2
+    m_Bits: 8192
+  nonEffectActivations:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
+  DestroyOnTrigger: 0
+--- !u!95 &6366971331250508120
 Animator:
   serializedVersion: 3
   m_ObjectHideFlags: 0
@@ -42,9 +64,9 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7107172470062903880}
   m_Enabled: 1
-  m_Avatar: {fileID: 9000000, guid: fa4d288ec6486cb4cb3feab268d0ebd6, type: 3}
-  m_Controller: {fileID: 0}
-  m_CullingMode: 0
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 9e95476b24cc2b34aba1cd33a013e27b, type: 2}
+  m_CullingMode: 1
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0

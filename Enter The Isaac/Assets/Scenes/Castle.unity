@@ -319,6 +319,7 @@ GameObject:
   - component: {fileID: 1848568831}
   - component: {fileID: 1848568834}
   - component: {fileID: 1848568833}
+  - component: {fileID: 1848568835}
   m_Layer: 0
   m_Name: InGameManager
   m_TagString: Manager
@@ -460,6 +461,20 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   worldSpaceCanvas: {fileID: 908073329}
+--- !u!114 &1848568835
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1848568830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7d7a5bbfd90b3ac499d40afe1edc5c7d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  mixerGroup: {fileID: 243552550125322288, guid: 13bff3bf0468700409b57c81a7439e2e,
+    type: 2}
 --- !u!114 &1859468205 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4041570244442916167, guid: 9a96eedc2a6c76a409bd26521ce585ff,
@@ -556,12 +571,12 @@ PrefabInstance:
     - target: {fileID: 4041570244442916167, guid: 9a96eedc2a6c76a409bd26521ce585ff,
         type: 3}
       propertyPath: minBossRoomDistance
-      value: 4
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4041570244442916167, guid: 9a96eedc2a6c76a409bd26521ce585ff,
         type: 3}
       propertyPath: bossRoomChance
-      value: 1
+      value: 100
       objectReference: {fileID: 0}
     - target: {fileID: 4041570244442916164, guid: 9a96eedc2a6c76a409bd26521ce585ff,
         type: 3}

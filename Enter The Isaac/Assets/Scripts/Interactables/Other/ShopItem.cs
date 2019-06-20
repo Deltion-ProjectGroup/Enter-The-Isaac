@@ -5,11 +5,15 @@ using UnityEngine;
 public class ShopItem : Interactable
 {
     public int cost;
+    public AudioClip buySound;
+    public AudioClip cantBuySound;
     public GameObject attachedValueHolder;
     public ShopRoom shop;
 
-    public void Initialize(int cost_, GameObject costHolder_, ShopRoom ownerRoom)
+    public void Initialize(int cost_, GameObject costHolder_, ShopRoom ownerRoom, AudioClip buySFX, AudioClip noBuySFX)
     {
+        buySound = buySFX;
+        cantBuySound = noBuySFX;
         shop = ownerRoom;
         cost = cost_;
         attachedValueHolder = costHolder_;
@@ -22,7 +26,6 @@ public class ShopItem : Interactable
     public override void OnInteract(GameObject player)
     {
         shop.allItemsInRoom.Remove(gameObject);
-        Destroy(attachedValueHolder);
         player.GetComponent<PlayerController>().money -= cost;
         Interactable[] interactables = GetComponents<Interactable>();
         foreach(Interactable interactable in interactables)
@@ -35,11 +38,21 @@ public class ShopItem : Interactable
     }
     public override void Interact(GameObject player_)
     {
+        SoundSpawn soundSpawner = GameObject.FindGameObjectWithTag("Manager").GetComponent<SoundSpawn>();
         print("INTERACTOOD");
         if (canInteract && player_.GetComponent<PlayerController>().money >= cost)
         {
+            soundSpawner.SpawnEffect(buySound);
             print("ENUF MUNZ");
             OnInteract(player_);
         }
+        else
+        {
+            soundSpawner.SpawnEffect(cantBuySound);
+        }
+    }
+    public void OnDestroy()
+    {
+        Destroy(attachedValueHolder);
     }
 }

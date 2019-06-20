@@ -7,10 +7,12 @@ public class CollisionEffect : MonoBehaviour
 {
     public LayerMask possibleTargets;
     public UnityEvent nonEffectActivations;
+    public bool DestroyOnTrigger = true;
     public void OnTriggerEnter(Collider other)
     {
         //print("I HIT SUMTHING");
-        if(other.gameObject.GetComponent<Hitbox>() && other.gameObject.tag == "Player")
+        print(other.gameObject);
+        if(other.gameObject.GetComponentInChildren<Hitbox>() && other.gameObject.tag == "Player")
         {
             print("I HIT RITE LAYER");
             Effect[] effectsToApply = GetComponents<Effect>();
@@ -19,7 +21,10 @@ public class CollisionEffect : MonoBehaviour
                 effect.ApplyEffect(other.GetComponentInParent<PlayerController>().gameObject);
             }
             nonEffectActivations.Invoke();
-            Destroy(gameObject);
+            if (DestroyOnTrigger)
+            {
+                Destroy(gameObject);
+            }
         }
     }
 }

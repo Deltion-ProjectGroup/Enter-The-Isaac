@@ -14,7 +14,7 @@ public class EnemySpawnManager : MonoBehaviour
     int totalEnemiesToSpawn = 0;
     [SerializeField]ItemPoolHolder enemyPool;
     [SerializeField]Spawner[] enemySpawners;
-    List<WaveData> waves = new List<WaveData>();
+    public List<WaveData> waves = new List<WaveData>();
     public delegate void VoidDelegate();
     public VoidDelegate onClearWaves;
     [SerializeField] List<GameObject> aliveEnemies = new List<GameObject>();

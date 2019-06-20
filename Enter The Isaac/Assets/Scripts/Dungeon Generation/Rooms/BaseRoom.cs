@@ -166,11 +166,17 @@ public abstract class BaseRoom : MonoBehaviour
     }
     public virtual void OnTriggerEnter(Collider other)
     {
-        UC(other);
+        if(other.tag == "Player")
+        {
+            UC(other);
+        }
     }
     public virtual void OnTriggerExit(Collider other)
     {
-        StartCoroutine(C(other));
+        if(other.tag == "Player")
+        {
+            StartCoroutine(C(other));
+        }
     }
     public void UC(Collider other_)
     {

@@ -5,6 +5,9 @@ using UnityEngine.UI;
 
 public class ShopRoom : BaseRoom
 {
+    public AudioClip buySound;
+    public AudioClip noBuySound;
+
     public GameObject priceObject;
     public Vector3 priceOffsetFromSpawner;
 
@@ -34,7 +37,7 @@ public class ShopRoom : BaseRoom
             cost.x = item.GetComponent<Item>().minValue;
             cost.y = item.GetComponent<Item>().maxValue;
             GameObject pricetag = Instantiate(priceObject, spawner.transform.position + priceOffsetFromSpawner, priceObject.transform.rotation, GameObject.FindGameObjectWithTag("Manager").GetComponent<InGameUIManager>().worldSpaceCanvas.transform);
-            itemData.Initialize((int)Random.Range(cost.x, cost.y + 1), pricetag, this);
+            itemData.Initialize((int)Random.Range(cost.x, cost.y + 1), pricetag, this, buySound, noBuySound);
             pricetag.GetComponent<Text>().text = itemData.cost.ToString();
             allItemsInRoom.Add(item);
         }
@@ -46,7 +49,7 @@ public class ShopRoom : BaseRoom
             cost.x = item.GetComponent<Item>().minValue;
             cost.y = item.GetComponent<Item>().maxValue;
             GameObject pricetag = Instantiate(priceObject, spawner.transform.position + priceOffsetFromSpawner, priceObject.transform.rotation, GameObject.FindGameObjectWithTag("Manager").GetComponent<InGameUIManager>().worldSpaceCanvas.transform);
-            itemData.Initialize((int)Random.Range(cost.x, cost.y + 1), pricetag, this);
+            itemData.Initialize((int)Random.Range(cost.x, cost.y + 1), pricetag, this, buySound, noBuySound);
             pricetag.GetComponent<Text>().text = itemData.cost.ToString();
             allItemsInRoom.Add(item);
         }
@@ -58,7 +61,7 @@ public class ShopRoom : BaseRoom
             cost.x = item.GetComponent<Item>().minValue;
             cost.y = item.GetComponent<Item>().maxValue;
             GameObject pricetag = Instantiate(priceObject, spawner.transform.position + priceOffsetFromSpawner, priceObject.transform.rotation, GameObject.FindGameObjectWithTag("Manager").GetComponent<InGameUIManager>().worldSpaceCanvas.transform);
-            itemData.Initialize((int)Random.Range(cost.x, cost.y + 1), pricetag, this);
+            itemData.Initialize((int)Random.Range(cost.x, cost.y + 1), pricetag, this, buySound, noBuySound);
             pricetag.GetComponent<Text>().text = itemData.cost.ToString();
             allItemsInRoom.Add(item);
         }

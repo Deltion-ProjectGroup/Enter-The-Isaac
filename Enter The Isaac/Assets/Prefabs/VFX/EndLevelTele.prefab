@@ -4768,13 +4768,15 @@ GameObject:
   - component: {fileID: 4175028732419451789}
   - component: {fileID: 4175028732419451826}
   - component: {fileID: 2130493711251220055}
+  - component: {fileID: 4867181326723127304}
+  - component: {fileID: 1559935929176392450}
   m_Layer: 0
   m_Name: EndLevelTele
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4175028732419451827
 Transform:
   m_ObjectHideFlags: 0
@@ -4784,7 +4786,7 @@ Transform:
   m_GameObject: {fileID: 4175028732419451824}
   m_LocalRotation: {x: -0.7071068, y: 0, z: 0, w: 0.7071068}
   m_LocalPosition: {x: -93.05816, y: 72.78, z: 41.46442}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalScale: {x: 1, y: 1.0000005, z: 1.0000005}
   m_Children:
   - {fileID: 4175028733571537951}
   - {fileID: 4175028733433910053}
@@ -9617,6 +9619,32 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!135 &4867181326723127304
+SphereCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4175028732419451824}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.52
+  m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &1559935929176392450
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4175028732419451824}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d67b79e2f8d9e94b950846a9459eb44, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  levelToLoad: 0
 --- !u!1 &4175028732658603400
 GameObject:
   m_ObjectHideFlags: 0
