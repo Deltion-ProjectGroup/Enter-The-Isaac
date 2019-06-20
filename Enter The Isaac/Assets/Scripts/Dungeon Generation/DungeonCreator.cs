@@ -432,7 +432,9 @@ public class DungeonCreator : MonoBehaviour
 
     public void ForcedReplaceRoom(List<GameObject> roomsToReplace, int requiredTimes, List<GameObject> staticOptions = null, int minDistanceFromStart = 0)
     {
+        GameObject roomToReplacee = null;
         bool replaced = false;
+        roomsToReplace = new List<GameObject>(roomsToReplace);
         for(int counter = 0; counter < requiredTimes; counter++)
         {
             foreach (GameObject roomToReplace in roomsToReplace)
@@ -445,7 +447,7 @@ public class DungeonCreator : MonoBehaviour
                     List<GameObject> possibleAvailableOptions = new List<GameObject>();
                     if (staticOptions != null)
                     {
-                        possibleAvailableOptions = staticOptions;
+                        possibleAvailableOptions = new List<GameObject>(staticOptions);
                     }
                     else
                     {
@@ -511,9 +513,8 @@ public class DungeonCreator : MonoBehaviour
                         }
                         else
                         {
-                            roomsToReplace.Remove(roomToReplace);
                             roomToReplace.GetComponent<BaseRoom>().OnDestroyed();
-                            DestroyImmediate(roomToReplace);
+                            roomToReplacee = roomToReplace;
                             //print("THIS ONE DID NOT COLLIDE C:");
                             break;
                         }
@@ -534,6 +535,11 @@ public class DungeonCreator : MonoBehaviour
             if (!replaced)
             {
                 return;
+            }
+            else
+            {
+                roomsToReplace.Remove(roomToReplacee);
+                DestroyImmediate(roomToReplacee);
             }
         }
     }
