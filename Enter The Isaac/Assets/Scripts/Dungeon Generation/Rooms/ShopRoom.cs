@@ -78,7 +78,10 @@ public class ShopRoom : BaseRoom
         creator.roomCount--;
         foreach(GameObject item in allItemsInRoom)
         {
-            Destroy(item.GetComponent<ShopItem>().attachedValueHolder);
+            if(item.GetComponent<ShopItem>().attachedValueHolder != null)
+            {
+                DestroyImmediate(item.GetComponent<ShopItem>().attachedValueHolder);
+            }
         }
     }
 }

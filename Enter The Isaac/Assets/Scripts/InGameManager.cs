@@ -15,7 +15,7 @@ public class InGameManager : MonoBehaviour
     void Start()
     {
         dungeonCreator.onGenerationComplete = SpawnPlayer;
-        dungeonCreator.GenerateDungeon();
+        StartCoroutine(dungeonCreator.GenerateDungeon());
     }
 
     public void SpawnPlayer()

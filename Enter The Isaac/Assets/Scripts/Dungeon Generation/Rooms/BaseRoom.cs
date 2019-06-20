@@ -100,7 +100,7 @@ public abstract class BaseRoom : MonoBehaviour
             creator.openProcesses--;
             if (creator.openProcesses == 0)
             {
-                creator.CheckRoomCount();
+                StartCoroutine(creator.CheckRoomCount());
             }
         }
     }

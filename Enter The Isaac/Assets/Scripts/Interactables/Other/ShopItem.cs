@@ -51,8 +51,4 @@ public class ShopItem : Interactable
             soundSpawner.SpawnEffect(cantBuySound);
         }
     }
-    public void OnDestroy()
-    {
-        Destroy(attachedValueHolder);
-    }
 }

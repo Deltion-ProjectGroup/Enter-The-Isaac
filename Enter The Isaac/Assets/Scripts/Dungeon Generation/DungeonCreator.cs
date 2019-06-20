@@ -78,18 +78,23 @@ public class DungeonCreator : MonoBehaviour
         }
     }
     // Generates the dungeon
-    public void GenerateDungeon() 
+    public IEnumerator GenerateDungeon() 
     {
         iterations++;
         if (removePreviousDungeon)
         {
-            ClearDungeon();
+            StartCoroutine(ClearDungeon());
+            yield return null;
         }
-        startRoom = Instantiate(startRooms[Random.Range(0, startRooms.Count)]);
-        startRoom.GetComponent<BaseRoom>().Initialize(this);
-        StartCoroutine(startRoom.GetComponent<BaseRoom>().SpawnNextRoom());
+        else
+        {
+            startRoom = Instantiate(startRooms[Random.Range(0, startRooms.Count)]);
+            startRoom.GetComponent<BaseRoom>().Initialize(this);
+            yield return null;
+            StartCoroutine(startRoom.GetComponent<BaseRoom>().SpawnNextRoom());
+        }
     }
-    public void ClearDungeon()
+    public IEnumerator ClearDungeon()
     {
         eventRoomsThisFloor = 0;
         eventRoomCount = 0;
@@ -98,20 +103,33 @@ public class DungeonCreator : MonoBehaviour
         shopCount = 0;
         bossCount = 0;
         treasureCount = 0;
+        yield return null;
         foreach (GameObject dungeonPart in entireDungeon) /// Destroys the current dungeon if removePreviousDungeon is true;
         {
             if(dungeonPart.GetComponent<BaseRoom>().type == BaseRoom.RoomTypes.Shop)
             {
                 while(dungeonPart.GetComponent<ShopRoom>().allItemsInRoom.Count > 0)
                 {
+                    if(dungeonPart.GetComponent<ShopRoom>().allItemsInRoom[0].GetComponent<ShopItem>().attachedValueHolder != null)
+                    {
+                        DestroyImmediate(dungeonPart.GetComponent<ShopRoom>().allItemsInRoom[0].GetComponent<ShopItem>().attachedValueHolder);
+                    }
                     Destroy(dungeonPart.GetComponent<ShopRoom>().allItemsInRoom[0]);
+                    dungeonPart.GetComponent<ShopRoom>().allItemsInRoom.RemoveAt(0);
+                    yield return null;
                 }
             }
-            DestroyImmediate(dungeonPart);
+            Destroy(dungeonPart);
+            yield return null;
         }
         entireDungeon = new List<GameObject>();
         endRooms = new List<GameObject>();
         enemyRooms = new List<GameObject>();
+        yield return null;
+        startRoom = Instantiate(startRooms[Random.Range(0, startRooms.Count)]);
+        startRoom.GetComponent<BaseRoom>().Initialize(this);
+        yield return null;
+        StartCoroutine(startRoom.GetComponent<BaseRoom>().SpawnNextRoom());
     }
     public Vector3 GetLocationData(Transform thisObject, Transform selectedConnectionPoint, Transform connectionPointToSnapTo)
     {
@@ -179,7 +197,7 @@ public class DungeonCreator : MonoBehaviour
                 RemoveConnectionPoint(pointToConnectTo.GetComponent<DungeonConnectionPoint>());
                 if (openProcesses == 0)
                 {
-                    CheckRoomCount();
+                    StartCoroutine(CheckRoomCount());
                 }
             }
         }
@@ -188,7 +206,7 @@ public class DungeonCreator : MonoBehaviour
             RemoveConnectionPoint(pointToConnectTo.GetComponent<DungeonConnectionPoint>());
             if(openProcesses == 0)
             {
-                CheckRoomCount();
+                StartCoroutine(CheckRoomCount());
             }
         }
     }
@@ -203,10 +221,11 @@ public class DungeonCreator : MonoBehaviour
             StartCoroutine(roomToCheck.GetComponent<BaseRoom>().SpawnNextRoom());
         }
     }
-    public void CheckRoomCount()
+    public IEnumerator CheckRoomCount()
     {
         if(roomCount < minRoomCount)
         {
+            yield return null;
             ProceedGeneration();
         }
         else
@@ -214,21 +233,26 @@ public class DungeonCreator : MonoBehaviour
             if(bossCount < minBossRoomCount)
             {
                 ForcedReplaceRoom(endRooms, minBossRoomCount - bossCount, bossRooms, minBossRoomDistance);
+                yield return null;
             }
             if(shopCount < minShopRoomCount)
             {
                 ForcedReplaceRoom(endRooms, minShopRoomCount - shopCount, shopRooms);
+                yield return null;
             }
             if (treasureCount < minTreasureRoomCount)
             {
+                yield return null;
                 ForcedReplaceRoom(endRooms, minTreasureRoomCount - treasureCount, treasureRooms);
             }
             if (bossCount < minBossRoomCount || shopCount < minShopRoomCount || treasureCount < minTreasureRoomCount)
             {
-                GenerateDungeon();
+                yield return null;
+                StartCoroutine(GenerateDungeon());
             }
             else
             {
+                yield return null;
                 StartCoroutine(InitializeEnemyRooms());
             }
         }
@@ -262,6 +286,7 @@ public class DungeonCreator : MonoBehaviour
                 enemyRoomsCopy.RemoveAt(0);
             }
         }
+        
         foreach(GameObject enemyRoom in enemyRooms)
         {
             yield return null;
@@ -303,7 +328,7 @@ public class DungeonCreator : MonoBehaviour
         }
         else
         {
-            GenerateDungeon();
+            StartCoroutine(GenerateDungeon());
         }
     }
     public void RemoveConnectionPoint(DungeonConnectionPoint connectionPointToRemove)
@@ -322,7 +347,8 @@ public class DungeonCreator : MonoBehaviour
         {
             connectionPointToRemove.ownerRoom.allDoors.Remove(connectionPointToRemove.objectToReplace.GetComponentInChildren<DungeonDoor>().gameObject);
         }
-        if (connectionPointToRemove.ownerRoom.availableConnectionPoints.Count <= 0 && connectionPointToRemove.ownerRoom.replacedTimes <= maxReplacementTimes)
+        //Remove type part below if bugs start appearing in generation
+        if (connectionPointToRemove.ownerRoom.availableConnectionPoints.Count <= 0 && connectionPointToRemove.ownerRoom.replacedTimes <= maxReplacementTimes && connectionPointToRemove.ownerRoom.type == BaseRoom.RoomTypes.Normal)
         {
             connectionPointToRemove.ownerRoom.type = BaseRoom.RoomTypes.End;
             endRooms.Add(connectionPointToRemove.ownerRoom.gameObject);
@@ -425,7 +451,7 @@ public class DungeonCreator : MonoBehaviour
             RemoveConnectionPoint(backupParentConnectionPoint.GetComponent<DungeonConnectionPoint>());
             if (openProcesses == 0)
             {
-                CheckRoomCount();
+                StartCoroutine(CheckRoomCount());
             }
         }
     }
@@ -513,7 +539,6 @@ public class DungeonCreator : MonoBehaviour
                         }
                         else
                         {
-                            roomToReplace.GetComponent<BaseRoom>().OnDestroyed();
                             roomToReplacee = roomToReplace;
                             //print("THIS ONE DID NOT COLLIDE C:");
                             break;
@@ -539,6 +564,7 @@ public class DungeonCreator : MonoBehaviour
             else
             {
                 roomsToReplace.Remove(roomToReplacee);
+                roomToReplacee.GetComponent<BaseRoom>().OnDestroyed();
                 DestroyImmediate(roomToReplacee);
             }
         }
