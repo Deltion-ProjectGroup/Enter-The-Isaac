@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 262386066318676089}
   - component: {fileID: 262386066319643321}
   - component: {fileID: 262386066317478623}
-  m_Layer: 0
+  - component: {fileID: 835816924776130080}
+  m_Layer: 19
   m_Name: DinnerTable
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -91,3 +92,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1.9150395, y: 0.97288704, z: 1.0096335}
   m_Center: {x: 0, y: 0.48644352, z: -0.00000029802322}
+--- !u!208 &835816924776130080
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 262386066317380729}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.95752, y: 0.4864435, z: 0.504817}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0.4864435, z: -0.0000002980232}
+  m_TimeToStationary: 0.5

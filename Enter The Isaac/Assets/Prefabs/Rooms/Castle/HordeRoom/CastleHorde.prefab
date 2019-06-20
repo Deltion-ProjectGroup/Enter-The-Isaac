@@ -1717,6 +1717,7 @@ MonoBehaviour:
   allConnectionPoints: []
   type: 5
   spawnManager: {fileID: 6902859408734790415}
+  soundBankMusicID: 2
   triggerRoomSound: {fileID: 8300000, guid: 948cd09a924c6184391fbd372685b884, type: 3}
   hasCutscene: 0
   bossImage: {fileID: 0}
@@ -3696,19 +3697,6 @@ Transform:
   m_Father: {fileID: 5647399353152870324}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!135 &8606967394165744999
-SphereCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7720788265137386070}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Radius: 0.62
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7796719037842319086
 GameObject:
   m_ObjectHideFlags: 0
@@ -6251,34 +6239,9 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8454028433587580454, guid: 92e7ffe454017b843977b9f796d022bc,
         type: 3}
-      propertyPath: nonEffectActivations.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8454028433587580454, guid: 92e7ffe454017b843977b9f796d022bc,
-        type: 3}
-      propertyPath: nonEffectActivations.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 8454028433587580454, guid: 92e7ffe454017b843977b9f796d022bc,
-        type: 3}
-      propertyPath: nonEffectActivations.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 8454028433587580454, guid: 92e7ffe454017b843977b9f796d022bc,
-        type: 3}
       propertyPath: nonEffectActivations.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 6464704367885141807}
-    - target: {fileID: 8454028433587580454, guid: 92e7ffe454017b843977b9f796d022bc,
-        type: 3}
-      propertyPath: nonEffectActivations.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
-      value: TriggerRoom
-      objectReference: {fileID: 0}
-    - target: {fileID: 8454028433587580454, guid: 92e7ffe454017b843977b9f796d022bc,
-        type: 3}
-      propertyPath: nonEffectActivations.m_PersistentCalls.m_Calls.Array.data[0].m_Arguments.m_ObjectArgumentAssemblyTypeName
-      value: UnityEngine.Object, UnityEngine
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 92e7ffe454017b843977b9f796d022bc, type: 3}
 --- !u!1 &7720788265137386070 stripped

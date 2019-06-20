@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 9077523441401284448}
   - component: {fileID: 9077523441402250656}
   - component: {fileID: 8432221734023039205}
-  m_Layer: 0
+  - component: {fileID: 2137174079960943662}
+  m_Layer: 19
   m_Name: TortureTable
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -91,3 +92,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 2.8394585, y: 1.0642512, z: 1.391463}
   m_Center: {x: 0, y: 0.52926946, z: -0.00056126714}
+--- !u!208 &2137174079960943662
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9077523441404517216}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 1.419729, y: 0.5321255, z: 0.6957315}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0.5292695, z: -0.0005612671}
+  m_TimeToStationary: 0.5

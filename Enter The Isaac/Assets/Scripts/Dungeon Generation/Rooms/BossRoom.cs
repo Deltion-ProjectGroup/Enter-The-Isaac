@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class BossRoom : EnemyRoom
 {
+    public int soundBankMusicID;
     public AudioClip triggerRoomSound;
     bool triggered;
     public bool hasCutscene;
@@ -17,6 +18,7 @@ public class BossRoom : EnemyRoom
     {
         if (button && !triggered)
         {
+            FindObjectOfType<MusicManager>().curTrack = soundBankMusicID;
             GameObject.FindGameObjectWithTag("Manager").GetComponent<SoundSpawn>().SpawnEffect(triggerRoomSound);
             Animator buttonAnimator = button.GetComponent<Animator>();
             triggered = true;

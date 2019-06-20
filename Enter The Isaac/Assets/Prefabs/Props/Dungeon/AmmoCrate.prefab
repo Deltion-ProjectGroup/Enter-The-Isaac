@@ -164,7 +164,8 @@ GameObject:
   m_Component:
   - component: {fileID: 5273532068483848663}
   - component: {fileID: 7813736292809391459}
-  m_Layer: 0
+  - component: {fileID: 8973930403006977795}
+  m_Layer: 19
   m_Name: AmmoCrate
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -200,3 +201,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 0.83, y: 0.56, z: 0.39}
   m_Center: {x: 0, y: 0.3, z: 0}
+--- !u!208 &8973930403006977795
+NavMeshObstacle:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5273532068483810807}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Shape: 1
+  m_Extents: {x: 0.415, y: 0.28, z: 0.195}
+  m_MoveThreshold: 0.1
+  m_Carve: 0
+  m_CarveOnlyStationary: 1
+  m_Center: {x: 0, y: 0.3, z: 0}
+  m_TimeToStationary: 0.5

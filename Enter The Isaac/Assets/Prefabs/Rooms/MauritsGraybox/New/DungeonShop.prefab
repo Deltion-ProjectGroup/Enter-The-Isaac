@@ -1159,6 +1159,7 @@ MonoBehaviour:
   culler: {fileID: 0}
   occluder: {fileID: 5867820999244816810}
   roomHolder: {fileID: 8608907357330929586}
+  isCulled: 1
   roomDistanceFromStart: 0
   parentRoom: {fileID: 0}
   replacedTimes: 0
@@ -1173,6 +1174,8 @@ MonoBehaviour:
   entrancePoint: {fileID: 0}
   allConnectionPoints: []
   type: 3
+  buySound: {fileID: 0}
+  noBuySound: {fileID: 0}
   priceObject: {fileID: 3106720227555800437, guid: e3d3dc1bde7db82498d88e08c3667786,
     type: 3}
   priceOffsetFromSpawner: {x: 0, y: 1.2, z: 0}
@@ -1196,7 +1199,7 @@ GameObject:
   - component: {fileID: 1896990450025247431}
   - component: {fileID: 6402573898241270857}
   - component: {fileID: 5025867099613229829}
-  m_Layer: 0
+  m_Layer: 17
   m_Name: Occluder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
