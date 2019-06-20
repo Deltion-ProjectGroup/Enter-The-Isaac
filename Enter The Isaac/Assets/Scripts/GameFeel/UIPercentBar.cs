@@ -10,7 +10,7 @@ public float curPercent = 100;
 RectTransform rect;
 [SerializeField] float lerpSpeed = 1;
 
-	void Start () {
+	void Awake () {
 		rect = GetComponent<RectTransform>();
 		maxScale = rect.localScale.x;
 	}

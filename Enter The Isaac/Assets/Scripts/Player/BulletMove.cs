@@ -30,7 +30,7 @@ public class BulletMove : MonoBehaviour
     public void RayCollide()
     {
         RaycastHit hit;
-        if (Physics.SphereCast(lastPos, 0.1f, -(lastPos - transform.position), out hit, Vector3.Distance(transform.position, lastPos),~LayerMask.GetMask("Ignore Raycast","Bullet","EnemyBullet")))
+        if (Physics.SphereCast(lastPos, 0.1f, -(lastPos - transform.position), out hit, Vector3.Distance(transform.position, lastPos),~LayerMask.GetMask("Ignore Raycast","Bullet","EnemyBullet","RoomHolder")))
         {
             if (hit.transform.tag != "Player")
             {
