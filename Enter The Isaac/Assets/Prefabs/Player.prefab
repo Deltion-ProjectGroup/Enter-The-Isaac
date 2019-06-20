@@ -1866,7 +1866,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1693689674
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3240,12 +3240,12 @@ MonoBehaviour:
   footStepSpeed: 0.2
   gun: {fileID: 65470453587846303}
   guns:
-  - {fileID: 11400000, guid: a0207214a85a407439564341b58d1b5b, type: 2}
+  - {fileID: 11400000, guid: 0b86913692ee9e342a12ce463ed61a5b, type: 2}
   - {fileID: 11400000, guid: e631141ea86048b43a5c41f83b3b58cc, type: 2}
   curGun: 0
   ammoStore: 
   magazineStore: 
-  reloadSound: {fileID: 8300000, guid: 4988374df05a38840b17793bea3d1e57, type: 3}
+  reloadSound: {fileID: 8300000, guid: b1f801f26bcb3594cbaa304f923bbe1e, type: 3}
   realReloadSound: {fileID: 8300000, guid: b3f7b9d0c16c5b84bb1be96a6071c059, type: 3}
   horInput: Horizontal
   vertInput: Vertical
@@ -3283,7 +3283,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   passiveItems: []
-  weaponItems: []
+  weaponItems:
+  - {fileID: 11400000, guid: c382607d589d67b4d92b6a9b366c4670, type: 2}
+  - {fileID: 11400000, guid: c382607d589d67b4d92b6a9b366c4670, type: 2}
 --- !u!1 &65470452675986998
 GameObject:
   m_ObjectHideFlags: 0
