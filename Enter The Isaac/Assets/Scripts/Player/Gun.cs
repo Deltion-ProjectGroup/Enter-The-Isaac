@@ -10,8 +10,7 @@ public class Gun : MonoBehaviour
     [HideInInspector] public float shootInput = 0;
     [HideInInspector] public bool shootFirstFrame = false;
     public GunType myGun;
-    //List<int> ammoStore = new List<int>();
-    //List<int> magazineStore = new List<int>();
+    [HideInInspector] public float curReloadTime = 0;
     int curGun = 0;
     GunType lastGunType = null;
     Shake camShake;
@@ -106,16 +105,6 @@ public class Gun : MonoBehaviour
         lastGunType = gunType;
     }
 
-    /*void SetPresentationUI()
-    {
-        //hardcoded because this is used for debugging.
-        uiElements[0].text = "" + curAmmo;
-        uiElements[1].text = "" + gunClone.magazineSize;
-        uiElements[2].text = "" + gunClone.maxAmmo;
-        uiElements[3].text = gunType.name;
-        uiElements[4].text = totalMaxAmmo + "/";
-    } */
-
     public void GetShootInput()
     {
         if (IsInvoking("Reload") == false && IsInvoking("IgnoreInput") == false && IsInvoking("Shoot") == false)
@@ -130,35 +119,17 @@ public class Gun : MonoBehaviour
     public void GetReloadInput()
     {
         CancelInvoke("Shoot");
-        Invoke("Reload", gunClone.reloadTime);
+        curReloadTime = 0;
+        Invoke("Reload", gunClone.reloadTime - player.gunReloadTimes[player.curGun]);
         if (player != null)
         {
-            player.reloadBar.GetComponent<AutoRotate>().speed = 1 / gunClone.reloadTime;
+            player.reloadBar.GetComponent<AutoRotate>().speed = 1 / (gunClone.reloadTime - player.gunReloadTimes[player.curGun]);
             player.reloadBar.transform.localScale = new Vector3(1, player.reloadBar.transform.localScale.y, 0);
             soundSpawner.SpawnEffect(player.realReloadSound);
         }
         transform.Rotate(0, 0, 90);
     }
 
-    /*  public void GetSwitchGunInput(float scrollInput)
-      {
-          if (player != null)
-          {
-              player.ammoStore[player.curGun] = curAmmo;
-          }
-          curGun += (int)(scrollInput * 10);
-          if (curGun < 0)
-          {
-              curGun = guns.Length - 1;
-          }
-          else if (curGun > guns.Length - 1)
-          {
-              curGun = 0;
-          }
-          gunType = guns[curGun];
-
-      }
-   */
     void IgnoreInput()
     {
         //this is an invoke function
@@ -191,6 +162,11 @@ public class Gun : MonoBehaviour
         //going back from recoil back
         transform.localPosition = Vector3.Lerp(transform.localPosition, startPos, Time.deltaTime * recoilSpeed);
         transform.localRotation = Quaternion.Lerp(transform.localRotation, Quaternion.Euler(angle), Time.deltaTime * 20);
+
+        //reload thingy
+        if(IsInvoking("Reload") == true){
+            curReloadTime += Time.deltaTime;
+        }
     }
 
     public void Shoot()
@@ -206,11 +182,11 @@ public class Gun : MonoBehaviour
                 //stop shooting and reload
                 CancelInvoke("Shoot");
                 //should you reload automatically? If so, slash the if here
-                if (shootFirstFrame == true)
-                {
+                //if (shootFirstFrame == true)
+                //{
                     GetReloadInput();
                     transform.Rotate(0, 0, 90);
-                }
+               // }
             }
         }
         else
@@ -242,6 +218,7 @@ public class Gun : MonoBehaviour
             player.moveV3 += player.transform.forward * gunType.kickBack;
         }
         camShake.CustomShake(gunClone.screenShakeTime, gunClone.screenshakeStrength);
+        
         //this is so you can't spam the bullets
         Invoke("IgnoreInput", gunClone.fireRate);
         if (inputEvent != null)
@@ -432,6 +409,7 @@ public class Gun : MonoBehaviour
             player.magazineStore[player.curGun] = totalMaxAmmo;
             player.ammoStore[player.curGun] = curAmmo;
         }
+        player.gunReloadTimes[player.curGun] = 0;
         GameObject.FindGameObjectWithTag("Manager").GetComponent<ChanceManager>().RecalculateEnemyDropRate((int)player.hitbox.GetComponent<Hitbox>().curHealth, (int)player.hitbox.GetComponent<Hitbox>().maxHealth, player.magazineStore[player.curGun], player.gun.gunClone.maxAmmo, player.keys);
     }
 }

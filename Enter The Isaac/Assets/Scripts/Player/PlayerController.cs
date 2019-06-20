@@ -40,6 +40,7 @@ public class PlayerController : MonoBehaviour {
     public Gun.voidDelegate gunDel;
     [SerializeField] AudioClip reloadSound;
     public AudioClip realReloadSound;
+    [HideInInspector] public float[] gunReloadTimes;
     [Header ("Input")]
     public string horInput = "Horizontal";
     public string vertInput = "Vertical";
@@ -80,6 +81,7 @@ public class PlayerController : MonoBehaviour {
     bool isCamTopDown = false;
 
     void Awake () {
+        gunReloadTimes = new float[guns.Count];
         pauseSettings = FindObjectOfType<Pause> ();
         cc = GetComponent<CharacterController> ();
         cam = Camera.main.transform;
@@ -279,8 +281,11 @@ public class PlayerController : MonoBehaviour {
     }
 
     void SwitchGun () {
-        if (Input.GetAxis (scrollInput) != 0 && Input.GetAxis (shootInput) <= 0 && GameObject.FindGameObjectWithTag ("LaserHold") == null && IsInvoking ("NoSwitchGun") == false && gun.IsInvoking ("Reload") == false) {
+        if (Input.GetAxis (scrollInput) != 0 && Input.GetAxis (shootInput) <= 0 && GameObject.FindGameObjectWithTag ("LaserHold") == null && IsInvoking ("NoSwitchGun") == false) {// && gun.IsInvoking ("Reload") == false
             Invoke ("NoSwitchGun", 0.2f);
+            gunReloadTimes[curGun] = gun.curReloadTime;
+            gun.CancelInvoke("Reload");
+            reloadBar.transform.localScale = new Vector3(0,reloadBar.transform.localScale.y,reloadBar.transform.localScale.z);
             gun.transform.Rotate (-90, 0, 0);
             soundSpawn.SpawnEffect (reloadSound);
             if (Input.GetAxis (scrollInput) > 0) {

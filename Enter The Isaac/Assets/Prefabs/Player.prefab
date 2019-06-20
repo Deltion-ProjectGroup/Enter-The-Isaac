@@ -3263,13 +3263,14 @@ MonoBehaviour:
   footStepSpeed: 0.2
   gun: {fileID: 65470453587846303}
   guns:
-  - {fileID: 11400000, guid: 0b86913692ee9e342a12ce463ed61a5b, type: 2}
-  - {fileID: 11400000, guid: e631141ea86048b43a5c41f83b3b58cc, type: 2}
+  - {fileID: 11400000, guid: 741b2b00c3755ff4aa6cbe39ea56b77a, type: 2}
+  - {fileID: 11400000, guid: 7b6d9d2b29dcd914fb4e518a8172a992, type: 2}
   curGun: 0
   ammoStore: 
   magazineStore: 
   reloadSound: {fileID: 8300000, guid: b1f801f26bcb3594cbaa304f923bbe1e, type: 3}
   realReloadSound: {fileID: 8300000, guid: b3f7b9d0c16c5b84bb1be96a6071c059, type: 3}
+  gunReloadTimes: []
   horInput: Horizontal
   vertInput: Vertical
   rollInput: Fire2
@@ -5834,6 +5835,7 @@ MonoBehaviour:
   shootInput: 0
   shootFirstFrame: 0
   myGun: {fileID: 0}
+  curReloadTime: 0
   curAmmo: 0
   angle: {x: 0, y: 0, z: 0}
   player: {fileID: 65470452505166385}
