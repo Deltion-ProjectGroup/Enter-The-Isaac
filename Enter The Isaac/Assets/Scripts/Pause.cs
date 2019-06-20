@@ -16,32 +16,37 @@ public class Pause : MonoBehaviour {
 
     float ignorePause = 0;
 
-    void Start(){
-        cross = FindObjectOfType<Crosshair>();
-        if(isPaused == false){
+    void Start () {
+        cross = FindObjectOfType<Crosshair> ();
+        if (isPaused == false) {
             Time.timeScale = 1;
-            audioMixer.audioMixer.SetFloat ("pauseEffect", 22000);
+            if (audioMixer != null) {
+                audioMixer.audioMixer.SetFloat ("pauseEffect", 22000);
+            }
         } else {
             Time.timeScale = 0;
-            audioMixer.audioMixer.SetFloat ("pauseEffect", 300);
+            if (audioMixer != null) {
+                audioMixer.audioMixer.SetFloat ("pauseEffect", 300);
+            }
         }
     }
     void Update () {
-        if (Input.GetButtonDown (pauseButton) == true && Mathf.Approximately (ignorePause, 0) == true) {
-            PauseFuntion ();
-        }
-        ignorePause = Mathf.MoveTowards (ignorePause, 0, Time.unscaledDeltaTime);
+        if (pauseButton != "") {
+            if (Input.GetButtonDown (pauseButton) == true && Mathf.Approximately (ignorePause, 0) == true) {
+                PauseFuntion ();
+            }
+            ignorePause = Mathf.MoveTowards (ignorePause, 0, Time.unscaledDeltaTime);
 
-
-        //related to mouse visibility when pausing
-        if (cross != null) {
-            if (cross.mouseControlled == false && isPaused == false) {
-                Cursor.visible = false;
+            //related to mouse visibility when pausing
+            if (cross != null) {
+                if (cross.mouseControlled == false && isPaused == false) {
+                    Cursor.visible = false;
+                } else {
+                    Cursor.visible = true;
+                }
             } else {
                 Cursor.visible = true;
             }
-        } else {
-            Cursor.visible = true;
         }
     }
 
@@ -55,8 +60,8 @@ public class Pause : MonoBehaviour {
         ignorePause = 0.3f;
         StartCoroutine (InvokedPauseSetter ());
 
-        if(cross != null && cross.mouseControlled == false && FindObjectOfType<MoveMouseWithInput>() != null){
-            FindObjectOfType<MoveMouseWithInput>().SetMouseToCenter();
+        if (cross != null && cross.mouseControlled == false && FindObjectOfType<MoveMouseWithInput> () != null) {
+            FindObjectOfType<MoveMouseWithInput> ().SetMouseToCenter ();
         }
     }
 
@@ -75,4 +80,3 @@ public class Pause : MonoBehaviour {
     }
 
 }
-

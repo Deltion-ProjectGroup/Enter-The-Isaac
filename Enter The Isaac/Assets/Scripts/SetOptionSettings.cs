@@ -1,13 +1,12 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.IO;
 using UnityEngine;
 using UnityEngine.Audio;
-using UnityEngine.UI;
 using UnityEngine.SceneManagement;
-using System.IO;
+using UnityEngine.UI;
 
-public class SetOptionSettings : MonoBehaviour
-{
+public class SetOptionSettings : MonoBehaviour {
     [SerializeField] AudioMixer mixer;
     [SerializeField] Slider mainVolumeSlider;
     [SerializeField] Slider musicVolumeSlider;
@@ -18,100 +17,76 @@ public class SetOptionSettings : MonoBehaviour
     [SerializeField] Toggle doomMusicToggle;
     [SerializeField] GameObject continueButton;
 
-    public void Awake()
-    {
-        if (File.Exists(Application.dataPath + "/LevelData"))
-        {
-            continueButton.SetActive(true);
+    public void Awake () {
+        if (File.Exists (Application.dataPath + "/LevelData")) {
+            continueButton.SetActive (true);
         }
     }
-    public void SetMainVolume(float value)
-    {
-        if (value != 0)
-        {
-            mixer.SetFloat("masterVolume", Mathf.Log10(value) * 20);
+    public void SetMainVolume (float value) {
+        if (value != 0) {
+            mixer.SetFloat ("masterVolume", Mathf.Log10 (value) * 20);
+        } else {
+            mixer.SetFloat ("masterVolume", -80);
         }
-        else
-        {
-            mixer.SetFloat("masterVolume", -80);
-        }
-        PlayerPrefs.SetFloat("masterVolume", value);
+        PlayerPrefs.SetFloat ("masterVolume", value);
     }
 
-    public void SetDOOMMusic(bool value){
-         if (value == false)
-        {
-            PlayerPrefs.SetInt("doomMusic", 0);
+    public void SetDOOMMusic (bool value) {
+        if (value == false) {
+            PlayerPrefs.SetInt ("doomMusic", 0);
+        } else {
+            PlayerPrefs.SetInt ("doomMusic", 1);
         }
-        else
-        {
-            PlayerPrefs.SetInt("doomMusic", 1);
-        }
-        if(FindObjectOfType<MusicManager>() != null){
-            FindObjectOfType<MusicManager>().SetTrackPool();
-            FindObjectOfType<MusicManager>().UpdateMusic(FindObjectOfType<MusicManager>().curTrack);
+        if (FindObjectOfType<MusicManager> () != null) {
+            FindObjectOfType<MusicManager> ().SetTrackPool ();
+            FindObjectOfType<MusicManager> ().UpdateMusic (FindObjectOfType<MusicManager> ().curTrack);
         }
     }
 
-    public void QuitGame(){
-        print("quiting");
-        Application.Quit();
+    public void QuitGame () {
+        print ("quiting");
+        Application.Quit ();
     }
 
-    public void SetSFXVolume(float value)
-    {
-        if (value != 0)
-        {
-            mixer.SetFloat("sfxVolume", Mathf.Log10(value) * 20);
+    public void SetSFXVolume (float value) {
+        if (value != 0) {
+            mixer.SetFloat ("sfxVolume", Mathf.Log10 (value) * 20);
+        } else {
+            mixer.SetFloat ("sfxVolume", -80);
         }
-        else
-        {
-            mixer.SetFloat("sfxVolume", -80);
-        }
-        PlayerPrefs.SetFloat("sfxVolume", value);
+        PlayerPrefs.SetFloat ("sfxVolume", value);
     }
 
-    public void SetMusicVolume(float value)
-    {
-        if (value != 0)
-        {
-            mixer.SetFloat("musicVolume", Mathf.Log10(value) * 20);
+    public void SetMusicVolume (float value) {
+        if (value != 0) {
+            mixer.SetFloat ("musicVolume", Mathf.Log10 (value) * 20);
+        } else {
+            mixer.SetFloat ("musicVolume", -80);
         }
-        else
-        {
-            mixer.SetFloat("musicVolume", -80);
-        }
-        PlayerPrefs.SetFloat("musicVolume", value);
+        PlayerPrefs.SetFloat ("musicVolume", value);
     }
 
-    public void SetMusicPitch(float value)
-    {
-        PlayerPrefs.SetFloat("musicPitch", value);
+    public void SetMusicPitch (float value) {
+        PlayerPrefs.SetFloat ("musicPitch", value);
         value *= 2;
-        mixer.SetFloat("musicPitch", value);
+        mixer.SetFloat ("musicPitch", value);
     }
 
-    public void SetScreenshake(bool value)
-    {
-        if (value == false)
-        {
-            PlayerPrefs.SetInt("screenshake", 0);
-        }
-        else
-        {
-            PlayerPrefs.SetInt("screenshake", 1);
+    public void SetScreenshake (bool value) {
+        if (value == false) {
+            PlayerPrefs.SetInt ("screenshake", 0);
+        } else {
+            PlayerPrefs.SetInt ("screenshake", 1);
         }
     }
 
-    public void SetMouseFollowAmount(float value)
-    {
-        PlayerPrefs.SetFloat("mouseFollowAmount", value);
+    public void SetMouseFollowAmount (float value) {
+        PlayerPrefs.SetFloat ("mouseFollowAmount", value);
         value -= 0.5f;
         value *= 2;
     }
 
-    public void SetToDefault()
-    {
+    public void SetToDefault () {
         mainVolumeSlider.value = 1;
         musicVolumeSlider.value = 1;
         sfxVolumeSlider.value = 1;
@@ -121,58 +96,53 @@ public class SetOptionSettings : MonoBehaviour
         doomMusicToggle.isOn = false;
     }
 
-    void Start()
-    {
-        SetSavedValues();
+    void Start () {
+        SetSavedValues ();
+        Resources.UnloadUnusedAssets ();
     }
 
-    void SetSavedValues()
-    {
-        mainVolumeSlider.value = PlayerPrefs.GetFloat("masterVolume");
-        musicVolumeSlider.value = PlayerPrefs.GetFloat("musicVolume");
-        sfxVolumeSlider.value = PlayerPrefs.GetFloat("sfxVolume");
-        mouseFollowSlider.value = PlayerPrefs.GetFloat("mouseFollowAmount");
-        nightcoreSlider.value = PlayerPrefs.GetFloat("musicPitch");
-        screenShakeToggle.isOn = (PlayerPrefs.GetInt("screenshake") == 1);
-        doomMusicToggle.isOn = (PlayerPrefs.GetInt("doomMusic") == 1);
+    void SetSavedValues () {
+        mainVolumeSlider.value = PlayerPrefs.GetFloat ("masterVolume");
+        musicVolumeSlider.value = PlayerPrefs.GetFloat ("musicVolume");
+        sfxVolumeSlider.value = PlayerPrefs.GetFloat ("sfxVolume");
+        mouseFollowSlider.value = PlayerPrefs.GetFloat ("mouseFollowAmount");
+        nightcoreSlider.value = PlayerPrefs.GetFloat ("musicPitch");
+        screenShakeToggle.isOn = (PlayerPrefs.GetInt ("screenshake") == 1);
+        doomMusicToggle.isOn = (PlayerPrefs.GetInt ("doomMusic") == 1);
     }
 
-    public void LoadScene(int newScene)
-    {
-        SceneManager.LoadScene(newScene);
+    public void LoadScene (int newScene) {
+        SceneManager.UnloadScene(SceneManager.GetActiveScene().buildIndex);
+        SceneManager.LoadScene (newScene);
     }
 
-    public void LoadScene(string newScene)
-    {
-        SceneManager.LoadScene(newScene);
+    public void LoadScene (string newScene) {
+        SceneManager.UnloadScene(SceneManager.GetActiveScene().buildIndex);
+        SceneManager.LoadScene (newScene);
     }
 
-    public void LoadSavedScene()
-    {
-        SceneManager.LoadScene(GameObject.FindGameObjectWithTag("Database").GetComponent<SaveDatabase>().LoadSavedLevel());
+    public void LoadSavedScene () {
+        SceneManager.LoadScene (GameObject.FindGameObjectWithTag ("Database").GetComponent<SaveDatabase> ().LoadSavedLevel ());
     }
-    public void StartNewGame(float newScene)
-    {
-        if(File.Exists(Application.dataPath + "/LevelData"))
-        {
-            File.Delete(Application.dataPath + "/LevelData");
+    public void StartNewGame (float newScene) {
+        if (File.Exists (Application.dataPath + "/LevelData")) {
+            File.Delete (Application.dataPath + "/LevelData");
         }
-        LoadSceneASync(newScene);
+        //  LoadSceneASync(newScene);
+        SceneManager.UnloadScene(SceneManager.GetActiveScene().buildIndex);
+        LoadScene ((int) newScene);
     }
-    public void LoadSceneASync(float newScene)
-    {
-        StartCoroutine(LoadSceneASyncIE(newScene));
+    public void LoadSceneASync (float newScene) {
+        SceneManager.UnloadScene(SceneManager.GetActiveScene().buildIndex);
+        StartCoroutine (LoadSceneASyncIE (newScene));
     }
 
-    IEnumerator LoadSceneASyncIE(float newScene)
-    {
-        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync((int)newScene);
+    IEnumerator LoadSceneASyncIE (float newScene) {
+        AsyncOperation asyncLoad = SceneManager.LoadSceneAsync ((int) newScene);
 
-        while (!asyncLoad.isDone)
-        {
+        while (!asyncLoad.isDone) {
             yield return null;
         }
     }
-
 
 }
