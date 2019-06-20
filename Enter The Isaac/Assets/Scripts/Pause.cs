@@ -20,8 +20,10 @@ public class Pause : MonoBehaviour {
         cross = FindObjectOfType<Crosshair>();
         if(isPaused == false){
             Time.timeScale = 1;
+            audioMixer.audioMixer.SetFloat ("pauseEffect", 22000);
         } else {
             Time.timeScale = 0;
+            audioMixer.audioMixer.SetFloat ("pauseEffect", 300);
         }
     }
     void Update () {

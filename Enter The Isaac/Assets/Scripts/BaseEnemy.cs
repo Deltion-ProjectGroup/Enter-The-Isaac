@@ -71,7 +71,7 @@ public class BaseEnemy : MonoBehaviour {
     [SerializeField] bool parentToMe = false;
     GameObject contactDmg;
 
-    [Header("Currency")]
+    [Header ("Currency")]
     [SerializeField] int minValue, maxValue;
 
     void Awake () {
@@ -92,9 +92,9 @@ public class BaseEnemy : MonoBehaviour {
             Spawn ();
             hitbox.enabled = false;
             GetComponent<Collider> ().enabled = false;
-            contactDmg = transform.Find("ContactDamage").gameObject;
-            contactDmg.layer = 10;//10 = enemy layer
-            contactDmg.SetActive(false);
+            contactDmg = transform.Find ("ContactDamage").gameObject;
+            contactDmg.layer = 10; //10 = enemy layer
+            contactDmg.SetActive (false);
         }
         gunStartPos = new Vector3[gun.Length];
         for (int i = 0; i < gun.Length; i++) {
@@ -115,7 +115,7 @@ public class BaseEnemy : MonoBehaviour {
     void AfterSpawnComplete () {
         GetComponent<Collider> ().enabled = true;
         hitbox.enabled = true;
-        contactDmg.SetActive(true);
+        contactDmg.SetActive (true);
         for (int i = 0; i < spawnInvisible.Length; i++) {
             spawnInvisible[i].enabled = true;
         }
@@ -232,42 +232,44 @@ public class BaseEnemy : MonoBehaviour {
         if (timer < 0.05f) {
             transform.position -= transform.forward * 100 * Time.deltaTime;
         }
-         RaycastHit hit;
-        if(Physics.Raycast(oldPos,transform.position - oldPos,out hit,Vector3.Distance(transform.position,oldPos),LayerMask.GetMask("Default"),QueryTriggerInteraction.Ignore)){
+        RaycastHit hit;
+        if (Physics.Raycast (oldPos, transform.position - oldPos, out hit, Vector3.Distance (transform.position, oldPos), LayerMask.GetMask ("Default"), QueryTriggerInteraction.Ignore)) {
             transform.position = hit.point;
             timer = 0.26f;
         }
         if (timer > 0.25f) {
             shakeCam.SmallShake ();
             Camera.main.fieldOfView = 60;
-            int currencyValue = Random.Range(minValue, maxValue);
-            GameObject currency = Instantiate(GameObject.FindGameObjectWithTag("Manager").GetComponent<ChanceManager>().getCorrespondingGem(currencyValue), transform.position, Quaternion.identity);
-            currency.GetComponent<MoveToTarget>().target = GameObject.FindGameObjectWithTag("Player");
-            currency.GetComponent<MoveToTarget>().StartMove();
-            currency.GetComponent<CurrencyModifierEffect>().value = currencyValue;
+            int currencyValue = Random.Range (minValue, maxValue);
+            GameObject currency = Instantiate (GameObject.FindGameObjectWithTag ("Manager").GetComponent<ChanceManager> ().getCorrespondingGem (currencyValue), transform.position, Quaternion.identity);
+            currency.GetComponent<MoveToTarget> ().target = GameObject.FindGameObjectWithTag ("Player");
+            currency.GetComponent<MoveToTarget> ().StartMove ();
+            currency.GetComponent<CurrencyModifierEffect> ().value = currencyValue;
             Destroy (gameObject);
         }
     }
 
     int curGun = 0;
     public virtual void Attack () {
-        if (soundSpawner != null) {
-            soundSpawner.SpawnEffect (shootSound);
-        }
-        shakeCam.SmallShake ();
-        gun[curGun].position -= gun[curGun].right * recoil;
-        curGun = (int) Mathf.Repeat (curGun + 1, gun.Length);
-        float curAngle = -angleRadius / 2;
-        for (int i = 0; i < amountOfBullets; i++) {
-            GameObject g = Instantiate (toShoot, shootPivot.position, transform.rotation * toShoot.transform.rotation * Quaternion.Euler (0, curAngle, 0));
-            g.GetComponent<AutoRotate> ().speed = speedMuliplier;
-            g.GetComponent<AutoRotate> ().eulerV3.y = rotateY / speedMuliplier;
-            g.GetComponent<DestroyAfterSeconds> ().time = lifeTime;
-            if (parentToMe == true) {
-                g.transform.SetParent (transform);
+        if (gameObject.activeInHierarchy == true) {
+            if (soundSpawner != null) {
+                soundSpawner.SpawnEffect (shootSound);
             }
-            g.GetComponent<Hurtbox> ().damage = damage;
-            curAngle += angleRadius / amountOfBullets;
+            shakeCam.SmallShake ();
+            gun[curGun].position -= gun[curGun].right * recoil;
+            curGun = (int) Mathf.Repeat (curGun + 1, gun.Length);
+            float curAngle = -angleRadius / 2;
+            for (int i = 0; i < amountOfBullets; i++) {
+                GameObject g = Instantiate (toShoot, shootPivot.position, transform.rotation * toShoot.transform.rotation * Quaternion.Euler (0, curAngle, 0));
+                g.GetComponent<AutoRotate> ().speed = speedMuliplier;
+                g.GetComponent<AutoRotate> ().eulerV3.y = rotateY / speedMuliplier;
+                g.GetComponent<DestroyAfterSeconds> ().time = lifeTime;
+                if (parentToMe == true) {
+                    g.transform.SetParent (transform);
+                }
+                g.GetComponent<Hurtbox> ().damage = damage;
+                curAngle += angleRadius / amountOfBullets;
+            }
         }
     }
 
@@ -363,8 +365,8 @@ public class BaseEnemy : MonoBehaviour {
     }
     void AttackRepeatFunction () {
         //basically this is the actual called function
-        if(gameObject.activeSelf == true){
-        Attack ();
+        if (gameObject.activeInHierarchy == true) {
+            Attack ();
         }
     }
 
