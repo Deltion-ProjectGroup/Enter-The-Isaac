@@ -11,12 +11,13 @@ public class GunUI : MonoBehaviour
     [SerializeField] Text[] curGunMagazine;
     [SerializeField] Text[] curGunMaxAmmo;
     [SerializeField] Text[] curGunMagazineLeft;
+    [SerializeField] UIPercentBar bar;
     void Start()
     {
         player = FindObjectOfType<PlayerController>();
     }
 
-    void Update()
+    void LateUpdate()
     {
         //this code does not make any logical sense because I'm dumb today, how are you? #brainfarts #whostilluseshashtags
         SetNameText();
@@ -24,6 +25,12 @@ public class GunUI : MonoBehaviour
         SetMagazineLeftText();
         SetMaxAmmoText();
         SetAmmoText();
+        SetBar();
+    }
+    void SetBar(){
+        if(player.IsInvoking("NoSwitchGun") == false){
+        bar.SetPercent(player.magazineStore[player.curGun] / (float)player.gun.gunClone.maxAmmo * 100);
+        }
     }
 
     void SetNameText()
@@ -48,7 +55,7 @@ public class GunUI : MonoBehaviour
     }
     void SetMagazineText()
     {
-        string toSet = player.magazineStore[player.curGun] + " / ";
+        string toSet = player.magazineStore[player.curGun] + "";
         for (int i = 0; i < curGunMagazine.Length; i++)
         {
             curGunMagazine[i].text = toSet;
@@ -59,7 +66,7 @@ public class GunUI : MonoBehaviour
         string toSet = player.guns[player.curGun].magazineSize + "";
         if (player.gun != null)
         {
-            toSet = player.gun.curAmmo + "";
+            toSet = player.gun.curAmmo + "/";
         }
         for (int i = 0; i < curGunMaxAmmo.Length; i++)
         {
