@@ -335,8 +335,8 @@ public class PlayerController : MonoBehaviour {
         //invoke function lol
     }
 
-    IEnumerator RollEvent () {
-        soundSpawn.SpawnEffect (rollSound);
+    IEnumerator RollEvent () {//here
+        soundSpawn.SpawnEffect (rollSound,0.5f,1,0,transform);
         anim.Play ("Dash", 0);
         anim.SetLayerWeight (1, 0);
         GetComponentInChildren<IKHoldGun> ().enabled = false;
