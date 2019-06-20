@@ -2221,6 +2221,7 @@ GameObject:
   - component: {fileID: 522080339}
   - component: {fileID: 522080338}
   - component: {fileID: 522080341}
+  - component: {fileID: 522080342}
   m_Layer: 5
   m_Name: DoomLogo
   m_TagString: Untagged
@@ -2335,6 +2336,27 @@ MonoBehaviour:
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   inputName: uiSelect
+--- !u!114 &522080342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 522080337}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5e0044a0a9997546b30480ce6179ace, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  goalColor: {r: 1, g: 1, b: 1, a: 1}
+  startColor: {r: 0, g: 0, b: 0, a: 0}
+  speed: 6
+  waitTime: 1
+  endEvent:
+    m_PersistentCalls:
+      m_Calls: []
+    m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
+      Culture=neutral, PublicKeyToken=null
 --- !u!1 &529748435
 GameObject:
   m_ObjectHideFlags: 0
