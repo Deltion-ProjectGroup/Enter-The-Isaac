@@ -416,7 +416,7 @@ MonoBehaviour:
   minSpawnersToUse: 2
   maxSpawnersToUse: 4
   minEnemiesPerSpawner: 1
-  maxEnemiesPerSpawner: 20
+  maxEnemiesPerSpawner: 4
   minEnemySpawnDelay: 0
   maxEnemySpawnDelay: 0
   enemyPool:
@@ -436,6 +436,7 @@ MonoBehaviour:
   - {fileID: 2662267463992567629}
   - {fileID: 8610379185516302038}
   - {fileID: 7559406650359683859}
+  waves: []
   aliveEnemies: []
   checkEnemiesInUpdate: 0
 --- !u!1 &2816832860116412035
@@ -835,6 +836,7 @@ MonoBehaviour:
   culler: {fileID: 0}
   occluder: {fileID: 8864680707719251955}
   roomHolder: {fileID: 6081407419291784737}
+  isCulled: 1
   roomDistanceFromStart: 0
   parentRoom: {fileID: 0}
   replacedTimes: 0

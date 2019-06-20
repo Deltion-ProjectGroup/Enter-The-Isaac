@@ -899,7 +899,7 @@ MonoBehaviour:
   minSpawnersToUse: 2
   maxSpawnersToUse: 4
   minEnemiesPerSpawner: 1
-  maxEnemiesPerSpawner: 20
+  maxEnemiesPerSpawner: 4
   minEnemySpawnDelay: 0
   maxEnemySpawnDelay: 0
   enemyPool:
@@ -908,7 +908,7 @@ MonoBehaviour:
       chance: 50
       percentageBorders: {x: 0, y: 0}
       items:
-      - {fileID: 7129523558497025242, guid: a6d05cfdf7244a84aa9896bc5543d6fd, type: 3}
+      - {fileID: 5147418959096718469, guid: c976ce3c268d9de4eb3364b8f97e65b2, type: 3}
     - unlocksAtFloor: 2
       chance: 50
       percentageBorders: {x: 0, y: 0}
@@ -921,6 +921,7 @@ MonoBehaviour:
   - {fileID: 2591916157089590542}
   - {fileID: 5054881124173488336}
   - {fileID: 6744475909641823355}
+  waves: []
   aliveEnemies: []
   checkEnemiesInUpdate: 0
 --- !u!1 &4493924745403143673
@@ -2203,6 +2204,7 @@ MonoBehaviour:
   culler: {fileID: 0}
   occluder: {fileID: 7641462458797781130}
   roomHolder: {fileID: 4493924745403143673}
+  isCulled: 1
   roomDistanceFromStart: 0
   parentRoom: {fileID: 0}
   replacedTimes: 0
