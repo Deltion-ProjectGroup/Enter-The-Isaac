@@ -259,6 +259,7 @@ public class DungeonCreator : MonoBehaviour
     }
     public IEnumerator InitializeEnemyRooms()
     {
+        print("FINAL");
         List<GameObject> enemyRoomsCopy = new List<GameObject>(enemyRooms);
         int backupCount = enemyRoomsCopy.Count;
         print(enemyRoomsCopy.Count);
@@ -547,7 +548,10 @@ public class DungeonCreator : MonoBehaviour
                     if (finalRoom != null)
                     {
                         finalRoom.GetComponent<BaseRoom>().replacedTimes++;
-                        //StartCoroutine(finalRoom.GetComponent<BaseRoom>().SpawnNextRoom());
+                        while(finalRoom.GetComponent<BaseRoom>().availableConnectionPoints.Count > 0)
+                        {
+                            RemoveConnectionPoint(finalRoom.GetComponent<BaseRoom>().availableConnectionPoints[0]);
+                        }
                         replaced = true;
                         break;
                     }

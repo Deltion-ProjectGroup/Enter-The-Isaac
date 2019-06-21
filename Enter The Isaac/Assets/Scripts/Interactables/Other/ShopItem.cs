@@ -27,6 +27,7 @@ public class ShopItem : Interactable
     {
         shop.allItemsInRoom.Remove(gameObject);
         player.GetComponent<PlayerController>().money -= cost;
+        Destroy(attachedValueHolder);
         Interactable[] interactables = GetComponents<Interactable>();
         foreach(Interactable interactable in interactables)
         {

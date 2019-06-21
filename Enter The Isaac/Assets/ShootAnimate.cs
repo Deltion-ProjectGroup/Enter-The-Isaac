@@ -11,7 +11,7 @@ public class ShootAnimate : MonoBehaviour {
     }
 
     void LateUpdate () {
-        if (player.gun.IsInvoking ("Shoot") == true) {
+        if (player != null && player.gun.IsInvoking ("Shoot") == true) {
             anim.SetFloat ("speed", 1);
         } else {
             anim.SetFloat ("speed", 0);
