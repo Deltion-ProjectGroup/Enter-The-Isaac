@@ -317,6 +317,8 @@ MonoBehaviour:
   rotateY: 0
   lifeTime: 2
   parentToMe: 0
+  minValue: 0
+  maxValue: 0
 --- !u!114 &2360543678455215553
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -330,7 +332,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   toSpawn:
-  - {fileID: 8158331382286321570, guid: 0ebfa3aed7b2a5448802bbb678241437, type: 3}
+  - {fileID: 6341158165910525886, guid: 616405efcb666ba428836b2a289ede54, type: 3}
   addMyRotationInSpawn: 0
 --- !u!195 &2360543678455215552
 NavMeshAgent:
@@ -598,10 +600,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: Private LP
       objectReference: {fileID: 0}
-    - target: {fileID: 13700000, guid: 3ba41376c11b9e64c8712b7cc80ff663, type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 1a20819c8bbaed44b9ffeba420035c44, type: 2}
     - target: {fileID: 400042, guid: 3ba41376c11b9e64c8712b7cc80ff663, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -654,6 +652,10 @@ PrefabInstance:
       propertyPath: m_ApplyRootMotion
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 13700000, guid: 3ba41376c11b9e64c8712b7cc80ff663, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 1a20819c8bbaed44b9ffeba420035c44, type: 2}
     - target: {fileID: 400014, guid: 3ba41376c11b9e64c8712b7cc80ff663, type: 3}
       propertyPath: m_LocalRotation.x
       value: 0.044693414

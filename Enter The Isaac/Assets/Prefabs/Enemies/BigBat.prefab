@@ -5426,8 +5426,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4b4cc388610de894983fd504465264cb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  home: {fileID: 0}
-  homeRadius: 5
   curState: 0
   noticePlayerTime: 0.5
   moveToTargetSpeed: 9
@@ -5445,6 +5443,7 @@ MonoBehaviour:
   deathSound: {fileID: 8300000, guid: 020e257d35191bf4dab6958da3e9d7b0, type: 3}
   getHitSound: {fileID: 8300000, guid: 161b53d3a56fb324a9a875e9353a827e, type: 3}
   idleSound: {fileID: 8300000, guid: 40041f8277dbd29478aeaf9183684b5e, type: 3}
+  flapRepeatSpeed: 0.4
 --- !u!114 &8177181223158001214
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5522,7 +5521,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ca8bd342b38a3542aec7c36a87b57d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  curHealth: 20
+  curHealth: 10
   fakeHealth: 0
   team: 1
   maxHealth: 1
@@ -5659,7 +5658,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   toSpawn:
-  - {fileID: 8158331382286321570, guid: 0ebfa3aed7b2a5448802bbb678241437, type: 3}
+  - {fileID: 6341158165910525886, guid: 616405efcb666ba428836b2a289ede54, type: 3}
+  addMyRotationInSpawn: 0
 --- !u!114 &8177181223158001202
 MonoBehaviour:
   m_ObjectHideFlags: 0

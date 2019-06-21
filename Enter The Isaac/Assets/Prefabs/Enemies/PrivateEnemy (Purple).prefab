@@ -221,7 +221,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0ca8bd342b38a3542aec7c36a87b57d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  curHealth: 45
+  curHealth: 40
   fakeHealth: 0
   team: 1
   maxHealth: 1
@@ -328,6 +328,8 @@ MonoBehaviour:
   rotateY: 0
   lifeTime: 2
   parentToMe: 0
+  minValue: 0
+  maxValue: 0
 --- !u!114 &5311357528164019236
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -341,7 +343,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   toSpawn:
-  - {fileID: 8158331382286321570, guid: 0ebfa3aed7b2a5448802bbb678241437, type: 3}
+  - {fileID: 6341158165910525886, guid: 616405efcb666ba428836b2a289ede54, type: 3}
   addMyRotationInSpawn: 0
 --- !u!195 &5311357528164019237
 NavMeshAgent:
