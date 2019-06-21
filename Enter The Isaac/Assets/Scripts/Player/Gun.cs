@@ -29,7 +29,7 @@ public class Gun : MonoBehaviour {
     public GameObject lastSpawnedBullet;
     public delegate void voidDelegate ();
     public voidDelegate gunDel;
-    public delegate void gunDelegate (Gun thisGun);
+    public delegate void gunDelegate (Gun thisGun, GameObject currentPlayer);
     public gunDelegate onSwapGun;
     voidDelegate lastGunDel; //used to check if gunDel has to update the stats;
     [Header ("Delete later, for presentation")]
@@ -70,7 +70,7 @@ public class Gun : MonoBehaviour {
         player = lastPlayer;
 
         if (onSwapGun != null) {
-            onSwapGun (this);
+            onSwapGun (this, player.gameObject);
         }
 
         //normal stuff

@@ -18,7 +18,7 @@ public class MagazineModifierEffect : Effect
         gun.gunClone.magazineSize -= modifyAmount;
         gun.onSwapGun -= OnSwapGun;
     }
-    public void OnSwapGun(Gun newGun)
+    public void OnSwapGun(Gun newGun, GameObject player)
     {
         newGun.gunClone.magazineSize += modifyAmount;
     }

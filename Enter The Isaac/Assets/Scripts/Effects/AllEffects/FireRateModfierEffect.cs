@@ -17,7 +17,7 @@ public class FireRateModfierEffect : GunEffect
         gun.gunClone.fireRate += modifyAmount;
         gun.onSwapGun -= OnSwapGun;
     }
-    public void OnSwapGun(Gun gunSwappedTo)
+    public void OnSwapGun(Gun gunSwappedTo, GameObject player)
     {
         gunSwappedTo.gunClone.fireRate = Mathf.Max(gunSwappedTo.gunClone.fireRate - modifyAmount, gunSwappedTo.gunClone.minFireRate);
     }
