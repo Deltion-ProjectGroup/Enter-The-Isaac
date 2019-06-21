@@ -11,6 +11,7 @@ public class AddAmmoEffect : Effect
         float ammoRefundAmount = player.gun.gunClone.maxAmmo;
         ammoRefundAmount *= (ammoPercentage / 100);
         player.magazineStore[player.curGun] = Mathf.Min(player.magazineStore[player.curGun] + (int)ammoRefundAmount, player.gun.gunClone.maxAmmo);
+        player.gun.totalMaxAmmo = Mathf.Min(player.gun.totalMaxAmmo + (int)ammoRefundAmount, player.gun.gunClone.maxAmmo);
     }
     public override void RemoveEffect(GameObject target)
     {

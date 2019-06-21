@@ -14,7 +14,7 @@ public class Gun : MonoBehaviour {
     GunType lastGunType = null;
     Shake camShake;
     [HideInInspector] public int curAmmo = 0;
-    int totalMaxAmmo = 0;
+    [HideInInspector] public int totalMaxAmmo = 0;
     SoundSpawn soundSpawner;
     public Vector3 angle = new Vector3 (0, 0, 0);
     [SerializeField] PlayerController player;
