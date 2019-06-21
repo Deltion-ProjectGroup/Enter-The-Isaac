@@ -168,6 +168,7 @@ public class BatBehaviour : MonoBehaviour {
     }
 
     public void GetHit () {
+        hitbox.enabled = true;
         if(soundSpawner != null){
         soundSpawner.SpawnEffect (getHitSound);
         }
