@@ -2627,7 +2627,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 515863
+    m_Bits: 1040151
   m_RenderingPath: 3
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -3308,8 +3308,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   passiveItems: []
   weaponItems:
-  - {fileID: 11400000, guid: c382607d589d67b4d92b6a9b366c4670, type: 2}
-  - {fileID: 11400000, guid: c382607d589d67b4d92b6a9b366c4670, type: 2}
+  - {fileID: 0}
+  - {fileID: 0}
 --- !u!1 &65470452675986998
 GameObject:
   m_ObjectHideFlags: 0
@@ -5834,6 +5834,7 @@ MonoBehaviour:
   myGun: {fileID: 0}
   curReloadTime: 0
   curAmmo: 0
+  totalMaxAmmo: 0
   angle: {x: 0, y: 0, z: 0}
   player: {fileID: 65470452505166385}
   startPos: {x: 0, y: 0, z: 0}
