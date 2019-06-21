@@ -7,6 +7,7 @@ public class MagazineModifierEffect : Effect
     public int modifyAmount;
     public override void ApplyEffect(GameObject target)
     {
+        PlayerController controller = target.GetComponent<PlayerController>();
         Gun gun = target.GetComponent<PlayerController>().gun;
         gun.gunClone.magazineSize += modifyAmount;
         gun.onSwapGun += OnSwapGun;
