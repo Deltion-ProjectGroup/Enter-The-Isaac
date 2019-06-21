@@ -128,7 +128,7 @@ public class GunMagician : MonoBehaviour {
         hitbox = GetComponent<Hitbox> ();
         mainCam.GetComponent<Cam> ().enabled = false;
         FindObjectOfType<MusicManager> ().UpdateMusic (1);
-        speedLines = mainCamRipple.transform.FindChild ("SuperSpeedlines").GetComponent<ParticleSystem> ();
+        speedLines = mainCamRipple.transform.Find ("SuperSpeedlines").GetComponent<ParticleSystem> ();
 
         if (skipIntro == false) {
             shakeCam.CustomShake (0.4f, 2);
