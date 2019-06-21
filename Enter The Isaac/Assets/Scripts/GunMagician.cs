@@ -102,6 +102,9 @@ public class GunMagician : MonoBehaviour {
     [Header ("Death")]
     [SerializeField] AudioClip deathSound;
     [SerializeField] GameObject deathCam;
+
+    public delegate void DelegateVoid();
+    public DelegateVoid onDeath;
     void Awake () {
         if (skipIntro == false) {
             enabled = false;
@@ -220,6 +223,10 @@ public class GunMagician : MonoBehaviour {
         anim.speed = 1;
         transform.position += Vector3.up / 5;
         transform.Rotate (0, 180, 0);
+        if(onDeath != null)
+        {
+            onDeath();
+        }
     }
 
     public void UpdateCurrentSpeed () {
