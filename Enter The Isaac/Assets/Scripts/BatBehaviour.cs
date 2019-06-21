@@ -120,6 +120,7 @@ public class BatBehaviour : MonoBehaviour {
     }
 
     public void Die () {
+        hitbox.gameObject.SetActive(false);
         StopAllCoroutines ();
         CancelInvoke ();
         curState = State.Die;
@@ -168,8 +169,9 @@ public class BatBehaviour : MonoBehaviour {
     }
 
     public void GetHit () {
+        hitbox.enabled = true;
         if(soundSpawner != null){
-        soundSpawner.SpawnEffect (getHitSound);
+        soundSpawner.SpawnEffect (getHitSound,1,Random.Range(0.95f,1.05f),0,transform);
         }
     }
 
