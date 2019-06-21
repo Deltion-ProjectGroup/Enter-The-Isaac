@@ -282,7 +282,7 @@ public class BaseEnemy : MonoBehaviour {
             }
             anim.Play ("Flinch", 0);
             if (soundSpawner != null) {
-                soundSpawner.SpawnEffect (getHitSound);
+                soundSpawner.SpawnEffect (getHitSound,1,Random.Range(0.95f,1.05f),0,transform);
             }
             anim.GetComponent<IKHoldGun> ().enabled = false;
             if (lastGunScale == Vector3.zero) {
