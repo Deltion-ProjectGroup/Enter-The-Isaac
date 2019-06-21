@@ -3264,7 +3264,7 @@ MonoBehaviour:
   gun: {fileID: 65470453587846303}
   guns:
   - {fileID: 11400000, guid: 741b2b00c3755ff4aa6cbe39ea56b77a, type: 2}
-  - {fileID: 11400000, guid: 7b6d9d2b29dcd914fb4e518a8172a992, type: 2}
+  - {fileID: 11400000, guid: 95555f19c9b6fb54e98672cf15a33469, type: 2}
   curGun: 0
   ammoStore: 
   magazineStore: 
@@ -4779,15 +4779,15 @@ RectTransform:
   m_GameObject: {fileID: 65470452822780660}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 7.4579997}
-  m_LocalScale: {x: 1.5008, y: 1.5008, z: 1.5008}
+  m_LocalScale: {x: 0.70781183, y: 0.70781183, z: 0.70781183}
   m_Children: []
   m_Father: {fileID: 65470453526666812}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -228, y: -9}
-  m_SizeDelta: {x: 156.25, y: 70.04}
+  m_AnchoredPosition: {x: -182.02, y: 4}
+  m_SizeDelta: {x: 476.81, y: 101.1}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &65470452822780670
 CanvasRenderer:
@@ -4819,18 +4819,18 @@ MonoBehaviour:
       Version=1.0.0.0, Culture=neutral, PublicKeyToken=null
   m_FontData:
     m_Font: {fileID: 12800000, guid: 62427a04346924c42a6f417adf88252f, type: 3}
-    m_FontSize: 70
+    m_FontSize: 113
     m_FontStyle: 0
     m_BestFit: 1
-    m_MinSize: 10
+    m_MinSize: 47
     m_MaxSize: 300
-    m_Alignment: 5
+    m_Alignment: 6
     m_AlignByGeometry: 0
-    m_RichText: 1
+    m_RichText: 0
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: Gun name
+  m_Text: Rocket box ultra deluxe EX
 --- !u!1 &65470452881420558
 GameObject:
   m_ObjectHideFlags: 0
@@ -5033,7 +5033,7 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 65470453131414240}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 27.3, y: 73.63618, z: 27.300793}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
@@ -40410,6 +40410,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 65470453131414247}
     m_Modifications:
+    - target: {fileID: 354003489755812157, guid: 8f4b92c86216dfc4f9b5566f4aef7787,
+        type: 3}
+      propertyPath: m_Name
+      value: PPDungeon
+      objectReference: {fileID: 0}
     - target: {fileID: 354003489755812159, guid: 8f4b92c86216dfc4f9b5566f4aef7787,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -40465,11 +40470,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 354003489755812157, guid: 8f4b92c86216dfc4f9b5566f4aef7787,
-        type: 3}
-      propertyPath: m_Name
-      value: PPDungeon
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 8f4b92c86216dfc4f9b5566f4aef7787, type: 3}
 --- !u!4 &2958379809052025133 stripped
@@ -40497,6 +40497,11 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 65470453587846298}
     m_Modifications:
+    - target: {fileID: 5340255346962640094, guid: ba49d5577f13db84ca513ef469922b83,
+        type: 3}
+      propertyPath: m_Name
+      value: HandGunPrefab
+      objectReference: {fileID: 0}
     - target: {fileID: 5340255346962640095, guid: ba49d5577f13db84ca513ef469922b83,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -40551,11 +40556,6 @@ PrefabInstance:
         type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5340255346962640094, guid: ba49d5577f13db84ca513ef469922b83,
-        type: 3}
-      propertyPath: m_Name
-      value: HandGunPrefab
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: ba49d5577f13db84ca513ef469922b83, type: 3}
