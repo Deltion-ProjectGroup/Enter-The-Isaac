@@ -20,9 +20,11 @@ public class InGameManager : MonoBehaviour
 
     public void SpawnPlayer()
     {
+        print("SPAWNED");
         localPlayer = Instantiate(playerPrefab, dungeonCreator.startRoom.GetComponent<StartRoom>().spawnPoint.position, dungeonCreator.startRoom.GetComponent<StartRoom>().spawnPoint.rotation);
         GameObject actualPlayer = GameObject.FindGameObjectWithTag("Player");
         GameObject.FindGameObjectWithTag("Database").GetComponent<SaveDatabase>().LoadPlayerData(actualPlayer.GetComponent<PlayerController>(), actualPlayer.GetComponent<Inventory>(), actualPlayer.GetComponentInChildren<Hitbox>());
+        print("LOADED");
     }
     public void ResetGame()
     {

@@ -11,7 +11,7 @@ public class Teleporter : MonoBehaviour
         if(hit.transform.tag == "Player")
         {
             GameObject.FindGameObjectWithTag("Database").GetComponent<SaveDatabase>().SavePlayerData(hit.GetComponent<PlayerController>(), hit.GetComponent<Inventory>(), hit.GetComponentInChildren<Hitbox>());
-            SceneManager.LoadScene(levelToLoad);
+            GameObject.FindGameObjectWithTag("SceneManager").GetComponent<InGameSceneManager>().LoadSceneAsyncStart(levelToLoad);
         }
     }
 }

@@ -122,15 +122,13 @@ public class SetOptionSettings : MonoBehaviour {
     }
 
     public void LoadSavedScene () {
-        SceneManager.LoadScene (GameObject.FindGameObjectWithTag ("Database").GetComponent<SaveDatabase> ().LoadSavedLevel ());
+        GameObject.FindGameObjectWithTag("SceneManager").GetComponent<InGameSceneManager>().LoadSceneAsyncStart(GameObject.FindGameObjectWithTag("Database").GetComponent<SaveDatabase>().LoadSavedLevel());
     }
     public void StartNewGame (float newScene) {
         if (File.Exists (Application.dataPath + "/LevelData")) {
             File.Delete (Application.dataPath + "/LevelData");
         }
-        //  LoadSceneASync(newScene);
-        SceneManager.UnloadScene(SceneManager.GetActiveScene().buildIndex);
-        LoadScene ((int) newScene);
+        GameObject.FindGameObjectWithTag("SceneManager").GetComponent<InGameSceneManager>().LoadSceneAsyncStart((int)newScene);
     }
     public void LoadSceneASync (float newScene) {
         SceneManager.UnloadScene(SceneManager.GetActiveScene().buildIndex);

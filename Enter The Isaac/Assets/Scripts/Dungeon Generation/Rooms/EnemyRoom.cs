@@ -25,6 +25,10 @@ public class EnemyRoom : BaseRoom
     public virtual void TriggerRoom()
     {
         ToggleAllDoors();
+        foreach(DungeonConnectionPoint connectionPoint in allConnectionPoints)
+        {
+            connectionPoint.pointConnectedTo.GetComponent<DungeonConnectionPoint>().ownerRoom.gameObject.GetComponent<BoxCollider>().isTrigger = false;
+        }
         spawnManager.onClearWaves += OnCompleteRoom;
         spawnManager.ActivateSpawners();
         print("TOGGLED");
@@ -43,6 +47,10 @@ public class EnemyRoom : BaseRoom
     public virtual void OnCompleteRoom()
     {
         print("COMPL");
+        foreach (DungeonConnectionPoint connectionPoint in allConnectionPoints)
+        {
+            connectionPoint.pointConnectedTo.GetComponent<DungeonConnectionPoint>().ownerRoom.gameObject.GetComponent<BoxCollider>().isTrigger = true;
+        }
         ToggleAllDoors();
     }
 }
