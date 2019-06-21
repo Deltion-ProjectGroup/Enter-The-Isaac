@@ -103,7 +103,7 @@ public class GunMagician : MonoBehaviour {
     [SerializeField] AudioClip deathSound;
     [SerializeField] GameObject deathCam;
 
-    public delegate void DelegateVoid();
+    public delegate void DelegateVoid ();
     public DelegateVoid onDeath;
     void Awake () {
         if (skipIntro == false) {
@@ -128,6 +128,7 @@ public class GunMagician : MonoBehaviour {
         hitbox = GetComponent<Hitbox> ();
         mainCam.GetComponent<Cam> ().enabled = false;
         FindObjectOfType<MusicManager> ().UpdateMusic (1);
+        speedLines = mainCamRipple.transform.FindChild ("SuperSpeedlines").GetComponent<ParticleSystem> ();
 
         if (skipIntro == false) {
             shakeCam.CustomShake (0.4f, 2);
@@ -183,8 +184,8 @@ public class GunMagician : MonoBehaviour {
         transform.localScale = startScale;
         //pointnshoot
         CancelInvoke ("PointNShootShoot");
-        pointShootParticleL.Stop();
-        pointShootParticleR.Stop();
+        pointShootParticleL.Stop ();
+        pointShootParticleR.Stop ();
         Hurtbox[] hurtboxes = GameObject.FindObjectsOfType<Hurtbox> ();
         for (int i = 0; i < hurtboxes.Length; i++) {
             hurtboxes[i].damage = 0;
@@ -223,9 +224,8 @@ public class GunMagician : MonoBehaviour {
         anim.speed = 1;
         transform.position += Vector3.up / 5;
         transform.Rotate (0, 180, 0);
-        if(onDeath != null)
-        {
-            onDeath();
+        if (onDeath != null) {
+            onDeath ();
         }
     }
 
@@ -436,8 +436,8 @@ public class GunMagician : MonoBehaviour {
     public void PointNShoot () {
         currentPointShootVersionL = Random.Range (0, 2);
         currentPointShootVersionR = Random.Range (0, 2);
-       // currentPointShootVersionL = 0;
-       // currentPointShootVersionR = 0;
+        // currentPointShootVersionL = 0;
+        // currentPointShootVersionR = 0;
         anim.SetLayerWeight (1, 1);
         anim.SetLayerWeight (2, 1);
         pointshootLeft = pointshootTimes;
@@ -451,8 +451,8 @@ public class GunMagician : MonoBehaviour {
     }
 
     void StartPointShootAnim () {
-        pointShootParticleL.Play();
-        pointShootParticleR.Play();
+        pointShootParticleL.Play ();
+        pointShootParticleR.Play ();
         if (currentPointShootVersionR == 0) {
             anim.Play ("metarig|Point 'n shoot v1 (Wind up and Recovery)", 2);
         } else {
@@ -492,8 +492,8 @@ public class GunMagician : MonoBehaviour {
             isDoingSomething = false;
             anim.SetLayerWeight (1, 0);
             anim.SetLayerWeight (2, 0);
-            pointShootParticleL.Stop();
-            pointShootParticleR.Stop();
+            pointShootParticleL.Stop ();
+            pointShootParticleR.Stop ();
         }
     }
 
