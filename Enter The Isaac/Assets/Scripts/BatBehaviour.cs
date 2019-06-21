@@ -100,7 +100,9 @@ public class BatBehaviour : MonoBehaviour {
     }
 
     void ActualFlapSound () {
+        if(soundSpawner != null){
         soundSpawner.SpawnEffect (idleSound, 1, 1, 1, transform);
+        }
     }
 
     IEnumerator SpawnEvents () {
@@ -122,7 +124,9 @@ public class BatBehaviour : MonoBehaviour {
         CancelInvoke ();
         curState = State.Die;
         timer = 0;
+        if(soundSpawner != null){
         soundSpawner.SpawnEffect (deathSound);
+        }
         if (GetComponent<Hitbox> ().impactDir != Vector3.zero) {
             transform.LookAt (transform.position + GetComponent<Hitbox> ().impactDir);
         }
@@ -164,7 +168,9 @@ public class BatBehaviour : MonoBehaviour {
     }
 
     public void GetHit () {
+        if(soundSpawner != null){
         soundSpawner.SpawnEffect (getHitSound);
+        }
     }
 
     void IdleMove () {
@@ -216,7 +222,9 @@ public class BatBehaviour : MonoBehaviour {
         attackPhase = 1;
         hurtbox.SetActive (true);
         transform.Find ("Line").gameObject.SetActive (true);
+        if(soundSpawner != null){
         soundSpawner.SpawnEffect (chargeSound, 1, 1, 1, transform);
+        }
         yield return new WaitForSeconds (0.3f);
         //stop
         anim.Play ("metarig|Attack(Attack)", 0);
@@ -257,7 +265,9 @@ public class BatBehaviour : MonoBehaviour {
                     transform.Find ("Line").gameObject.SetActive (false);
                     transform.position = lastPos;
                     Invoke ("StopBonk", 0.4f);
+                    if(soundSpawner != null){
                     soundSpawner.SpawnEffect (getHitSound, 1, 1, 1, transform);
+                    }
                 }
                 break;
             case 2:
