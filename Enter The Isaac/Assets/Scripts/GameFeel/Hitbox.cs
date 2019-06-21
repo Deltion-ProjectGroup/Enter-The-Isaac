@@ -118,7 +118,7 @@ public class Hitbox : MonoBehaviour {
 
     public virtual void Die () {
         //  Destroy(transform.root.gameObject);
-        if (!dead) {
+       // if (!dead) {
             deathEvent.Invoke ();
             if (onDeath != null) {
                 onDeath (gameObject);
@@ -126,8 +126,8 @@ public class Hitbox : MonoBehaviour {
             if (destoy == true) {
                 Destroy (gameObject);
             }
-            dead = true;
-        }
+         //   dead = true;
+        //}
     }
 }
 
