@@ -1567,24 +1567,39 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   requiredWaveAmount: 0
-  minSpawnersToUse: 2
-  maxSpawnersToUse: 4
+  minSpawnersToUse: 5
+  maxSpawnersToUse: 8
   minEnemiesPerSpawner: 1
-  maxEnemiesPerSpawner: 4
+  maxEnemiesPerSpawner: 3
   minEnemySpawnDelay: 0
   maxEnemySpawnDelay: 0
   enemyPool:
     itemPoolData:
     - unlocksAtFloor: 1
-      chance: 50
+      chance: 40
       percentageBorders: {x: 0, y: 0}
       items:
-      - {fileID: 5147418959096718469, guid: c976ce3c268d9de4eb3364b8f97e65b2, type: 3}
-    - unlocksAtFloor: 2
-      chance: 50
+      - {fileID: 4123927476388192464, guid: 246bc225189f4f545919792fadc87ffb, type: 3}
+    - unlocksAtFloor: 1
+      chance: 20
       percentageBorders: {x: 0, y: 0}
       items:
-      - {fileID: 8177181223158001203, guid: bed91ea3a64a49742ada83a561733b58, type: 3}
+      - {fileID: 5569348261447040626, guid: 47b39d836ea262b4db4a3ad4ee88c2b9, type: 3}
+    - unlocksAtFloor: 1
+      chance: 30
+      percentageBorders: {x: 0, y: 0}
+      items:
+      - {fileID: 2588156744913086052, guid: cffb82bc4273bab40a38dd5821257ec1, type: 3}
+    - unlocksAtFloor: 1
+      chance: 5
+      percentageBorders: {x: 0, y: 0}
+      items:
+      - {fileID: 5219403428757834239, guid: 09c3378c5636e9e489d0610e8738675c, type: 3}
+    - unlocksAtFloor: 1
+      chance: 5
+      percentageBorders: {x: 0, y: 0}
+      items:
+      - {fileID: 3467661685434995652, guid: 9b53e229ae02be348950871ebcd1f809, type: 3}
     maxPercentage: 0
   enemySpawners:
   - {fileID: 7333583347705767720}
