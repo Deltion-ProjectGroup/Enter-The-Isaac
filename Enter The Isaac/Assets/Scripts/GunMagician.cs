@@ -67,6 +67,8 @@ public class GunMagician : MonoBehaviour {
     [SerializeField] AudioClip pointshootShootAudio;
     int currentPointShootVersionL = 0;
     int currentPointShootVersionR = 0;
+    [SerializeField] ParticleSystem pointShootParticleL;
+    [SerializeField] ParticleSystem pointShootParticleR;
     [Header ("Clap 'n Attack")]
     [SerializeField] GameObject clapAttackProjectile;
     [SerializeField] GameObject clapParticle;
@@ -425,8 +427,8 @@ public class GunMagician : MonoBehaviour {
     public void PointNShoot () {
         currentPointShootVersionL = Random.Range (0, 2);
         currentPointShootVersionR = Random.Range (0, 2);
-       // currentPointShootVersionL = 1;
-      //  currentPointShootVersionR = 1;
+       // currentPointShootVersionL = 0;
+       // currentPointShootVersionR = 0;
         anim.SetLayerWeight (1, 1);
         anim.SetLayerWeight (2, 1);
         pointshootLeft = pointshootTimes;
@@ -440,6 +442,8 @@ public class GunMagician : MonoBehaviour {
     }
 
     void StartPointShootAnim () {
+        pointShootParticleL.Play();
+        pointShootParticleR.Play();
         if (currentPointShootVersionR == 0) {
             anim.Play ("metarig|Point 'n shoot v1 (Wind up and Recovery)", 2);
         } else {
@@ -448,20 +452,20 @@ public class GunMagician : MonoBehaviour {
         if (currentPointShootVersionL == 0) {
             anim.Play ("metarig|Point 'n shoot (Wind up and Recovery Left Hand) 0", 1);
         } else {
-            anim.Play ("metarig|Point 'n shoot (Wind up and Recovery Left Hand) 0", 1);//THIS IS WRONG
+            anim.Play ("metarig|Point 'n shoot v2 (Wind up and Recovery Left Hand)", 1); //THIS IS WRONG
         }
     }
 
     void PointNShootShoot () {
         if (currentPointShootVersionL == 0) {
-            Instantiate (pointshootProjectile, leftHand.position, pointshootProjectile.transform.rotation * Quaternion.Euler (0, -pointshootCurAngle, 0)).GetComponent<AutoRotate> ().tranformV3.z = pointShootProjectileSpeed;
+            Instantiate (pointshootProjectile, pointShootParticleL.transform.position, pointshootProjectile.transform.rotation * Quaternion.Euler (0, -pointshootCurAngle, 0)).GetComponent<AutoRotate> ().tranformV3.z = pointShootProjectileSpeed;
             soundSpawner.SpawnEffect (pointshootShootAudio, 0.25f, soundPitchhelper, 0, transform);
         } else {
             Instantiate (pointshootProjectile, leftHand.position, pointshootProjectile.transform.rotation * Quaternion.Euler (0, Random.Range (0, pointshootTotalAngle), 0)).GetComponent<AutoRotate> ().tranformV3.z = pointShootProjectileSpeed;
             soundSpawner.SpawnEffect (pointshootShootAudio, 0.25f, Random.Range (0.8f, 1.2f), 0, transform);
         }
         if (currentPointShootVersionR == 0) {
-            Instantiate (pointshootProjectile, rightHand.position, pointshootProjectile.transform.rotation * Quaternion.Euler (0, pointshootCurAngle, 0)).GetComponent<AutoRotate> ().tranformV3.z = pointShootProjectileSpeed;
+            Instantiate (pointshootProjectile, pointShootParticleR.transform.position, pointshootProjectile.transform.rotation * Quaternion.Euler (0, pointshootCurAngle, 0)).GetComponent<AutoRotate> ().tranformV3.z = pointShootProjectileSpeed;
             soundSpawner.SpawnEffect (pointshootShootAudio, 0.25f, soundPitchhelper, 0, transform);
         } else {
             Instantiate (pointshootProjectile, rightHand.position, pointshootProjectile.transform.rotation * Quaternion.Euler (0, Random.Range (0, pointshootTotalAngle), 0)).GetComponent<AutoRotate> ().tranformV3.z = pointShootProjectileSpeed;
@@ -479,6 +483,8 @@ public class GunMagician : MonoBehaviour {
             isDoingSomething = false;
             anim.SetLayerWeight (1, 0);
             anim.SetLayerWeight (2, 0);
+            pointShootParticleL.Stop();
+            pointShootParticleR.Stop();
         }
     }
 
