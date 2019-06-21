@@ -180,6 +180,8 @@ public class GunMagician : MonoBehaviour {
         transform.localScale = startScale;
         //pointnshoot
         CancelInvoke ("PointNShootShoot");
+        pointShootParticleL.Stop();
+        pointShootParticleR.Stop();
         Hurtbox[] hurtboxes = GameObject.FindObjectsOfType<Hurtbox> ();
         for (int i = 0; i < hurtboxes.Length; i++) {
             hurtboxes[i].damage = 0;

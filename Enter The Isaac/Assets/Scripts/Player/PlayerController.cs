@@ -219,11 +219,7 @@ public class PlayerController : MonoBehaviour {
             hitbox.GetComponent<Hitbox> ().AddHealth (40);
         }
         if (Input.GetKeyDown (KeyCode.Alpha6)) {
-            if (hitbox.GetComponent<Hitbox> ().team == 0) {
-                hitbox.GetComponent<Hitbox> ().team = 1;
-            } else {
-                hitbox.GetComponent<Hitbox> ().team = 0;
-            }
+                hitbox.GetComponent<Collider>().enabled = !hitbox.GetComponent<Collider>().enabled;
         }
         if (Input.GetKeyDown (KeyCode.Alpha7)) {
             if (walkSpeed < 7) {
