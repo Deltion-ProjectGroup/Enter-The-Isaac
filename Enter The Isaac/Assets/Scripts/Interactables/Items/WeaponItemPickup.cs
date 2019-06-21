@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class WeaponItemPickup : InventoryItemPickup
 {
+    public bool dropped = false;
     public GunType gunData;
     public int remainingAmmoStore;
     public int remainingClipStore;
@@ -15,10 +16,19 @@ public class WeaponItemPickup : InventoryItemPickup
             GameObject droppedWeapon = Instantiate(controller.guns[controller.curGun].dropPrefab, transform.position, transform.rotation);
             droppedWeapon.GetComponent<WeaponItemPickup>().remainingAmmoStore = controller.magazineStore[controller.curGun];
             droppedWeapon.GetComponent<WeaponItemPickup>().remainingClipStore = controller.ammoStore[controller.curGun];
+            droppedWeapon.GetComponent<WeaponItemPickup>().dropped = true;
             player.GetComponent<Inventory>().weaponItems[controller.curGun] = pickUpData;
             controller.guns[controller.curGun] = gunData;
-            controller.ammoStore[controller.curGun] = gunData.magazineSize;
-            controller.magazineStore[controller.curGun] = gunData.maxAmmo;
+            if (!dropped)
+            {
+                controller.ammoStore[controller.curGun] = gunData.magazineSize;
+                controller.magazineStore[controller.curGun] = gunData.maxAmmo;
+            }
+            else
+            {
+                controller.ammoStore[controller.curGun] = remainingClipStore;
+                controller.magazineStore[controller.curGun] = remainingAmmoStore;
+            }
             base.OnInteract(player);
         }
         else

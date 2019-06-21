@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &146287797357915031
+--- !u!1 &607819232069924618
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,52 +8,52 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 1881604786751812768}
-  - component: {fileID: 3294401449205709378}
-  - component: {fileID: 2151517132118064582}
-  - component: {fileID: 8411118394307275724}
-  - component: {fileID: 1338378445229739864}
-  m_Layer: 12
-  m_Name: FireRateModifyInteractable
+  - component: {fileID: 1185592601845671997}
+  - component: {fileID: 2869020616774887135}
+  - component: {fileID: 1707821708842623323}
+  - component: {fileID: 1799821094310826949}
+  - component: {fileID: 8339271280516135833}
+  m_Layer: 18
+  m_Name: WispOfFlamesInteractable
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &1881604786751812768
+--- !u!4 &1185592601845671997
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 146287797357915031}
+  m_GameObject: {fileID: 607819232069924618}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 40.324192, y: 8.766413, z: 4.6216574}
+  m_LocalPosition: {x: -292.44, y: 86.40602, z: 45.62925}
   m_LocalScale: {x: 0.4, y: 0.4, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &3294401449205709378
+--- !u!65 &2869020616774887135
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 146287797357915031}
+  m_GameObject: {fileID: 607819232069924618}
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 3.4003544, y: 1, z: 0.36514664}
-  m_Center: {x: 0.145545, y: 0, z: -0.018922806}
---- !u!114 &2151517132118064582
+  m_Size: {x: 2.4428558, y: 3.4097862, z: 0.36514664}
+  m_Center: {x: -0.08747101, y: -0.5639744, z: -0.018922806}
+--- !u!114 &1707821708842623323
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 146287797357915031}
+  m_GameObject: {fileID: 607819232069924618}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: a8366aeaa24da334185f5778aa64f9f3, type: 3}
@@ -62,29 +62,15 @@ MonoBehaviour:
   canInteract: 1
   minValue: 5
   maxValue: 10
-  pickUpData: {fileID: 11400000, guid: 645e0f509cdfccb4eb4cd79b4029e8a5, type: 2}
-  pickUpSound: {fileID: 8300000, guid: 6d2f3b33b75bca04986de5b5911bd968, type: 3}
---- !u!114 &8411118394307275724
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 146287797357915031}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f0fd38b3cb0888f459120fb9c3928ec6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  gunToAdd: {fileID: 0}
-  modifyAmount: 0
---- !u!212 &1338378445229739864
+  pickUpData: {fileID: 11400000, guid: 2a72108759696b240bebc6f96091495e, type: 2}
+  pickUpSound: {fileID: 8300000, guid: f33bf587501828f419a2efb6c8585add, type: 3}
+--- !u!212 &1799821094310826949
 SpriteRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 146287797357915031}
+  m_GameObject: {fileID: 607819232069924618}
   m_Enabled: 1
   m_CastShadows: 0
   m_ReceiveShadows: 0
@@ -115,7 +101,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 71056cdae1327dc41bbeba3f61d662eb, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 3828ff6e4ae59dc499d4fb20d97090d4, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -126,3 +112,16 @@ SpriteRenderer:
   m_WasSpriteAssigned: 1
   m_MaskInteraction: 0
   m_SpriteSortPoint: 0
+--- !u!114 &8339271280516135833
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 607819232069924618}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d8fdd24683b2e6543890d854a8e05c3b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  modifyAmount: 20

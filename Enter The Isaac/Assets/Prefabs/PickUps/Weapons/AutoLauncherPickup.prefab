@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &5496543056268999194
+--- !u!1 &6588780251099513209
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,47 +8,47 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 6078978402528240941}
-  - component: {fileID: 7729280107837643860}
-  - component: {fileID: 7068488676584539041}
-  - component: {fileID: 7203511565860187087}
-  - component: {fileID: 5956273936035943880}
-  m_Layer: 12
-  m_Name: WeaponPickup
+  - component: {fileID: 6588780251099356505}
+  - component: {fileID: 6588780251098553721}
+  - component: {fileID: 6588780251097587641}
+  - component: {fileID: 8594415290104890147}
+  - component: {fileID: 5904729908127662404}
+  m_Layer: 18
+  m_Name: AutoLauncherPickup
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &6078978402528240941
+--- !u!4 &6588780251099356505
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5496543056268999194}
+  m_GameObject: {fileID: 6588780251099513209}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 4.218841, y: 7.5856915, z: -5.305577}
+  m_LocalPosition: {x: -304.13144, y: 64.187126, z: 38.863865}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &7729280107837643860
+--- !u!33 &6588780251098553721
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5496543056268999194}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &7068488676584539041
+  m_GameObject: {fileID: 6588780251099513209}
+  m_Mesh: {fileID: 4300000, guid: 0f72180ccec807b4a947f005fd0ae07a, type: 3}
+--- !u!23 &6588780251097587641
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5496543056268999194}
+  m_GameObject: {fileID: 6588780251099513209}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -59,7 +59,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10303, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 503b306a00592a7448cb1cff09063d8b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -79,26 +79,13 @@ MeshRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
---- !u!65 &7203511565860187087
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5496543056268999194}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 1
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &5956273936035943880
+--- !u!114 &8594415290104890147
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 5496543056268999194}
+  m_GameObject: {fileID: 6588780251099513209}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 290b94c70a5b50c4a8ad4231beb8e19e, type: 3}
@@ -107,7 +94,20 @@ MonoBehaviour:
   canInteract: 1
   minValue: 0
   maxValue: 0
-  pickUpData: {fileID: 11400000, guid: c382607d589d67b4d92b6a9b366c4670, type: 2}
-  gunData: {fileID: 11400000, guid: 88e2302c7ce07a740b29ef5e5413438f, type: 2}
-  remainingAmmoStore: 100
-  remainingClipStore: 10
+  pickUpData: {fileID: 11400000, guid: 9c40a98dd3ac1c14c99290a0d13e6840, type: 2}
+  gunData: {fileID: 11400000, guid: a750c47dfc3bb554cb789527430e2b17, type: 2}
+  remainingAmmoStore: 0
+  remainingClipStore: 0
+--- !u!65 &5904729908127662404
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6588780251099513209}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 0.1375033, y: 0.29689214, z: 1.3837414}
+  m_Center: {x: 0.00063736364, y: 0.09742118, z: -0.011927158}

@@ -8,7 +8,7 @@ public class FireRateModfierEffect : GunEffect
     public override void ApplyEffect(GameObject target)
     {
         Gun gun = target.GetComponent<PlayerController>().gun;
-        gun.gunClone.fireRate = Mathf.Max(gun.gunClone.fireRate - modifyAmount, gun.gunClone.minFireRate);
+        gun.gunClone.fireRate = Mathf.Max(gun.gunClone.fireRate + modifyAmount, gun.gunClone.minFireRate);
         gun.onSwapGun += OnSwapGun;
     }
     public override void RemoveEffect(GameObject target)
