@@ -134,7 +134,6 @@ public abstract class BaseRoom : MonoBehaviour
                         {
                             print(hit.gameObject);
                         }
-                        throw new System.Exception("k");
                     }
                     return true;
                 }
