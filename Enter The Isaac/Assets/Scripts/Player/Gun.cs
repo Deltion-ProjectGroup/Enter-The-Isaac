@@ -328,11 +328,12 @@ public class Gun : MonoBehaviour {
 
     }
 
-    public void Reload () {
-        if (totalMaxAmmo > gunClone.magazineSize) {
+       public void Reload () {
+        if (totalMaxAmmo > gunClone.magazineSize - curAmmo) {
             totalMaxAmmo -= gunClone.magazineSize - curAmmo;
             curAmmo = gunClone.magazineSize;
         } else if (totalMaxAmmo != 0) {
+            //totalMaxAmmo -= gunClone.magazineSize - curAmmo;
             curAmmo = totalMaxAmmo;
             totalMaxAmmo = 0;
         }
